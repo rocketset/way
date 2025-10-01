@@ -1,0 +1,281 @@
+import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { Menu, X, ChevronRight, ChevronDown } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import logoWay from "@/assets/logo-way.png";
+import iconNuvemshop from "@/assets/icon-nuvemshop.svg";
+import iconWordpress from "@/assets/icon-wordpress.svg";
+
+const Header = () => {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("inicio");
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+      
+      // Detect active section
+      const sections = ["inicio", "por-que-way", "solucoes", "cases", "noticias", "contato"];
+      const current = sections.find(section => {
+        const element = document.getElementById(section);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          return rect.top <= 100 && rect.bottom >= 100;
+        }
+        return false;
+      });
+      if (current) setActiveSection(current);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const navItems = [
+    { id: "inicio", label: "INÍCIO" },
+    { id: "por-que-way", label: "POR QUE A WAY?" },
+    { id: "solucoes", label: "SOLUÇÕES" },
+    { id: "cases", label: "CASES" },
+    { id: "noticias", label: "NOTÍCIAS" },
+    { id: "contato", label: "CONTATO" },
+  ];
+
+  const platformItems = [
+    { label: "Nuvem Shop", icon: iconNuvemshop },
+    { label: "Wordpress", icon: iconWordpress },
+  ];
+
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+      setIsMobileMenuOpen(false);
+    }
+  };
+
+  return (
+    <>
+      <header 
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+          isScrolled 
+            ? "bg-background/95 backdrop-blur-xl border-b border-border shadow-lg" 
+            : "bg-transparent"
+        }`}
+      >
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-between h-20">
+            {/* Logo */}
+            <div 
+              className="flex items-center gap-3 cursor-pointer group"
+              onClick={() => scrollToSection("inicio")}
+            >
+              <img 
+                src={logoWay} 
+                alt="Way+ E-commerce" 
+                className="h-10 transition-all duration-300 group-hover:scale-110 group-hover:drop-shadow-[0_0_8px_rgba(255,215,0,0.5)]" 
+              />
+            </div>
+
+            {/* Desktop Navigation - Centered */}
+            <nav className="hidden lg:flex items-center justify-center flex-1 mx-8">
+              <div className="flex items-center gap-1 bg-background/50 backdrop-blur-sm px-4 py-2 rounded-full border border-border/50">
+                {/* First 3 items: INÍCIO, POR QUE A WAY?, SOLUÇÕES */}
+                {navItems.slice(0, 3).map((item, index) => (
+                  <button
+                    key={item.id}
+                    onClick={() => scrollToSection(item.id)}
+                    className={`relative px-4 py-2 text-sm font-medium transition-all duration-300 rounded-full group ${
+                      activeSection === item.id
+                        ? "text-primary"
+                        : "text-foreground/70 hover:text-foreground"
+                    }`}
+                  >
+                    {/* Active indicator with animation */}
+                    {activeSection === item.id && (
+                      <>
+                        <div className="absolute inset-0 bg-primary/10 rounded-full animate-pulse" />
+                        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 bg-primary rounded-full animate-ping" />
+                      </>
+                    )}
+                    
+                    {/* Hover effect */}
+                    <div className="absolute inset-0 bg-primary/5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    
+                    <span className="relative z-10">{item.label}</span>
+                    
+                    {/* Animated underline on hover */}
+                    <div className={`absolute bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ${
+                      activeSection === item.id ? "scale-x-100" : ""
+                    }`} />
+                  </button>
+                ))}
+                
+                {/* Plataformas Dropdown */}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <button className="relative px-4 py-2 text-sm font-medium transition-all duration-300 rounded-full group text-foreground/70 hover:text-foreground">
+                      <div className="absolute inset-0 bg-primary/5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      <span className="relative z-10 flex items-center gap-1">
+                        PLATAFORMAS
+                        <ChevronDown className="w-3 h-3 transition-transform duration-300 group-hover:rotate-180" />
+                      </span>
+                      <div className="absolute bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
+                    </button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent 
+                    align="center" 
+                    className="w-56 bg-background/95 backdrop-blur-xl border-border/50 shadow-xl"
+                  >
+                    {platformItems.map((platform) => (
+                      <DropdownMenuItem 
+                        key={platform.label}
+                        className="flex items-center gap-3 px-4 py-3 cursor-pointer hover:bg-primary/10 transition-all duration-300 rounded-lg group"
+                      >
+                        <img 
+                          src={platform.icon} 
+                          alt={platform.label}
+                          className="w-5 h-5 transition-transform duration-300 group-hover:scale-110"
+                        />
+                        <span className="font-medium group-hover:text-black transition-colors duration-300">
+                          {platform.label}
+                        </span>
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+
+                {/* Last 3 items: CASES, NOTÍCIAS, CONTATO */}
+                {navItems.slice(3).map((item, index) => (
+                  <button
+                    key={item.id}
+                    onClick={() => scrollToSection(item.id)}
+                    className={`relative px-4 py-2 text-sm font-medium transition-all duration-300 rounded-full group ${
+                      activeSection === item.id
+                        ? "text-primary"
+                        : "text-foreground/70 hover:text-foreground"
+                    }`}
+                  >
+                    {/* Active indicator with animation */}
+                    {activeSection === item.id && (
+                      <>
+                        <div className="absolute inset-0 bg-primary/10 rounded-full animate-pulse" />
+                        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 bg-primary rounded-full animate-ping" />
+                      </>
+                    )}
+                    
+                    {/* Hover effect */}
+                    <div className="absolute inset-0 bg-primary/5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    
+                    <span className="relative z-10">{item.label}</span>
+                    
+                    {/* Animated underline on hover */}
+                    <div className={`absolute bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ${
+                      activeSection === item.id ? "scale-x-100" : ""
+                    }`} />
+                  </button>
+                ))}
+              </div>
+            </nav>
+
+            {/* CTA Button */}
+            <div className="hidden lg:block">
+              <Button 
+                onClick={() => scrollToSection("contato")}
+                className="relative bg-gradient-to-r from-primary via-yellow-500 to-primary text-gray-900 hover:shadow-2xl font-bold px-6 py-3 rounded-full transition-all duration-300 overflow-hidden group hover:scale-105"
+              >
+                {/* Animated shine effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+                
+                <span className="relative z-10 flex items-center gap-2">
+                  FALAR COM A GENTE
+                  <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                </span>
+
+                {/* Pulse ring */}
+                <div className="absolute inset-0 rounded-full border-2 border-primary/50 animate-ping opacity-20" />
+              </Button>
+            </div>
+
+            {/* Mobile menu button */}
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="lg:hidden p-2 rounded-lg hover:bg-primary/10 transition-colors duration-300"
+            >
+              {isMobileMenuOpen ? (
+                <X className="w-6 h-6 text-foreground" />
+              ) : (
+                <Menu className="w-6 h-6 text-foreground" />
+              )}
+            </button>
+          </div>
+        </div>
+
+        {/* Animated bottom border */}
+        {isScrolled && (
+          <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent opacity-50" />
+        )}
+      </header>
+
+      {/* Mobile Menu */}
+      <div
+        className={`fixed inset-0 z-40 lg:hidden transition-all duration-500 ${
+          isMobileMenuOpen ? "visible" : "invisible"
+        }`}
+      >
+        {/* Backdrop */}
+        <div
+          className={`absolute inset-0 bg-background/95 backdrop-blur-xl transition-opacity duration-500 ${
+            isMobileMenuOpen ? "opacity-100" : "opacity-0"
+          }`}
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+
+        {/* Menu content */}
+        <div
+          className={`absolute top-20 left-0 right-0 bg-card/95 backdrop-blur-xl border-b border-border transition-transform duration-500 ${
+            isMobileMenuOpen ? "translate-y-0" : "-translate-y-full"
+          }`}
+        >
+          <nav className="container mx-auto px-4 py-8">
+            <div className="flex flex-col gap-2">
+              {navItems.map((item, index) => (
+                <button
+                  key={item.id}
+                  onClick={() => scrollToSection(item.id)}
+                  className={`flex items-center justify-between px-6 py-4 text-left font-medium rounded-xl transition-all duration-300 transform hover:scale-105 ${
+                    activeSection === item.id
+                      ? "bg-primary/10 text-primary shadow-lg"
+                      : "bg-background/50 text-foreground hover:bg-primary/5"
+                  }`}
+                  style={{
+                    animationDelay: `${index * 0.05}s`,
+                  }}
+                >
+                  <span>{item.label}</span>
+                  <ChevronRight className={`w-5 h-5 transition-transform duration-300 ${
+                    activeSection === item.id ? "translate-x-1" : ""
+                  }`} />
+                </button>
+              ))}
+              
+              <Button
+                onClick={() => scrollToSection("contato")}
+                className="mt-4 bg-gradient-to-r from-primary via-yellow-500 to-primary text-gray-900 hover:shadow-2xl font-bold py-6 rounded-xl"
+              >
+                FALAR COM A GENTE
+              </Button>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default Header;
