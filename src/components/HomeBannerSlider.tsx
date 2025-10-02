@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
@@ -9,17 +9,35 @@ const banners = [
   {
     id: 1,
     desktopImage: banner1Desktop,
-    mobileImage: banner1Desktop, // Por enquanto usa a mesma imagem
+    mobileImage: banner1Desktop,
     alt: "Banner Way+ E-commerce",
   },
 ];
 
 const HomeBannerSlider = () => {
   const [isMobile, setIsMobile] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(0);
   const [emblaRef, emblaApi] = useEmblaCarousel(
-    { loop: true },
+    { loop: true, duration: 20 },
     [Autoplay({ delay: 5000, stopOnInteraction: false })]
   );
+
+  const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
+  const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
+
+  const onSelect = useCallback(() => {
+    if (!emblaApi) return;
+    setSelectedIndex(emblaApi.selectedScrollSnap());
+  }, [emblaApi]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    onSelect();
+    emblaApi.on("select", onSelect);
+    return () => {
+      emblaApi.off("select", onSelect);
+    };
+  }, [emblaApi, onSelect]);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -30,9 +48,6 @@ const HomeBannerSlider = () => {
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
-
-  const scrollPrev = () => emblaApi?.scrollPrev();
-  const scrollNext = () => emblaApi?.scrollNext();
 
   return (
     <section id="inicio" className="relative w-full overflow-hidden bg-background">
@@ -57,18 +72,34 @@ const HomeBannerSlider = () => {
         <>
           <button
             onClick={scrollPrev}
-            className="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-background/80 hover:bg-background text-foreground p-3 rounded-full transition-all duration-300 hover:scale-110"
+            className="absolute left-6 top-1/2 -translate-y-1/2 z-10 bg-primary/90 hover:bg-primary text-primary-foreground p-4 rounded-full transition-all duration-300 hover:scale-110 shadow-lg hover:shadow-xl hover:shadow-primary/50 group"
             aria-label="Banner anterior"
           >
-            <ChevronLeft className="w-6 h-6" />
+            <ChevronLeft className="w-7 h-7 transition-transform group-hover:-translate-x-1" />
           </button>
           <button
             onClick={scrollNext}
-            className="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-background/80 hover:bg-background text-foreground p-3 rounded-full transition-all duration-300 hover:scale-110"
+            className="absolute right-6 top-1/2 -translate-y-1/2 z-10 bg-primary/90 hover:bg-primary text-primary-foreground p-4 rounded-full transition-all duration-300 hover:scale-110 shadow-lg hover:shadow-xl hover:shadow-primary/50 group"
             aria-label="Próximo banner"
           >
-            <ChevronRight className="w-6 h-6" />
+            <ChevronRight className="w-7 h-7 transition-transform group-hover:translate-x-1" />
           </button>
+
+          {/* Dots indicator */}
+          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex gap-2">
+            {banners.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => emblaApi?.scrollTo(index)}
+                className={`transition-all duration-300 rounded-full ${
+                  index === selectedIndex
+                    ? "w-8 h-3 bg-primary"
+                    : "w-3 h-3 bg-primary/40 hover:bg-primary/70"
+                }`}
+                aria-label={`Ir para banner ${index + 1}`}
+              />
+            ))}
+          </div>
         </>
       )}
     </section>
