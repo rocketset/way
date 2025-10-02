@@ -21,7 +21,7 @@ const Header = () => {
       setIsScrolled(window.scrollY > 20);
       
       // Detect active section
-      const sections = ["inicio", "por-que-way", "solucoes", "cases", "noticias", "contato"];
+      const sections = ["inicio", "por-que-way", "solucoes", "cases", "contato"];
       const current = sections.find(section => {
         const element = document.getElementById(section);
         if (element) {
@@ -43,7 +43,6 @@ const Header = () => {
     { id: "solucoes", label: "SOLUÇÕES", type: "scroll" },
     { id: "cases", label: "CASES", type: "scroll" },
     { id: "blog", label: "BLOG", type: "link", path: "/blog" },
-    { id: "noticias", label: "NOTÍCIAS", type: "scroll" },
     { id: "contato", label: "CONTATO", type: "scroll" },
   ];
 
@@ -155,7 +154,7 @@ const Header = () => {
                   </DropdownMenuContent>
                 </DropdownMenu>
 
-                {/* Last 4 items: CASES, BLOG, NOTÍCIAS, CONTATO */}
+                {/* Last 3 items: CASES, BLOG, CONTATO */}
                 {navItems.slice(3).map((item, index) => (
                   <button
                     key={item.id}
