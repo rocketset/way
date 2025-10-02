@@ -227,7 +227,7 @@ const Blog = () => {
                             variant="ghost"
                             className="text-primary hover:text-primary hover:bg-primary/10 group/btn p-0"
                           >
-                            <span className="mr-2">Ver case completo</span>
+                            <span className="mr-2">Ver post completo</span>
                             <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover/btn:translate-x-1" />
                           </Button>
                         </div>
