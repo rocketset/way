@@ -49,6 +49,8 @@ const Header = () => {
       setActiveSection('por-que-way');
     } else if (location.pathname === '/blog') {
       setActiveSection('blog');
+    } else if (location.pathname === '/contact') {
+      setActiveSection('contato');
     } else if (location.pathname !== '/') {
       setActiveSection('');
     }
@@ -60,7 +62,7 @@ const Header = () => {
     { id: "solucoes", label: "SOLUÇÕES", type: "scroll" },
     { id: "cases", label: "CASES", type: "scroll" },
     { id: "blog", label: "BLOG", type: "link", path: "/blog" },
-    { id: "contato", label: "CONTATO", type: "scroll" },
+    { id: "contato", label: "CONTATO", type: "link", path: "/contact" },
   ];
 
   const platformItems = [
