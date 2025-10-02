@@ -17,7 +17,6 @@ import {
   MessageSquare,
   Instagram,
   Linkedin,
-  Facebook,
 } from "lucide-react";
 import {
   Form,
@@ -118,9 +117,8 @@ const Contact = () => {
   ];
 
   const socialLinks = [
-    { icon: Instagram, link: "#", label: "Instagram" },
-    { icon: Linkedin, link: "#", label: "LinkedIn" },
-    { icon: Facebook, link: "#", label: "Facebook" },
+    { icon: Instagram, link: "https://www.instagram.com/wayecommerce/", label: "Instagram" },
+    { icon: Linkedin, link: "https://www.linkedin.com/company/wayecommerce/", label: "LinkedIn" },
   ];
 
   return (
