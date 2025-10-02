@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X, ChevronRight, ChevronDown } from "lucide-react";
 import {
@@ -12,15 +13,30 @@ import iconNuvemshop from "@/assets/icon-nuvemshop.svg";
 import iconWordpress from "@/assets/icon-wordpress.svg";
 
 const Header = () => {
+  const location = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("inicio");
 
+  // Determine active section based on current route or scroll position
   useEffect(() => {
+    // Check if we're on a specific page route
+    if (location.pathname === '/why-way') {
+      setActiveSection('por-que-way');
+      return;
+    } else if (location.pathname === '/blog') {
+      setActiveSection('blog');
+      return;
+    } else if (location.pathname !== '/') {
+      setActiveSection('');
+      return;
+    }
+
+    // If we're on homepage, use scroll detection
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
       
-      // Detect active section
+      // Detect active section on homepage
       const sections = ["inicio", "por-que-way", "solucoes", "cases", "contato"];
       const current = sections.find(section => {
         const element = document.getElementById(section);
@@ -33,9 +49,10 @@ const Header = () => {
       if (current) setActiveSection(current);
     };
 
+    handleScroll(); // Run once on mount
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [location.pathname]);
 
   const navItems = [
     { id: "inicio", label: "INÍCIO", type: "scroll" },
