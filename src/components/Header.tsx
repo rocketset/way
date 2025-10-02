@@ -38,12 +38,13 @@ const Header = () => {
   }, []);
 
   const navItems = [
-    { id: "inicio", label: "INÍCIO" },
-    { id: "por-que-way", label: "POR QUE A WAY?" },
-    { id: "solucoes", label: "SOLUÇÕES" },
-    { id: "cases", label: "CASES" },
-    { id: "noticias", label: "NOTÍCIAS" },
-    { id: "contato", label: "CONTATO" },
+    { id: "inicio", label: "INÍCIO", type: "scroll" },
+    { id: "por-que-way", label: "POR QUE A WAY?", type: "scroll" },
+    { id: "solucoes", label: "SOLUÇÕES", type: "scroll" },
+    { id: "cases", label: "CASES", type: "scroll" },
+    { id: "blog", label: "BLOG", type: "link", path: "/blog" },
+    { id: "noticias", label: "NOTÍCIAS", type: "scroll" },
+    { id: "contato", label: "CONTATO", type: "scroll" },
   ];
 
   const platformItems = [
@@ -51,11 +52,15 @@ const Header = () => {
     { label: "Wordpress", icon: iconWordpress },
   ];
 
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-      setIsMobileMenuOpen(false);
+  const handleNavClick = (item: typeof navItems[0]) => {
+    if (item.type === "link" && item.path) {
+      window.location.href = item.path;
+    } else {
+      const element = document.getElementById(item.id);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+        setIsMobileMenuOpen(false);
+      }
     }
   };
 
@@ -73,7 +78,7 @@ const Header = () => {
             {/* Logo */}
             <div 
               className="flex items-center gap-3 cursor-pointer group"
-              onClick={() => scrollToSection("inicio")}
+              onClick={() => window.location.href = "/"}
             >
               <img 
                 src={logoWay} 
@@ -89,7 +94,7 @@ const Header = () => {
                 {navItems.slice(0, 3).map((item, index) => (
                   <button
                     key={item.id}
-                    onClick={() => scrollToSection(item.id)}
+                    onClick={() => handleNavClick(item)}
                     className={`relative px-4 py-2 text-sm font-medium transition-all duration-300 rounded-full group ${
                       activeSection === item.id
                         ? "text-primary"
@@ -150,11 +155,11 @@ const Header = () => {
                   </DropdownMenuContent>
                 </DropdownMenu>
 
-                {/* Last 3 items: CASES, NOTÍCIAS, CONTATO */}
+                {/* Last 4 items: CASES, BLOG, NOTÍCIAS, CONTATO */}
                 {navItems.slice(3).map((item, index) => (
                   <button
                     key={item.id}
-                    onClick={() => scrollToSection(item.id)}
+                    onClick={() => handleNavClick(item)}
                     className={`relative px-4 py-2 text-sm font-medium transition-all duration-300 rounded-full group ${
                       activeSection === item.id
                         ? "text-primary"
@@ -185,8 +190,8 @@ const Header = () => {
 
             {/* CTA Button */}
             <div className="hidden lg:block">
-              <Button 
-                onClick={() => scrollToSection("contato")}
+            <Button 
+                onClick={() => handleNavClick(navItems.find(item => item.id === "contato")!)}
                 className="relative bg-gradient-to-r from-primary via-yellow-500 to-primary text-gray-900 hover:shadow-2xl font-bold px-6 py-3 rounded-full transition-all duration-300 overflow-hidden group hover:scale-105"
               >
                 {/* Animated shine effect */}
@@ -247,7 +252,7 @@ const Header = () => {
               {navItems.map((item, index) => (
                 <button
                   key={item.id}
-                  onClick={() => scrollToSection(item.id)}
+                  onClick={() => handleNavClick(item)}
                   className={`flex items-center justify-between px-6 py-4 text-left font-medium rounded-xl transition-all duration-300 transform hover:scale-105 ${
                     activeSection === item.id
                       ? "bg-primary/10 text-primary shadow-lg"
@@ -265,7 +270,7 @@ const Header = () => {
               ))}
               
               <Button
-                onClick={() => scrollToSection("contato")}
+                onClick={() => handleNavClick(navItems.find(item => item.id === "contato")!)}
                 className="mt-4 bg-gradient-to-r from-primary via-yellow-500 to-primary text-gray-900 hover:shadow-2xl font-bold py-6 rounded-xl"
               >
                 FALAR COM A GENTE
