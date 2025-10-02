@@ -19,6 +19,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import teamImage from "@/assets/why-way-team.png";
 import innovationImage from "@/assets/why-way-innovation.png";
+import differentialsImage from "@/assets/why-way-differentials.png";
 import successImage from "@/assets/why-way-success.png";
 
 const WhyWay = () => {
@@ -246,10 +247,8 @@ const WhyWay = () => {
                 
                 <div className="relative bg-card border border-border rounded-2xl p-8 hover:border-primary/50 transition-all duration-500 hover:shadow-2xl hover:-translate-y-2">
                   {/* Icon */}
-                  <div className={`mb-6 inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br ${value.color} p-0.5 group-hover:scale-110 transition-transform duration-500`}>
-                    <div className="w-full h-full bg-background rounded-2xl flex items-center justify-center">
-                      <value.icon className={`w-8 h-8 bg-gradient-to-br ${value.color} bg-clip-text text-transparent`} />
-                    </div>
+                  <div className={`mb-6 inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br ${value.color} group-hover:scale-110 transition-transform duration-500`}>
+                    <value.icon className="w-8 h-8 text-white" />
                   </div>
 
                   <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors duration-300">
@@ -273,10 +272,10 @@ const WhyWay = () => {
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-12 items-center mb-20">
             <div className="relative animate-fade-in order-2 md:order-1">
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-cyan-500/20 rounded-3xl blur-3xl" />
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-yellow-500/20 rounded-3xl blur-3xl" />
               <img 
-                src={innovationImage}
-                alt="Inovação Way+"
+                src={differentialsImage}
+                alt="Equipe E-commerce Way+"
                 className="relative rounded-3xl shadow-2xl w-full h-auto object-cover hover:scale-105 transition-transform duration-500"
               />
             </div>
