@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X, ChevronRight, ChevronDown } from "lucide-react";
 import {
@@ -55,7 +55,7 @@ const Header = () => {
   }, [location.pathname]);
 
   const navItems = [
-    { id: "inicio", label: "INÍCIO", type: "scroll" },
+    { id: "inicio", label: "INÍCIO", type: "link", path: "/" },
     { id: "por-que-way", label: "POR QUE A WAY?", type: "link", path: "/why-way" },
     { id: "solucoes", label: "SOLUÇÕES", type: "scroll" },
     { id: "cases", label: "CASES", type: "scroll" },
@@ -70,12 +70,19 @@ const Header = () => {
 
   const handleNavClick = (item: typeof navItems[0]) => {
     if (item.type === "link" && item.path) {
+      // Use window.location for navigation to ensure page reload and scroll to top
       window.location.href = item.path;
     } else {
-      const element = document.getElementById(item.id);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
-        setIsMobileMenuOpen(false);
+      // For scroll items, only work on homepage
+      if (location.pathname === '/') {
+        const element = document.getElementById(item.id);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+          setIsMobileMenuOpen(false);
+        }
+      } else {
+        // If not on homepage, navigate to homepage first
+        window.location.href = "/#" + item.id;
       }
     }
   };
@@ -92,16 +99,16 @@ const Header = () => {
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
-            <div 
+            <Link 
+              to="/"
               className="flex items-center gap-3 cursor-pointer group"
-              onClick={() => window.location.href = "/"}
             >
               <img 
                 src={logoWay} 
                 alt="Way+ E-commerce" 
                 className="h-10 transition-all duration-300 group-hover:scale-110 group-hover:drop-shadow-[0_0_8px_rgba(255,215,0,0.5)]" 
               />
-            </div>
+            </Link>
 
             {/* Desktop Navigation - Centered */}
             <nav className="hidden lg:flex items-center justify-center flex-1 mx-8">
