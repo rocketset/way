@@ -3,6 +3,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import banner1Desktop from "@/assets/home-banner-1.png";
+import banner2Desktop from "@/assets/home-banner-2.png";
 
 // Array de banners - futuramente virá do admin
 const banners = [
@@ -10,7 +11,13 @@ const banners = [
     id: 1,
     desktopImage: banner1Desktop,
     mobileImage: banner1Desktop,
-    alt: "Banner Way+ E-commerce",
+    alt: "Banner Way+ E-commerce 1",
+  },
+  {
+    id: 2,
+    desktopImage: banner2Desktop,
+    mobileImage: banner2Desktop,
+    alt: "Banner Way+ E-commerce 2",
   },
 ];
 
@@ -67,41 +74,37 @@ const HomeBannerSlider = () => {
         </div>
       </div>
 
-      {/* Navigation arrows - only show if there are multiple banners */}
-      {banners.length > 1 && (
-        <>
-          <button
-            onClick={scrollPrev}
-            className="absolute left-6 top-1/2 -translate-y-1/2 z-10 bg-primary/90 hover:bg-primary text-primary-foreground p-4 rounded-full transition-all duration-300 hover:scale-110 shadow-lg hover:shadow-xl hover:shadow-primary/50 group"
-            aria-label="Banner anterior"
-          >
-            <ChevronLeft className="w-7 h-7 transition-transform group-hover:-translate-x-1" />
-          </button>
-          <button
-            onClick={scrollNext}
-            className="absolute right-6 top-1/2 -translate-y-1/2 z-10 bg-primary/90 hover:bg-primary text-primary-foreground p-4 rounded-full transition-all duration-300 hover:scale-110 shadow-lg hover:shadow-xl hover:shadow-primary/50 group"
-            aria-label="Próximo banner"
-          >
-            <ChevronRight className="w-7 h-7 transition-transform group-hover:translate-x-1" />
-          </button>
+      {/* Navigation arrows */}
+      <button
+        onClick={scrollPrev}
+        className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-20 bg-background/90 hover:bg-background text-foreground p-3 md:p-4 rounded-full transition-all duration-300 hover:scale-110 shadow-xl backdrop-blur-sm group"
+        aria-label="Banner anterior"
+      >
+        <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 transition-transform group-hover:-translate-x-0.5" />
+      </button>
+      <button
+        onClick={scrollNext}
+        className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-20 bg-background/90 hover:bg-background text-foreground p-3 md:p-4 rounded-full transition-all duration-300 hover:scale-110 shadow-xl backdrop-blur-sm group"
+        aria-label="Próximo banner"
+      >
+        <ChevronRight className="w-5 h-5 md:w-6 md:h-6 transition-transform group-hover:translate-x-0.5" />
+      </button>
 
-          {/* Dots indicator */}
-          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex gap-2">
-            {banners.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => emblaApi?.scrollTo(index)}
-                className={`transition-all duration-300 rounded-full ${
-                  index === selectedIndex
-                    ? "w-8 h-3 bg-primary"
-                    : "w-3 h-3 bg-primary/40 hover:bg-primary/70"
-                }`}
-                aria-label={`Ir para banner ${index + 1}`}
-              />
-            ))}
-          </div>
-        </>
-      )}
+      {/* Dots indicator - interno */}
+      <div className="absolute bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-2.5">
+        {banners.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => emblaApi?.scrollTo(index)}
+            className={`transition-all duration-300 rounded-full backdrop-blur-sm ${
+              index === selectedIndex
+                ? "w-10 h-2.5 bg-primary shadow-lg shadow-primary/50"
+                : "w-2.5 h-2.5 bg-background/60 hover:bg-background/80 hover:scale-125"
+            }`}
+            aria-label={`Ir para banner ${index + 1}`}
+          />
+        ))}
+      </div>
     </section>
   );
 };
