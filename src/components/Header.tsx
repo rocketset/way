@@ -18,40 +18,40 @@ const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("inicio");
 
-  // Determine active section based on current route or scroll position
+  // Handle scroll detection for all pages
   useEffect(() => {
-    // Check if we're on a specific page route
-    if (location.pathname === '/why-way') {
-      setActiveSection('por-que-way');
-      return;
-    } else if (location.pathname === '/blog') {
-      setActiveSection('blog');
-      return;
-    } else if (location.pathname !== '/') {
-      setActiveSection('');
-      return;
-    }
-
-    // If we're on homepage, use scroll detection
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
       
-      // Detect active section on homepage
-      const sections = ["inicio", "por-que-way", "solucoes", "cases", "contato"];
-      const current = sections.find(section => {
-        const element = document.getElementById(section);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          return rect.top <= 100 && rect.bottom >= 100;
-        }
-        return false;
-      });
-      if (current) setActiveSection(current);
+      // Only detect active section on homepage
+      if (location.pathname === '/') {
+        const sections = ["inicio", "por-que-way", "solucoes", "cases", "contato"];
+        const current = sections.find(section => {
+          const element = document.getElementById(section);
+          if (element) {
+            const rect = element.getBoundingClientRect();
+            return rect.top <= 100 && rect.bottom >= 100;
+          }
+          return false;
+        });
+        if (current) setActiveSection(current);
+      }
     };
 
     handleScroll(); // Run once on mount
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
+  }, [location.pathname]);
+
+  // Set active section based on current route
+  useEffect(() => {
+    if (location.pathname === '/why-way') {
+      setActiveSection('por-que-way');
+    } else if (location.pathname === '/blog') {
+      setActiveSection('blog');
+    } else if (location.pathname !== '/') {
+      setActiveSection('');
+    }
   }, [location.pathname]);
 
   const navItems = [
