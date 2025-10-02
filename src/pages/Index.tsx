@@ -1,5 +1,5 @@
 import Header from "@/components/Header";
-import HeroSection from "@/components/HeroSection";
+import HomeBannerSlider from "@/components/HomeBannerSlider";
 import WhyWaySection from "@/components/WhyWaySection";
 import ResultsSection from "@/components/ResultsSection";
 import PartnersCarousel from "@/components/PartnersCarousel";
@@ -14,7 +14,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      <HeroSection />
+      <HomeBannerSlider />
       <WhyWaySection />
       <ResultsSection />
       <PartnersCarousel />
