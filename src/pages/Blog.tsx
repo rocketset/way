@@ -103,17 +103,17 @@ const Blog = () => {
           <div className="max-w-4xl mx-auto text-center space-y-6">
             <div className="inline-block">
               <Badge className="bg-card text-muted-foreground border-border px-4 py-2 text-sm font-medium">
-                Nós chamamos lugar de se mostrar da melhor forma
+                Insights, estratégias e novidades do mundo digital
               </Badge>
             </div>
             
             <h1 className="text-5xl md:text-6xl font-bold">
-              Cases de <span className="text-primary">sucesso</span>
+              Blog da <span className="text-primary">Way</span>
             </h1>
             
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Confira cases reais de resultados de crescimento e transformação digital com 
-              tecnologia e inteligência de dados.
+              Acompanhe artigos sobre e-commerce, marketing digital, tecnologia e 
+              as melhores práticas para crescer seu negócio online.
             </p>
           </div>
         </div>
