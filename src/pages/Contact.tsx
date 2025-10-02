@@ -11,8 +11,6 @@ import { useToast } from "@/hooks/use-toast";
 import {
   Mail,
   Phone,
-  MapPin,
-  Clock,
   Send,
   CheckCircle2,
   Sparkles,
@@ -100,34 +98,22 @@ const Contact = () => {
     form.reset();
     setIsSubmitting(false);
 
-    // Open WhatsApp (replace with actual number)
-    // window.open(`https://wa.me/5511999999999?text=${whatsappMessage}`, '_blank');
+    // Open WhatsApp
+    // window.open(`https://wa.me/5583996443602?text=${whatsappMessage}`, '_blank');
   };
 
   const contactInfo = [
     {
       icon: Mail,
       title: "E-mail",
-      info: "contato@way.com.br",
-      link: "mailto:contato@way.com.br",
+      info: "contato@wayecommerce.com.br",
+      link: "mailto:contato@wayecommerce.com.br",
     },
     {
       icon: Phone,
       title: "Telefone",
-      info: "+55 (11) 98765-4321",
-      link: "tel:+5511987654321",
-    },
-    {
-      icon: MapPin,
-      title: "Endereço",
-      info: "São Paulo, SP - Brasil",
-      link: "#",
-    },
-    {
-      icon: Clock,
-      title: "Horário",
-      info: "Seg - Sex: 9h às 18h",
-      link: "#",
+      info: "(83) 99644-3602",
+      link: "tel:+5583996443602",
     },
   ];
 
@@ -383,31 +369,6 @@ const Contact = () => {
         </div>
       </section>
 
-      {/* Map Section */}
-      <section className="py-20 bg-muted/30">
-        <div className="container mx-auto px-4">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-12 animate-fade-in">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                Venha nos Visitar
-              </h2>
-              <p className="text-muted-foreground">
-                Estamos localizados no coração de São Paulo
-              </p>
-            </div>
-
-            <div className="rounded-2xl overflow-hidden shadow-2xl border border-border animate-fade-in">
-              <div className="aspect-video bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
-                <div className="text-center p-8">
-                  <MapPin className="w-16 h-16 text-primary mx-auto mb-4" />
-                  <p className="text-lg font-semibold mb-2">Way+ E-commerce</p>
-                  <p className="text-muted-foreground">São Paulo, SP - Brasil</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       <Footer />
     </div>
