@@ -39,7 +39,7 @@ const Header = () => {
 
   const navItems = [
     { id: "inicio", label: "INÍCIO", type: "scroll" },
-    { id: "por-que-way", label: "POR QUE A WAY?", type: "scroll" },
+    { id: "por-que-way", label: "POR QUE A WAY?", type: "link", path: "/why-way" },
     { id: "solucoes", label: "SOLUÇÕES", type: "scroll" },
     { id: "cases", label: "CASES", type: "scroll" },
     { id: "blog", label: "BLOG", type: "link", path: "/blog" },
