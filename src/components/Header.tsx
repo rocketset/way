@@ -17,6 +17,7 @@ const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("inicio");
+  const [isPlatformMenuOpen, setIsPlatformMenuOpen] = useState(false);
 
   // Handle scroll detection for all pages
   useEffect(() => {
@@ -57,12 +58,12 @@ const Header = () => {
   }, [location.pathname]);
 
   const navItems = [
-    { id: "inicio", label: "INÍCIO", type: "link", path: "/" },
-    { id: "por-que-way", label: "POR QUE A WAY?", type: "link", path: "/why-way" },
-    { id: "solucoes", label: "SOLUÇÕES", type: "scroll" },
-    { id: "cases", label: "CASES", type: "scroll" },
-    { id: "blog", label: "BLOG", type: "link", path: "/blog" },
-    { id: "contato", label: "CONTATO", type: "link", path: "/contact" },
+    { id: "inicio", label: "Início", type: "link", path: "/" },
+    { id: "por-que-way", label: "Por que a Way?", type: "link", path: "/why-way" },
+    { id: "solucoes", label: "Soluções", type: "scroll" },
+    { id: "cases", label: "Cases", type: "scroll" },
+    { id: "blog", label: "Blog", type: "link", path: "/blog" },
+    { id: "contato", label: "Contato", type: "link", path: "/contact" },
   ];
 
   const platformItems = [
@@ -152,7 +153,7 @@ const Header = () => {
                     <button className="relative px-4 py-2 text-sm font-medium transition-all duration-300 rounded-full group text-foreground/70 hover:text-foreground">
                       <div className="absolute inset-0 bg-primary/5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                       <span className="relative z-10 flex items-center gap-1">
-                        PLATAFORMAS
+                        Plataformas
                         <ChevronDown className="w-3 h-3 transition-transform duration-300 group-hover:rotate-180" />
                       </span>
                       <div className="absolute bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
@@ -223,7 +224,7 @@ const Header = () => {
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
                 
                 <span className="relative z-10 flex items-center gap-2">
-                  FALAR COM A GENTE
+                  Falar com a gente
                   <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
                 </span>
 
@@ -260,7 +261,7 @@ const Header = () => {
       >
         {/* Backdrop */}
         <div
-          className={`absolute inset-0 bg-background/95 backdrop-blur-xl transition-opacity duration-500 ${
+          className={`absolute inset-0 bg-background/70 backdrop-blur-md transition-opacity duration-500 ${
             isMobileMenuOpen ? "opacity-100" : "opacity-0"
           }`}
           onClick={() => setIsMobileMenuOpen(false)}
@@ -268,13 +269,13 @@ const Header = () => {
 
         {/* Menu content */}
         <div
-          className={`absolute top-20 left-0 right-0 bg-card/95 backdrop-blur-xl border-b border-border transition-transform duration-500 ${
+          className={`absolute top-20 left-0 right-0 bg-card/80 backdrop-blur-lg border-b border-border transition-transform duration-500 ${
             isMobileMenuOpen ? "translate-y-0" : "-translate-y-full"
           }`}
         >
           <nav className="container mx-auto px-4 py-8">
             <div className="flex flex-col gap-2">
-              {navItems.map((item, index) => (
+              {navItems.slice(0, 3).map((item, index) => (
                 <button
                   key={item.id}
                   onClick={() => handleNavClick(item)}
@@ -294,11 +295,68 @@ const Header = () => {
                 </button>
               ))}
               
+              {/* Plataformas Menu */}
+              <div className="flex flex-col gap-2">
+                <button
+                  onClick={() => setIsPlatformMenuOpen(!isPlatformMenuOpen)}
+                  className="flex items-center justify-between px-6 py-4 text-left font-medium rounded-xl transition-all duration-300 bg-background/50 text-foreground hover:bg-primary/5"
+                  style={{
+                    animationDelay: `0.15s`,
+                  }}
+                >
+                  <span>Plataformas</span>
+                  <ChevronDown className={`w-5 h-5 transition-transform duration-300 ${
+                    isPlatformMenuOpen ? "rotate-180" : ""
+                  }`} />
+                </button>
+                
+                {/* Submenu de Plataformas */}
+                <div className={`overflow-hidden transition-all duration-300 ${
+                  isPlatformMenuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+                }`}>
+                  <div className="flex flex-col gap-2 pl-4">
+                    {platformItems.map((platform) => (
+                      <button
+                        key={platform.label}
+                        className="flex items-center gap-3 px-6 py-3 text-left font-medium rounded-xl transition-all duration-300 bg-background/30 text-foreground hover:bg-primary/5"
+                      >
+                        <img 
+                          src={platform.icon} 
+                          alt={platform.label}
+                          className="w-5 h-5"
+                        />
+                        <span>{platform.label}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              
+              {navItems.slice(3).map((item, index) => (
+                <button
+                  key={item.id}
+                  onClick={() => handleNavClick(item)}
+                  className={`flex items-center justify-between px-6 py-4 text-left font-medium rounded-xl transition-all duration-300 transform hover:scale-105 ${
+                    activeSection === item.id
+                      ? "bg-primary/10 text-primary shadow-lg"
+                      : "bg-background/50 text-foreground hover:bg-primary/5"
+                  }`}
+                  style={{
+                    animationDelay: `${(index + 4) * 0.05}s`,
+                  }}
+                >
+                  <span>{item.label}</span>
+                  <ChevronRight className={`w-5 h-5 transition-transform duration-300 ${
+                    activeSection === item.id ? "translate-x-1" : ""
+                  }`} />
+                </button>
+              ))}
+              
               <Button
                 onClick={() => handleNavClick(navItems.find(item => item.id === "contato")!)}
                 className="mt-4 bg-gradient-to-r from-primary via-yellow-500 to-primary text-gray-900 hover:shadow-2xl font-bold py-6 rounded-xl"
               >
-                FALAR COM A GENTE
+                Falar com a gente
               </Button>
             </div>
           </nav>
