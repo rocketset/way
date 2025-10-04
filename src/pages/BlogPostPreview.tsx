@@ -29,8 +29,11 @@ export default function BlogPostPreview() {
       return;
     }
 
-    loadPost();
-  }, [id]);
+    // Aguardar autenticação carregar antes de buscar o post
+    if (!authLoading) {
+      loadPost();
+    }
+  }, [id, authLoading, user]);
 
 const loadPost = async () => {
     try {
