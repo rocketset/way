@@ -7,68 +7,98 @@ export const useBlogPost = (slug: string | undefined) => {
     queryFn: async () => {
       if (!slug) throw new Error('Slug is required');
 
+      // Buscar o post
       const { data: post, error } = await supabase
         .from('posts')
-        .select(`
-          *,
-          profiles!posts_autor_id_fkey(nome, email)
-        `)
+        .select('*')
         .eq('slug', slug)
         .eq('publicado', true)
         .eq('status', 'published')
         .single();
 
-      if (error) throw error;
+      if (error) {
+        console.error('Error fetching post:', error);
+        throw error;
+      }
+      
       if (!post) throw new Error('Post not found');
+
+      // Buscar autor
+      let autorNome = 'Autor';
+      let autorEmail = '';
+      if (post.autor_id) {
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('nome, email')
+          .eq('id', post.autor_id)
+          .single();
+        
+        if (profile) {
+          autorNome = profile.nome;
+          autorEmail = profile.email;
+        }
+      }
 
       // Buscar categorias
       const { data: postCategories } = await supabase
         .from('post_categories')
-        .select('category_id, categories!inner(id, nome)')
+        .select(`
+          category_id,
+          categories (
+            id,
+            nome
+          )
+        `)
         .eq('post_id', post.id);
 
       // Buscar tags
       const { data: postTags } = await supabase
         .from('post_tags')
-        .select('tag_id, tags!inner(nome)')
-        .eq('post_id', post.id);
-
-      const categorias = postCategories?.map((pc: any) => pc.categories.nome) || [];
-      const tags = postTags?.map((pt: any) => pt.tags.nome) || [];
-      const categoryIds = postCategories?.map((pc: any) => pc.categories.id) || [];
-
-      // Buscar posts relacionados (mesma categoria, excluindo o atual)
-      const { data: relatedPosts } = await supabase
-        .from('post_categories')
         .select(`
-          post_id,
-          posts!inner(
-            id,
-            titulo,
-            slug,
-            excerpt,
-            featured_image,
-            criado_em,
-            reading_time
+          tags (
+            nome
           )
         `)
-        .in('category_id', categoryIds)
-        .neq('post_id', post.id)
-        .limit(3);
+        .eq('post_id', post.id);
 
-      const related = relatedPosts
-        ?.map((rp: any) => ({
-          ...rp.posts,
-          categoria: categorias[0] || 'Blog',
-        }))
-        .slice(0, 3) || [];
+      const categorias = postCategories?.map((pc: any) => pc.categories?.nome).filter(Boolean) || [];
+      const tags = postTags?.map((pt: any) => pt.tags?.nome).filter(Boolean) || [];
+      const categoryIds = postCategories?.map((pc: any) => pc.categories?.id).filter(Boolean) || [];
+
+      // Buscar posts relacionados (mesma categoria, excluindo o atual)
+      let related: any[] = [];
+      if (categoryIds.length > 0) {
+        const { data: relatedPostCategories } = await supabase
+          .from('post_categories')
+          .select('post_id')
+          .in('category_id', categoryIds)
+          .neq('post_id', post.id)
+          .limit(10);
+
+        if (relatedPostCategories && relatedPostCategories.length > 0) {
+          const relatedPostIds = relatedPostCategories.map((rpc: any) => rpc.post_id);
+          
+          const { data: relatedPosts } = await supabase
+            .from('posts')
+            .select('id, titulo, slug, excerpt, featured_image, criado_em, reading_time')
+            .in('id', relatedPostIds)
+            .eq('publicado', true)
+            .eq('status', 'published')
+            .limit(3);
+
+          related = relatedPosts?.map((rp: any) => ({
+            ...rp,
+            categoria: categorias[0] || 'Blog',
+          })) || [];
+        }
+      }
 
       return {
         ...post,
         categorias,
         tags,
-        autor_nome: (post.profiles as any)?.nome || 'Autor',
-        autor_email: (post.profiles as any)?.email || '',
+        autor_nome: autorNome,
+        autor_email: autorEmail,
         conteudo: typeof post.conteudo === 'string' ? JSON.parse(post.conteudo) : post.conteudo,
         related,
       };

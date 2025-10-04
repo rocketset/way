@@ -19,45 +19,65 @@ export const useBlogPosts = (searchQuery?: string, selectedCategory?: string) =>
   return useQuery({
     queryKey: ['blog-posts', searchQuery, selectedCategory],
     queryFn: async () => {
-      let query = supabase
+      // Buscar posts publicados
+      const { data: posts, error } = await supabase
         .from('posts')
-        .select(`
-          id,
-          titulo,
-          excerpt,
-          featured_image,
-          slug,
-          criado_em,
-          reading_time,
-          is_featured,
-          autor_id,
-          profiles!posts_autor_id_fkey(nome)
-        `)
+        .select('*')
         .eq('publicado', true)
         .eq('status', 'published')
         .order('criado_em', { ascending: false });
 
-      const { data: posts, error } = await query;
+      if (error) {
+        console.error('Error fetching posts:', error);
+        throw error;
+      }
 
-      if (error) throw error;
+      if (!posts || posts.length === 0) {
+        console.log('No posts found');
+        return { featured: [], regular: [], all: [] };
+      }
 
-      // Buscar categorias e tags para cada post
+      console.log('Posts fetched:', posts.length);
+
+      // Buscar detalhes adicionais para cada post
       const postsWithDetails = await Promise.all(
-        (posts || []).map(async (post) => {
+        posts.map(async (post) => {
+          // Buscar autor
+          let autorNome = 'Autor';
+          if (post.autor_id) {
+            const { data: profile } = await supabase
+              .from('profiles')
+              .select('nome')
+              .eq('id', post.autor_id)
+              .single();
+            
+            if (profile) {
+              autorNome = profile.nome;
+            }
+          }
+
           // Buscar categorias
           const { data: postCategories } = await supabase
             .from('post_categories')
-            .select('category_id, categories!inner(nome)')
+            .select(`
+              categories (
+                nome
+              )
+            `)
             .eq('post_id', post.id);
 
           // Buscar tags
           const { data: postTags } = await supabase
             .from('post_tags')
-            .select('tag_id, tags!inner(nome)')
+            .select(`
+              tags (
+                nome
+              )
+            `)
             .eq('post_id', post.id);
 
-          const categorias = postCategories?.map((pc: any) => pc.categories.nome) || [];
-          const tags = postTags?.map((pt: any) => pt.tags.nome) || [];
+          const categorias = postCategories?.map((pc: any) => pc.categories?.nome).filter(Boolean) || [];
+          const tags = postTags?.map((pt: any) => pt.tags?.nome).filter(Boolean) || [];
 
           return {
             id: post.id,
@@ -70,7 +90,7 @@ export const useBlogPosts = (searchQuery?: string, selectedCategory?: string) =>
             is_featured: post.is_featured || false,
             categorias,
             tags,
-            autor_nome: (post.profiles as any)?.nome || 'Autor',
+            autor_nome: autorNome,
           };
         })
       );
@@ -96,6 +116,8 @@ export const useBlogPosts = (searchQuery?: string, selectedCategory?: string) =>
       // Separar featured e regulares
       const featured = filtered.filter((p) => p.is_featured);
       const regular = filtered.filter((p) => !p.is_featured);
+
+      console.log('Filtered posts - Featured:', featured.length, 'Regular:', regular.length);
 
       return { featured, regular, all: filtered };
     },
