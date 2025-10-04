@@ -59,7 +59,10 @@ export function FormattingToolbar({
               variant="ghost"
               size="icon"
               className="h-8 w-8"
-              onClick={() => onFormat(btn.format)}
+              onMouseDown={(e) => {
+                e.preventDefault();
+                onFormat(btn.format);
+              }}
             >
               <btn.icon className="h-4 w-4" />
             </Button>
@@ -85,7 +88,10 @@ export function FormattingToolbar({
                   variant={alignment === btn.value ? 'secondary' : 'ghost'}
                   size="icon"
                   className="h-8 w-8"
-                  onClick={() => onAlignmentChange(btn.value)}
+                  onMouseDown={(e) => {
+                    e.preventDefault();
+                    onAlignmentChange(btn.value);
+                  }}
                 >
                   <btn.icon className="h-4 w-4" />
                 </Button>
