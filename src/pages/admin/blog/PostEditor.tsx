@@ -24,6 +24,7 @@ import { ArrowLeft, Save, Eye, Clock, CheckCircle2 } from 'lucide-react';
 import { PostFormData, PostStatus, Category } from '@/types/editor';
 import { generateUniqueSlug, isValidSlug } from '@/utils/slugUtils';
 import { calculateReadingStats } from '@/utils/editorUtils';
+import { BlockEditor } from '@/components/editor/BlockEditor';
 
 export default function PostEditor() {
   const { id } = useParams(); // ID do post se for edição
@@ -434,14 +435,11 @@ export default function PostEditor() {
             </div>
 
             {/* Editor de Conteúdo */}
-            <div className="border rounded-lg p-6 min-h-[500px] bg-card">
-              <p className="text-center text-muted-foreground py-20">
-                Editor de blocos será implementado aqui
-              </p>
-              <p className="text-center text-sm text-muted-foreground">
-                Por enquanto, você pode usar o campo de resumo acima
-              </p>
-            </div>
+            <BlockEditor
+              blocks={formData.conteudo}
+              onChange={(blocks) => setFormData(prev => ({ ...prev, conteudo: blocks }))}
+              placeholder="Comece a escrever seu conteúdo. Clique em '+ Adicionar Bloco' para inserir texto, imagens, listas e muito mais..."
+            />
           </div>
 
           {/* ============================================
