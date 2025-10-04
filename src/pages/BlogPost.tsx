@@ -83,8 +83,8 @@ const BlogPost = () => {
     <div className="min-h-screen bg-background">
       <Header />
       
-      {/* Back Button - Fora da imagem */}
-      <div className="bg-background pt-24 pb-4 px-[10px]">
+      {/* Back Button - Mobile only acima da imagem */}
+      <div className="md:hidden bg-background pt-24 pb-4 px-[10px]">
         <Link 
           to="/blog"
           className="inline-flex items-center gap-2 bg-card backdrop-blur-sm border border-border text-foreground hover:text-primary hover:border-primary transition-all duration-300 px-4 py-2 rounded-full group"
@@ -177,10 +177,10 @@ const BlogPost = () => {
       </section>
 
       {/* Content Section */}
-      <section className="pb-16 px-[10px] md:px-4">
-        <div className="container mx-auto">
-          <div className="max-w-6xl mx-auto">
-            <div className="bg-card rounded-3xl p-4 md:p-12 border border-border">
+      <section className="pb-16 px-0 md:px-4">
+        <div className="md:container md:mx-auto">
+          <div className="md:max-w-6xl md:mx-auto">
+            <div className="bg-card md:rounded-3xl p-4 md:p-12 md:border md:border-border">
               <div 
                 className="prose prose-lg max-w-none
                   prose-headings:text-foreground prose-headings:font-bold prose-headings:mt-8 prose-headings:mb-4
