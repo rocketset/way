@@ -28,6 +28,8 @@ import { PostFormData, PostStatus, Category } from '@/types/editor';
 import { generateUniqueSlug, isValidSlug } from '@/utils/slugUtils';
 import { calculateReadingStats } from '@/utils/editorUtils';
 import { BlockEditor } from '@/components/editor/BlockEditor';
+import { useBlogTags } from '@/hooks/useBlogTags';
+import { TagsAutocomplete } from '@/components/editor/TagsAutocomplete';
 
 export default function PostEditor() {
   const { id } = useParams(); // ID do post se for edição
@@ -47,6 +49,7 @@ export default function PostEditor() {
     featured_image: '',
     categoria_id: '',
     categoriesIds: [],
+    tagsIds: [],
     status: 'draft',
     scheduled_at: undefined,
     is_featured: false,
@@ -57,6 +60,9 @@ export default function PostEditor() {
   const [isEditingSlug, setIsEditingSlug] = useState(false);
   const [wordCount, setWordCount] = useState(0);
   const [readingTime, setReadingTime] = useState(0);
+
+  // Buscar tags
+  const { data: tags = [], isLoading: tagsLoading } = useBlogTags();
 
   // ============================================
   // CARREGAMENTO INICIAL
@@ -110,6 +116,14 @@ export default function PostEditor() {
 
       const categoriesIds = postCategoriesData?.map(pc => pc.category_id) || [];
 
+      // Buscar tags associadas
+      const { data: postTagsData } = await supabase
+        .from('post_tags')
+        .select('tag_id')
+        .eq('post_id', postId);
+
+      const tagsIds = postTagsData?.map(pt => pt.tag_id) || [];
+
       // Preenche o formulário com os dados do post
       setFormData({
         titulo: post.titulo || '',
@@ -119,6 +133,7 @@ export default function PostEditor() {
         featured_image: post.featured_image || '',
         categoria_id: post.categoria_id || '',
         categoriesIds,
+        tagsIds,
         status: post.status || 'draft',
         scheduled_at: post.scheduled_at ? new Date(post.scheduled_at) : undefined,
         is_featured: post.is_featured || false,
@@ -323,6 +338,27 @@ export default function PostEditor() {
               categoriesIds: savedCategories.map(c => c.category_id)
             }));
           }
+        }
+      }
+
+      // Gerenciar tags via post_tags
+      if (postId) {
+        // Remover todas as relações existentes
+        await supabase
+          .from('post_tags')
+          .delete()
+          .eq('post_id', postId);
+
+        // Inserir novas relações
+        if (formData.tagsIds.length > 0) {
+          await supabase
+            .from('post_tags')
+            .insert(
+              formData.tagsIds.map(tagId => ({
+                post_id: postId,
+                tag_id: tagId,
+              }))
+            );
         }
       }
 
@@ -604,6 +640,20 @@ export default function PostEditor() {
                   );
                 })}
               </div>
+            </div>
+
+            {/* Tags */}
+            <div className="border rounded-lg p-4 bg-card space-y-4">
+              <h3 className="font-semibold">Tags</h3>
+              <p className="text-sm text-muted-foreground">
+                Digite para buscar ou criar novas tags
+              </p>
+              
+              <TagsAutocomplete
+                selectedTagIds={formData.tagsIds}
+                onChange={(tagsIds) => setFormData(prev => ({ ...prev, tagsIds }))}
+                allTags={tags}
+              />
             </div>
 
             {/* Post em Destaque */}

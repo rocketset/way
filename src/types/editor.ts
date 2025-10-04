@@ -302,6 +302,7 @@ export interface PostFormData {
   featured_image?: string;
   categoria_id?: string;
   categoriesIds: string[]; // Múltiplas categorias
+  tagsIds: string[]; // Múltiplas tags
   status: PostStatus;
   scheduled_at?: Date;
   is_featured: boolean;
