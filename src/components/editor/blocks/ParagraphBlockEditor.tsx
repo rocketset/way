@@ -144,6 +144,9 @@ export function ParagraphBlockEditor({
           className={`
             outline-none min-h-[60px] prose prose-sm max-w-none
             text-${block.alignment || 'left'}
+            [&_a]:text-primary [&_a]:underline [&_a]:underline-offset-2
+            [&_a]:decoration-primary/50 [&_a:hover]:decoration-primary
+            [&_a]:transition-colors [&_a]:cursor-pointer
           `}
           tagName="div"
         />

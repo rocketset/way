@@ -42,7 +42,12 @@ export function QuoteBlockEditor({
           onChange={(evt) => onChange({ ...block, content: evt.target.value })}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
-          className="outline-none text-lg italic mb-3"
+          className={`
+            outline-none text-lg italic mb-3
+            [&_a]:text-primary [&_a]:underline [&_a]:underline-offset-2
+            [&_a]:decoration-primary/50 [&_a:hover]:decoration-primary
+            [&_a]:transition-colors [&_a]:cursor-pointer
+          `}
           tagName="div"
         />
 
