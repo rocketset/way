@@ -49,6 +49,18 @@ export function FormattingToolbar({
     { icon: AlignJustify, value: 'justify' as const, label: 'Justificar' },
   ];
 
+  const handleFormatClick = (format: string) => {
+    if (format === 'createLink') {
+      const url = prompt('Digite a URL do link:');
+      if (url) {
+        onFormat(format);
+        document.execCommand('createLink', false, url);
+      }
+    } else {
+      onFormat(format);
+    }
+  };
+
   return (
     <div className="flex items-center gap-1 p-2 bg-card border rounded-lg shadow-lg mb-2">
       {/* Botões de formatação */}
@@ -61,7 +73,7 @@ export function FormattingToolbar({
               className="h-8 w-8"
               onMouseDown={(e) => {
                 e.preventDefault();
-                onFormat(btn.format);
+                handleFormatClick(btn.format);
               }}
             >
               <btn.icon className="h-4 w-4" />
