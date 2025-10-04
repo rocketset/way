@@ -6,8 +6,12 @@ import { Label } from '@/components/ui/label';
 import { ParagraphBlockEditor } from './ParagraphBlockEditor';
 import { HeadingBlockEditor } from './HeadingBlockEditor';
 import { ImageBlockEditor } from './ImageBlockEditor';
+import { VideoBlockEditor } from './VideoBlockEditor';
+import { PollBlockEditor } from './PollBlockEditor';
 import { Button } from '@/components/ui/button';
-import { Plus } from 'lucide-react';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Plus, Type, Image, Video, BarChart3 } from 'lucide-react';
+import { useState } from 'react';
 
 interface Props {
   block: ColumnsBlock;
@@ -43,11 +47,36 @@ export function ColumnsBlockEditor({
     onChange({ ...block, columns: newColumns });
   };
 
-  const handleAddBlock = (columnIndex: number) => {
+  const handleAddBlock = (columnIndex: number, blockType: EditorBlock['type']) => {
+    let newBlock: EditorBlock;
+    
+    switch (blockType) {
+      case 'paragraph':
+        newBlock = { id: crypto.randomUUID(), type: 'paragraph', content: '', alignment: 'left' } as any;
+        break;
+      case 'image':
+        newBlock = { id: crypto.randomUUID(), type: 'image', url: '', alt: '', caption: '', alignment: 'center' } as any;
+        break;
+      case 'video':
+        newBlock = { id: crypto.randomUUID(), type: 'video', url: '', caption: '' } as any;
+        break;
+      case 'poll':
+        newBlock = { 
+          id: crypto.randomUUID(), 
+          type: 'poll', 
+          question: '', 
+          pollType: 'single', 
+          options: [{ id: '1', text: '', votes: 0 }],
+          allowMultiple: false,
+          showResults: 'after'
+        } as any;
+        break;
+      default:
+        newBlock = { id: crypto.randomUUID(), type: 'paragraph', content: '', alignment: 'left' } as any;
+    }
+    
     const newColumns = block.columns.map((col, i) =>
-      i === columnIndex
-        ? [...col, { id: crypto.randomUUID(), type: 'paragraph', content: '', alignment: 'left' } as any]
-        : col
+      i === columnIndex ? [...col, newBlock] : col
     );
     onChange({ ...block, columns: newColumns });
   };
@@ -72,6 +101,10 @@ export function ColumnsBlockEditor({
         return <HeadingBlockEditor key={b.id} block={b} {...commonProps} />;
       case 'image':
         return <ImageBlockEditor key={b.id} block={b} {...commonProps} />;
+      case 'video':
+        return <VideoBlockEditor key={b.id} block={b} {...commonProps} />;
+      case 'poll':
+        return <PollBlockEditor key={b.id} block={b} {...commonProps} />;
       default:
         return null;
     }
@@ -104,15 +137,66 @@ export function ColumnsBlockEditor({
                 Coluna {colIndex + 1}
               </div>
               {column.map((b, blockIndex) => renderBlock(b, colIndex, blockIndex))}
-              <Button
-                variant="ghost"
-                size="sm"
-                className="w-full"
-                onClick={() => handleAddBlock(colIndex)}
-              >
-                <Plus className="h-3 w-3 mr-1" />
-                Adicionar
-              </Button>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="w-full"
+                  >
+                    <Plus className="h-3 w-3 mr-1" />
+                    Adicionar
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-56 p-2 bg-popover z-50" align="start">
+                  <div className="space-y-1">
+                    <Button
+                      variant="ghost"
+                      className="w-full justify-start h-auto p-2"
+                      onClick={() => handleAddBlock(colIndex, 'paragraph')}
+                    >
+                      <Type className="h-4 w-4 mr-3" />
+                      <div className="text-left">
+                        <div className="font-medium text-sm">Texto</div>
+                        <div className="text-xs text-muted-foreground">Parágrafo</div>
+                      </div>
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      className="w-full justify-start h-auto p-2"
+                      onClick={() => handleAddBlock(colIndex, 'image')}
+                    >
+                      <Image className="h-4 w-4 mr-3" />
+                      <div className="text-left">
+                        <div className="font-medium text-sm">Imagem</div>
+                        <div className="text-xs text-muted-foreground">Upload ou URL</div>
+                      </div>
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      className="w-full justify-start h-auto p-2"
+                      onClick={() => handleAddBlock(colIndex, 'video')}
+                    >
+                      <Video className="h-4 w-4 mr-3" />
+                      <div className="text-left">
+                        <div className="font-medium text-sm">Vídeo</div>
+                        <div className="text-xs text-muted-foreground">YouTube, Vimeo...</div>
+                      </div>
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      className="w-full justify-start h-auto p-2"
+                      onClick={() => handleAddBlock(colIndex, 'poll')}
+                    >
+                      <BarChart3 className="h-4 w-4 mr-3" />
+                      <div className="text-left">
+                        <div className="font-medium text-sm">Enquete</div>
+                        <div className="text-xs text-muted-foreground">Votação interativa</div>
+                      </div>
+                    </Button>
+                  </div>
+                </PopoverContent>
+              </Popover>
             </div>
           ))}
         </div>
