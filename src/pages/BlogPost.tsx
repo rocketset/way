@@ -182,7 +182,7 @@ const BlogPost = () => {
                   prose-a:text-primary prose-a:no-underline hover:prose-a:underline"
               >
                 {Array.isArray(post.conteudo) && post.conteudo.length > 0 ? (
-                  post.conteudo.map((block, index) => renderEditorBlock(block, index))
+                  post.conteudo.map((block, index) => renderEditorBlock(block, index, post.id))
                 ) : (
                   <p>Conteúdo não disponível</p>
                 )}

@@ -283,7 +283,7 @@ const loadPost = async () => {
           prose-a:text-primary prose-a:underline
           [&_a]:text-primary [&_a]:underline [&_a]:cursor-pointer">
           {contentBlocks.length > 0 ? (
-            contentBlocks.map((block, index) => renderEditorBlock(block, index))
+            contentBlocks.map((block, index) => renderEditorBlock(block, index, id))
           ) : (
             <p className="text-muted-foreground italic">
               Este post ainda não possui conteúdo.

@@ -6,7 +6,7 @@ import { Poll } from '@/components/Poll';
 /**
  * Renderiza um bloco do editor em JSX para visualização
  */
-export const renderEditorBlock = (block: EditorBlock, index: number): JSX.Element => {
+export const renderEditorBlock = (block: EditorBlock, index: number, postId?: string): JSX.Element => {
   const key = `${block.type}-${block.id}-${index}`;
 
   switch (block.type) {
@@ -268,6 +268,7 @@ export const renderEditorBlock = (block: EditorBlock, index: number): JSX.Elemen
           requireLogin={block.requireLogin}
           allowAnonymous={block.allowAnonymous}
           showResultsAfterVote={block.showResultsAfterVote}
+          postId={postId}
         />
       );
 
@@ -284,7 +285,7 @@ export const renderEditorBlock = (block: EditorBlock, index: number): JSX.Elemen
           {block.columns.map((column, i) => (
             <div key={i} className="space-y-4">
               {column.map((nestedBlock, j) => 
-                renderEditorBlock(nestedBlock, j)
+                renderEditorBlock(nestedBlock, j, postId)
               )}
             </div>
           ))}

@@ -75,12 +75,45 @@ export function Poll({
         .from('polls')
         .select('id')
         .eq('block_id', blockId)
+        .maybeSingle();
+
+      if (error) throw error;
+      
+      if (data) {
+        setPollId(data.id);
+      } else {
+        // Enquete não existe, vamos criá-la
+        await createPollInDatabase();
+      }
+    } catch (error) {
+      console.error('Erro ao carregar poll ID:', error);
+      // Tenta criar a enquete mesmo assim
+      await createPollInDatabase();
+    }
+  };
+
+  const createPollInDatabase = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('polls')
+        .insert({
+          block_id: blockId,
+          post_id: postId,
+          question,
+          poll_type: pollType,
+          options,
+          require_login: requireLogin,
+          allow_anonymous: allowAnonymous,
+          show_results_after_vote: showResultsAfterVote,
+        })
+        .select('id')
         .single();
 
       if (error) throw error;
       setPollId(data.id);
+      console.log('Enquete criada com sucesso:', data.id);
     } catch (error) {
-      console.error('Erro ao carregar poll ID:', error);
+      console.error('Erro ao criar enquete:', error);
     }
   };
 
