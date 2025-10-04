@@ -11,6 +11,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import {
   Type,
   Heading1,
@@ -80,12 +81,13 @@ export function BlockToolbar({ onInsert, position = 'bottom' }: BlockToolbarProp
       </PopoverTrigger>
       
       <PopoverContent 
-        className="w-80 p-2 bg-popover z-50" 
+        className="w-80 p-0 bg-popover z-50" 
         align="start"
         side="bottom"
         sideOffset={5}
       >
-        <div className="space-y-4">
+        <ScrollArea className="h-[500px] p-2">
+          <div className="space-y-4">
           {/* Categoria: Texto */}
           <div>
             <h4 className="text-xs font-semibold text-muted-foreground mb-2 px-2">
@@ -185,7 +187,8 @@ export function BlockToolbar({ onInsert, position = 'bottom' }: BlockToolbarProp
               ))}
             </div>
           </div>
-        </div>
+          </div>
+        </ScrollArea>
       </PopoverContent>
     </Popover>
   );
