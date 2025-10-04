@@ -9,6 +9,11 @@ import ContentEditable from 'react-contenteditable';
 import { ParagraphBlock } from '@/types/editor';
 import { BlockActions } from '../BlockActions';
 import { FormattingToolbar } from '../FormattingToolbar';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Button } from '@/components/ui/button';
 
 interface Props {
   block: ParagraphBlock;
@@ -32,6 +37,9 @@ export function ParagraphBlockEditor({
   const contentRef = useRef<HTMLElement>(null);
   const [isFocused, setIsFocused] = useState(false);
   const savedRangeRef = useRef<Range | null>(null);
+  const [linkOpen, setLinkOpen] = useState(false);
+  const [linkUrl, setLinkUrl] = useState('');
+  const [linkTarget, setLinkTarget] = useState<'_self' | '_blank'>('_self');
 
   const handleContentChange = (evt: any) => {
     onChange({
@@ -56,17 +64,25 @@ export function ParagraphBlockEditor({
     }
   };
 
-  const applyLink = (url: string, target: '_self' | '_blank') => {
+  const normalizeUrl = (url: string): string => {
+    const trimmed = url.trim();
+    if (!trimmed) return '';
+    if (/^(https?|mailto|tel):/.test(trimmed)) return trimmed;
+    return `https://${trimmed}`;
+  };
+
+  const handleApplyLink = () => {
     const sel = window.getSelection();
     const range = savedRangeRef.current;
-    if (!sel || !range || range.collapsed) return;
+    if (!sel || !range || range.collapsed || !linkUrl.trim()) return;
 
-    // Restaura a seleção antes de aplicar o link
+    // Restaura a seleção
     sel.removeAllRanges();
     sel.addRange(range);
 
-    // Cria o link em volta da seleção
-    document.execCommand('createLink', false, url);
+    // Cria o link
+    const normalizedUrl = normalizeUrl(linkUrl);
+    document.execCommand('createLink', false, normalizedUrl);
 
     // Ajusta atributos do link criado
     let linkEl: HTMLAnchorElement | null = null;
@@ -80,13 +96,22 @@ export function ParagraphBlockEditor({
       if (anchors.length > 0) linkEl = anchors[anchors.length - 1] as HTMLAnchorElement;
     }
     if (linkEl) {
-      linkEl.target = target;
-      if (target === '_blank') linkEl.rel = 'noopener noreferrer';
+      linkEl.target = linkTarget;
+      if (linkTarget === '_blank') linkEl.rel = 'noopener noreferrer';
     }
 
+    // Atualiza o conteúdo
     if (contentRef.current) {
       onChange({ ...block, content: contentRef.current.innerHTML });
     }
+
+    // Fecha o dialog e limpa estados
+    setLinkOpen(false);
+    setLinkUrl('');
+    setLinkTarget('_self');
+
+    // Re-foca o editor
+    setTimeout(() => contentRef.current?.focus(), 0);
   };
   return (
     <div className="group relative">
@@ -96,16 +121,15 @@ export function ParagraphBlockEditor({
           ${isFocused ? 'border-primary shadow-sm' : 'border-transparent hover:border-border'}
         `}
       >
-        {isFocused && (
+        {(isFocused || linkOpen) && (
           <FormattingToolbar
             onFormat={(format) => {
-              // Aplicar formatação ao texto selecionado
               document.execCommand(format, false);
             }}
             alignment={block.alignment}
             onAlignmentChange={handleAlignmentChange}
             onCaptureSelection={captureSelection}
-            onCreateLink={applyLink}
+            onRequestLink={() => setLinkOpen(true)}
           />
         )}
 
@@ -132,6 +156,51 @@ export function ParagraphBlockEditor({
         onMoveDown={onMoveDown}
         onInsertBelow={onInsertBelow}
       />
+
+      <Dialog open={linkOpen} onOpenChange={setLinkOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Inserir Link</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <Label htmlFor="link-url">URL</Label>
+              <Input
+                id="link-url"
+                placeholder="https://example.com"
+                value={linkUrl}
+                onChange={(e) => setLinkUrl(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault();
+                    handleApplyLink();
+                  }
+                }}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="link-target">Abrir em</Label>
+              <Select value={linkTarget} onValueChange={(v) => setLinkTarget(v as '_self' | '_blank')}>
+                <SelectTrigger id="link-target">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="_self">Mesma janela</SelectItem>
+                  <SelectItem value="_blank">Nova janela</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setLinkOpen(false)}>
+              Cancelar
+            </Button>
+            <Button onClick={handleApplyLink}>
+              Aplicar
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
