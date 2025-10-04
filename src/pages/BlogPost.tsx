@@ -119,8 +119,8 @@ const BlogPost = () => {
 
       {/* Title Section */}
       <section className="py-12 px-[10px] md:px-4">
-        <div className="container mx-auto">
-          <div className="max-w-6xl mx-auto space-y-6">
+        <div className="md:container md:mx-auto">
+          <div className="md:max-w-6xl md:mx-auto space-y-6">
             <div className="flex flex-wrap items-center gap-4">
               <Badge className="bg-primary text-primary-foreground">
                 {post.categorias[0] || 'Blog'}
