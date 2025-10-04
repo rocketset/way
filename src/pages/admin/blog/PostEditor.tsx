@@ -12,6 +12,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import { Checkbox } from '@/components/ui/checkbox';
 import { MediaSelector } from '@/components/editor/MediaSelector';
 import {
   Select,
@@ -536,34 +537,37 @@ export default function PostEditor() {
             {/* Categoria */}
             <div className="border rounded-lg p-4 bg-card space-y-4">
               <h3 className="font-semibold">Categorias</h3>
-              <p className="text-sm text-muted-foreground mb-2">
+              <p className="text-sm text-muted-foreground">
                 {formData.categoriesIds.length} selecionada(s)
               </p>
               
-              <div className="space-y-2 max-h-64 overflow-y-auto">
+              <div className="space-y-3 max-h-64 overflow-y-auto pr-1">
                 {categories.map((category) => {
                   const isChecked = formData.categoriesIds.includes(category.id);
                   return (
-                    <div key={category.id} className="flex items-center space-x-2">
-                      <input
-                        type="checkbox"
+                    <div 
+                      key={category.id} 
+                      className="flex items-center space-x-3 p-2 rounded-md hover:bg-accent/50 transition-colors"
+                    >
+                      <Checkbox
                         id={`category-${category.id}`}
                         checked={isChecked}
-                        onChange={(e) => {
-                          const newIds = e.target.checked
-                            ? [...formData.categoriesIds, category.id]
-                            : formData.categoriesIds.filter(id => id !== category.id);
-                          setFormData({ 
-                            ...formData, 
-                            categoriesIds: newIds,
-                            categoria_id: newIds[0] || undefined // Primeira como principal
+                        onCheckedChange={(checked) => {
+                          setFormData(prev => {
+                            const newIds = checked
+                              ? [...prev.categoriesIds, category.id]
+                              : prev.categoriesIds.filter(id => id !== category.id);
+                            return {
+                              ...prev,
+                              categoriesIds: newIds,
+                              categoria_id: newIds[0] || ''
+                            };
                           });
                         }}
-                        className="rounded border-input"
                       />
                       <Label
                         htmlFor={`category-${category.id}`}
-                        className="text-sm font-normal cursor-pointer flex-1"
+                        className="text-sm font-normal cursor-pointer flex-1 leading-relaxed"
                       >
                         {category.nome}
                       </Label>
