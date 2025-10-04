@@ -1,9 +1,12 @@
+// Importações dos componentes de UI e bibliotecas
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ScrollToTop from "@/components/ScrollToTop";
+
+// Páginas públicas do site
 import Index from "./pages/Index";
 import WhyWay from "./pages/WhyWay";
 import Blog from "./pages/Blog";
@@ -11,6 +14,20 @@ import BlogPost from "./pages/BlogPost";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 
+// Páginas administrativas
+import Auth from "./pages/admin/Auth";
+import AdminLayout from "./components/admin/AdminLayout";
+import Dashboard from "./pages/admin/Dashboard";
+import BlogPosts from "./pages/admin/blog/Posts";
+import BlogCategories from "./pages/admin/blog/Categories";
+import BlogTags from "./pages/admin/blog/Tags";
+import CasesList from "./pages/admin/cases/List";
+import CasesCategories from "./pages/admin/cases/Categories";
+import CasesTags from "./pages/admin/cases/Tags";
+import Contacts from "./pages/admin/Contacts";
+import Users from "./pages/admin/Users";
+
+// Configuração do React Query
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -21,12 +38,36 @@ const App = () => (
       <BrowserRouter>
         <ScrollToTop />
         <Routes>
+          {/* Rotas públicas do site */}
           <Route path="/" element={<Index />} />
           <Route path="/why-way" element={<WhyWay />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:id" element={<BlogPost />} />
           <Route path="/contact" element={<Contact />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          
+          {/* Rota de autenticação (login/registro) */}
+          <Route path="/auth/login" element={<Auth />} />
+          
+          {/* Rotas administrativas protegidas */}
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route index element={<Dashboard />} />
+            
+            {/* Rotas do Blog */}
+            <Route path="blog/posts" element={<BlogPosts />} />
+            <Route path="blog/categories" element={<BlogCategories />} />
+            <Route path="blog/tags" element={<BlogTags />} />
+            
+            {/* Rotas de Cases */}
+            <Route path="cases/list" element={<CasesList />} />
+            <Route path="cases/categories" element={<CasesCategories />} />
+            <Route path="cases/tags" element={<CasesTags />} />
+            
+            {/* Outras rotas admin */}
+            <Route path="contacts" element={<Contacts />} />
+            <Route path="users" element={<Users />} />
+          </Route>
+          
+          {/* Rota 404 - deve ser sempre a última */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
