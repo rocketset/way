@@ -14,16 +14,289 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      case_tags: {
+        Row: {
+          case_id: string
+          tag_id: string
+        }
+        Insert: {
+          case_id: string
+          tag_id: string
+        }
+        Update: {
+          case_id?: string
+          tag_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "case_tags_case_id_fkey"
+            columns: ["case_id"]
+            isOneToOne: false
+            referencedRelation: "cases"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "case_tags_tag_id_fkey"
+            columns: ["tag_id"]
+            isOneToOne: false
+            referencedRelation: "tags"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      cases: {
+        Row: {
+          atualizado_em: string
+          categoria_id: string | null
+          criado_em: string
+          descricao: string
+          id: string
+          imagem_url: string | null
+          publicado: boolean | null
+          titulo: string
+        }
+        Insert: {
+          atualizado_em?: string
+          categoria_id?: string | null
+          criado_em?: string
+          descricao: string
+          id?: string
+          imagem_url?: string | null
+          publicado?: boolean | null
+          titulo: string
+        }
+        Update: {
+          atualizado_em?: string
+          categoria_id?: string | null
+          criado_em?: string
+          descricao?: string
+          id?: string
+          imagem_url?: string | null
+          publicado?: boolean | null
+          titulo?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cases_categoria_id_fkey"
+            columns: ["categoria_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      categories: {
+        Row: {
+          atualizado_em: string
+          criado_em: string
+          id: string
+          nome: string
+          tipo: string
+        }
+        Insert: {
+          atualizado_em?: string
+          criado_em?: string
+          id?: string
+          nome: string
+          tipo: string
+        }
+        Update: {
+          atualizado_em?: string
+          criado_em?: string
+          id?: string
+          nome?: string
+          tipo?: string
+        }
+        Relationships: []
+      }
+      contacts: {
+        Row: {
+          criado_em: string
+          email: string
+          empresa: string | null
+          id: string
+          lido: boolean | null
+          mensagem: string
+          nome: string
+          telefone: string | null
+        }
+        Insert: {
+          criado_em?: string
+          email: string
+          empresa?: string | null
+          id?: string
+          lido?: boolean | null
+          mensagem: string
+          nome: string
+          telefone?: string | null
+        }
+        Update: {
+          criado_em?: string
+          email?: string
+          empresa?: string | null
+          id?: string
+          lido?: boolean | null
+          mensagem?: string
+          nome?: string
+          telefone?: string | null
+        }
+        Relationships: []
+      }
+      post_tags: {
+        Row: {
+          post_id: string
+          tag_id: string
+        }
+        Insert: {
+          post_id: string
+          tag_id: string
+        }
+        Update: {
+          post_id?: string
+          tag_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "post_tags_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "posts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "post_tags_tag_id_fkey"
+            columns: ["tag_id"]
+            isOneToOne: false
+            referencedRelation: "tags"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      posts: {
+        Row: {
+          atualizado_em: string
+          autor_id: string | null
+          categoria_id: string | null
+          conteudo: string
+          criado_em: string
+          id: string
+          publicado: boolean | null
+          titulo: string
+        }
+        Insert: {
+          atualizado_em?: string
+          autor_id?: string | null
+          categoria_id?: string | null
+          conteudo: string
+          criado_em?: string
+          id?: string
+          publicado?: boolean | null
+          titulo: string
+        }
+        Update: {
+          atualizado_em?: string
+          autor_id?: string | null
+          categoria_id?: string | null
+          conteudo?: string
+          criado_em?: string
+          id?: string
+          publicado?: boolean | null
+          titulo?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "posts_categoria_id_fkey"
+            columns: ["categoria_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          atualizado_em: string
+          criado_em: string
+          email: string
+          id: string
+          nome: string
+        }
+        Insert: {
+          atualizado_em?: string
+          criado_em?: string
+          email: string
+          id: string
+          nome: string
+        }
+        Update: {
+          atualizado_em?: string
+          criado_em?: string
+          email?: string
+          id?: string
+          nome?: string
+        }
+        Relationships: []
+      }
+      tags: {
+        Row: {
+          atualizado_em: string
+          criado_em: string
+          id: string
+          nome: string
+          tipo: string
+        }
+        Insert: {
+          atualizado_em?: string
+          criado_em?: string
+          id?: string
+          nome: string
+          tipo: string
+        }
+        Update: {
+          atualizado_em?: string
+          criado_em?: string
+          id?: string
+          nome?: string
+          tipo?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          criado_em: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          criado_em?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          criado_em?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +423,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "user"],
+    },
   },
 } as const
