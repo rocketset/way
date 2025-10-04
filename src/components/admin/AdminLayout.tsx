@@ -14,6 +14,7 @@ import {
   Menu,
   ChevronDown,
   ChevronRight,
+  Image as ImageIcon,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -43,6 +44,7 @@ const menuItems = [
       { label: 'Tags', path: '/admin/cases/tags' },
     ]
   },
+  { icon: ImageIcon, label: 'Mídia', path: '/admin/media' },
   { icon: Mail, label: 'Solicitações', path: '/admin/contacts' },
   { icon: Users, label: 'Usuários', path: '/admin/users' },
 ];

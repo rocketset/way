@@ -1,23 +1,13 @@
-// ============================================
-// EDITOR DE BLOCO DE IMAGEM
-// ============================================
-// Upload de imagem com alt text, legenda e alinhamento
-
+// Editor de Bloco de Imagem
+import { useState } from 'react';
 import { ImageBlock } from '@/types/editor';
 import { BlockActions } from '../BlockActions';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { Upload, Link2 } from 'lucide-react';
-import { useState } from 'react';
-import { Textarea } from '@/components/ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Button } from '@/components/ui/button';
+import { Image, Library } from 'lucide-react';
+import { MediaSelector } from '../MediaSelector';
 
 interface Props {
   block: ImageBlock;
@@ -38,148 +28,109 @@ export function ImageBlockEditor({
   onMoveDown,
   onInsertBelow,
 }: Props) {
-  const [showUrlInput, setShowUrlInput] = useState(!block.url);
-
-  const handleUrlChange = (url: string) => {
-    onChange({ ...block, url });
-  };
-
-  const handleAltChange = (alt: string) => {
-    onChange({ ...block, alt });
-  };
-
-  const handleCaptionChange = (caption: string) => {
-    onChange({ ...block, caption });
-  };
-
-  const handleAlignmentChange = (alignment: string) => {
-    onChange({
-      ...block,
-      alignment: alignment as 'left' | 'center' | 'right' | 'full',
-    });
-  };
+  const [mediaSelectorOpen, setMediaSelectorOpen] = useState(false);
 
   return (
-    <div className="group relative">
-      <div className="border rounded-lg p-4 hover:border-border transition-all">
-        {!block.url || showUrlInput ? (
-          // Estado de configuração
-          <div className="space-y-4">
-            <div className="space-y-2">
-              <Label>URL da Imagem</Label>
-              <div className="flex gap-2">
-                <Input
-                  value={block.url}
-                  onChange={(e) => handleUrlChange(e.target.value)}
-                  placeholder="https://exemplo.com/imagem.jpg"
-                  className="flex-1"
-                />
-                <Button
-                  variant="outline"
-                  onClick={() => {
-                    // TODO: Abrir biblioteca de mídia
-                    alert('Biblioteca de mídia em desenvolvimento');
-                  }}
-                >
-                  <Upload className="h-4 w-4" />
-                </Button>
-              </div>
-            </div>
+    <>
+      <MediaSelector
+        open={mediaSelectorOpen}
+        onClose={() => setMediaSelectorOpen(false)}
+        onSelect={(url, alt) => {
+          onChange({ ...block, url, alt: alt || '' });
+        }}
+      />
 
-            <div className="space-y-2">
-              <Label>Texto Alternativo (Alt) *</Label>
-              <Input
-                value={block.alt}
-                onChange={(e) => handleAltChange(e.target.value)}
-                placeholder="Descrição da imagem para acessibilidade"
-              />
-              <p className="text-xs text-muted-foreground">
-                Importante para SEO e acessibilidade
-              </p>
-            </div>
-
-            {block.url && (
-              <Button
-                variant="default"
-                className="w-full"
-                onClick={() => setShowUrlInput(false)}
-                disabled={!block.alt}
-              >
-                Aplicar
-              </Button>
-            )}
-          </div>
-        ) : (
-          // Visualização da imagem
-          <div className="space-y-3">
-            <div className="flex items-center gap-2 mb-2">
-              <Select
-                value={block.alignment || 'center'}
-                onValueChange={handleAlignmentChange}
-              >
-                <SelectTrigger className="w-32 h-8">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="left">Esquerda</SelectItem>
-                  <SelectItem value="center">Centro</SelectItem>
-                  <SelectItem value="right">Direita</SelectItem>
-                  <SelectItem value="full">Largura Total</SelectItem>
-                </SelectContent>
-              </Select>
-
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setShowUrlInput(true)}
-              >
-                <Link2 className="h-4 w-4 mr-2" />
-                Trocar
-              </Button>
-            </div>
-
-            <div
-              className={`
-                ${block.alignment === 'left' ? 'mr-auto' : ''}
-                ${block.alignment === 'right' ? 'ml-auto' : ''}
-                ${block.alignment === 'center' ? 'mx-auto' : ''}
-                ${block.alignment === 'full' ? 'w-full' : 'max-w-2xl'}
-              `}
-            >
+      <div className="group relative">
+        <div className="border rounded-lg p-4 hover:border-border transition-all">
+          {block.url ? (
+            <div className="space-y-4">
               <img
                 src={block.url}
                 alt={block.alt}
-                className="rounded-lg w-full object-cover"
+                className={`max-w-full h-auto rounded ${
+                  block.alignment === 'center' ? 'mx-auto' :
+                  block.alignment === 'right' ? 'ml-auto' : ''
+                }`}
+                style={{ maxHeight: '400px' }}
               />
-            </div>
+              
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label className="text-xs">Alt Text</Label>
+                  <Input
+                    value={block.alt}
+                    onChange={(e) => onChange({ ...block, alt: e.target.value })}
+                    placeholder="Descrição da imagem"
+                    className="h-8 text-sm"
+                  />
+                </div>
+                <div>
+                  <Label className="text-xs">Alinhamento</Label>
+                  <Select value={block.alignment} onValueChange={(value: any) => onChange({ ...block, alignment: value })}>
+                    <SelectTrigger className="h-8 text-sm">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="left">Esquerda</SelectItem>
+                      <SelectItem value="center">Centro</SelectItem>
+                      <SelectItem value="right">Direita</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
 
-            <div className="space-y-2">
-              <Label>Legenda (opcional)</Label>
-              <Textarea
-                value={block.caption || ''}
-                onChange={(e) => handleCaptionChange(e.target.value)}
-                placeholder="Adicione uma legenda..."
-                rows={2}
-                className="resize-none"
-              />
-            </div>
+              {block.caption !== undefined && (
+                <div>
+                  <Label className="text-xs">Legenda</Label>
+                  <Input
+                    value={block.caption}
+                    onChange={(e) => onChange({ ...block, caption: e.target.value })}
+                    className="h-8 text-sm"
+                  />
+                </div>
+              )}
 
-            {block.caption && (
-              <p className="text-sm text-muted-foreground text-center italic">
-                {block.caption}
-              </p>
-            )}
-          </div>
-        )}
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setMediaSelectorOpen(true)}
+              >
+                Trocar Imagem
+              </Button>
+            </div>
+          ) : (
+            <div className="text-center py-8 space-y-4">
+              <Image className="h-12 w-12 mx-auto text-muted-foreground" />
+              <div className="space-y-2">
+                <Button
+                  variant="outline"
+                  onClick={() => setMediaSelectorOpen(true)}
+                  className="w-full"
+                >
+                  <Library className="h-4 w-4 mr-2" />
+                  Escolher da Biblioteca
+                </Button>
+                <div>
+                  <Label className="text-sm">Ou cole uma URL</Label>
+                  <Input
+                    placeholder="https://exemplo.com/imagem.jpg"
+                    onChange={(e) => onChange({ ...block, url: e.target.value })}
+                    className="mt-2"
+                  />
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+
+        <BlockActions
+          onDelete={onDelete}
+          onDuplicate={onDuplicate}
+          onMoveUp={onMoveUp}
+          onMoveDown={onMoveDown}
+          onInsertBelow={onInsertBelow}
+        />
       </div>
-
-      <BlockActions
-        onDelete={onDelete}
-        onDuplicate={onDuplicate}
-        onMoveUp={onMoveUp}
-        onMoveDown={onMoveDown}
-        onInsertBelow={onInsertBelow}
-      />
-    </div>
+    </>
   );
 }

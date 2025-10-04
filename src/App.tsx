@@ -27,6 +27,7 @@ import CasesCategories from "./pages/admin/cases/Categories";
 import CasesTags from "./pages/admin/cases/Tags";
 import Contacts from "./pages/admin/Contacts";
 import Users from "./pages/admin/Users";
+import MediaLibrary from "./pages/admin/media/MediaLibrary";
 
 // Configuração do React Query
 const queryClient = new QueryClient();
@@ -64,6 +65,9 @@ const App = () => (
             <Route path="cases/list" element={<CasesList />} />
             <Route path="cases/categories" element={<CasesCategories />} />
             <Route path="cases/tags" element={<CasesTags />} />
+            
+            {/* Biblioteca de Mídia */}
+            <Route path="media" element={<MediaLibrary />} />
             
             {/* Outras rotas admin */}
             <Route path="contacts" element={<Contacts />} />
