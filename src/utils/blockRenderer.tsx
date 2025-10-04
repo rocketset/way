@@ -1,6 +1,7 @@
 import { EditorBlock } from '@/types/editor';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { Poll } from '@/components/Poll';
 
 /**
  * Renderiza um bloco do editor em JSX para visualização
@@ -258,25 +259,16 @@ export const renderEditorBlock = (block: EditorBlock, index: number): JSX.Elemen
 
     case 'poll':
       return (
-        <div key={key} className="my-8 p-6 border-2 border-border rounded-lg bg-muted/30">
-          <h3 className="text-xl font-semibold mb-4 text-foreground">
-            {block.question}
-          </h3>
-          <div className="space-y-3">
-            {block.options.map((option, i) => (
-              <div
-                key={i}
-                className="flex items-center gap-3 p-3 bg-background rounded border border-border"
-              >
-                <Badge variant="outline">{i + 1}</Badge>
-                <span className="text-foreground">{option.text}</span>
-              </div>
-            ))}
-          </div>
-          <p className="text-sm text-muted-foreground mt-4">
-            Preview: Votação não disponível no modo de visualização
-          </p>
-        </div>
+        <Poll
+          key={key}
+          blockId={block.id}
+          question={block.question}
+          pollType={block.pollType}
+          options={block.options}
+          requireLogin={block.requireLogin}
+          allowAnonymous={block.allowAnonymous}
+          showResultsAfterVote={block.showResultsAfterVote}
+        />
       );
 
     case 'columns':

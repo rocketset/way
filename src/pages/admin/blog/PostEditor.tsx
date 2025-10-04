@@ -362,6 +362,36 @@ export default function PostEditor() {
         }
       }
 
+      // Gerenciar enquetes (polls)
+      if (postId) {
+        // Extrair todos os blocos de enquete do conteúdo
+        const pollBlocks = formData.conteudo.filter(block => block.type === 'poll');
+        
+        // Remover todas as enquetes existentes deste post
+        await supabase
+          .from('polls')
+          .delete()
+          .eq('post_id', postId);
+
+        // Inserir novas enquetes
+        if (pollBlocks.length > 0) {
+          const pollsData = pollBlocks.map((block: any) => ({
+            post_id: postId,
+            block_id: block.id,
+            question: block.question,
+            poll_type: block.pollType,
+            options: block.options,
+            require_login: block.requireLogin,
+            allow_anonymous: block.allowAnonymous,
+            show_results_after_vote: block.showResultsAfterVote,
+          }));
+
+          await supabase
+            .from('polls')
+            .insert(pollsData);
+        }
+      }
+
     } catch (error: any) {
       console.error('Erro ao salvar post:', error);
       toast.error(error.message || 'Erro ao salvar post');
