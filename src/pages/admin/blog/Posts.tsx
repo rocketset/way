@@ -2,6 +2,7 @@
 // CRUD completo: Criar, Ler, Atualizar e Deletar posts
 
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -52,6 +53,7 @@ interface Category {
 
 export default function BlogPosts() {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [posts, setPosts] = useState<Post[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
@@ -109,28 +111,14 @@ export default function BlogPosts() {
     }
   };
 
-  // Abre o dialog para criar novo post
+  // Redireciona para a página de criação de post
   const handleCreate = () => {
-    setEditingPost(null);
-    setFormData({
-      titulo: '',
-      conteudo: '',
-      categoria_id: '',
-      publicado: false,
-    });
-    setDialogOpen(true);
+    navigate('/admin/blog/posts/new');
   };
 
-  // Abre o dialog para editar post existente
+  // Redireciona para a página de edição de post
   const handleEdit = (post: Post) => {
-    setEditingPost(post);
-    setFormData({
-      titulo: post.titulo,
-      conteudo: post.conteudo,
-      categoria_id: post.categoria_id || '',
-      publicado: post.publicado,
-    });
-    setDialogOpen(true);
+    navigate(`/admin/blog/posts/edit/${post.id}`);
   };
 
   // Função para salvar (criar ou atualizar) post

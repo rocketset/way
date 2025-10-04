@@ -19,6 +19,7 @@ import Auth from "./pages/admin/Auth";
 import AdminLayout from "./components/admin/AdminLayout";
 import Dashboard from "./pages/admin/Dashboard";
 import BlogPosts from "./pages/admin/blog/Posts";
+import BlogPostEditor from "./pages/admin/blog/PostEditor";
 import BlogCategories from "./pages/admin/blog/Categories";
 import BlogTags from "./pages/admin/blog/Tags";
 import CasesList from "./pages/admin/cases/List";
@@ -54,6 +55,8 @@ const App = () => (
             
             {/* Rotas do Blog */}
             <Route path="blog/posts" element={<BlogPosts />} />
+            <Route path="blog/posts/new" element={<BlogPostEditor />} />
+            <Route path="blog/posts/edit/:id" element={<BlogPostEditor />} />
             <Route path="blog/categories" element={<BlogCategories />} />
             <Route path="blog/tags" element={<BlogTags />} />
             
