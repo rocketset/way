@@ -79,10 +79,7 @@ export default function BlogPosts() {
     try {
       const { data, error } = await supabase
         .from('posts')
-        .select(`
-          *,
-          categories (nome)
-        `)
+        .select('*')
         .order('criado_em', { ascending: false });
 
       if (error) throw error;
@@ -209,7 +206,6 @@ export default function BlogPosts() {
           <TableHeader>
             <TableRow>
               <TableHead>Título</TableHead>
-              <TableHead>Categoria</TableHead>
               <TableHead>Status</TableHead>
               <TableHead>Data</TableHead>
               <TableHead className="text-right">Ações</TableHead>
@@ -218,7 +214,7 @@ export default function BlogPosts() {
           <TableBody>
             {posts.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={5} className="text-center text-muted-foreground">
+                <TableCell colSpan={4} className="text-center text-muted-foreground">
                   Nenhum post cadastrado
                 </TableCell>
               </TableRow>
@@ -226,7 +222,6 @@ export default function BlogPosts() {
               posts.map((post) => (
                 <TableRow key={post.id}>
                   <TableCell className="font-medium">{post.titulo}</TableCell>
-                  <TableCell>{post.categories?.nome || '-'}</TableCell>
                   <TableCell>
                     <span className={`inline-flex px-2 py-1 rounded-full text-xs ${
                       post.publicado ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
