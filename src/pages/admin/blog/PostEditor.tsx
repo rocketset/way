@@ -277,10 +277,17 @@ export default function PostEditor() {
       // Gerenciar categorias via post_categories
       if (postId) {
         // Remover todas as relações existentes
-        await supabase
+        const { error: deleteError } = await supabase
           .from('post_categories')
           .delete()
           .eq('post_id', postId);
+
+        if (deleteError) {
+          console.error('Erro ao deletar categorias antigas:', deleteError);
+          toast.error('Não foi possível salvar as categorias. Verifique suas permissões.');
+          setIsSaving(false);
+          return;
+        }
 
         // Inserir novas relações
         if (formData.categoriesIds.length > 0) {
@@ -293,7 +300,25 @@ export default function PostEditor() {
               }))
             );
 
-          if (catError) throw catError;
+          if (catError) {
+            console.error('Erro ao inserir categorias:', catError);
+            toast.error('Não foi possível salvar as categorias. Verifique suas permissões.');
+            setIsSaving(false);
+            return;
+          }
+
+          // Verificar categorias salvas e atualizar o estado
+          const { data: savedCategories } = await supabase
+            .from('post_categories')
+            .select('category_id')
+            .eq('post_id', postId);
+
+          if (savedCategories) {
+            setFormData(prev => ({
+              ...prev,
+              categoriesIds: savedCategories.map(c => c.category_id)
+            }));
+          }
         }
       }
 
