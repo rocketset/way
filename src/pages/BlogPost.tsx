@@ -109,7 +109,7 @@ const BlogPost = () => {
       {/* Title Section */}
       <section className="py-12 px-4">
         <div className="container mx-auto">
-          <div className="max-w-4xl mx-auto space-y-6">
+          <div className="max-w-6xl mx-auto space-y-6">
             <div className="flex flex-wrap items-center gap-4">
               <Badge className="bg-primary text-primary-foreground">
                 {post.categorias[0] || 'Blog'}
@@ -168,7 +168,7 @@ const BlogPost = () => {
       {/* Content Section */}
       <section className="pb-16 px-4">
         <div className="container mx-auto">
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-6xl mx-auto">
             <div className="bg-card rounded-3xl p-8 md:p-12 border border-border">
               <div 
                 className="prose prose-lg max-w-none
