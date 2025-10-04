@@ -280,8 +280,13 @@ export default function PostEditor() {
   const handleSchedule = () => handleSave('scheduled');
 
   const handlePreview = () => {
-    toast.info('Preview em desenvolvimento');
-    // TODO: Implementar preview em nova aba
+    if (!id) {
+      toast.error('Salve o post antes de visualizar o preview');
+      return;
+    }
+    
+    window.open(`/blog/preview/${id}`, '_blank');
+    toast.success('Preview aberto em nova aba');
   };
 
   const handleBack = () => {

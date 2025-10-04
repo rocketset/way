@@ -11,6 +11,7 @@ import Index from "./pages/Index";
 import WhyWay from "./pages/WhyWay";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
+import BlogPostPreview from "./pages/BlogPostPreview";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 
@@ -44,6 +45,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/why-way" element={<WhyWay />} />
           <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/preview/:id" element={<BlogPostPreview />} />
           <Route path="/blog/:id" element={<BlogPost />} />
           <Route path="/contact" element={<Contact />} />
           
