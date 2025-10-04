@@ -44,6 +44,7 @@ export default function PostEditor() {
     conteudo: [], // Array de blocos (será implementado)
     featured_image: '',
     categoria_id: '',
+    categoriesIds: [],
     status: 'draft',
     scheduled_at: undefined,
     seoMeta: {},
@@ -98,6 +99,14 @@ export default function PostEditor() {
 
       if (error) throw error;
 
+      // Buscar categorias associadas
+      const { data: postCategoriesData } = await supabase
+        .from('post_categories')
+        .select('category_id')
+        .eq('post_id', postId);
+
+      const categoriesIds = postCategoriesData?.map(pc => pc.category_id) || [];
+
       // Preenche o formulário com os dados do post
       setFormData({
         titulo: post.titulo || '',
@@ -106,6 +115,7 @@ export default function PostEditor() {
         conteudo: post.conteudo ? JSON.parse(post.conteudo) : [],
         featured_image: post.featured_image || '',
         categoria_id: post.categoria_id || '',
+        categoriesIds,
         status: post.status || 'draft',
         scheduled_at: post.scheduled_at ? new Date(post.scheduled_at) : undefined,
         seoMeta: post.post_meta?.[0] || {},
@@ -260,6 +270,29 @@ export default function PostEditor() {
           await supabase
             .from('post_meta')
             .insert(seoData);
+        }
+      }
+
+      // Gerenciar categorias via post_categories
+      if (postId) {
+        // Remover todas as relações existentes
+        await supabase
+          .from('post_categories')
+          .delete()
+          .eq('post_id', postId);
+
+        // Inserir novas relações
+        if (formData.categoriesIds.length > 0) {
+          const { error: catError } = await supabase
+            .from('post_categories')
+            .insert(
+              formData.categoriesIds.map(categoryId => ({
+                post_id: postId,
+                category_id: categoryId,
+              }))
+            );
+
+          if (catError) throw catError;
         }
       }
 
@@ -502,24 +535,41 @@ export default function PostEditor() {
 
             {/* Categoria */}
             <div className="border rounded-lg p-4 bg-card space-y-4">
-              <h3 className="font-semibold">Categoria</h3>
+              <h3 className="font-semibold">Categorias</h3>
+              <p className="text-sm text-muted-foreground mb-2">
+                {formData.categoriesIds.length} selecionada(s)
+              </p>
               
-              <div className="space-y-2">
-                <Select
-                  value={formData.categoria_id}
-                  onValueChange={(value) => setFormData(prev => ({ ...prev, categoria_id: value }))}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Selecione uma categoria" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {categories.map((cat) => (
-                      <SelectItem key={cat.id} value={cat.id}>
-                        {cat.nome}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+              <div className="space-y-2 max-h-64 overflow-y-auto">
+                {categories.map((category) => {
+                  const isChecked = formData.categoriesIds.includes(category.id);
+                  return (
+                    <div key={category.id} className="flex items-center space-x-2">
+                      <input
+                        type="checkbox"
+                        id={`category-${category.id}`}
+                        checked={isChecked}
+                        onChange={(e) => {
+                          const newIds = e.target.checked
+                            ? [...formData.categoriesIds, category.id]
+                            : formData.categoriesIds.filter(id => id !== category.id);
+                          setFormData({ 
+                            ...formData, 
+                            categoriesIds: newIds,
+                            categoria_id: newIds[0] || undefined // Primeira como principal
+                          });
+                        }}
+                        className="rounded border-input"
+                      />
+                      <Label
+                        htmlFor={`category-${category.id}`}
+                        className="text-sm font-normal cursor-pointer flex-1"
+                      >
+                        {category.nome}
+                      </Label>
+                    </div>
+                  );
+                })}
               </div>
             </div>
 

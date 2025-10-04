@@ -32,19 +32,15 @@ export default function BlogPostPreview() {
     loadPost();
   }, [id]);
 
-  const loadPost = async () => {
+const loadPost = async () => {
     try {
       setLoading(true);
       setError(null);
 
-      // Buscar post com dados relacionados
+      // Buscar post sem categorias (evita erro de FK duplicada)
       const { data: postData, error: postError } = await supabase
         .from('posts')
-        .select(`
-          *,
-          categories (nome),
-          profiles (nome)
-        `)
+        .select('*')
         .eq('id', id)
         .single();
 
@@ -59,6 +55,32 @@ export default function BlogPostPreview() {
       }
 
       setPost(postData);
+
+      // Buscar autor se houver
+      if (postData.autor_id) {
+        const { data: autor } = await supabase
+          .from('profiles')
+          .select('nome')
+          .eq('id', postData.autor_id)
+          .single();
+        
+        if (autor) {
+          setPost(prev => prev ? { ...prev, profiles: autor } : null);
+        }
+      }
+
+      // Buscar categorias via post_categories
+      const { data: categoriesData } = await supabase
+        .from('post_categories')
+        .select('categories (id, nome)')
+        .eq('post_id', id);
+
+      if (categoriesData) {
+        const cats = categoriesData.map(c => c.categories).filter(Boolean);
+        if (cats.length > 0) {
+          setPost(prev => prev ? { ...prev, categories: cats } : null);
+        }
+      }
 
       // Buscar tags do post
       const { data: postTags, error: tagsError } = await supabase
@@ -180,11 +202,11 @@ export default function BlogPostPreview() {
         {/* Title Section */}
         <header className="mb-8">
           <div className="flex flex-wrap items-center gap-2 mb-4">
-            {post.categories && (
-              <Badge variant="default" className="bg-primary text-primary-foreground">
-                {post.categories.nome}
+            {post.categories && Array.isArray(post.categories) && post.categories.map((cat: any) => (
+              <Badge key={cat.id} variant="default" className="bg-primary text-primary-foreground">
+                {cat.nome}
               </Badge>
-            )}
+            ))}
             {tags.map((tag: any) => (
               <Badge key={tag.id} variant="outline">
                 {tag.nome}

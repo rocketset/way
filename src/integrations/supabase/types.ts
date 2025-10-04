@@ -278,6 +278,39 @@ export type Database = {
           },
         ]
       }
+      post_categories: {
+        Row: {
+          category_id: string
+          criado_em: string
+          post_id: string
+        }
+        Insert: {
+          category_id: string
+          criado_em?: string
+          post_id: string
+        }
+        Update: {
+          category_id?: string
+          criado_em?: string
+          post_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "post_categories_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "post_categories_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       post_meta: {
         Row: {
           atualizado_em: string
@@ -472,13 +505,6 @@ export type Database = {
             columns: ["autor_id"]
             isOneToOne: false
             referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "fk_posts_categoria"
-            columns: ["categoria_id"]
-            isOneToOne: false
-            referencedRelation: "categories"
             referencedColumns: ["id"]
           },
           {

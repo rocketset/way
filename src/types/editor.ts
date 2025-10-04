@@ -301,6 +301,7 @@ export interface PostFormData {
   conteudo: EditorBlock[];
   featured_image?: string;
   categoria_id?: string;
+  categoriesIds: string[]; // Múltiplas categorias
   status: PostStatus;
   scheduled_at?: Date;
   seoMeta: Partial<PostMeta>;

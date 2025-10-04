@@ -106,7 +106,7 @@ export default function BlogCategories() {
       setDialogOpen(false);
       fetchCategories();
     } catch (error: any) {
-      toast.error('Erro ao salvar categoria');
+      toast.error(error.message || 'Erro ao salvar categoria');
       console.error('Erro:', error);
     }
   };
@@ -125,7 +125,7 @@ export default function BlogCategories() {
       toast.success('Categoria excluída!');
       fetchCategories();
     } catch (error: any) {
-      toast.error('Erro ao excluir categoria');
+      toast.error(error.message || 'Erro ao excluir categoria');
       console.error('Erro:', error);
     }
   };
