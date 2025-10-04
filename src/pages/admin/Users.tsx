@@ -149,16 +149,18 @@ export default function Users() {
               .from('user_roles')
               .delete()
               .eq('user_id', editingUser.id)
-              .eq('role', currentRole);
+              .eq('role', currentRole as 'admin' | 'user');
           }
 
           // Adiciona nova role
-          await supabase
+          const { error: roleError } = await supabase
             .from('user_roles')
             .insert({
               user_id: editingUser.id,
-              role: formData.role,
+              role: formData.role as 'admin' | 'user',
             });
+          
+          if (roleError) throw roleError;
         }
 
         toast.success('Usuário atualizado com sucesso!');
