@@ -12,6 +12,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import { MediaSelector } from '@/components/editor/MediaSelector';
 import {
   Select,
   SelectContent,
@@ -33,6 +34,7 @@ export default function PostEditor() {
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState<Category[]>([]);
   const [isSaving, setIsSaving] = useState(false);
+  const [mediaSelectorOpen, setMediaSelectorOpen] = useState(false);
   
   // Estado do formulário
   const [formData, setFormData] = useState<PostFormData>({
@@ -302,10 +304,20 @@ export default function PostEditor() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* ============================================
-          BARRA SUPERIOR - AÇÕES E STATUS
-          ============================================ */}
+    <>
+      <MediaSelector
+        open={mediaSelectorOpen}
+        onClose={() => setMediaSelectorOpen(false)}
+        onSelect={(url) => {
+          setFormData(prev => ({ ...prev, featured_image: url }));
+          setMediaSelectorOpen(false);
+        }}
+      />
+      
+      <div className="min-h-screen bg-background">
+        {/* ============================================
+            BARRA SUPERIOR - AÇÕES E STATUS
+            ============================================ */}
       <div className="sticky top-0 z-50 border-b bg-card/95 backdrop-blur">
         <div className="container max-w-7xl mx-auto px-4 py-3">
           <div className="flex items-center justify-between">
@@ -530,7 +542,7 @@ export default function PostEditor() {
                 <Button
                   variant="outline"
                   className="w-full"
-                  onClick={() => toast.info('Biblioteca de mídia em desenvolvimento')}
+                  onClick={() => setMediaSelectorOpen(true)}
                 >
                   Definir Imagem Destacada
                 </Button>
@@ -547,6 +559,7 @@ export default function PostEditor() {
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 }
