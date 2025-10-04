@@ -5,93 +5,28 @@ import Footer from "@/components/Footer";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Search, Calendar, ArrowRight } from "lucide-react";
-import catfishCase from "@/assets/catfish-case.png";
-
-// Mock data for blog posts
-const blogPosts = [
-  {
-    id: 1,
-    title: "Catfish",
-    subtitle: "Peças autorais, estampas exclusivas e qualidade que você sente no vestir.",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    image: catfishCase,
-    category: "E-commerce",
-    tags: ["High-Ticket", "Tráfego", "E-commerce", "Shopify", "Facebook Ads", "Google Ads", "Instagram Ads"],
-    date: "15 Mar 2024",
-    readTime: "5 min",
-    featured: true,
-  },
-  {
-    id: 2,
-    title: "Catfish",
-    subtitle: "Peças autorais, estampas exclusivas e qualidade que você sente no vestir.",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    image: catfishCase,
-    category: "E-commerce",
-    tags: ["High-Ticket", "Tráfego", "E-commerce", "Shopify"],
-    date: "12 Mar 2024",
-    readTime: "4 min",
-    featured: true,
-  },
-  {
-    id: 3,
-    title: "Catfish",
-    subtitle: "Peças autorais, estampas exclusivas e qualidade que você sente no vestir.",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    image: catfishCase,
-    category: "E-commerce",
-    tags: ["High-Ticket", "Tráfego", "E-commerce"],
-    date: "10 Mar 2024",
-    readTime: "6 min",
-    featured: true,
-  },
-  {
-    id: 4,
-    title: "Verona",
-    subtitle: "Moda íntima masculina com design diferenciado",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    image: catfishCase,
-    category: "E-commerce",
-    tags: ["High-Ticket", "Tráfego", "E-commerce"],
-    date: "08 Mar 2024",
-    readTime: "5 min",
-    featured: false,
-  },
-  {
-    id: 5,
-    title: "Verona",
-    subtitle: "Moda íntima masculina com design diferenciado",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    image: catfishCase,
-    category: "E-commerce",
-    tags: ["High-Ticket", "Tráfego", "E-commerce"],
-    date: "05 Mar 2024",
-    readTime: "4 min",
-    featured: false,
-  },
-  {
-    id: 6,
-    title: "Verona",
-    subtitle: "Moda íntima masculina com design diferenciado",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    image: catfishCase,
-    category: "E-commerce",
-    tags: ["High-Ticket", "Tráfego", "E-commerce"],
-    date: "03 Mar 2024",
-    readTime: "7 min",
-    featured: false,
-  },
-];
-
-const categories = ["Todos", "E-commerce", "High-Ticket", "Tráfego", "Shopify", "Facebook Ads"];
+import { useBlogPosts } from "@/hooks/useBlogPosts";
+import { useBlogCategories } from "@/hooks/useBlogCategories";
+import { formatDate, formatReadingTime } from "@/utils/dateUtils";
 
 const Blog = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("Todos");
+  const [visiblePosts, setVisiblePosts] = useState(6);
 
-  const featuredPosts = blogPosts.filter(post => post.featured);
-  const regularPosts = blogPosts.filter(post => !post.featured);
+  const { data: categoriesData, isLoading: categoriesLoading } = useBlogCategories();
+  const { data: postsData, isLoading: postsLoading } = useBlogPosts(searchQuery, selectedCategory);
+
+  const categories = ["Todos", ...(categoriesData?.map((c) => c.nome) || [])];
+  const featuredPosts = postsData?.featured || [];
+  const regularPosts = postsData?.regular.slice(0, visiblePosts) || [];
+  const hasMorePosts = (postsData?.regular.length || 0) > visiblePosts;
+
+  const handleLoadMore = () => {
+    setVisiblePosts((prev) => prev + 6);
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -137,185 +72,219 @@ const Blog = () => {
 
             {/* Category Filters */}
             <div className="flex flex-wrap gap-3">
-              {categories.map((category) => (
-                <Button
-                  key={category}
-                  onClick={() => setSelectedCategory(category)}
-                  variant={selectedCategory === category ? "default" : "outline"}
-                  className={`rounded-full transition-all duration-300 ${
-                    selectedCategory === category
-                      ? "bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg shadow-primary/20"
-                      : "bg-card border-border text-foreground hover:bg-card/80 hover:border-primary"
-                  }`}
-                >
-                  {category}
-                </Button>
-              ))}
+              {categoriesLoading ? (
+                <>
+                  <Skeleton className="h-10 w-24 rounded-full" />
+                  <Skeleton className="h-10 w-28 rounded-full" />
+                  <Skeleton className="h-10 w-24 rounded-full" />
+                </>
+              ) : (
+                categories.map((category) => (
+                  <Button
+                    key={category}
+                    onClick={() => setSelectedCategory(category)}
+                    variant={selectedCategory === category ? "default" : "outline"}
+                    className={`rounded-full transition-all duration-300 ${
+                      selectedCategory === category
+                        ? "bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg shadow-primary/20"
+                        : "bg-card border-border text-foreground hover:bg-card/80 hover:border-primary"
+                    }`}
+                  >
+                    {category}
+                  </Button>
+                ))
+              )}
             </div>
           </div>
         </div>
       </section>
 
       {/* Featured Posts */}
-      <section className="pb-16 px-4">
-        <div className="container mx-auto">
-          <div className="max-w-7xl mx-auto space-y-8">
-            {featuredPosts.map((post, index) => (
-              <Link
-                key={post.id}
-                to={`/blog/${post.id}`}
-                className="block group"
-              >
-                <div className="relative bg-card rounded-3xl overflow-hidden border border-border hover:border-primary transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10">
-                  <div className="flex flex-col md:flex-row">
-                    {/* Image */}
-                    <div className="md:w-2/5 relative overflow-hidden">
-                      <div className="absolute top-4 left-4 z-10">
-                        <Badge className="bg-card text-foreground border-border">
-                          {post.category}
-                        </Badge>
-                      </div>
-                      <img
-                        src={post.image}
-                        alt={post.title}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-r from-background/80 to-transparent md:hidden" />
-                    </div>
-
-                    {/* Content */}
-                    <div className="md:w-3/5 p-8 md:p-12 flex flex-col justify-center">
-                      <div className="space-y-4">
-                        <h2 className="text-3xl md:text-4xl font-bold text-foreground group-hover:text-primary transition-colors duration-300">
-                          {post.title}
-                        </h2>
-                        
-                        <p className="text-lg text-muted-foreground">
-                          {post.subtitle}
-                        </p>
-                        
-                        <p className="text-foreground/80 line-clamp-2">
-                          {post.description}
-                        </p>
-
-                        {/* Tags */}
-                        <div className="flex flex-wrap gap-2 pt-2">
-                          {post.tags.map((tag) => (
-                            <Badge
-                              key={tag}
-                              variant="secondary"
-                              className="bg-primary/10 text-primary border-primary/20 hover:bg-primary/20 transition-colors duration-300"
-                            >
-                              {tag}
-                            </Badge>
-                          ))}
-                        </div>
-
-                        {/* Meta Info */}
-                        <div className="flex items-center gap-6 pt-4 text-sm text-muted-foreground">
-                          <div className="flex items-center gap-2">
-                            <Calendar className="w-4 h-4" />
-                            <span>{post.date}</span>
-                          </div>
-                          <span>•</span>
-                          <span>{post.readTime} de leitura</span>
-                        </div>
-
-                        {/* CTA */}
-                        <div className="pt-4">
-                          <Button
-                            variant="ghost"
-                            className="text-primary hover:text-primary hover:bg-primary/10 group/btn p-0"
-                          >
-                            <span className="mr-2">Ver post completo</span>
-                            <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover/btn:translate-x-1" />
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Regular Posts Grid */}
-      <section className="pb-24 px-4">
-        <div className="container mx-auto">
-          <div className="max-w-7xl mx-auto">
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {regularPosts.map((post) => (
+      {featuredPosts.length > 0 && (
+        <section className="pb-16 px-4">
+          <div className="container mx-auto">
+            <div className="max-w-7xl mx-auto space-y-8">
+              {featuredPosts.map((post, index) => (
                 <Link
                   key={post.id}
-                  to={`/blog/${post.id}`}
-                  className="group"
+                  to={`/blog/${post.slug}`}
+                  className="block group"
                 >
-                  <div className="bg-card rounded-2xl overflow-hidden border border-border hover:border-primary transition-all duration-500 hover:shadow-xl hover:shadow-primary/10 h-full flex flex-col">
-                    {/* Image */}
-                    <div className="relative overflow-hidden aspect-video">
-                      <div className="absolute top-4 left-4 z-10">
-                        <Badge className="bg-card text-foreground border-border">
-                          {post.category}
-                        </Badge>
+                  <div className="relative bg-card rounded-3xl overflow-hidden border border-border hover:border-primary transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10">
+                    <div className="flex flex-col md:flex-row">
+                      {/* Image */}
+                      <div className="md:w-2/5 relative overflow-hidden">
+                        <div className="absolute top-4 left-4 z-10">
+                          <Badge className="bg-card text-foreground border-border">
+                            {post.categorias[0] || 'Blog'}
+                          </Badge>
+                        </div>
+                        <img
+                          src={post.featured_image || '/placeholder.svg'}
+                          alt={post.titulo}
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-r from-background/80 to-transparent md:hidden" />
                       </div>
-                      <img
-                        src={post.image}
-                        alt={post.title}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                      />
-                    </div>
 
-                    {/* Content */}
-                    <div className="p-6 flex-1 flex flex-col">
-                      <div className="space-y-3 flex-1">
-                        <h3 className="text-2xl font-bold text-foreground group-hover:text-primary transition-colors duration-300">
-                          {post.title}
-                        </h3>
-                        
-                        <p className="text-muted-foreground line-clamp-2">
-                          {post.description}
-                        </p>
+                      {/* Content */}
+                      <div className="md:w-3/5 p-8 md:p-12 flex flex-col justify-center">
+                        <div className="space-y-4">
+                          <h2 className="text-3xl md:text-4xl font-bold text-foreground group-hover:text-primary transition-colors duration-300">
+                            {post.titulo}
+                          </h2>
+                          
+                          <p className="text-lg text-muted-foreground">
+                            {post.excerpt}
+                          </p>
+                          
+                          <p className="text-foreground/80 line-clamp-2">
+                            {post.excerpt}
+                          </p>
 
-                        {/* Tags */}
-                        <div className="flex flex-wrap gap-2 pt-2">
-                          {post.tags.slice(0, 3).map((tag) => (
-                            <Badge
-                              key={tag}
-                              variant="secondary"
-                              className="bg-primary/10 text-primary border-primary/20 text-xs"
+                          {/* Tags */}
+                          <div className="flex flex-wrap gap-2 pt-2">
+                            {post.tags.map((tag) => (
+                              <Badge
+                                key={tag}
+                                variant="secondary"
+                                className="bg-primary/10 text-primary border-primary/20 hover:bg-primary/20 transition-colors duration-300"
+                              >
+                                {tag}
+                              </Badge>
+                            ))}
+                          </div>
+
+                          {/* Meta Info */}
+                          <div className="flex items-center gap-6 pt-4 text-sm text-muted-foreground">
+                            <div className="flex items-center gap-2">
+                              <Calendar className="w-4 h-4" />
+                              <span>{formatDate(post.criado_em)}</span>
+                            </div>
+                            <span>•</span>
+                            <span>{formatReadingTime(post.reading_time)} de leitura</span>
+                          </div>
+
+                          {/* CTA */}
+                          <div className="pt-4">
+                            <Button
+                              variant="ghost"
+                              className="text-primary hover:text-primary hover:bg-primary/10 group/btn p-0"
                             >
-                              {tag}
-                            </Badge>
-                          ))}
+                              <span className="mr-2">Ver post completo</span>
+                              <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover/btn:translate-x-1" />
+                            </Button>
+                          </div>
                         </div>
-                      </div>
-
-                      {/* Meta Info */}
-                      <div className="flex items-center gap-4 pt-4 text-sm text-muted-foreground border-t border-border mt-4">
-                        <div className="flex items-center gap-2">
-                          <Calendar className="w-4 h-4" />
-                          <span>{post.date}</span>
-                        </div>
-                        <span>•</span>
-                        <span>{post.readTime}</span>
                       </div>
                     </div>
                   </div>
                 </Link>
               ))}
             </div>
+          </div>
+        </section>
+      )}
 
-            {/* Load More Button */}
-            <div className="text-center mt-12">
-              <Button
-                variant="outline"
-                className="bg-card border-border text-foreground hover:bg-card/80 hover:border-primary px-8 py-6 text-lg rounded-full"
-              >
-                Ver mais cases
-              </Button>
-            </div>
+      {/* Regular Posts Grid */}
+      <section className="pb-24 px-4">
+        <div className="container mx-auto">
+          <div className="max-w-7xl mx-auto">
+            {postsLoading ? (
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {[...Array(6)].map((_, i) => (
+                  <div key={i} className="space-y-4">
+                    <Skeleton className="h-48 w-full rounded-2xl" />
+                    <Skeleton className="h-6 w-3/4" />
+                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className="h-4 w-2/3" />
+                  </div>
+                ))}
+              </div>
+            ) : regularPosts.length === 0 ? (
+              <div className="text-center py-16">
+                <p className="text-muted-foreground text-lg">
+                  Nenhum post encontrado. Ajuste os filtros ou volte em breve para novos conteúdos!
+                </p>
+              </div>
+            ) : (
+              <>
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {regularPosts.map((post) => (
+                    <Link
+                      key={post.id}
+                      to={`/blog/${post.slug}`}
+                      className="group"
+                    >
+                      <div className="bg-card rounded-2xl overflow-hidden border border-border hover:border-primary transition-all duration-500 hover:shadow-xl hover:shadow-primary/10 h-full flex flex-col">
+                        {/* Image */}
+                        <div className="relative overflow-hidden aspect-video">
+                          <div className="absolute top-4 left-4 z-10">
+                            <Badge className="bg-card text-foreground border-border">
+                              {post.categorias[0] || 'Blog'}
+                            </Badge>
+                          </div>
+                          <img
+                            src={post.featured_image || '/placeholder.svg'}
+                            alt={post.titulo}
+                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                          />
+                        </div>
+
+                        {/* Content */}
+                        <div className="p-6 flex-1 flex flex-col">
+                          <div className="space-y-3 flex-1">
+                            <h3 className="text-2xl font-bold text-foreground group-hover:text-primary transition-colors duration-300">
+                              {post.titulo}
+                            </h3>
+                            
+                            <p className="text-muted-foreground line-clamp-2">
+                              {post.excerpt}
+                            </p>
+
+                            {/* Tags */}
+                            <div className="flex flex-wrap gap-2 pt-2">
+                              {post.tags.slice(0, 3).map((tag) => (
+                                <Badge
+                                  key={tag}
+                                  variant="secondary"
+                                  className="bg-primary/10 text-primary border-primary/20 text-xs"
+                                >
+                                  {tag}
+                                </Badge>
+                              ))}
+                            </div>
+                          </div>
+
+                          {/* Meta Info */}
+                          <div className="flex items-center gap-4 pt-4 text-sm text-muted-foreground border-t border-border mt-4">
+                            <div className="flex items-center gap-2">
+                              <Calendar className="w-4 h-4" />
+                              <span>{formatDate(post.criado_em)}</span>
+                            </div>
+                            <span>•</span>
+                            <span>{formatReadingTime(post.reading_time)}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+
+                {/* Load More Button */}
+                {hasMorePosts && (
+                  <div className="text-center mt-12">
+                    <Button
+                      variant="outline"
+                      onClick={handleLoadMore}
+                      className="bg-card border-border text-foreground hover:bg-card/80 hover:border-primary px-8 py-6 text-lg rounded-full"
+                    >
+                      Ver mais cases
+                    </Button>
+                  </div>
+                )}
+              </>
+            )}
           </div>
         </div>
       </section>

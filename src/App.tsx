@@ -46,7 +46,7 @@ const App = () => (
           <Route path="/why-way" element={<WhyWay />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/preview/:id" element={<BlogPostPreview />} />
-          <Route path="/blog/:id" element={<BlogPost />} />
+          <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/contact" element={<Contact />} />
           
           {/* Rota de autenticação (login/registro) */}
