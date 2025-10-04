@@ -85,13 +85,13 @@ const BlogPost = () => {
       
       {/* Hero Image */}
       <section className="pt-20">
-        <div className="relative h-[500px] md:h-[600px] overflow-hidden">
+        <div className="relative h-auto md:h-[600px] overflow-hidden p-[10px] md:p-0">
           <img
             src={post.featured_image || '/placeholder.svg'}
             alt={post.titulo}
-            className="w-full h-full object-contain"
+            className="w-full h-auto md:h-full object-contain md:object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent hidden md:block" />
           
           {/* Back Button */}
           <div className="absolute top-8 left-4 md:left-8 z-10">
