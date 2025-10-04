@@ -142,6 +142,248 @@ export type Database = {
         }
         Relationships: []
       }
+      media_library: {
+        Row: {
+          alt_text: string | null
+          atualizado_em: string
+          caption: string | null
+          criado_em: string
+          file_path: string
+          file_size: number
+          filename: string
+          height: number | null
+          id: string
+          metadata: Json | null
+          mime_type: string
+          original_filename: string
+          user_id: string | null
+          width: number | null
+        }
+        Insert: {
+          alt_text?: string | null
+          atualizado_em?: string
+          caption?: string | null
+          criado_em?: string
+          file_path: string
+          file_size: number
+          filename: string
+          height?: number | null
+          id?: string
+          metadata?: Json | null
+          mime_type: string
+          original_filename: string
+          user_id?: string | null
+          width?: number | null
+        }
+        Update: {
+          alt_text?: string | null
+          atualizado_em?: string
+          caption?: string | null
+          criado_em?: string
+          file_path?: string
+          file_size?: number
+          filename?: string
+          height?: number | null
+          id?: string
+          metadata?: Json | null
+          mime_type?: string
+          original_filename?: string
+          user_id?: string | null
+          width?: number | null
+        }
+        Relationships: []
+      }
+      poll_votes: {
+        Row: {
+          criado_em: string
+          id: string
+          option_ids: Json
+          poll_id: string
+          user_id: string | null
+          voter_fingerprint: string | null
+        }
+        Insert: {
+          criado_em?: string
+          id?: string
+          option_ids: Json
+          poll_id: string
+          user_id?: string | null
+          voter_fingerprint?: string | null
+        }
+        Update: {
+          criado_em?: string
+          id?: string
+          option_ids?: Json
+          poll_id?: string
+          user_id?: string | null
+          voter_fingerprint?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "poll_votes_poll_id_fkey"
+            columns: ["poll_id"]
+            isOneToOne: false
+            referencedRelation: "polls"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      polls: {
+        Row: {
+          allow_anonymous: boolean | null
+          atualizado_em: string
+          block_id: string
+          criado_em: string
+          id: string
+          options: Json
+          poll_type: string
+          post_id: string | null
+          question: string
+          require_login: boolean | null
+          show_results_after_vote: boolean | null
+        }
+        Insert: {
+          allow_anonymous?: boolean | null
+          atualizado_em?: string
+          block_id: string
+          criado_em?: string
+          id?: string
+          options: Json
+          poll_type: string
+          post_id?: string | null
+          question: string
+          require_login?: boolean | null
+          show_results_after_vote?: boolean | null
+        }
+        Update: {
+          allow_anonymous?: boolean | null
+          atualizado_em?: string
+          block_id?: string
+          criado_em?: string
+          id?: string
+          options?: Json
+          poll_type?: string
+          post_id?: string | null
+          question?: string
+          require_login?: boolean | null
+          show_results_after_vote?: boolean | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "polls_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      post_meta: {
+        Row: {
+          atualizado_em: string
+          canonical_url: string | null
+          criado_em: string
+          id: string
+          meta_description: string | null
+          meta_title: string | null
+          noindex: boolean | null
+          og_description: string | null
+          og_image: string | null
+          og_title: string | null
+          post_id: string
+          twitter_card_type: string | null
+          twitter_description: string | null
+          twitter_image: string | null
+          twitter_title: string | null
+        }
+        Insert: {
+          atualizado_em?: string
+          canonical_url?: string | null
+          criado_em?: string
+          id?: string
+          meta_description?: string | null
+          meta_title?: string | null
+          noindex?: boolean | null
+          og_description?: string | null
+          og_image?: string | null
+          og_title?: string | null
+          post_id: string
+          twitter_card_type?: string | null
+          twitter_description?: string | null
+          twitter_image?: string | null
+          twitter_title?: string | null
+        }
+        Update: {
+          atualizado_em?: string
+          canonical_url?: string | null
+          criado_em?: string
+          id?: string
+          meta_description?: string | null
+          meta_title?: string | null
+          noindex?: boolean | null
+          og_description?: string | null
+          og_image?: string | null
+          og_title?: string | null
+          post_id?: string
+          twitter_card_type?: string | null
+          twitter_description?: string | null
+          twitter_image?: string | null
+          twitter_title?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "post_meta_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: true
+            referencedRelation: "posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      post_revisions: {
+        Row: {
+          conteudo: Json
+          criado_em: string
+          excerpt: string | null
+          id: string
+          metadata: Json | null
+          post_id: string
+          revision_number: number
+          titulo: string
+          user_id: string | null
+        }
+        Insert: {
+          conteudo: Json
+          criado_em?: string
+          excerpt?: string | null
+          id?: string
+          metadata?: Json | null
+          post_id: string
+          revision_number: number
+          titulo: string
+          user_id?: string | null
+        }
+        Update: {
+          conteudo?: Json
+          criado_em?: string
+          excerpt?: string | null
+          id?: string
+          metadata?: Json | null
+          post_id?: string
+          revision_number?: number
+          titulo?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "post_revisions_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       post_tags: {
         Row: {
           post_id: string
@@ -179,9 +421,16 @@ export type Database = {
           categoria_id: string | null
           conteudo: string
           criado_em: string
+          excerpt: string | null
+          featured_image: string | null
           id: string
           publicado: boolean | null
+          reading_time: number | null
+          scheduled_at: string | null
+          slug: string | null
+          status: Database["public"]["Enums"]["post_status"] | null
           titulo: string
+          word_count: number | null
         }
         Insert: {
           atualizado_em?: string
@@ -189,9 +438,16 @@ export type Database = {
           categoria_id?: string | null
           conteudo: string
           criado_em?: string
+          excerpt?: string | null
+          featured_image?: string | null
           id?: string
           publicado?: boolean | null
+          reading_time?: number | null
+          scheduled_at?: string | null
+          slug?: string | null
+          status?: Database["public"]["Enums"]["post_status"] | null
           titulo: string
+          word_count?: number | null
         }
         Update: {
           atualizado_em?: string
@@ -199,9 +455,16 @@ export type Database = {
           categoria_id?: string | null
           conteudo?: string
           criado_em?: string
+          excerpt?: string | null
+          featured_image?: string | null
           id?: string
           publicado?: boolean | null
+          reading_time?: number | null
+          scheduled_at?: string | null
+          slug?: string | null
+          status?: Database["public"]["Enums"]["post_status"] | null
           titulo?: string
+          word_count?: number | null
         }
         Relationships: [
           {
@@ -287,6 +550,17 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      calculate_reading_stats: {
+        Args: { p_content: Json }
+        Returns: {
+          reading_time: number
+          word_count: number
+        }[]
+      }
+      generate_unique_slug: {
+        Args: { p_post_id?: string; p_title: string }
+        Returns: string
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -297,6 +571,7 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "user"
+      post_status: "draft" | "scheduled" | "published" | "archived"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -425,6 +700,7 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "user"],
+      post_status: ["draft", "scheduled", "published", "archived"],
     },
   },
 } as const
