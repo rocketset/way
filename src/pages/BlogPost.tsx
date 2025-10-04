@@ -89,7 +89,7 @@ const BlogPost = () => {
           <img
             src={post.featured_image || '/placeholder.svg'}
             alt={post.titulo}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-contain"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
           

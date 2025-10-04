@@ -273,14 +273,16 @@ export const renderEditorBlock = (block: EditorBlock, index: number, postId?: st
       );
 
     case 'columns':
-      const columnTemplate = `repeat(${block.columnCount}, 1fr)`;
+      // Define classes responsivas baseadas no número de colunas
+      const responsiveClass = 
+        block.columnCount === 2 ? 'grid-cols-1 md:grid-cols-2' :
+        block.columnCount === 3 ? 'grid-cols-1 md:grid-cols-3' :
+        'grid-cols-1 md:grid-cols-4';
+        
       return (
         <div
           key={key}
-          className="grid gap-6 my-8"
-          style={{
-            gridTemplateColumns: columnTemplate
-          }}
+          className={`grid gap-6 my-8 ${responsiveClass}`}
         >
           {block.columns.map((column, i) => (
             <div key={i} className="space-y-4">
