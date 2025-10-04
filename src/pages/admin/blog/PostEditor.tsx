@@ -13,6 +13,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
+import { Switch } from '@/components/ui/switch';
 import { MediaSelector } from '@/components/editor/MediaSelector';
 import {
   Select,
@@ -48,6 +49,7 @@ export default function PostEditor() {
     categoriesIds: [],
     status: 'draft',
     scheduled_at: undefined,
+    is_featured: false,
     seoMeta: {},
   });
 
@@ -119,6 +121,7 @@ export default function PostEditor() {
         categoriesIds,
         status: post.status || 'draft',
         scheduled_at: post.scheduled_at ? new Date(post.scheduled_at) : undefined,
+        is_featured: post.is_featured || false,
         seoMeta: post.post_meta?.[0] || {},
       });
 
@@ -213,6 +216,7 @@ export default function PostEditor() {
         categoria_id: formData.categoria_id || null,
         status: newStatus || formData.status,
         scheduled_at: formData.scheduled_at?.toISOString() || null,
+        is_featured: formData.is_featured,
         autor_id: user?.id,
         word_count: wordCount,
         reading_time: readingTime,
@@ -599,6 +603,27 @@ export default function PostEditor() {
                     </div>
                   );
                 })}
+              </div>
+            </div>
+
+            {/* Post em Destaque */}
+            <div className="border rounded-lg p-4 bg-card">
+              <div className="flex items-center justify-between">
+                <div className="space-y-0.5">
+                  <Label htmlFor="is-featured" className="text-base font-semibold">
+                    Post em Destaque
+                  </Label>
+                  <p className="text-sm text-muted-foreground">
+                    Posts em destaque aparecem no topo da listagem do blog
+                  </p>
+                </div>
+                <Switch
+                  id="is-featured"
+                  checked={formData.is_featured}
+                  onCheckedChange={(checked) =>
+                    setFormData(prev => ({ ...prev, is_featured: checked }))
+                  }
+                />
               </div>
             </div>
 

@@ -457,6 +457,7 @@ export type Database = {
           excerpt: string | null
           featured_image: string | null
           id: string
+          is_featured: boolean | null
           publicado: boolean | null
           reading_time: number | null
           scheduled_at: string | null
@@ -474,6 +475,7 @@ export type Database = {
           excerpt?: string | null
           featured_image?: string | null
           id?: string
+          is_featured?: boolean | null
           publicado?: boolean | null
           reading_time?: number | null
           scheduled_at?: string | null
@@ -491,6 +493,7 @@ export type Database = {
           excerpt?: string | null
           featured_image?: string | null
           id?: string
+          is_featured?: boolean | null
           publicado?: boolean | null
           reading_time?: number | null
           scheduled_at?: string | null

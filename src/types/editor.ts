@@ -304,5 +304,6 @@ export interface PostFormData {
   categoriesIds: string[]; // Múltiplas categorias
   status: PostStatus;
   scheduled_at?: Date;
+  is_featured: boolean;
   seoMeta: Partial<PostMeta>;
 }
