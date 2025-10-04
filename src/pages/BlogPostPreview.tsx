@@ -4,8 +4,6 @@ import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
 import { Post } from '@/types/editor';
 import { renderEditorBlock } from '@/utils/blockRenderer';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, X, AlertCircle } from 'lucide-react';
@@ -115,14 +113,23 @@ const loadPost = async () => {
   if (loading || authLoading) {
     return (
       <div className="min-h-screen bg-background">
-        <Header />
+        {/* Preview Banner */}
+        <div className="fixed top-0 left-0 right-0 z-[100] bg-yellow-500 text-yellow-950 py-3 px-4 shadow-md">
+          <div className="container mx-auto flex items-center gap-3">
+            <AlertCircle className="w-5 h-5" />
+            <span className="font-semibold">Carregando Preview...</span>
+          </div>
+        </div>
+        
+        {/* Spacer para o banner fixo */}
+        <div className="h-[52px]"></div>
+        
         <div className="container mx-auto px-4 py-20 text-center">
           <div className="animate-pulse">
             <div className="h-8 bg-muted rounded w-3/4 mx-auto mb-4"></div>
             <div className="h-4 bg-muted rounded w-1/2 mx-auto"></div>
           </div>
         </div>
-        <Footer />
       </div>
     );
   }
@@ -131,7 +138,28 @@ const loadPost = async () => {
   if (error) {
     return (
       <div className="min-h-screen bg-background">
-        <Header />
+        {/* Preview Banner */}
+        <div className="fixed top-0 left-0 right-0 z-[100] bg-yellow-500 text-yellow-950 py-3 px-4 shadow-md">
+          <div className="container mx-auto flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <AlertCircle className="w-5 h-5" />
+              <span className="font-semibold">Modo Preview - Erro</span>
+            </div>
+            <Button
+              onClick={() => navigate('/admin/blog/posts')}
+              size="sm"
+              variant="secondary"
+              className="bg-yellow-400 hover:bg-yellow-300 text-yellow-950"
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Voltar
+            </Button>
+          </div>
+        </div>
+        
+        {/* Spacer para o banner fixo */}
+        <div className="h-[52px]"></div>
+        
         <div className="container mx-auto px-4 py-20 text-center">
           <AlertCircle className="w-16 h-16 text-destructive mx-auto mb-4" />
           <h1 className="text-2xl font-bold text-foreground mb-2">Erro ao Carregar Preview</h1>
@@ -140,7 +168,6 @@ const loadPost = async () => {
             Voltar para Lista de Posts
           </Button>
         </div>
-        <Footer />
       </div>
     );
   }
@@ -156,7 +183,7 @@ const loadPost = async () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Preview Banner */}
-      <div className="sticky top-0 z-50 bg-yellow-500 text-yellow-950 py-3 px-4 shadow-md">
+      <div className="fixed top-0 left-0 right-0 z-[100] bg-yellow-500 text-yellow-950 py-3 px-4 shadow-md">
         <div className="container mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
             <AlertCircle className="w-5 h-5" />
@@ -187,7 +214,8 @@ const loadPost = async () => {
         </div>
       </div>
 
-      <Header />
+      {/* Spacer para o banner fixo */}
+      <div className="h-[52px]"></div>
 
       {/* Hero Image */}
       {post.featured_image && (
@@ -263,8 +291,6 @@ const loadPost = async () => {
           )}
         </div>
       </article>
-
-      <Footer />
     </div>
   );
 }

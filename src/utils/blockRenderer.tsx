@@ -140,6 +140,39 @@ export const renderEditorBlock = (block: EditorBlock, index: number): JSX.Elemen
       );
 
     case 'video':
+      // Detectar se é URL do YouTube
+      const isYouTube = block.url.includes('youtube.com') || block.url.includes('youtu.be');
+      
+      if (isYouTube) {
+        // Extrair ID do vídeo do YouTube
+        let videoId = '';
+        if (block.url.includes('youtube.com/watch?v=')) {
+          videoId = block.url.split('v=')[1]?.split('&')[0] || '';
+        } else if (block.url.includes('youtu.be/')) {
+          videoId = block.url.split('youtu.be/')[1]?.split('?')[0] || '';
+        }
+        
+        return (
+          <div key={key} className="my-8">
+            <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
+              <iframe
+                src={`https://www.youtube.com/embed/${videoId}`}
+                title="YouTube video"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="absolute top-0 left-0 w-full h-full rounded-lg"
+              />
+            </div>
+            {block.caption && (
+              <p className="text-center text-sm text-muted-foreground mt-2">
+                {block.caption}
+              </p>
+            )}
+          </div>
+        );
+      }
+      
+      // Vídeo normal (arquivo)
       return (
         <div key={key} className="my-8">
           <video
