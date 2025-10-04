@@ -80,8 +80,10 @@ export function BlockToolbar({ onInsert, position = 'bottom' }: BlockToolbarProp
       </PopoverTrigger>
       
       <PopoverContent 
-        className="w-80 p-2" 
-        align={position === 'center' ? 'center' : 'start'}
+        className="w-80 p-2 bg-popover z-50" 
+        align="start"
+        side="bottom"
+        sideOffset={5}
       >
         <div className="space-y-4">
           {/* Categoria: Texto */}

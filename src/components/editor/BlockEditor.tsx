@@ -29,6 +29,15 @@ import { HeadingBlockEditor } from './blocks/HeadingBlockEditor';
 import { ListBlockEditor } from './blocks/ListBlockEditor';
 import { ImageBlockEditor } from './blocks/ImageBlockEditor';
 import { DividerBlockEditor } from './blocks/DividerBlockEditor';
+import { QuoteBlockEditor } from './blocks/QuoteBlockEditor';
+import { CodeBlockEditor } from './blocks/CodeBlockEditor';
+import { VideoBlockEditor } from './blocks/VideoBlockEditor';
+import { AudioBlockEditor } from './blocks/AudioBlockEditor';
+import { GalleryBlockEditor } from './blocks/GalleryBlockEditor';
+import { ColumnsBlockEditor } from './blocks/ColumnsBlockEditor';
+import { ButtonBlockEditor } from './blocks/ButtonBlockEditor';
+import { HTMLBlockEditor } from './blocks/HTMLBlockEditor';
+import { PollBlockEditor } from './blocks/PollBlockEditor';
 import { Button } from '@/components/ui/button';
 import { Plus } from 'lucide-react';
 
@@ -212,16 +221,37 @@ export function BlockEditor({ blocks, onChange, placeholder }: BlockEditorProps)
       case 'divider':
         return <DividerBlockEditor block={block} {...commonProps} />;
       
-      // TODO: Adicionar mais tipos de blocos aqui
-      // case 'quote': return <QuoteBlockEditor ... />;
-      // case 'code': return <CodeBlockEditor ... />;
-      // case 'video': return <VideoBlockEditor ... />;
-      // etc.
+      case 'quote':
+        return <QuoteBlockEditor block={block} {...commonProps} />;
+      
+      case 'code':
+        return <CodeBlockEditor block={block} {...commonProps} />;
+      
+      case 'video':
+        return <VideoBlockEditor block={block} {...commonProps} />;
+      
+      case 'audio':
+        return <AudioBlockEditor block={block} {...commonProps} />;
+      
+      case 'gallery':
+        return <GalleryBlockEditor block={block} {...commonProps} />;
+      
+      case 'columns':
+        return <ColumnsBlockEditor block={block} {...commonProps} />;
+      
+      case 'button':
+        return <ButtonBlockEditor block={block} {...commonProps} />;
+      
+      case 'html':
+        return <HTMLBlockEditor block={block} {...commonProps} />;
+      
+      case 'poll':
+        return <PollBlockEditor block={block} {...commonProps} />;
       
       default:
         return (
           <div className="p-4 border border-dashed rounded bg-muted/50 text-muted-foreground text-center">
-            Tipo de bloco "{block.type}" não implementado
+            Tipo de bloco desconhecido
           </div>
         );
     }
@@ -268,23 +298,10 @@ export function BlockEditor({ blocks, onChange, placeholder }: BlockEditorProps)
       {/* Botão para adicionar bloco no final */}
       {blocks.length > 0 && (
         <div className="pt-4">
-          <Button
-            variant="outline"
-            className="w-full"
-            onClick={() => setActiveToolbarIndex(blocks.length)}
-          >
-            <Plus className="h-4 w-4 mr-2" />
-            Adicionar Bloco
-          </Button>
-          
-          {activeToolbarIndex === blocks.length && (
-            <div className="mt-2">
-              <BlockToolbar
-                onInsert={(type) => handleInsertBlock(type, -1)}
-                position="bottom"
-              />
-            </div>
-          )}
+          <BlockToolbar
+            onInsert={(type) => handleInsertBlock(type, -1)}
+            position="bottom"
+          />
         </div>
       )}
     </div>
