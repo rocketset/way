@@ -84,7 +84,7 @@ const BlogPost = () => {
       <Header />
       
       {/* Back Button - Fora da imagem */}
-      <div className="bg-background py-4 px-4">
+      <div className="bg-background pt-24 pb-4 px-[10px]">
         <Link 
           to="/blog"
           className="inline-flex items-center gap-2 bg-card backdrop-blur-sm border border-border text-foreground hover:text-primary hover:border-primary transition-all duration-300 px-4 py-2 rounded-full group"
@@ -118,7 +118,7 @@ const BlogPost = () => {
       </section>
 
       {/* Title Section */}
-      <section className="py-12 px-2 md:px-4">
+      <section className="py-12 px-[10px] md:px-4">
         <div className="container mx-auto">
           <div className="max-w-6xl mx-auto space-y-6">
             <div className="flex flex-wrap items-center gap-4">
@@ -177,7 +177,7 @@ const BlogPost = () => {
       </section>
 
       {/* Content Section */}
-      <section className="pb-16 px-2 md:px-4">
+      <section className="pb-16 px-[10px] md:px-4">
         <div className="container mx-auto">
           <div className="max-w-6xl mx-auto">
             <div className="bg-card rounded-3xl p-4 md:p-12 border border-border">
