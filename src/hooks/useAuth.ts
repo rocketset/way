@@ -16,32 +16,37 @@ export function useAuth() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    let isChecking = false;
+
     // Listener para mudanças no estado de autenticação
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
+      (event, session) => {
         setSession(session);
         setUser(session?.user ?? null);
         setLoading(false);
 
-        // Verifica se o usuário é admin após login
-        if (session?.user) {
-          setTimeout(async () => {
-            await checkIfAdmin(session.user.id);
-          }, 0);
-        } else {
+        // Verifica se o usuário é admin após login, com debounce
+        if (session?.user && !isChecking) {
+          isChecking = true;
+          setTimeout(() => {
+            checkIfAdmin(session.user.id).finally(() => {
+              isChecking = false;
+            });
+          }, 100);
+        } else if (!session?.user) {
           setIsAdmin(false);
         }
       }
     );
 
     // Busca sessão existente ao carregar a página
-    supabase.auth.getSession().then(async ({ data: { session } }) => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
       setUser(session?.user ?? null);
       setLoading(false);
 
       if (session?.user) {
-        await checkIfAdmin(session.user.id);
+        checkIfAdmin(session.user.id);
       }
     });
 
