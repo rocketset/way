@@ -9,10 +9,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Separator } from "@/components/ui/separator";
-import { ArrowLeft, Save } from "lucide-react";
+import { ArrowLeft, Save, Upload, X } from "lucide-react";
 import { toast } from "sonner";
 import { useQuery } from "@tanstack/react-query";
 import { IconPicker } from "@/components/editor/IconPicker";
+import { MediaSelector } from "@/components/editor/MediaSelector";
 import type {
   HeroBlockContent,
   WhyChooseBlockContent,
@@ -23,6 +24,8 @@ import type {
 export default function NewCase() {
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [mediaSelectorOpen, setMediaSelectorOpen] = useState(false);
+  const [currentImageField, setCurrentImageField] = useState<string | null>(null);
 
   // Informações básicas do case
   const [basicInfo, setBasicInfo] = useState({
@@ -76,6 +79,62 @@ export default function NewCase() {
       return data;
     },
   });
+
+  const handleImageSelect = (imageUrl: string) => {
+    if (!currentImageField) return;
+
+    const [block, field] = currentImageField.split(".");
+    
+    switch (block) {
+      case "basic":
+        setBasicInfo({ ...basicInfo, imagem_url: imageUrl });
+        break;
+      case "hero":
+        if (field === "logo_pequena") {
+          setHeroData({ ...heroData, logo_pequena: imageUrl });
+        } else if (field === "imagem_principal") {
+          setHeroData({ ...heroData, imagem_principal: imageUrl });
+        }
+        break;
+      case "whyChoose":
+        setWhyChooseData({ ...whyChooseData, imagem: imageUrl });
+        break;
+      case "platform":
+        setPlatformData({ ...platformData, imagem: imageUrl });
+        break;
+    }
+    
+    setMediaSelectorOpen(false);
+    setCurrentImageField(null);
+  };
+
+  const openMediaSelector = (field: string) => {
+    setCurrentImageField(field);
+    setMediaSelectorOpen(true);
+  };
+
+  const removeImage = (field: string) => {
+    const [block, subfield] = field.split(".");
+    
+    switch (block) {
+      case "basic":
+        setBasicInfo({ ...basicInfo, imagem_url: "" });
+        break;
+      case "hero":
+        if (subfield === "logo_pequena") {
+          setHeroData({ ...heroData, logo_pequena: "" });
+        } else if (subfield === "imagem_principal") {
+          setHeroData({ ...heroData, imagem_principal: "" });
+        }
+        break;
+      case "whyChoose":
+        setWhyChooseData({ ...whyChooseData, imagem: "" });
+        break;
+      case "platform":
+        setPlatformData({ ...platformData, imagem: "" });
+        break;
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -204,15 +263,43 @@ export default function NewCase() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="imagem_url">URL da Imagem</Label>
-              <Input
-                id="imagem_url"
-                value={basicInfo.imagem_url}
-                onChange={(e) => setBasicInfo({ ...basicInfo, imagem_url: e.target.value })}
-                placeholder="https://exemplo.com/imagem.jpg"
-                type="url"
-              />
-              <p className="text-sm text-muted-foreground">URL da imagem de capa do case</p>
+              <Label>Imagem de Capa</Label>
+              {basicInfo.imagem_url ? (
+                <div className="space-y-2">
+                  <img src={basicInfo.imagem_url} alt="Preview" className="w-full h-48 object-cover rounded-lg" />
+                  <div className="flex gap-2">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => openMediaSelector("basic")}
+                      className="flex-1"
+                    >
+                      <Upload className="h-4 w-4 mr-2" />
+                      Alterar Imagem
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => removeImage("basic")}
+                    >
+                      <X className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </div>
+              ) : (
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => openMediaSelector("basic")}
+                  className="w-full"
+                >
+                  <Upload className="h-4 w-4 mr-2" />
+                  Selecionar Imagem
+                </Button>
+              )}
+              <p className="text-sm text-muted-foreground">Imagem de capa do case</p>
             </div>
 
             <div className="space-y-2">
@@ -254,12 +341,42 @@ export default function NewCase() {
           <CardContent className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label>Logo Pequena (URL)</Label>
-                <Input
-                  value={heroData.logo_pequena || ""}
-                  onChange={(e) => setHeroData({ ...heroData, logo_pequena: e.target.value })}
-                  placeholder="URL da logo"
-                />
+                <Label>Logo Pequena</Label>
+                {heroData.logo_pequena ? (
+                  <div className="space-y-2">
+                    <img src={heroData.logo_pequena} alt="Logo" className="h-16 object-contain" />
+                    <div className="flex gap-2">
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={() => openMediaSelector("hero.logo_pequena")}
+                        className="flex-1"
+                      >
+                        <Upload className="h-4 w-4 mr-2" />
+                        Alterar
+                      </Button>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={() => removeImage("hero.logo_pequena")}
+                      >
+                        <X className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </div>
+                ) : (
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => openMediaSelector("hero.logo_pequena")}
+                    className="w-full"
+                  >
+                    <Upload className="h-4 w-4 mr-2" />
+                    Selecionar Logo
+                  </Button>
+                )}
               </div>
               <div className="space-y-2">
                 <Label>Badge</Label>
@@ -290,23 +407,52 @@ export default function NewCase() {
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label>Texto do CTA</Label>
-                <Input
-                  value={heroData.cta_text || ""}
-                  onChange={(e) => setHeroData({ ...heroData, cta_text: e.target.value })}
-                  placeholder="Ex: Falar com especialista"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label>Imagem Principal (URL)</Label>
-                <Input
-                  value={heroData.imagem_principal || ""}
-                  onChange={(e) => setHeroData({ ...heroData, imagem_principal: e.target.value })}
-                  placeholder="URL da imagem principal"
-                />
-              </div>
+            <div className="space-y-2">
+              <Label>Texto do CTA</Label>
+              <Input
+                value={heroData.cta_text || ""}
+                onChange={(e) => setHeroData({ ...heroData, cta_text: e.target.value })}
+                placeholder="Ex: Falar com especialista"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label>Imagem Principal</Label>
+              {heroData.imagem_principal ? (
+                <div className="space-y-2">
+                  <img src={heroData.imagem_principal} alt="Preview" className="w-full h-48 object-cover rounded-lg" />
+                  <div className="flex gap-2">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => openMediaSelector("hero.imagem_principal")}
+                      className="flex-1"
+                    >
+                      <Upload className="h-4 w-4 mr-2" />
+                      Alterar Imagem
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => removeImage("hero.imagem_principal")}
+                    >
+                      <X className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </div>
+              ) : (
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => openMediaSelector("hero.imagem_principal")}
+                  className="w-full"
+                >
+                  <Upload className="h-4 w-4 mr-2" />
+                  Selecionar Imagem
+                </Button>
+              )}
             </div>
 
             <div className="space-y-2">
@@ -362,12 +508,42 @@ export default function NewCase() {
             </div>
 
             <div className="space-y-2">
-              <Label>Imagem (URL)</Label>
-              <Input
-                value={whyChooseData.imagem || ""}
-                onChange={(e) => setWhyChooseData({ ...whyChooseData, imagem: e.target.value })}
-                placeholder="URL da imagem"
-              />
+              <Label>Imagem</Label>
+              {whyChooseData.imagem ? (
+                <div className="space-y-2">
+                  <img src={whyChooseData.imagem} alt="Preview" className="w-full h-48 object-cover rounded-lg" />
+                  <div className="flex gap-2">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => openMediaSelector("whyChoose")}
+                      className="flex-1"
+                    >
+                      <Upload className="h-4 w-4 mr-2" />
+                      Alterar Imagem
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => removeImage("whyChoose")}
+                    >
+                      <X className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </div>
+              ) : (
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => openMediaSelector("whyChoose")}
+                  className="w-full"
+                >
+                  <Upload className="h-4 w-4 mr-2" />
+                  Selecionar Imagem
+                </Button>
+              )}
             </div>
           </CardContent>
         </Card>
@@ -455,23 +631,52 @@ export default function NewCase() {
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label>Imagem (URL)</Label>
-                <Input
-                  value={platformData.imagem || ""}
-                  onChange={(e) => setPlatformData({ ...platformData, imagem: e.target.value })}
-                  placeholder="URL da imagem"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label>Texto do CTA</Label>
-                <Input
-                  value={platformData.cta_text || ""}
-                  onChange={(e) => setPlatformData({ ...platformData, cta_text: e.target.value })}
-                  placeholder="Ex: Falar com especialista"
-                />
-              </div>
+            <div className="space-y-2">
+              <Label>Imagem</Label>
+              {platformData.imagem ? (
+                <div className="space-y-2">
+                  <img src={platformData.imagem} alt="Preview" className="w-full h-48 object-cover rounded-lg" />
+                  <div className="flex gap-2">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => openMediaSelector("platform")}
+                      className="flex-1"
+                    >
+                      <Upload className="h-4 w-4 mr-2" />
+                      Alterar Imagem
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => removeImage("platform")}
+                    >
+                      <X className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </div>
+              ) : (
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => openMediaSelector("platform")}
+                  className="w-full"
+                >
+                  <Upload className="h-4 w-4 mr-2" />
+                  Selecionar Imagem
+                </Button>
+              )}
+            </div>
+
+            <div className="space-y-2">
+              <Label>Texto do CTA</Label>
+              <Input
+                value={platformData.cta_text || ""}
+                onChange={(e) => setPlatformData({ ...platformData, cta_text: e.target.value })}
+                placeholder="Ex: Falar com especialista"
+              />
             </div>
           </CardContent>
         </Card>
@@ -492,6 +697,15 @@ export default function NewCase() {
           </Button>
         </div>
       </form>
+
+      <MediaSelector
+        open={mediaSelectorOpen}
+        onClose={() => {
+          setMediaSelectorOpen(false);
+          setCurrentImageField(null);
+        }}
+        onSelect={handleImageSelect}
+      />
     </div>
   );
 }
