@@ -1,11 +1,12 @@
 import { useParams, Link } from "react-router-dom";
-import { ArrowLeft, Sparkles } from "lucide-react";
+import { ArrowLeft, Sparkles, TrendingUp, Users, ShoppingCart, Award } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useCase } from "@/hooks/useCase";
+import CaseContactForm from "@/components/CaseContactForm";
 
 const CaseDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -136,63 +137,133 @@ const CaseDetail = () => {
         </div>
       </section>
 
-      {/* Detailed Content Section */}
-      <section className="pb-24 px-4">
+      {/* Why Choose Section - With text and image */}
+      <section className="pb-16 px-4">
         <div className="container mx-auto">
-          <div className="max-w-4xl mx-auto space-y-12">
-            {/* Challenge Section */}
-            <div className="bg-card border border-border rounded-2xl p-8 animate-fade-in" style={{ animationDelay: '0.2s' }}>
-              <h2 className="text-3xl font-bold mb-4 text-primary">O Desafio</h2>
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                {caseData.descricao}
-              </p>
-            </div>
-
-            {/* Solution Section */}
-            <div className="bg-card border border-border rounded-2xl p-8 animate-fade-in" style={{ animationDelay: '0.4s' }}>
-              <h2 className="text-3xl font-bold mb-4 text-primary">A Solução</h2>
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                Implementamos uma estratégia completa de transformação digital, focando em 
-                otimização de processos, experiência do usuário e resultados mensuráveis.
-              </p>
-            </div>
-
-            {/* Results Section */}
-            <div className="bg-gradient-to-br from-primary/10 via-primary/5 to-transparent border border-primary/20 rounded-2xl p-8 animate-fade-in" style={{ animationDelay: '0.6s' }}>
-              <h2 className="text-3xl font-bold mb-6 text-primary">Resultados Alcançados</h2>
-              <div className="grid md:grid-cols-3 gap-6">
-                <div className="text-center space-y-2">
-                  <div className="text-4xl font-bold text-primary">+150%</div>
-                  <p className="text-muted-foreground">Crescimento em vendas</p>
-                </div>
-                <div className="text-center space-y-2">
-                  <div className="text-4xl font-bold text-primary">+200%</div>
-                  <p className="text-muted-foreground">Aumento em conversão</p>
-                </div>
-                <div className="text-center space-y-2">
-                  <div className="text-4xl font-bold text-primary">-40%</div>
-                  <p className="text-muted-foreground">Redução de custos</p>
+          <div className="max-w-7xl mx-auto">
+            <div className="grid lg:grid-cols-2 gap-12 items-center bg-card border border-border rounded-3xl p-8 lg:p-12 animate-fade-in">
+              <div className="space-y-6">
+                <h2 className="text-3xl lg:text-4xl font-bold leading-tight">
+                  Por que escolher a {caseData.categoria_nome || 'solução'}?
+                </h2>
+                <p className="text-lg text-muted-foreground leading-relaxed">
+                  Escolha a plataforma certa para o seu negócio e acelere seu crescimento digital. 
+                  Nossa solução oferece tecnologia de ponta, suporte especializado e resultados comprovados 
+                  para empresas que querem se destacar no mercado.
+                </p>
+                <p className="text-muted-foreground">
+                  Conheça a estratégia da {caseData.categoria_nome} para vender mais, logística mais 
+                  eficiente e muito mais.
+                </p>
+              </div>
+              <div className="relative animate-scale-in">
+                <div className="relative rounded-2xl overflow-hidden shadow-xl">
+                  <img
+                    src={caseData.imagem_url || '/placeholder.svg'}
+                    alt="Why choose"
+                    className="w-full h-auto rounded-2xl"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent" />
                 </div>
               </div>
-            </div>
-
-            {/* CTA Section */}
-            <div className="text-center space-y-6 pt-8 animate-fade-in" style={{ animationDelay: '0.8s' }}>
-              <h3 className="text-2xl font-bold">
-                Quer alcançar resultados como este?
-              </h3>
-              <p className="text-muted-foreground">
-                Entre em contato e descubra como podemos transformar seu negócio.
-              </p>
-              <Link to="/contact">
-                <Button size="lg" className="rounded-full px-8">
-                  Falar com especialista
-                </Button>
-              </Link>
             </div>
           </div>
         </div>
       </section>
+
+      {/* Benefits Grid - 4 Cards */}
+      <section className="pb-16 px-4">
+        <div className="container mx-auto">
+          <div className="max-w-7xl mx-auto">
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {/* Benefit 1 */}
+              <div className="bg-card border border-border rounded-2xl p-6 space-y-4 hover-scale animate-fade-in" style={{ animationDelay: '0.1s' }}>
+                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
+                  <TrendingUp className="w-6 h-6 text-primary" />
+                </div>
+                <h3 className="text-xl font-bold">ROI e economia comprovados</h3>
+                <p className="text-muted-foreground">
+                  Empresas que migram para a plataforma conseguem até 51% de economia em até 12 meses.
+                </p>
+              </div>
+
+              {/* Benefit 2 */}
+              <div className="bg-card border border-border rounded-2xl p-6 space-y-4 hover-scale animate-fade-in" style={{ animationDelay: '0.2s' }}>
+                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
+                  <Users className="w-6 h-6 text-primary" />
+                </div>
+                <h3 className="text-xl font-bold">Processos escolha dos Clientes</h3>
+                <p className="text-muted-foreground">
+                  A plataforma é mais transparente, flexível e intuitiva do que as ferramentas dos concorrentes.
+                </p>
+              </div>
+
+              {/* Benefit 3 */}
+              <div className="bg-card border border-border rounded-2xl p-6 space-y-4 hover-scale animate-fade-in" style={{ animationDelay: '0.3s' }}>
+                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
+                  <ShoppingCart className="w-6 h-6 text-primary" />
+                </div>
+                <h3 className="text-xl font-bold">Líder em Comércio B2C</h3>
+                <p className="text-muted-foreground">
+                  A solução top #1 em 20 de 20 casos de uso em comércio digital para lojas online.
+                </p>
+              </div>
+
+              {/* Benefit 4 */}
+              <div className="bg-card border border-border rounded-2xl p-6 space-y-4 hover-scale animate-fade-in" style={{ animationDelay: '0.4s' }}>
+                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
+                  <Award className="w-6 h-6 text-primary" />
+                </div>
+                <h3 className="text-xl font-bold">Destaque em B2B Digital</h3>
+                <p className="text-muted-foreground">
+                  A ferramenta tem capacidades muito boas e também foi reconhecida em B2B no mercado.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Platform Ideal Section - With image on right */}
+      <section className="pb-24 px-4">
+        <div className="container mx-auto">
+          <div className="max-w-7xl mx-auto">
+            <div className="grid lg:grid-cols-2 gap-12 items-center bg-card border border-border rounded-3xl p-8 lg:p-12 animate-fade-in">
+              <div className="space-y-6">
+                <h2 className="text-3xl lg:text-4xl font-bold leading-tight">
+                  {caseData.categoria_nome} é a plataforma ideal para diversos perfis de negócios
+                </h2>
+                <p className="text-lg text-muted-foreground leading-relaxed">
+                  Com a plataforma certa, você oferece uma formatura personalizada aos seus clientes. 
+                  Hoje, lojas de diferentes tamanhos já experimentam esse software moderno para organizar 
+                  negócios online complexos.
+                </p>
+                <div className="pt-4">
+                  <Link to="/contact">
+                    <Button size="lg" className="rounded-full group">
+                      Falar com especialista
+                      <ArrowLeft className="w-5 h-5 ml-2 rotate-180 transition-transform group-hover:translate-x-1" />
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+              <div className="relative animate-scale-in lg:order-first">
+                <div className="relative rounded-2xl overflow-hidden shadow-xl">
+                  <img
+                    src={caseData.imagem_url || '/placeholder.svg'}
+                    alt="Platform ideal"
+                    className="w-full h-auto rounded-2xl"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-b from-background/40 to-transparent" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Fixed Contact Form Section */}
+      <CaseContactForm />
 
       <Footer />
     </div>
