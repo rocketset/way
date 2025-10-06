@@ -31,13 +31,11 @@ export default function CaseEditor() {
     descricao: "",
     tags: [],
     imagem_principal: "",
-    background_color: "#000000",
   });
 
   const [textColumnsData, setTextColumnsData] = useState<TextColumnsBlockContent>({
     coluna_esquerda: "",
     coluna_direita: "",
-    background_color: "#000000",
   });
 
   const [benefitsData, setBenefitsData] = useState<BenefitsBlockContent>({
@@ -47,7 +45,6 @@ export default function CaseEditor() {
       { icon: "ShoppingCart", titulo: "", descricao: "" },
       { icon: "Award", titulo: "", descricao: "" },
     ],
-    background_color: "#000000",
   });
 
   useEffect(() => {
@@ -185,14 +182,6 @@ export default function CaseEditor() {
                   placeholder="Tag1, Tag2, Tag3"
                 />
               </div>
-              <div>
-                <Label>Cor de Fundo</Label>
-                <Input
-                  type="color"
-                  value={heroData.background_color || "#000000"}
-                  onChange={(e) => setHeroData({ ...heroData, background_color: e.target.value })}
-                />
-              </div>
               <Button onClick={handleSaveHero} disabled={saveMutation.isPending}>
                 <Save className="h-4 w-4 mr-2" />
                 Salvar Hero
@@ -223,14 +212,6 @@ export default function CaseEditor() {
                   onChange={(e) => setTextColumnsData({ ...textColumnsData, coluna_direita: e.target.value })}
                   placeholder="Texto da coluna direita"
                   rows={8}
-                />
-              </div>
-              <div>
-                <Label>Cor de Fundo</Label>
-                <Input
-                  type="color"
-                  value={textColumnsData.background_color || "#000000"}
-                  onChange={(e) => setTextColumnsData({ ...textColumnsData, background_color: e.target.value })}
                 />
               </div>
               <Button onClick={handleSaveTextColumns} disabled={saveMutation.isPending}>
@@ -288,14 +269,6 @@ export default function CaseEditor() {
                   </div>
                 </div>
               ))}
-              <div>
-                <Label>Cor de Fundo</Label>
-                <Input
-                  type="color"
-                  value={benefitsData.background_color || "#000000"}
-                  onChange={(e) => setBenefitsData({ ...benefitsData, background_color: e.target.value })}
-                />
-              </div>
               <Button onClick={handleSaveBenefits} disabled={saveMutation.isPending}>
                 <Save className="h-4 w-4 mr-2" />
                 Salvar Benefícios

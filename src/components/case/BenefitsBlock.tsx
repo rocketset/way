@@ -20,10 +20,12 @@ const ICON_MAP: Record<string, LucideIcon> = {
 };
 
 export const BenefitsBlock = ({ data }: BenefitsBlockProps) => {
+  const bgColor = "#000000";
+  
   return (
     <section 
       className="py-20 px-6"
-      style={{ backgroundColor: data.background_color || "#000000" }}
+      style={{ backgroundColor: bgColor }}
     >
       <div className="container mx-auto">
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">

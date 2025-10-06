@@ -35,13 +35,11 @@ export default function NewCase() {
     descricao: "",
     tags: [],
     imagem_principal: "",
-    background_color: "#000000",
   });
 
   const [textColumnsData, setTextColumnsData] = useState<TextColumnsBlockContent>({
     coluna_esquerda: "",
     coluna_direita: "",
-    background_color: "#000000",
   });
 
   const [benefitsData, setBenefitsData] = useState<BenefitsBlockContent>({
@@ -51,7 +49,6 @@ export default function NewCase() {
       { icon: "ShoppingCart", titulo: "", descricao: "" },
       { icon: "Award", titulo: "", descricao: "" },
     ],
-    background_color: "#000000",
   });
 
   const { data: categories } = useQuery({
@@ -203,7 +200,7 @@ export default function NewCase() {
             <div>
               <Label>Categoria</Label>
               <select
-                className="w-full p-2 border rounded-md"
+                className="w-full p-2 border rounded-md bg-background text-foreground"
                 value={basicInfo.categoria_id}
                 onChange={(e) => setBasicInfo({ ...basicInfo, categoria_id: e.target.value })}
               >
@@ -396,16 +393,6 @@ export default function NewCase() {
               </div>
             </div>
 
-            <div>
-              <Label>Cor de Fundo (Hexadecimal)</Label>
-              <Input
-                type="color"
-                value={heroData.background_color}
-                onChange={(e) =>
-                  setHeroData({ ...heroData, background_color: e.target.value })
-                }
-              />
-            </div>
           </CardContent>
         </Card>
 
@@ -447,19 +434,6 @@ export default function NewCase() {
               />
             </div>
 
-            <div>
-              <Label>Cor de Fundo (Hexadecimal)</Label>
-              <Input
-                type="color"
-                value={textColumnsData.background_color}
-                onChange={(e) =>
-                  setTextColumnsData({
-                    ...textColumnsData,
-                    background_color: e.target.value,
-                  })
-                }
-              />
-            </div>
           </CardContent>
         </Card>
 
@@ -531,19 +505,6 @@ export default function NewCase() {
               ))}
             </div>
 
-            <div>
-              <Label>Cor de Fundo (Hexadecimal)</Label>
-              <Input
-                type="color"
-                value={benefitsData.background_color}
-                onChange={(e) =>
-                  setBenefitsData({
-                    ...benefitsData,
-                    background_color: e.target.value,
-                  })
-                }
-              />
-            </div>
           </CardContent>
         </Card>
 

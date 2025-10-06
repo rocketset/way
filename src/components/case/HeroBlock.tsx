@@ -13,6 +13,7 @@ const tagColors: Record<string, string> = {
 };
 
 export const HeroBlock = ({ data }: HeroBlockProps) => {
+  const bgColor = "#000000";
   const getTagColor = (tag: string) => {
     const normalized = tag.toLowerCase();
     return tagColors[normalized] || tagColors.default;
@@ -21,7 +22,7 @@ export const HeroBlock = ({ data }: HeroBlockProps) => {
   return (
     <section 
       className="min-h-screen flex items-center py-20 px-6"
-      style={{ backgroundColor: data.background_color || "#000000" }}
+      style={{ backgroundColor: bgColor }}
     >
       <div className="container mx-auto">
         <div className="grid lg:grid-cols-2 gap-12 items-center">

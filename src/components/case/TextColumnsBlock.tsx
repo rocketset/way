@@ -5,10 +5,12 @@ interface TextColumnsBlockProps {
 }
 
 export const TextColumnsBlock = ({ data }: TextColumnsBlockProps) => {
+  const bgColor = "#000000";
+  
   return (
     <section 
       className="py-20 px-6"
-      style={{ backgroundColor: data.background_color || "#000000" }}
+      style={{ backgroundColor: bgColor }}
     >
       <div className="container mx-auto">
         <div className="grid md:grid-cols-2 gap-12">

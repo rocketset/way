@@ -8,13 +8,11 @@ export interface HeroBlockContent {
   descricao: string;
   tags?: string[];
   imagem_principal?: string;
-  background_color?: string;
 }
 
 export interface TextColumnsBlockContent {
   coluna_esquerda: string;
   coluna_direita: string;
-  background_color?: string;
 }
 
 export interface BenefitItem {
@@ -25,7 +23,6 @@ export interface BenefitItem {
 
 export interface BenefitsBlockContent {
   benefits: BenefitItem[];
-  background_color?: string;
 }
 
 export interface CaseBlock {
