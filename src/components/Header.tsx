@@ -48,8 +48,10 @@ const Header = () => {
   useEffect(() => {
     if (location.pathname === '/why-way') {
       setActiveSection('por-que-way');
-    } else if (location.pathname === '/blog') {
+    } else if (location.pathname === '/blog' || location.pathname.startsWith('/blog/')) {
       setActiveSection('blog');
+    } else if (location.pathname === '/cases' || location.pathname.startsWith('/cases/')) {
+      setActiveSection('cases');
     } else if (location.pathname === '/contact') {
       setActiveSection('contato');
     } else if (location.pathname !== '/') {
@@ -61,7 +63,7 @@ const Header = () => {
     { id: "inicio", label: "Início", type: "link", path: "/" },
     { id: "por-que-way", label: "Por que a Way?", type: "link", path: "/why-way" },
     { id: "solucoes", label: "Soluções", type: "scroll" },
-    { id: "cases", label: "Cases", type: "scroll" },
+    { id: "cases", label: "Cases", type: "link", path: "/cases" },
     { id: "blog", label: "Blog", type: "link", path: "/blog" },
     { id: "contato", label: "Contato", type: "link", path: "/contact" },
   ];
