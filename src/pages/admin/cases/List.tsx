@@ -31,8 +31,9 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
-import { Plus, Pencil, Trash2 } from 'lucide-react';
+import { Plus, Pencil, Trash2, FileEdit } from 'lucide-react';
 import { toast } from 'sonner';
+import { useNavigate } from 'react-router-dom';
 
 interface Case {
   id: string;
@@ -51,6 +52,7 @@ interface Category {
 }
 
 export default function CasesList() {
+  const navigate = useNavigate();
   const [cases, setCases] = useState<Case[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
@@ -251,11 +253,20 @@ export default function CasesList() {
                   <TableCell>
                     {new Date(caseItem.criado_em).toLocaleDateString('pt-BR')}
                   </TableCell>
-                  <TableCell className="text-right">
+                  <TableCell className="text-right space-x-1">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => navigate(`/admin/cases/${caseItem.id}/editor`)}
+                      title="Editar conteúdo"
+                    >
+                      <FileEdit className="h-4 w-4" />
+                    </Button>
                     <Button
                       variant="ghost"
                       size="icon"
                       onClick={() => handleEdit(caseItem)}
+                      title="Editar informações básicas"
                     >
                       <Pencil className="h-4 w-4" />
                     </Button>
@@ -263,6 +274,7 @@ export default function CasesList() {
                       variant="ghost"
                       size="icon"
                       onClick={() => handleDelete(caseItem.id)}
+                      title="Deletar"
                     >
                       <Trash2 className="h-4 w-4" />
                     </Button>

@@ -14,6 +14,44 @@ export type Database = {
   }
   public: {
     Tables: {
+      case_content_blocks: {
+        Row: {
+          atualizado_em: string
+          block_type: string
+          case_id: string
+          content: Json
+          criado_em: string
+          id: string
+          position: number
+        }
+        Insert: {
+          atualizado_em?: string
+          block_type: string
+          case_id: string
+          content?: Json
+          criado_em?: string
+          id?: string
+          position?: number
+        }
+        Update: {
+          atualizado_em?: string
+          block_type?: string
+          case_id?: string
+          content?: Json
+          criado_em?: string
+          id?: string
+          position?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "case_content_blocks_case_id_fkey"
+            columns: ["case_id"]
+            isOneToOne: false
+            referencedRelation: "cases"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       case_tags: {
         Row: {
           case_id: string
