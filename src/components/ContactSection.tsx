@@ -3,9 +3,65 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Mail, Phone, User, MessageSquare, Send, Sparkles } from "lucide-react";
 import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
+import { z } from "zod";
+
+const contactSchema = z.object({
+  nome: z.string().trim().min(2, "Nome muito curto").max(100),
+  email: z.string().trim().email("E-mail inválido").max(255),
+  telefone: z.string().trim().min(10, "Telefone inválido").max(20),
+  mensagem: z.string().trim().min(10, "Mensagem muito curta").max(1000),
+});
 
 const ContactSection = () => {
   const [focusedField, setFocusedField] = useState<string | null>(null);
+  const [formData, setFormData] = useState({
+    nome: "",
+    email: "",
+    telefone: "",
+    mensagem: "",
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      const validatedData = contactSchema.parse(formData);
+
+      const { error } = await supabase.from("contacts").insert([{
+        nome: validatedData.nome,
+        email: validatedData.email,
+        telefone: validatedData.telefone,
+        empresa: null,
+        mensagem: validatedData.mensagem,
+      }]);
+
+      if (error) throw error;
+
+      toast({
+        title: "Mensagem enviada!",
+        description: "Em breve entraremos em contato.",
+      });
+      setFormData({ nome: "", email: "", telefone: "", mensagem: "" });
+    } catch (error: any) {
+      console.error("Erro ao enviar:", error);
+      toast({
+        title: "Erro ao enviar",
+        description: error.message || "Tente novamente mais tarde.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   return (
     <section id="contato" className="relative py-24 bg-white overflow-hidden">
@@ -65,18 +121,22 @@ const ContactSection = () => {
                 </h3>
               </div>
 
-              <form className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Nome Field */}
                 <div className="relative group/field">
-                  <div className={`absolute -inset-0.5 bg-gradient-to-r from-primary/50 to-yellow-400/50 rounded-lg blur opacity-0 ${focusedField === 'name' ? 'opacity-30' : ''} group-hover/field:opacity-20 transition-opacity duration-300`} />
+                  <div className={`absolute -inset-0.5 bg-gradient-to-r from-primary/50 to-yellow-400/50 rounded-lg blur opacity-0 ${focusedField === 'nome' ? 'opacity-30' : ''} group-hover/field:opacity-20 transition-opacity duration-300`} />
                   <div className="relative">
                     <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 group-hover/field:text-primary transition-colors duration-300">
-                      <User className={`w-5 h-5 ${focusedField === 'name' ? 'text-primary' : ''}`} />
+                      <User className={`w-5 h-5 ${focusedField === 'nome' ? 'text-primary' : ''}`} />
                     </div>
                     <Input
+                      name="nome"
                       placeholder="Nome completo"
-                      onFocus={() => setFocusedField('name')}
+                      value={formData.nome}
+                      onChange={handleChange}
+                      onFocus={() => setFocusedField('nome')}
                       onBlur={() => setFocusedField(null)}
+                      required
                       className="pl-12 pr-4 py-6 bg-gray-50 border-2 border-gray-200 focus:border-primary focus:bg-white text-gray-900 rounded-lg transition-all duration-300 hover:border-primary/50"
                     />
                   </div>
@@ -90,10 +150,14 @@ const ContactSection = () => {
                       <Mail className={`w-5 h-5 ${focusedField === 'email' ? 'text-primary' : ''}`} />
                     </div>
                     <Input
+                      name="email"
                       type="email"
                       placeholder="E-mail"
+                      value={formData.email}
+                      onChange={handleChange}
                       onFocus={() => setFocusedField('email')}
                       onBlur={() => setFocusedField(null)}
+                      required
                       className="pl-12 pr-4 py-6 bg-gray-50 border-2 border-gray-200 focus:border-primary focus:bg-white text-gray-900 rounded-lg transition-all duration-300 hover:border-primary/50"
                     />
                   </div>
@@ -101,16 +165,20 @@ const ContactSection = () => {
 
                 {/* Phone Field */}
                 <div className="relative group/field">
-                  <div className={`absolute -inset-0.5 bg-gradient-to-r from-primary/50 to-yellow-400/50 rounded-lg blur opacity-0 ${focusedField === 'phone' ? 'opacity-30' : ''} group-hover/field:opacity-20 transition-opacity duration-300`} />
+                  <div className={`absolute -inset-0.5 bg-gradient-to-r from-primary/50 to-yellow-400/50 rounded-lg blur opacity-0 ${focusedField === 'telefone' ? 'opacity-30' : ''} group-hover/field:opacity-20 transition-opacity duration-300`} />
                   <div className="relative">
                     <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 group-hover/field:text-primary transition-colors duration-300">
-                      <Phone className={`w-5 h-5 ${focusedField === 'phone' ? 'text-primary' : ''}`} />
+                      <Phone className={`w-5 h-5 ${focusedField === 'telefone' ? 'text-primary' : ''}`} />
                     </div>
                     <Input
+                      name="telefone"
                       type="tel"
                       placeholder="Telefone"
-                      onFocus={() => setFocusedField('phone')}
+                      value={formData.telefone}
+                      onChange={handleChange}
+                      onFocus={() => setFocusedField('telefone')}
                       onBlur={() => setFocusedField(null)}
+                      required
                       className="pl-12 pr-4 py-6 bg-gray-50 border-2 border-gray-200 focus:border-primary focus:bg-white text-gray-900 rounded-lg transition-all duration-300 hover:border-primary/50"
                     />
                   </div>
@@ -118,16 +186,20 @@ const ContactSection = () => {
 
                 {/* Message Field */}
                 <div className="relative group/field">
-                  <div className={`absolute -inset-0.5 bg-gradient-to-r from-primary/50 to-yellow-400/50 rounded-lg blur opacity-0 ${focusedField === 'message' ? 'opacity-30' : ''} group-hover/field:opacity-20 transition-opacity duration-300`} />
+                  <div className={`absolute -inset-0.5 bg-gradient-to-r from-primary/50 to-yellow-400/50 rounded-lg blur opacity-0 ${focusedField === 'mensagem' ? 'opacity-30' : ''} group-hover/field:opacity-20 transition-opacity duration-300`} />
                   <div className="relative">
                     <div className="absolute left-4 top-4 text-gray-400 group-hover/field:text-primary transition-colors duration-300">
-                      <MessageSquare className={`w-5 h-5 ${focusedField === 'message' ? 'text-primary' : ''}`} />
+                      <MessageSquare className={`w-5 h-5 ${focusedField === 'mensagem' ? 'text-primary' : ''}`} />
                     </div>
                     <Textarea
+                      name="mensagem"
                       placeholder="Mensagem"
+                      value={formData.mensagem}
+                      onChange={handleChange}
                       rows={5}
-                      onFocus={() => setFocusedField('message')}
+                      onFocus={() => setFocusedField('mensagem')}
                       onBlur={() => setFocusedField(null)}
+                      required
                       className="pl-12 pr-4 pt-4 pb-4 bg-gray-50 border-2 border-gray-200 focus:border-primary focus:bg-white text-gray-900 rounded-lg transition-all duration-300 hover:border-primary/50 resize-none"
                     />
                   </div>
@@ -136,9 +208,13 @@ const ContactSection = () => {
                 {/* Submit Button */}
                 <div className="relative group/button pt-2">
                   <div className="absolute -inset-1 bg-gradient-to-r from-primary via-yellow-400 to-primary rounded-lg blur opacity-40 group-hover/button:opacity-70 transition-opacity duration-500 animate-pulse" />
-                  <Button className="relative w-full bg-gradient-to-r from-primary to-yellow-400 text-gray-900 hover:from-yellow-400 hover:to-primary font-bold py-7 text-lg rounded-lg shadow-xl hover:shadow-2xl transform hover:scale-[1.02] transition-all duration-300 group-hover/button:shadow-primary/50">
+                  <Button 
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="relative w-full bg-gradient-to-r from-primary to-yellow-400 text-gray-900 hover:from-yellow-400 hover:to-primary font-bold py-7 text-lg rounded-lg shadow-xl hover:shadow-2xl transform hover:scale-[1.02] transition-all duration-300 group-hover/button:shadow-primary/50"
+                  >
                     <span className="flex items-center justify-center gap-2">
-                      ENVIAR MENSAGEM
+                      {isSubmitting ? "ENVIANDO..." : "ENVIAR MENSAGEM"}
                       <Send className="w-5 h-5 group-hover/button:translate-x-1 transition-transform duration-300" />
                     </span>
                   </Button>

@@ -75,30 +75,38 @@ const Contact = () => {
   const onSubmit = async (data: ContactFormData) => {
     setIsSubmitting(true);
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    try {
+      // Importar supabase
+      const { supabase } = await import("@/integrations/supabase/client");
 
-    // WhatsApp message with proper encoding
-    const whatsappMessage = encodeURIComponent(
-      `*Nova mensagem do site Way+*\n\n` +
-      `*Nome:* ${data.name}\n` +
-      `*E-mail:* ${data.email}\n` +
-      `*Telefone:* ${data.phone}\n` +
-      `${data.company ? `*Empresa:* ${data.company}\n` : ''}` +
-      `*Mensagem:* ${data.message}`
-    );
+      // Salva no banco de dados
+      const { error } = await supabase.from("contacts").insert([{
+        nome: data.name,
+        email: data.email,
+        telefone: data.phone,
+        empresa: data.company || null,
+        mensagem: data.message,
+      }]);
 
-    toast({
-      title: "Mensagem enviada com sucesso!",
-      description: "Em breve entraremos em contato.",
-      duration: 5000,
-    });
+      if (error) throw error;
 
-    form.reset();
-    setIsSubmitting(false);
+      toast({
+        title: "Mensagem enviada com sucesso!",
+        description: "Em breve entraremos em contato.",
+        duration: 5000,
+      });
 
-    // Open WhatsApp
-    // window.open(`https://wa.me/5583996443602?text=${whatsappMessage}`, '_blank');
+      form.reset();
+    } catch (error: any) {
+      console.error("Erro ao enviar:", error);
+      toast({
+        title: "Erro ao enviar mensagem",
+        description: error.message || "Tente novamente mais tarde.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const contactInfo = [
