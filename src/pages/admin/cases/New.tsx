@@ -29,6 +29,7 @@ export default function NewCase() {
     categoria_id: "",
     imagem_url: "",
     publicado: false,
+    is_featured: false,
   });
 
   const [heroData, setHeroData] = useState<HeroBlockContent>({
@@ -121,6 +122,7 @@ export default function NewCase() {
             categoria_id: basicInfo.categoria_id || null,
             imagem_url: basicInfo.imagem_url.trim() || null,
             publicado: basicInfo.publicado,
+            is_featured: basicInfo.is_featured,
           },
         ])
         .select()
@@ -282,6 +284,14 @@ export default function NewCase() {
                 onCheckedChange={(checked) => setBasicInfo({ ...basicInfo, publicado: checked })}
               />
               <Label>Publicar case</Label>
+            </div>
+
+            <div className="flex items-center space-x-2">
+              <Switch
+                checked={basicInfo.is_featured}
+                onCheckedChange={(checked) => setBasicInfo({ ...basicInfo, is_featured: checked })}
+              />
+              <Label>Marcar como destaque</Label>
             </div>
           </CardContent>
         </Card>

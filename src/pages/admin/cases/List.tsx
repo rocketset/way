@@ -66,6 +66,7 @@ export default function CasesList() {
     categoria_id: '',
     imagem_url: '',
     publicado: false,
+    is_featured: false,
   });
 
   // Carrega cases e categorias ao montar o componente
@@ -125,6 +126,7 @@ export default function CasesList() {
       categoria_id: caseItem.categoria_id || '',
       imagem_url: caseItem.imagem_url || '',
       publicado: caseItem.publicado,
+      is_featured: (caseItem as any).is_featured || false,
     });
     setDialogOpen(true);
   };
@@ -143,6 +145,7 @@ export default function CasesList() {
         categoria_id: formData.categoria_id || null,
         imagem_url: formData.imagem_url || null,
         publicado: formData.publicado,
+        is_featured: formData.is_featured,
       };
 
       if (editingCase) {
@@ -353,6 +356,16 @@ export default function CasesList() {
                 onCheckedChange={(checked) => setFormData({ ...formData, publicado: checked })}
               />
               <Label htmlFor="publicado">Publicar case</Label>
+            </div>
+
+            {/* Switch Destaque */}
+            <div className="flex items-center space-x-2">
+              <Switch
+                id="is_featured"
+                checked={formData.is_featured}
+                onCheckedChange={(checked) => setFormData({ ...formData, is_featured: checked })}
+              />
+              <Label htmlFor="is_featured">Marcar como destaque</Label>
             </div>
           </div>
 

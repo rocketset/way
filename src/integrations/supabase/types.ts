@@ -90,6 +90,7 @@ export type Database = {
           descricao: string
           id: string
           imagem_url: string | null
+          is_featured: boolean | null
           publicado: boolean | null
           titulo: string
         }
@@ -100,6 +101,7 @@ export type Database = {
           descricao: string
           id?: string
           imagem_url?: string | null
+          is_featured?: boolean | null
           publicado?: boolean | null
           titulo: string
         }
@@ -110,6 +112,7 @@ export type Database = {
           descricao?: string
           id?: string
           imagem_url?: string | null
+          is_featured?: boolean | null
           publicado?: boolean | null
           titulo?: string
         }
