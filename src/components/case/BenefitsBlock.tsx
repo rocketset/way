@@ -20,14 +20,15 @@ const ICON_MAP: Record<string, LucideIcon> = {
 };
 
 export const BenefitsBlock = ({ data }: BenefitsBlockProps) => {
-  const bgColor = "#000000";
-  
   return (
-    <section 
-      className="py-20 px-6"
-      style={{ backgroundColor: bgColor }}
-    >
-      <div className="container mx-auto">
+    <section className="relative py-24 px-6 bg-card/30 overflow-hidden">
+      {/* Animated background */}
+      <div className="absolute inset-0">
+        <div className="absolute top-20 left-20 w-64 h-64 bg-primary/10 rounded-full blur-[100px] animate-pulse" />
+        <div className="absolute bottom-20 right-20 w-80 h-80 bg-accent/10 rounded-full blur-[120px] animate-pulse delay-700" />
+      </div>
+
+      <div className="container mx-auto relative z-10">
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {data.benefits.map((benefit, index) => {
             const Icon = ICON_MAP[benefit.icon] || TrendingUp;
@@ -35,19 +36,28 @@ export const BenefitsBlock = ({ data }: BenefitsBlockProps) => {
             return (
               <div
                 key={index}
-                className="bg-zinc-900 border border-zinc-800 rounded-lg p-6 hover:border-zinc-700 transition-colors"
+                className="group relative bg-card border border-border rounded-xl p-8 hover:border-primary/50 transition-all duration-500 animate-fade-in hover:scale-105 hover:shadow-2xl hover:shadow-primary/10"
+                style={{ animationDelay: `${index * 100}ms` }}
               >
-                <div className="mb-4">
-                  <Icon className="w-8 h-8 text-white" />
+                {/* Glow effect on hover */}
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                
+                <div className="relative z-10">
+                  <div className="mb-6 inline-flex p-3 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors duration-300">
+                    <Icon className="w-8 h-8 text-primary group-hover:scale-110 transition-transform duration-300" />
+                  </div>
+                  
+                  <h3 className="text-xl font-semibold text-foreground mb-4 group-hover:text-primary transition-colors duration-300">
+                    {benefit.titulo}
+                  </h3>
+                  
+                  <p className="text-muted-foreground text-sm leading-relaxed group-hover:text-foreground/80 transition-colors duration-300">
+                    {benefit.descricao}
+                  </p>
                 </div>
-                
-                <h3 className="text-lg font-semibold text-white mb-3">
-                  {benefit.titulo}
-                </h3>
-                
-                <p className="text-gray-400 text-sm leading-relaxed">
-                  {benefit.descricao}
-                </p>
+
+                {/* Animated corner accent */}
+                <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-primary/20 to-transparent rounded-br-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </div>
             );
           })}
