@@ -13,6 +13,8 @@ import WhyWay from "./pages/WhyWay";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import BlogPostPreview from "./pages/BlogPostPreview";
+import Cases from "./pages/Cases";
+import CaseDetail from "./pages/CaseDetail";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 
@@ -49,6 +51,8 @@ const App = () => (
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/preview/:id" element={<BlogPostPreview />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
+          <Route path="/cases" element={<Cases />} />
+          <Route path="/cases/:id" element={<CaseDetail />} />
           <Route path="/contact" element={<Contact />} />
           
           {/* Rota de autenticação (login/registro) */}
