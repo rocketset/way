@@ -2,21 +2,19 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 
 export interface HeroBlockContent {
-  logo_pequena?: string;
-  badge_text?: string;
+  logo_url?: string;
   titulo: string;
+  subtitulo: string;
   descricao: string;
-  cta_text?: string;
-  cta_url?: string;
-  imagem_principal?: string;
   tags?: string[];
+  imagem_principal?: string;
+  background_color?: string;
 }
 
-export interface WhyChooseBlockContent {
-  titulo: string;
-  paragrafo_1: string;
-  paragrafo_2?: string;
-  imagem?: string;
+export interface TextColumnsBlockContent {
+  coluna_esquerda: string;
+  coluna_direita: string;
+  background_color?: string;
 }
 
 export interface BenefitItem {
@@ -27,22 +25,15 @@ export interface BenefitItem {
 
 export interface BenefitsBlockContent {
   benefits: BenefitItem[];
-}
-
-export interface PlatformIdealBlockContent {
-  titulo: string;
-  descricao: string;
-  imagem?: string;
-  cta_text?: string;
-  cta_url?: string;
+  background_color?: string;
 }
 
 export interface CaseBlock {
   id: string;
   case_id: string;
-  block_type: "hero" | "why_choose" | "benefits" | "platform_ideal";
+  block_type: "hero" | "text_columns" | "benefits";
   position: number;
-  content: HeroBlockContent | WhyChooseBlockContent | BenefitsBlockContent | PlatformIdealBlockContent;
+  content: HeroBlockContent | TextColumnsBlockContent | BenefitsBlockContent;
   criado_em: string;
   atualizado_em: string;
 }

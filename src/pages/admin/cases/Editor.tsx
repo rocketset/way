@@ -8,14 +8,13 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowLeft, Save } from "lucide-react";
 import { IconPicker } from "@/components/editor/IconPicker";
 import type {
   HeroBlockContent,
-  WhyChooseBlockContent,
+  TextColumnsBlockContent,
   BenefitsBlockContent,
-  PlatformIdealBlockContent,
 } from "@/hooks/useCaseBlocks";
 
 export default function CaseEditor() {
@@ -26,15 +25,19 @@ export default function CaseEditor() {
   const saveMutation = useSaveCaseBlock();
 
   const [heroData, setHeroData] = useState<HeroBlockContent>({
+    logo_url: "",
     titulo: "",
+    subtitulo: "",
     descricao: "",
-    badge_text: "Case de Sucesso",
     tags: [],
+    imagem_principal: "",
+    background_color: "#000000",
   });
 
-  const [whyChooseData, setWhyChooseData] = useState<WhyChooseBlockContent>({
-    titulo: "",
-    paragrafo_1: "",
+  const [textColumnsData, setTextColumnsData] = useState<TextColumnsBlockContent>({
+    coluna_esquerda: "",
+    coluna_direita: "",
+    background_color: "#000000",
   });
 
   const [benefitsData, setBenefitsData] = useState<BenefitsBlockContent>({
@@ -44,11 +47,7 @@ export default function CaseEditor() {
       { icon: "ShoppingCart", titulo: "", descricao: "" },
       { icon: "Award", titulo: "", descricao: "" },
     ],
-  });
-
-  const [platformData, setPlatformData] = useState<PlatformIdealBlockContent>({
-    titulo: "",
-    descricao: "",
+    background_color: "#000000",
   });
 
   useEffect(() => {
@@ -58,14 +57,11 @@ export default function CaseEditor() {
           case "hero":
             setHeroData(block.content as HeroBlockContent);
             break;
-          case "why_choose":
-            setWhyChooseData(block.content as WhyChooseBlockContent);
+          case "text_columns":
+            setTextColumnsData(block.content as TextColumnsBlockContent);
             break;
           case "benefits":
             setBenefitsData(block.content as BenefitsBlockContent);
-            break;
-          case "platform_ideal":
-            setPlatformData(block.content as PlatformIdealBlockContent);
             break;
         }
       });
@@ -86,13 +82,13 @@ export default function CaseEditor() {
     });
   };
 
-  const handleSaveWhyChoose = () => {
+  const handleSaveTextColumns = () => {
     saveMutation.mutate({
       caseId: id!,
-      blockType: "why_choose",
-      content: whyChooseData,
+      blockType: "text_columns",
+      content: textColumnsData,
       position: 1,
-      blockId: getBlockId("why_choose"),
+      blockId: getBlockId("text_columns"),
     });
   };
 
@@ -106,16 +102,6 @@ export default function CaseEditor() {
     });
   };
 
-  const handleSavePlatform = () => {
-    saveMutation.mutate({
-      caseId: id!,
-      blockType: "platform_ideal",
-      content: platformData,
-      position: 3,
-      blockId: getBlockId("platform_ideal"),
-    });
-  };
-
   if (caseLoading || blocksLoading) {
     return <div className="p-8">Carregando...</div>;
   }
@@ -123,7 +109,7 @@ export default function CaseEditor() {
   return (
     <div className="container mx-auto p-6 max-w-5xl">
       <div className="flex items-center gap-4 mb-6">
-        <Button variant="ghost" size="icon" onClick={() => navigate("/admin/cases")}>
+        <Button variant="ghost" size="icon" onClick={() => navigate("/admin/cases/list")}>
           <ArrowLeft className="h-4 w-4" />
         </Button>
         <div>
@@ -133,34 +119,24 @@ export default function CaseEditor() {
       </div>
 
       <Tabs defaultValue="hero" className="w-full">
-        <TabsList className="grid w-full grid-cols-4">
+        <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="hero">Hero</TabsTrigger>
-          <TabsTrigger value="why-choose">Por que escolher</TabsTrigger>
+          <TabsTrigger value="text-columns">Colunas de Texto</TabsTrigger>
           <TabsTrigger value="benefits">Benefícios</TabsTrigger>
-          <TabsTrigger value="platform">Plataforma Ideal</TabsTrigger>
         </TabsList>
 
         <TabsContent value="hero">
           <Card>
             <CardHeader>
               <CardTitle>Seção Hero</CardTitle>
-              <CardDescription>Configure o banner principal do case</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
-                <Label>Logo Pequena (URL)</Label>
+                <Label>Logo URL</Label>
                 <Input
-                  value={heroData.logo_pequena || ""}
-                  onChange={(e) => setHeroData({ ...heroData, logo_pequena: e.target.value })}
+                  value={heroData.logo_url || ""}
+                  onChange={(e) => setHeroData({ ...heroData, logo_url: e.target.value })}
                   placeholder="URL da logo"
-                />
-              </div>
-              <div>
-                <Label>Badge</Label>
-                <Input
-                  value={heroData.badge_text || ""}
-                  onChange={(e) => setHeroData({ ...heroData, badge_text: e.target.value })}
-                  placeholder="Ex: Case de Sucesso"
                 />
               </div>
               <div>
@@ -169,6 +145,14 @@ export default function CaseEditor() {
                   value={heroData.titulo}
                   onChange={(e) => setHeroData({ ...heroData, titulo: e.target.value })}
                   placeholder="Título principal"
+                />
+              </div>
+              <div>
+                <Label>Subtítulo</Label>
+                <Input
+                  value={heroData.subtitulo}
+                  onChange={(e) => setHeroData({ ...heroData, subtitulo: e.target.value })}
+                  placeholder="Subtítulo"
                 />
               </div>
               <div>
@@ -181,15 +165,7 @@ export default function CaseEditor() {
                 />
               </div>
               <div>
-                <Label>Texto do CTA</Label>
-                <Input
-                  value={heroData.cta_text || ""}
-                  onChange={(e) => setHeroData({ ...heroData, cta_text: e.target.value })}
-                  placeholder="Ex: Falar com especialista"
-                />
-              </div>
-              <div>
-                <Label>Imagem Principal (URL)</Label>
+                <Label>Imagem Principal URL</Label>
                 <Input
                   value={heroData.imagem_principal || ""}
                   onChange={(e) => setHeroData({ ...heroData, imagem_principal: e.target.value })}
@@ -203,10 +179,18 @@ export default function CaseEditor() {
                   onChange={(e) =>
                     setHeroData({
                       ...heroData,
-                      tags: e.target.value.split(",").map((t) => t.trim()),
+                      tags: e.target.value.split(",").map((t) => t.trim()).filter(t => t !== ""),
                     })
                   }
                   placeholder="Tag1, Tag2, Tag3"
+                />
+              </div>
+              <div>
+                <Label>Cor de Fundo</Label>
+                <Input
+                  type="color"
+                  value={heroData.background_color || "#000000"}
+                  onChange={(e) => setHeroData({ ...heroData, background_color: e.target.value })}
                 />
               </div>
               <Button onClick={handleSaveHero} disabled={saveMutation.isPending}>
@@ -217,50 +201,41 @@ export default function CaseEditor() {
           </Card>
         </TabsContent>
 
-        <TabsContent value="why-choose">
+        <TabsContent value="text-columns">
           <Card>
             <CardHeader>
-              <CardTitle>Por que escolher</CardTitle>
-              <CardDescription>Explique os diferenciais desta solução</CardDescription>
+              <CardTitle>Colunas de Texto</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
-                <Label>Título</Label>
-                <Input
-                  value={whyChooseData.titulo}
-                  onChange={(e) => setWhyChooseData({ ...whyChooseData, titulo: e.target.value })}
-                  placeholder="Título da seção"
-                />
-              </div>
-              <div>
-                <Label>Primeiro Parágrafo</Label>
+                <Label>Coluna Esquerda</Label>
                 <Textarea
-                  value={whyChooseData.paragrafo_1}
-                  onChange={(e) => setWhyChooseData({ ...whyChooseData, paragrafo_1: e.target.value })}
-                  placeholder="Primeiro parágrafo explicativo"
-                  rows={4}
+                  value={textColumnsData.coluna_esquerda}
+                  onChange={(e) => setTextColumnsData({ ...textColumnsData, coluna_esquerda: e.target.value })}
+                  placeholder="Texto da coluna esquerda"
+                  rows={8}
                 />
               </div>
               <div>
-                <Label>Segundo Parágrafo (opcional)</Label>
+                <Label>Coluna Direita</Label>
                 <Textarea
-                  value={whyChooseData.paragrafo_2 || ""}
-                  onChange={(e) => setWhyChooseData({ ...whyChooseData, paragrafo_2: e.target.value })}
-                  placeholder="Segundo parágrafo"
-                  rows={4}
+                  value={textColumnsData.coluna_direita}
+                  onChange={(e) => setTextColumnsData({ ...textColumnsData, coluna_direita: e.target.value })}
+                  placeholder="Texto da coluna direita"
+                  rows={8}
                 />
               </div>
               <div>
-                <Label>Imagem (URL)</Label>
+                <Label>Cor de Fundo</Label>
                 <Input
-                  value={whyChooseData.imagem || ""}
-                  onChange={(e) => setWhyChooseData({ ...whyChooseData, imagem: e.target.value })}
-                  placeholder="URL da imagem"
+                  type="color"
+                  value={textColumnsData.background_color || "#000000"}
+                  onChange={(e) => setTextColumnsData({ ...textColumnsData, background_color: e.target.value })}
                 />
               </div>
-              <Button onClick={handleSaveWhyChoose} disabled={saveMutation.isPending}>
+              <Button onClick={handleSaveTextColumns} disabled={saveMutation.isPending}>
                 <Save className="h-4 w-4 mr-2" />
-                Salvar
+                Salvar Colunas
               </Button>
             </CardContent>
           </Card>
@@ -270,7 +245,6 @@ export default function CaseEditor() {
           <Card>
             <CardHeader>
               <CardTitle>Grid de Benefícios</CardTitle>
-              <CardDescription>Configure os 4 cards de benefícios</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
               {benefitsData.benefits.map((benefit, index) => (
@@ -283,7 +257,7 @@ export default function CaseEditor() {
                       onChange={(iconName) => {
                         const newBenefits = [...benefitsData.benefits];
                         newBenefits[index].icon = iconName;
-                        setBenefitsData({ benefits: newBenefits });
+                        setBenefitsData({ ...benefitsData, benefits: newBenefits });
                       }}
                     />
                   </div>
@@ -294,7 +268,7 @@ export default function CaseEditor() {
                       onChange={(e) => {
                         const newBenefits = [...benefitsData.benefits];
                         newBenefits[index].titulo = e.target.value;
-                        setBenefitsData({ benefits: newBenefits });
+                        setBenefitsData({ ...benefitsData, benefits: newBenefits });
                       }}
                       placeholder="Título do benefício"
                     />
@@ -306,7 +280,7 @@ export default function CaseEditor() {
                       onChange={(e) => {
                         const newBenefits = [...benefitsData.benefits];
                         newBenefits[index].descricao = e.target.value;
-                        setBenefitsData({ benefits: newBenefits });
+                        setBenefitsData({ ...benefitsData, benefits: newBenefits });
                       }}
                       placeholder="Descrição do benefício"
                       rows={3}
@@ -314,57 +288,17 @@ export default function CaseEditor() {
                   </div>
                 </div>
               ))}
+              <div>
+                <Label>Cor de Fundo</Label>
+                <Input
+                  type="color"
+                  value={benefitsData.background_color || "#000000"}
+                  onChange={(e) => setBenefitsData({ ...benefitsData, background_color: e.target.value })}
+                />
+              </div>
               <Button onClick={handleSaveBenefits} disabled={saveMutation.isPending}>
                 <Save className="h-4 w-4 mr-2" />
                 Salvar Benefícios
-              </Button>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="platform">
-          <Card>
-            <CardHeader>
-              <CardTitle>Plataforma Ideal</CardTitle>
-              <CardDescription>Descreva para quem a plataforma é ideal</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div>
-                <Label>Título</Label>
-                <Input
-                  value={platformData.titulo}
-                  onChange={(e) => setPlatformData({ ...platformData, titulo: e.target.value })}
-                  placeholder="Título da seção"
-                />
-              </div>
-              <div>
-                <Label>Descrição</Label>
-                <Textarea
-                  value={platformData.descricao}
-                  onChange={(e) => setPlatformData({ ...platformData, descricao: e.target.value })}
-                  placeholder="Descrição da plataforma"
-                  rows={4}
-                />
-              </div>
-              <div>
-                <Label>Imagem (URL)</Label>
-                <Input
-                  value={platformData.imagem || ""}
-                  onChange={(e) => setPlatformData({ ...platformData, imagem: e.target.value })}
-                  placeholder="URL da imagem"
-                />
-              </div>
-              <div>
-                <Label>Texto do CTA</Label>
-                <Input
-                  value={platformData.cta_text || ""}
-                  onChange={(e) => setPlatformData({ ...platformData, cta_text: e.target.value })}
-                  placeholder="Ex: Falar com especialista"
-                />
-              </div>
-              <Button onClick={handleSavePlatform} disabled={saveMutation.isPending}>
-                <Save className="h-4 w-4 mr-2" />
-                Salvar
               </Button>
             </CardContent>
           </Card>

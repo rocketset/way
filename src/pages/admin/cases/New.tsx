@@ -4,30 +4,22 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
-import { Separator } from "@/components/ui/separator";
+import { toast } from "@/hooks/use-toast";
 import { ArrowLeft, Save, Upload, X } from "lucide-react";
-import { toast } from "sonner";
 import { useQuery } from "@tanstack/react-query";
 import { IconPicker } from "@/components/editor/IconPicker";
 import { MediaSelector } from "@/components/editor/MediaSelector";
-import type {
-  HeroBlockContent,
-  WhyChooseBlockContent,
-  BenefitsBlockContent,
-  PlatformIdealBlockContent,
-} from "@/hooks/useCaseBlocks";
+import type { HeroBlockContent, BenefitsBlockContent, TextColumnsBlockContent } from "@/hooks/useCaseBlocks";
 
 export default function NewCase() {
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [mediaSelectorOpen, setMediaSelectorOpen] = useState(false);
-  const [currentImageField, setCurrentImageField] = useState<string | null>(null);
+  const [currentImageField, setCurrentImageField] = useState<"basic" | "hero-logo" | "hero-main" | null>(null);
 
-  // Informações básicas do case
   const [basicInfo, setBasicInfo] = useState({
     titulo: "",
     descricao: "",
@@ -36,21 +28,22 @@ export default function NewCase() {
     publicado: false,
   });
 
-  // Bloco Hero
   const [heroData, setHeroData] = useState<HeroBlockContent>({
+    logo_url: "",
     titulo: "",
+    subtitulo: "",
     descricao: "",
-    badge_text: "Case de Sucesso",
     tags: [],
+    imagem_principal: "",
+    background_color: "#000000",
   });
 
-  // Bloco Por que escolher
-  const [whyChooseData, setWhyChooseData] = useState<WhyChooseBlockContent>({
-    titulo: "",
-    paragrafo_1: "",
+  const [textColumnsData, setTextColumnsData] = useState<TextColumnsBlockContent>({
+    coluna_esquerda: "",
+    coluna_direita: "",
+    background_color: "#000000",
   });
 
-  // Bloco Benefícios
   const [benefitsData, setBenefitsData] = useState<BenefitsBlockContent>({
     benefits: [
       { icon: "TrendingUp", titulo: "", descricao: "" },
@@ -58,12 +51,7 @@ export default function NewCase() {
       { icon: "ShoppingCart", titulo: "", descricao: "" },
       { icon: "Award", titulo: "", descricao: "" },
     ],
-  });
-
-  // Bloco Plataforma Ideal
-  const [platformData, setPlatformData] = useState<PlatformIdealBlockContent>({
-    titulo: "",
-    descricao: "",
+    background_color: "#000000",
   });
 
   const { data: categories } = useQuery({
@@ -80,59 +68,30 @@ export default function NewCase() {
     },
   });
 
-  const handleImageSelect = (imageUrl: string) => {
-    if (!currentImageField) return;
-
-    const [block, field] = currentImageField.split(".");
-    
-    switch (block) {
-      case "basic":
-        setBasicInfo({ ...basicInfo, imagem_url: imageUrl });
-        break;
-      case "hero":
-        if (field === "logo_pequena") {
-          setHeroData({ ...heroData, logo_pequena: imageUrl });
-        } else if (field === "imagem_principal") {
-          setHeroData({ ...heroData, imagem_principal: imageUrl });
-        }
-        break;
-      case "whyChoose":
-        setWhyChooseData({ ...whyChooseData, imagem: imageUrl });
-        break;
-      case "platform":
-        setPlatformData({ ...platformData, imagem: imageUrl });
-        break;
+  const handleImageSelect = (url: string) => {
+    if (currentImageField === "basic") {
+      setBasicInfo({ ...basicInfo, imagem_url: url });
+    } else if (currentImageField === "hero-logo") {
+      setHeroData({ ...heroData, logo_url: url });
+    } else if (currentImageField === "hero-main") {
+      setHeroData({ ...heroData, imagem_principal: url });
     }
-    
     setMediaSelectorOpen(false);
     setCurrentImageField(null);
   };
 
-  const openMediaSelector = (field: string) => {
+  const openMediaSelector = (field: "basic" | "hero-logo" | "hero-main") => {
     setCurrentImageField(field);
     setMediaSelectorOpen(true);
   };
 
-  const removeImage = (field: string) => {
-    const [block, subfield] = field.split(".");
-    
-    switch (block) {
-      case "basic":
-        setBasicInfo({ ...basicInfo, imagem_url: "" });
-        break;
-      case "hero":
-        if (subfield === "logo_pequena") {
-          setHeroData({ ...heroData, logo_pequena: "" });
-        } else if (subfield === "imagem_principal") {
-          setHeroData({ ...heroData, imagem_principal: "" });
-        }
-        break;
-      case "whyChoose":
-        setWhyChooseData({ ...whyChooseData, imagem: "" });
-        break;
-      case "platform":
-        setPlatformData({ ...platformData, imagem: "" });
-        break;
+  const removeImage = (field: "basic" | "hero-logo" | "hero-main") => {
+    if (field === "basic") {
+      setBasicInfo({ ...basicInfo, imagem_url: "" });
+    } else if (field === "hero-logo") {
+      setHeroData({ ...heroData, logo_url: "" });
+    } else if (field === "hero-main") {
+      setHeroData({ ...heroData, imagem_principal: "" });
     }
   };
 
@@ -140,14 +99,17 @@ export default function NewCase() {
     e.preventDefault();
 
     if (!basicInfo.titulo.trim() || !basicInfo.descricao.trim()) {
-      toast.error("Preencha todos os campos obrigatórios");
+      toast({
+        title: "Erro",
+        description: "Preencha todos os campos obrigatórios",
+        variant: "destructive",
+      });
       return;
     }
 
     setIsSubmitting(true);
 
     try {
-      // 1. Criar o case
       const { data: newCase, error: caseError } = await supabase
         .from("cases")
         .insert([
@@ -164,8 +126,8 @@ export default function NewCase() {
 
       if (caseError) throw caseError;
 
-      // 2. Criar os blocos de conteúdo
-      const blocks = [
+      // Create content blocks
+      const blocksToInsert = [
         {
           case_id: newCase.id,
           block_type: "hero",
@@ -174,9 +136,9 @@ export default function NewCase() {
         },
         {
           case_id: newCase.id,
-          block_type: "why_choose",
+          block_type: "text_columns",
           position: 1,
-          content: whyChooseData,
+          content: textColumnsData,
         },
         {
           case_id: newCase.id,
@@ -184,25 +146,26 @@ export default function NewCase() {
           position: 2,
           content: benefitsData,
         },
-        {
-          case_id: newCase.id,
-          block_type: "platform_ideal",
-          position: 3,
-          content: platformData,
-        },
       ];
 
       const { error: blocksError } = await supabase
         .from("case_content_blocks")
-        .insert(blocks as any);
+        .insert(blocksToInsert as any);
 
       if (blocksError) throw blocksError;
 
-      toast.success("Case criado com sucesso!");
+      toast({
+        title: "Sucesso",
+        description: "Case criado com sucesso!",
+      });
       navigate("/admin/cases/list");
     } catch (error: any) {
       console.error("Erro ao criar case:", error);
-      toast.error("Erro ao criar case. Tente novamente.");
+      toast({
+        title: "Erro",
+        description: "Erro ao criar case. Tente novamente.",
+        variant: "destructive",
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -221,21 +184,15 @@ export default function NewCase() {
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
-        {/* Informações Básicas */}
+        {/* Basic Info */}
         <Card>
           <CardHeader>
             <CardTitle>Informações Básicas</CardTitle>
-            <CardDescription>
-              Após criar o case, você poderá editar o conteúdo detalhado em blocos
-            </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="titulo">
-                Título <span className="text-destructive">*</span>
-              </Label>
+            <div>
+              <Label>Título *</Label>
               <Input
-                id="titulo"
                 value={basicInfo.titulo}
                 onChange={(e) => setBasicInfo({ ...basicInfo, titulo: e.target.value })}
                 placeholder="Digite o título do case"
@@ -243,71 +200,58 @@ export default function NewCase() {
               />
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="categoria">Categoria</Label>
-              <Select
+            <div>
+              <Label>Categoria</Label>
+              <select
+                className="w-full p-2 border rounded-md"
                 value={basicInfo.categoria_id}
-                onValueChange={(value) => setBasicInfo({ ...basicInfo, categoria_id: value })}
+                onChange={(e) => setBasicInfo({ ...basicInfo, categoria_id: e.target.value })}
               >
-                <SelectTrigger id="categoria">
-                  <SelectValue placeholder="Selecione uma categoria" />
-                </SelectTrigger>
-                <SelectContent>
-                  {categories?.map((cat) => (
-                    <SelectItem key={cat.id} value={cat.id}>
-                      {cat.nome}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+                <option value="">Selecione uma categoria</option>
+                {categories?.map((cat) => (
+                  <option key={cat.id} value={cat.id}>
+                    {cat.nome}
+                  </option>
+                ))}
+              </select>
             </div>
 
-            <div className="space-y-2">
+            <div>
               <Label>Imagem de Capa</Label>
-              {basicInfo.imagem_url ? (
-                <div className="space-y-2">
-                  <img src={basicInfo.imagem_url} alt="Preview" className="w-full h-48 object-cover rounded-lg" />
-                  <div className="flex gap-2">
+              <div className="space-y-2">
+                {basicInfo.imagem_url && (
+                  <div className="relative inline-block">
+                    <img 
+                      src={basicInfo.imagem_url} 
+                      alt="Capa" 
+                      className="h-32 w-auto object-contain border rounded"
+                    />
                     <Button
                       type="button"
-                      variant="outline"
-                      size="sm"
-                      onClick={() => openMediaSelector("basic")}
-                      className="flex-1"
-                    >
-                      <Upload className="h-4 w-4 mr-2" />
-                      Alterar Imagem
-                    </Button>
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
+                      variant="destructive"
+                      size="icon"
+                      className="absolute -top-2 -right-2 h-6 w-6"
                       onClick={() => removeImage("basic")}
                     >
-                      <X className="h-4 w-4" />
+                      <X className="h-3 w-3" />
                     </Button>
                   </div>
-                </div>
-              ) : (
+                )}
                 <Button
                   type="button"
                   variant="outline"
                   onClick={() => openMediaSelector("basic")}
                   className="w-full"
                 >
-                  <Upload className="h-4 w-4 mr-2" />
-                  Selecionar Imagem
+                  <Upload className="mr-2 h-4 w-4" />
+                  {basicInfo.imagem_url ? "Alterar Imagem" : "Selecionar Imagem"}
                 </Button>
-              )}
-              <p className="text-sm text-muted-foreground">Imagem de capa do case</p>
+              </div>
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="descricao">
-                Descrição <span className="text-destructive">*</span>
-              </Label>
+            <div>
+              <Label>Descrição *</Label>
               <Textarea
-                id="descricao"
                 value={basicInfo.descricao}
                 onChange={(e) => setBasicInfo({ ...basicInfo, descricao: e.target.value })}
                 placeholder="Digite a descrição do case"
@@ -316,384 +260,305 @@ export default function NewCase() {
               />
             </div>
 
-            <div className="flex items-center justify-between rounded-lg border p-4">
-              <div className="space-y-0.5">
-                <Label htmlFor="publicado">Publicar case</Label>
-                <p className="text-sm text-muted-foreground">Torne o case visível publicamente</p>
-              </div>
+            <div className="flex items-center space-x-2">
               <Switch
-                id="publicado"
                 checked={basicInfo.publicado}
                 onCheckedChange={(checked) => setBasicInfo({ ...basicInfo, publicado: checked })}
               />
+              <Label>Publicar case</Label>
             </div>
           </CardContent>
         </Card>
 
-        <Separator />
-
-        {/* Bloco Hero */}
+        {/* Hero Block */}
         <Card>
           <CardHeader>
             <CardTitle>Bloco 1: Hero Section</CardTitle>
-            <CardDescription>Banner principal com título, descrição e imagem</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
+            <div>
+              <Label>Logo/Marca</Label>
               <div className="space-y-2">
-                <Label>Logo Pequena</Label>
-                {heroData.logo_pequena ? (
-                  <div className="space-y-2">
-                    <img src={heroData.logo_pequena} alt="Logo" className="h-16 object-contain" />
-                    <div className="flex gap-2">
-                      <Button
-                        type="button"
-                        variant="outline"
-                        size="sm"
-                        onClick={() => openMediaSelector("hero.logo_pequena")}
-                        className="flex-1"
-                      >
-                        <Upload className="h-4 w-4 mr-2" />
-                        Alterar
-                      </Button>
-                      <Button
-                        type="button"
-                        variant="outline"
-                        size="sm"
-                        onClick={() => removeImage("hero.logo_pequena")}
-                      >
-                        <X className="h-4 w-4" />
-                      </Button>
-                    </div>
+                {heroData.logo_url && (
+                  <div className="relative inline-block">
+                    <img 
+                      src={heroData.logo_url} 
+                      alt="Logo preview" 
+                      className="h-20 w-auto object-contain border rounded"
+                    />
+                    <Button
+                      type="button"
+                      variant="destructive"
+                      size="icon"
+                      className="absolute -top-2 -right-2 h-6 w-6"
+                      onClick={() => removeImage("hero-logo")}
+                    >
+                      <X className="h-3 w-3" />
+                    </Button>
                   </div>
-                ) : (
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={() => openMediaSelector("hero.logo_pequena")}
-                    className="w-full"
-                  >
-                    <Upload className="h-4 w-4 mr-2" />
-                    Selecionar Logo
-                  </Button>
                 )}
-              </div>
-              <div className="space-y-2">
-                <Label>Badge</Label>
-                <Input
-                  value={heroData.badge_text || ""}
-                  onChange={(e) => setHeroData({ ...heroData, badge_text: e.target.value })}
-                  placeholder="Ex: Case de Sucesso"
-                />
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <Label>Título</Label>
-              <Input
-                value={heroData.titulo}
-                onChange={(e) => setHeroData({ ...heroData, titulo: e.target.value })}
-                placeholder="Título principal do hero"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label>Descrição</Label>
-              <Textarea
-                value={heroData.descricao}
-                onChange={(e) => setHeroData({ ...heroData, descricao: e.target.value })}
-                placeholder="Descrição do hero"
-                rows={3}
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label>Texto do CTA</Label>
-              <Input
-                value={heroData.cta_text || ""}
-                onChange={(e) => setHeroData({ ...heroData, cta_text: e.target.value })}
-                placeholder="Ex: Falar com especialista"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label>Imagem Principal</Label>
-              {heroData.imagem_principal ? (
-                <div className="space-y-2">
-                  <img src={heroData.imagem_principal} alt="Preview" className="w-full h-48 object-cover rounded-lg" />
-                  <div className="flex gap-2">
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      onClick={() => openMediaSelector("hero.imagem_principal")}
-                      className="flex-1"
-                    >
-                      <Upload className="h-4 w-4 mr-2" />
-                      Alterar Imagem
-                    </Button>
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      onClick={() => removeImage("hero.imagem_principal")}
-                    >
-                      <X className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </div>
-              ) : (
                 <Button
                   type="button"
                   variant="outline"
-                  onClick={() => openMediaSelector("hero.imagem_principal")}
+                  onClick={() => openMediaSelector("hero-logo")}
                   className="w-full"
                 >
-                  <Upload className="h-4 w-4 mr-2" />
-                  Selecionar Imagem
+                  <Upload className="mr-2 h-4 w-4" />
+                  {heroData.logo_url ? "Alterar Logo" : "Selecionar Logo"}
                 </Button>
-              )}
+              </div>
             </div>
 
-            <div className="space-y-2">
+            <div>
+              <Label>Título Principal *</Label>
+              <Input
+                value={heroData.titulo}
+                onChange={(e) =>
+                  setHeroData({ ...heroData, titulo: e.target.value })
+                }
+                placeholder="Ex: JADEJADE"
+                required
+              />
+            </div>
+
+            <div>
+              <Label>Subtítulo *</Label>
+              <Input
+                value={heroData.subtitulo}
+                onChange={(e) =>
+                  setHeroData({ ...heroData, subtitulo: e.target.value })
+                }
+                placeholder="Ex: Loja de moda jovem e moderna"
+                required
+              />
+            </div>
+
+            <div>
+              <Label>Descrição *</Label>
+              <Textarea
+                value={heroData.descricao}
+                onChange={(e) =>
+                  setHeroData({ ...heroData, descricao: e.target.value })
+                }
+                placeholder="Descreva o case de forma detalhada"
+                rows={4}
+                required
+              />
+            </div>
+
+            <div>
               <Label>Tags (separadas por vírgula)</Label>
               <Input
                 value={heroData.tags?.join(", ") || ""}
                 onChange={(e) =>
                   setHeroData({
                     ...heroData,
-                    tags: e.target.value.split(",").map((t) => t.trim()),
+                    tags: e.target.value
+                      .split(",")
+                      .map((tag) => tag.trim())
+                      .filter((tag) => tag !== ""),
                   })
                 }
-                placeholder="Tag1, Tag2, Tag3"
-              />
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Bloco Por que escolher */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Bloco 2: Por que escolher</CardTitle>
-            <CardDescription>Explique os diferenciais desta solução</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <Label>Título</Label>
-              <Input
-                value={whyChooseData.titulo}
-                onChange={(e) => setWhyChooseData({ ...whyChooseData, titulo: e.target.value })}
-                placeholder="Título da seção"
+                placeholder="Ex: Instagram, Shopee, Nuvemshop"
               />
             </div>
 
-            <div className="space-y-2">
-              <Label>Primeiro Parágrafo</Label>
-              <Textarea
-                value={whyChooseData.paragrafo_1}
-                onChange={(e) => setWhyChooseData({ ...whyChooseData, paragrafo_1: e.target.value })}
-                placeholder="Primeiro parágrafo explicativo"
-                rows={3}
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label>Segundo Parágrafo (opcional)</Label>
-              <Textarea
-                value={whyChooseData.paragrafo_2 || ""}
-                onChange={(e) => setWhyChooseData({ ...whyChooseData, paragrafo_2: e.target.value })}
-                placeholder="Segundo parágrafo"
-                rows={3}
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label>Imagem</Label>
-              {whyChooseData.imagem ? (
-                <div className="space-y-2">
-                  <img src={whyChooseData.imagem} alt="Preview" className="w-full h-48 object-cover rounded-lg" />
-                  <div className="flex gap-2">
+            <div>
+              <Label>Imagem Principal</Label>
+              <div className="space-y-2">
+                {heroData.imagem_principal && (
+                  <div className="relative inline-block">
+                    <img 
+                      src={heroData.imagem_principal} 
+                      alt="Hero preview" 
+                      className="h-32 w-auto object-contain border rounded"
+                    />
                     <Button
                       type="button"
-                      variant="outline"
-                      size="sm"
-                      onClick={() => openMediaSelector("whyChoose")}
-                      className="flex-1"
+                      variant="destructive"
+                      size="icon"
+                      className="absolute -top-2 -right-2 h-6 w-6"
+                      onClick={() => removeImage("hero-main")}
                     >
-                      <Upload className="h-4 w-4 mr-2" />
-                      Alterar Imagem
-                    </Button>
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      onClick={() => removeImage("whyChoose")}
-                    >
-                      <X className="h-4 w-4" />
+                      <X className="h-3 w-3" />
                     </Button>
                   </div>
-                </div>
-              ) : (
+                )}
                 <Button
                   type="button"
                   variant="outline"
-                  onClick={() => openMediaSelector("whyChoose")}
+                  onClick={() => openMediaSelector("hero-main")}
                   className="w-full"
                 >
-                  <Upload className="h-4 w-4 mr-2" />
-                  Selecionar Imagem
+                  <Upload className="mr-2 h-4 w-4" />
+                  {heroData.imagem_principal ? "Alterar Imagem" : "Selecionar Imagem"}
                 </Button>
-              )}
+              </div>
+            </div>
+
+            <div>
+              <Label>Cor de Fundo (Hexadecimal)</Label>
+              <Input
+                type="color"
+                value={heroData.background_color}
+                onChange={(e) =>
+                  setHeroData({ ...heroData, background_color: e.target.value })
+                }
+              />
             </div>
           </CardContent>
         </Card>
 
-        {/* Bloco Benefícios */}
+        {/* Text Columns Block */}
         <Card>
           <CardHeader>
-            <CardTitle>Bloco 3: Grid de Benefícios</CardTitle>
-            <CardDescription>Configure os 4 cards de benefícios</CardDescription>
+            <CardTitle>Bloco 2: Colunas de Texto</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div>
+              <Label>Coluna Esquerda *</Label>
+              <Textarea
+                value={textColumnsData.coluna_esquerda}
+                onChange={(e) =>
+                  setTextColumnsData({
+                    ...textColumnsData,
+                    coluna_esquerda: e.target.value,
+                  })
+                }
+                placeholder="Texto da primeira coluna (use quebras de linha para parágrafos)"
+                rows={8}
+                required
+              />
+            </div>
+
+            <div>
+              <Label>Coluna Direita *</Label>
+              <Textarea
+                value={textColumnsData.coluna_direita}
+                onChange={(e) =>
+                  setTextColumnsData({
+                    ...textColumnsData,
+                    coluna_direita: e.target.value,
+                  })
+                }
+                placeholder="Texto da segunda coluna (use quebras de linha para parágrafos)"
+                rows={8}
+                required
+              />
+            </div>
+
+            <div>
+              <Label>Cor de Fundo (Hexadecimal)</Label>
+              <Input
+                type="color"
+                value={textColumnsData.background_color}
+                onChange={(e) =>
+                  setTextColumnsData({
+                    ...textColumnsData,
+                    background_color: e.target.value,
+                  })
+                }
+              />
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Benefits Block */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Bloco 3: Grid de Benefícios (4 Cards)</CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {benefitsData.benefits.map((benefit, index) => (
                 <Card key={index}>
-                  <CardHeader>
-                    <CardTitle className="text-base">Benefício {index + 1}</CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-3">
-                    <div className="space-y-2">
+                  <CardContent className="pt-6 space-y-4">
+                    <div className="flex items-center justify-between">
+                      <Label>Card {index + 1}</Label>
+                    </div>
+                    
+                    <div>
                       <Label>Ícone</Label>
                       <IconPicker
                         value={benefit.icon}
                         onChange={(iconName) => {
                           const newBenefits = [...benefitsData.benefits];
                           newBenefits[index].icon = iconName;
-                          setBenefitsData({ benefits: newBenefits });
+                          setBenefitsData({
+                            ...benefitsData,
+                            benefits: newBenefits,
+                          });
                         }}
                       />
                     </div>
-                    <div className="space-y-2">
-                      <Label>Título</Label>
+
+                    <div>
+                      <Label>Título *</Label>
                       <Input
                         value={benefit.titulo}
                         onChange={(e) => {
                           const newBenefits = [...benefitsData.benefits];
                           newBenefits[index].titulo = e.target.value;
-                          setBenefitsData({ benefits: newBenefits });
+                          setBenefitsData({
+                            ...benefitsData,
+                            benefits: newBenefits,
+                          });
                         }}
-                        placeholder="Título do benefício"
+                        placeholder="Ex: Layout como extensão da identidade"
+                        required
                       />
                     </div>
-                    <div className="space-y-2">
-                      <Label>Descrição</Label>
+
+                    <div>
+                      <Label>Descrição *</Label>
                       <Textarea
                         value={benefit.descricao}
                         onChange={(e) => {
                           const newBenefits = [...benefitsData.benefits];
                           newBenefits[index].descricao = e.target.value;
-                          setBenefitsData({ benefits: newBenefits });
+                          setBenefitsData({
+                            ...benefitsData,
+                            benefits: newBenefits,
+                          });
                         }}
-                        placeholder="Descrição"
-                        rows={2}
+                        placeholder="Descreva o benefício em detalhes"
+                        rows={3}
+                        required
                       />
                     </div>
                   </CardContent>
                 </Card>
               ))}
             </div>
-          </CardContent>
-        </Card>
 
-        {/* Bloco Plataforma Ideal */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Bloco 4: Plataforma Ideal</CardTitle>
-            <CardDescription>Descreva para quem a plataforma é ideal</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <Label>Título</Label>
+            <div>
+              <Label>Cor de Fundo (Hexadecimal)</Label>
               <Input
-                value={platformData.titulo}
-                onChange={(e) => setPlatformData({ ...platformData, titulo: e.target.value })}
-                placeholder="Título da seção"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label>Descrição</Label>
-              <Textarea
-                value={platformData.descricao}
-                onChange={(e) => setPlatformData({ ...platformData, descricao: e.target.value })}
-                placeholder="Descrição da plataforma"
-                rows={3}
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label>Imagem</Label>
-              {platformData.imagem ? (
-                <div className="space-y-2">
-                  <img src={platformData.imagem} alt="Preview" className="w-full h-48 object-cover rounded-lg" />
-                  <div className="flex gap-2">
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      onClick={() => openMediaSelector("platform")}
-                      className="flex-1"
-                    >
-                      <Upload className="h-4 w-4 mr-2" />
-                      Alterar Imagem
-                    </Button>
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      onClick={() => removeImage("platform")}
-                    >
-                      <X className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </div>
-              ) : (
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={() => openMediaSelector("platform")}
-                  className="w-full"
-                >
-                  <Upload className="h-4 w-4 mr-2" />
-                  Selecionar Imagem
-                </Button>
-              )}
-            </div>
-
-            <div className="space-y-2">
-              <Label>Texto do CTA</Label>
-              <Input
-                value={platformData.cta_text || ""}
-                onChange={(e) => setPlatformData({ ...platformData, cta_text: e.target.value })}
-                placeholder="Ex: Falar com especialista"
+                type="color"
+                value={benefitsData.background_color}
+                onChange={(e) =>
+                  setBenefitsData({
+                    ...benefitsData,
+                    background_color: e.target.value,
+                  })
+                }
               />
             </div>
           </CardContent>
         </Card>
 
-        {/* Botões de ação */}
-        <div className="flex gap-3 justify-end sticky bottom-0 bg-background py-4 border-t">
+        {/* Actions */}
+        <div className="flex gap-4">
           <Button
             type="button"
             variant="outline"
             onClick={() => navigate("/admin/cases/list")}
-            disabled={isSubmitting}
           >
             Cancelar
           </Button>
           <Button type="submit" disabled={isSubmitting}>
-            <Save className="h-4 w-4 mr-2" />
-            {isSubmitting ? "Salvando..." : "Salvar Case Completo"}
+            <Save className="mr-2 h-4 w-4" />
+            {isSubmitting ? "Salvando..." : "Criar Case"}
           </Button>
         </div>
       </form>
