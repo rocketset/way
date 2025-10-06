@@ -111,17 +111,9 @@ export default function CasesList() {
     }
   };
 
-  // Abre o dialog para criar novo case
+  // Redireciona para a página de criação de case
   const handleCreate = () => {
-    setEditingCase(null);
-    setFormData({
-      titulo: '',
-      descricao: '',
-      categoria_id: '',
-      imagem_url: '',
-      publicado: false,
-    });
-    setDialogOpen(true);
+    navigate('/admin/cases/new');
   };
 
   // Abre o dialog para editar case existente

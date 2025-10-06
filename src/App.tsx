@@ -27,6 +27,7 @@ import BlogPostEditor from "./pages/admin/blog/PostEditor";
 import BlogCategories from "./pages/admin/blog/Categories";
 import BlogTags from "./pages/admin/blog/Tags";
 import CasesList from "./pages/admin/cases/List";
+import NewCase from "./pages/admin/cases/New";
 import CaseEditor from "./pages/admin/cases/Editor";
 import CasesCategories from "./pages/admin/cases/Categories";
 import CasesTags from "./pages/admin/cases/Tags";
@@ -72,6 +73,7 @@ const App = () => (
             
             {/* Rotas de Cases */}
             <Route path="cases/list" element={<CasesList />} />
+            <Route path="cases/new" element={<NewCase />} />
             <Route path="cases/:id/editor" element={<CaseEditor />} />
             <Route path="cases/categories" element={<CasesCategories />} />
             <Route path="cases/tags" element={<CasesTags />} />
