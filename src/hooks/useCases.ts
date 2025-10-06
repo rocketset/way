@@ -11,6 +11,7 @@ interface Case {
   categoria_id: string | null;
   categoria_nome?: string;
   tags: string[];
+  is_featured: boolean;
 }
 
 export const useCases = (searchQuery = "", selectedCategory = "Todos") => {
@@ -49,12 +50,16 @@ export const useCases = (searchQuery = "", selectedCategory = "Todos") => {
         categoria_id: c.categoria_id,
         categoria_nome: c.categories?.nome || "",
         tags: c.case_tags?.map((ct: any) => ct.tags.nome) || [],
+        is_featured: c.is_featured || false,
       })) || [];
 
-      // Separar cases em destaque (primeiros 2) e regulares
+      // Separar cases em destaque (baseado no campo is_featured) e regulares
+      const featured = formattedCases.filter((c: any) => c.is_featured);
+      const regular = formattedCases.filter((c: any) => !c.is_featured);
+      
       return {
-        featured: formattedCases.slice(0, 2),
-        regular: formattedCases.slice(2),
+        featured,
+        regular,
       };
     },
   });
