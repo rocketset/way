@@ -12,9 +12,11 @@ interface TagsAutocompleteProps {
   selectedTagIds: string[];
   onChange: (tagIds: string[]) => void;
   allTags: Tag[];
+  tipo: 'blog' | 'case';
+  queryKey: string[];
 }
 
-export const TagsAutocomplete = ({ selectedTagIds, onChange, allTags }: TagsAutocompleteProps) => {
+export const TagsAutocomplete = ({ selectedTagIds, onChange, allTags, tipo, queryKey }: TagsAutocompleteProps) => {
   const [inputValue, setInputValue] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
@@ -41,14 +43,14 @@ export const TagsAutocomplete = ({ selectedTagIds, onChange, allTags }: TagsAuto
       setIsCreating(true);
       const { data, error } = await supabase
         .from('tags')
-        .insert({ nome: nome.trim(), tipo: 'blog' })
+        .insert({ nome: nome.trim(), tipo })
         .select()
         .single();
       
       if (error) throw error;
       
       // Invalida cache para recarregar tags
-      await queryClient.invalidateQueries({ queryKey: ['blog-tags'] });
+      await queryClient.invalidateQueries({ queryKey });
       
       // Adiciona a nova tag aos selecionados
       onChange([...selectedTagIds, data.id]);
