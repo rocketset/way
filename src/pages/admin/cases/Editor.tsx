@@ -2,6 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useCase } from "@/hooks/useCase";
 import { useCaseBlocks } from "@/hooks/useCaseBlocks";
 import { useSaveCaseBlock } from "@/hooks/useSaveCaseBlock";
+import { useCaseTags } from "@/hooks/useCaseTags";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,6 +12,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowLeft, Save } from "lucide-react";
 import { IconPicker } from "@/components/editor/IconPicker";
+import { TagsAutocomplete } from "@/components/editor/TagsAutocomplete";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 import type {
   HeroBlockContent,
   TextColumnsBlockContent,
@@ -22,7 +26,9 @@ export default function CaseEditor() {
   const navigate = useNavigate();
   const { data: caseData, isLoading: caseLoading } = useCase(id!);
   const { data: blocks, isLoading: blocksLoading } = useCaseBlocks(id!);
+  const { data: caseTags = [] } = useCaseTags();
   const saveMutation = useSaveCaseBlock();
+  const [selectedTagIds, setSelectedTagIds] = useState<string[]>([]);
 
   const [heroData, setHeroData] = useState<HeroBlockContent>({
     logo_url: "",
@@ -65,18 +71,66 @@ export default function CaseEditor() {
     }
   }, [blocks]);
 
+  // Load existing tags for this case
+  useEffect(() => {
+    const loadCaseTags = async () => {
+      if (!id) return;
+      
+      const { data, error } = await supabase
+        .from('case_tags')
+        .select('tag_id')
+        .eq('case_id', id);
+      
+      if (error) {
+        console.error('Error loading case tags:', error);
+        return;
+      }
+      
+      setSelectedTagIds(data.map(ct => ct.tag_id));
+    };
+    
+    loadCaseTags();
+  }, [id]);
+
   const getBlockId = (blockType: string) => {
     return blocks?.find((b) => b.block_type === blockType)?.id;
   };
 
-  const handleSaveHero = () => {
-    saveMutation.mutate({
-      caseId: id!,
-      blockType: "hero",
-      content: heroData,
-      position: 0,
-      blockId: getBlockId("hero"),
-    });
+  const handleSaveHero = async () => {
+    try {
+      // Save hero block content
+      await saveMutation.mutateAsync({
+        caseId: id!,
+        blockType: "hero",
+        content: heroData,
+        position: 0,
+        blockId: getBlockId("hero"),
+      });
+
+      // Update case tags
+      // First delete existing tags
+      await supabase
+        .from('case_tags')
+        .delete()
+        .eq('case_id', id!);
+      
+      // Then insert new tags
+      if (selectedTagIds.length > 0) {
+        const tagRelations = selectedTagIds.map(tagId => ({
+          case_id: id!,
+          tag_id: tagId
+        }));
+        
+        await supabase
+          .from('case_tags')
+          .insert(tagRelations);
+      }
+      
+      toast.success('Hero e tags salvos com sucesso!');
+    } catch (error) {
+      console.error('Error saving hero:', error);
+      toast.error('Erro ao salvar');
+    }
   };
 
   const handleSaveTextColumns = () => {
@@ -170,16 +224,13 @@ export default function CaseEditor() {
                 />
               </div>
               <div>
-                <Label>Tags (separadas por vírgula)</Label>
-                <Input
-                  value={heroData.tags?.join(", ") || ""}
-                  onChange={(e) =>
-                    setHeroData({
-                      ...heroData,
-                      tags: e.target.value.split(",").map((t) => t.trim()).filter(t => t !== ""),
-                    })
-                  }
-                  placeholder="Tag1, Tag2, Tag3"
+                <Label>Tags</Label>
+                <TagsAutocomplete
+                  selectedTagIds={selectedTagIds}
+                  onChange={setSelectedTagIds}
+                  allTags={caseTags}
+                  tipo="case"
+                  queryKey={['case-tags']}
                 />
               </div>
               <Button onClick={handleSaveHero} disabled={saveMutation.isPending}>

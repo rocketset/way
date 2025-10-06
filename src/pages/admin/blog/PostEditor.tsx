@@ -683,6 +683,8 @@ export default function PostEditor() {
                 selectedTagIds={formData.tagsIds}
                 onChange={(tagsIds) => setFormData(prev => ({ ...prev, tagsIds }))}
                 allTags={tags}
+                tipo="blog"
+                queryKey={['blog-tags']}
               />
             </div>
 

@@ -12,6 +12,8 @@ import { ArrowLeft, Save, Upload, X } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { IconPicker } from "@/components/editor/IconPicker";
 import { MediaSelector } from "@/components/editor/MediaSelector";
+import { TagsAutocomplete } from "@/components/editor/TagsAutocomplete";
+import { useCaseTags } from "@/hooks/useCaseTags";
 import type { HeroBlockContent, BenefitsBlockContent, TextColumnsBlockContent } from "@/hooks/useCaseBlocks";
 
 export default function NewCase() {
@@ -19,6 +21,7 @@ export default function NewCase() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [mediaSelectorOpen, setMediaSelectorOpen] = useState(false);
   const [currentImageField, setCurrentImageField] = useState<"basic" | "hero-logo" | "hero-main" | null>(null);
+  const [selectedTagIds, setSelectedTagIds] = useState<string[]>([]);
 
   const [basicInfo, setBasicInfo] = useState({
     titulo: "",
@@ -64,6 +67,8 @@ export default function NewCase() {
       return data;
     },
   });
+
+  const { data: caseTags = [] } = useCaseTags();
 
   const handleImageSelect = (url: string) => {
     if (currentImageField === "basic") {
@@ -150,6 +155,20 @@ export default function NewCase() {
         .insert(blocksToInsert as any);
 
       if (blocksError) throw blocksError;
+
+      // Insert tags relationship
+      if (selectedTagIds.length > 0) {
+        const tagRelations = selectedTagIds.map(tagId => ({
+          case_id: newCase.id,
+          tag_id: tagId
+        }));
+        
+        const { error: tagsError } = await supabase
+          .from('case_tags')
+          .insert(tagRelations);
+        
+        if (tagsError) throw tagsError;
+      }
 
       toast({
         title: "Sucesso",
@@ -344,19 +363,13 @@ export default function NewCase() {
             </div>
 
             <div>
-              <Label>Tags (separadas por vírgula)</Label>
-              <Input
-                value={heroData.tags?.join(", ") || ""}
-                onChange={(e) =>
-                  setHeroData({
-                    ...heroData,
-                    tags: e.target.value
-                      .split(",")
-                      .map((tag) => tag.trim())
-                      .filter((tag) => tag !== ""),
-                  })
-                }
-                placeholder="Ex: Instagram, Shopee, Nuvemshop"
+              <Label>Tags</Label>
+              <TagsAutocomplete
+                selectedTagIds={selectedTagIds}
+                onChange={setSelectedTagIds}
+                allTags={caseTags}
+                tipo="case"
+                queryKey={['case-tags']}
               />
             </div>
 

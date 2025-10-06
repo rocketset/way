@@ -1,6 +1,8 @@
 import { useParams, Link } from "react-router-dom";
 import { useCase } from "@/hooks/useCase";
 import { useCaseBlocks } from "@/hooks/useCaseBlocks";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -13,6 +15,27 @@ const CaseDetail = () => {
   const { id } = useParams<{ id: string }>();
   const { data: caseData, isLoading, error } = useCase(id || "");
   const { data: blocks, isLoading: blocksLoading } = useCaseBlocks(id || "");
+  
+  // Fetch case tags
+  const { data: caseTags = [] } = useQuery({
+    queryKey: ['case-tags-detail', id],
+    queryFn: async () => {
+      if (!id) return [];
+      
+      const { data, error } = await supabase
+        .from('case_tags')
+        .select('tag_id, tags(id, nome)')
+        .eq('case_id', id);
+      
+      if (error) throw error;
+      
+      return data.map(ct => ({
+        id: ct.tags?.id || '',
+        nome: ct.tags?.nome || ''
+      }));
+    },
+    enabled: !!id
+  });
 
   if (isLoading || blocksLoading) {
     return (
@@ -58,7 +81,15 @@ const CaseDetail = () => {
       {blocks?.map((block) => {
         switch (block.block_type) {
           case "hero":
-            return <HeroBlock key={block.id} data={block.content as import("@/hooks/useCaseBlocks").HeroBlockContent} />;
+            return (
+              <HeroBlock 
+                key={block.id} 
+                data={{
+                  ...(block.content as import("@/hooks/useCaseBlocks").HeroBlockContent),
+                  tags: caseTags
+                }}
+              />
+            );
           case "text_columns":
             return <TextColumnsBlock key={block.id} data={block.content as import("@/hooks/useCaseBlocks").TextColumnsBlockContent} />;
           case "benefits":

@@ -6,7 +6,7 @@ export interface HeroBlockContent {
   titulo: string;
   subtitulo: string;
   descricao: string;
-  tags?: string[];
+  tags?: Array<{ id: string; nome: string }>;
   imagem_principal?: string;
 }
 

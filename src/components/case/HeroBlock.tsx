@@ -52,13 +52,13 @@ export const HeroBlock = ({ data }: HeroBlockProps) => {
 
             {data.tags && data.tags.length > 0 && (
               <div className="flex flex-wrap gap-3 pt-4">
-                {data.tags.map((tag, index) => (
+                {data.tags.map((tag) => (
                   <Badge 
-                    key={index} 
+                    key={tag.id} 
                     variant="outline"
-                    className={`${getTagColor(tag)} px-4 py-2 text-sm font-medium`}
+                    className={`${getTagColor(tag.nome)} px-4 py-2 text-sm font-medium`}
                   >
-                    {tag}
+                    {tag.nome}
                   </Badge>
                 ))}
               </div>
