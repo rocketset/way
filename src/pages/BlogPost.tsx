@@ -5,36 +5,16 @@ import AuthorCard from "@/components/AuthorCard";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Calendar, Clock, ArrowLeft, Share2, User } from "lucide-react";
+import { Calendar, Clock, ArrowLeft, User } from "lucide-react";
 import { useBlogPost } from "@/hooks/useBlogPost";
 import { formatDate, formatReadingTime } from "@/utils/dateUtils";
 import { renderEditorBlock } from "@/utils/blockRenderer";
-import { useToast } from "@/hooks/use-toast";
+import ShareButtons from "@/components/ShareButtons";
+import Comments from "@/components/Comments";
 
 const BlogPost = () => {
   const { slug } = useParams();
-  const { toast } = useToast();
   const { data: post, isLoading, error } = useBlogPost(slug);
-
-  const handleShare = async () => {
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: post?.titulo,
-          text: post?.excerpt,
-          url: window.location.href,
-        });
-      } catch (err) {
-        console.log('Share cancelled');
-      }
-    } else {
-      navigator.clipboard.writeText(window.location.href);
-      toast({
-        title: 'Link copiado!',
-        description: 'O link foi copiado para a área de transferência.',
-      });
-    }
-  };
 
   if (isLoading) {
     return (
@@ -168,15 +148,11 @@ const BlogPost = () => {
                 <span>{formatReadingTime(post.reading_time || 5)} de leitura</span>
               </div>
               <div className="ml-auto">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={handleShare}
-                  className="bg-card border-border text-foreground hover:bg-card/80 hover:border-primary"
-                >
-                  <Share2 className="w-4 h-4 mr-2" />
-                  Compartilhar
-                </Button>
+                <ShareButtons 
+                  title={post.titulo}
+                  excerpt={post.excerpt}
+                  url={window.location.href}
+                />
               </div>
             </div>
           </div>
@@ -278,6 +254,17 @@ const BlogPost = () => {
           </div>
         </section>
       )}
+
+      {/* Comments Section */}
+      <section className="pb-16 px-4">
+        <div className="container mx-auto">
+          <div className="max-w-6xl mx-auto">
+            <div className="bg-card rounded-3xl p-8 md:p-12 border border-border">
+              <Comments postId={post.id} />
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Related Posts Section */}
       {post.related && post.related.length > 0 && (

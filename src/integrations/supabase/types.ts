@@ -150,6 +150,60 @@ export type Database = {
         }
         Relationships: []
       }
+      comments: {
+        Row: {
+          approved: boolean
+          atualizado_em: string
+          author_email: string
+          author_name: string
+          content: string
+          criado_em: string
+          id: string
+          parent_id: string | null
+          post_id: string
+          user_id: string | null
+        }
+        Insert: {
+          approved?: boolean
+          atualizado_em?: string
+          author_email: string
+          author_name: string
+          content: string
+          criado_em?: string
+          id?: string
+          parent_id?: string | null
+          post_id: string
+          user_id?: string | null
+        }
+        Update: {
+          approved?: boolean
+          atualizado_em?: string
+          author_email?: string
+          author_name?: string
+          content?: string
+          criado_em?: string
+          id?: string
+          parent_id?: string | null
+          post_id?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "comments_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "comments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "comments_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       contacts: {
         Row: {
           criado_em: string
