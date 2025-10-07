@@ -211,7 +211,7 @@ const BlogPost = () => {
       {post.autor_bio && (
         <section className="pb-16 px-4">
           <div className="container mx-auto">
-            <div className="max-w-4xl mx-auto">
+            <div className="max-w-6xl mx-auto">
               <div className="relative overflow-hidden bg-gradient-to-br from-card via-card to-card/50 border border-border rounded-3xl p-8 md:p-12 group hover:border-primary/50 transition-all duration-500">
                 {/* Animated background effect */}
                 <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
