@@ -25,6 +25,7 @@ export interface ColumnistPost {
   criado_em: string;
   reading_time: number;
   categorias: string[];
+  destaque: boolean;
 }
 
 export const useColumnist = (columnistId: string | undefined) => {
@@ -48,7 +49,7 @@ export const useColumnist = (columnistId: string | undefined) => {
       // Buscar posts do colunista
       const { data: posts, error: postsError } = await supabase
         .from('posts')
-        .select('id, titulo, slug, excerpt, featured_image, criado_em, reading_time')
+        .select('id, titulo, slug, excerpt, featured_image, criado_em, reading_time, destaque')
         .eq('autor_id', columnistId)
         .eq('publicado', true)
         .eq('status', 'published')

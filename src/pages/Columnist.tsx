@@ -87,60 +87,80 @@ const Columnist = () => {
           </Link>
         </Button>
 
-        {/* Hero Section */}
-        <div className="flex flex-col md:flex-row gap-8 mb-16 items-start">
-          <div className="w-48 h-48 rounded-full overflow-hidden bg-muted flex items-center justify-center flex-shrink-0 border-4 border-primary/20">
-            {columnist.avatar_url ? (
-              <img 
-                src={columnist.avatar_url} 
-                alt={columnist.nome}
-                className="w-full h-full object-cover"
-              />
-            ) : (
-              <User className="w-24 h-24 text-muted-foreground" />
-            )}
-          </div>
+        {/* Hero Section - Social Media Style Profile */}
+        <div className="relative mb-16">
+          {/* Background gradient */}
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10 rounded-3xl -z-10" />
+          
+          <div className="flex flex-col items-center text-center py-12 px-8 animate-fade-in">
+            {/* Avatar with animation */}
+            <div className="relative mb-6 group">
+              <div className="absolute inset-0 bg-gradient-to-r from-primary to-accent rounded-full blur-xl opacity-50 group-hover:opacity-75 transition-opacity duration-500 animate-pulse" />
+              <div className="relative w-40 h-40 rounded-full overflow-hidden bg-muted flex items-center justify-center border-4 border-background shadow-2xl transform transition-transform duration-500 group-hover:scale-110">
+                {columnist.avatar_url ? (
+                  <img 
+                    src={columnist.avatar_url} 
+                    alt={columnist.nome}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <User className="w-20 h-20 text-muted-foreground" />
+                )}
+              </div>
+            </div>
 
-          <div className="flex-1">
-            <h1 className="text-5xl font-bold mb-2">{columnist.nome}</h1>
+            {/* Name and Title */}
+            <h1 className="text-5xl md:text-6xl font-bold mb-3 bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent animate-scale-in">
+              {columnist.nome}
+            </h1>
             {columnist.cargo && (
-              <p className="text-xl text-muted-foreground mb-4">{columnist.cargo}</p>
+              <p className="text-xl md:text-2xl text-muted-foreground mb-4 animate-fade-in">
+                {columnist.cargo}
+              </p>
             )}
+
+            {/* Stats Row */}
+            <div className="flex gap-12 mb-8 animate-fade-in">
+              <div className="group cursor-default">
+                <p className="text-5xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300">
+                  {columnist.totalPosts}
+                </p>
+                <p className="text-sm text-muted-foreground mt-1">Artigos Publicados</p>
+              </div>
+              {columnist.categorias.length > 0 && (
+                <div className="group cursor-default">
+                  <p className="text-5xl font-bold bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300">
+                    {columnist.categorias.length}
+                  </p>
+                  <p className="text-sm text-muted-foreground mt-1">Categorias</p>
+                </div>
+              )}
+            </div>
+
+            {/* Bio */}
             {columnist.bio && (
-              <p className="text-muted-foreground mb-6 leading-relaxed text-lg">{columnist.bio}</p>
+              <p className="text-muted-foreground mb-8 leading-relaxed text-lg max-w-2xl animate-fade-in">
+                {columnist.bio}
+              </p>
             )}
 
             {/* Social Links */}
             {socialLinks.length > 0 && (
-              <div className="flex gap-3 mb-6">
+              <div className="flex gap-4 mb-8 animate-fade-in">
                 {socialLinks.map((link, index) => (
                   <a
                     key={index}
                     href={link.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-12 h-12 rounded-full bg-muted hover:bg-primary hover:text-primary-foreground transition-all duration-300 flex items-center justify-center hover:scale-110"
+                    className="group relative w-14 h-14 rounded-full bg-gradient-to-br from-muted to-muted/50 hover:from-primary hover:to-accent transition-all duration-500 flex items-center justify-center hover:scale-125 hover:rotate-12 shadow-lg hover:shadow-2xl hover:shadow-primary/50"
                     aria-label={link.label}
                   >
-                    <link.icon className="w-5 h-5" />
+                    <link.icon className="w-6 h-6 text-foreground group-hover:text-primary-foreground transition-colors duration-300" />
                   </a>
                 ))}
               </div>
             )}
-
-            {/* Stats */}
-            <div className="flex gap-8">
-              <div className="text-center">
-                <p className="text-4xl font-bold text-primary">{columnist.totalPosts}</p>
-                <p className="text-sm text-muted-foreground">Artigos Publicados</p>
-              </div>
-              {columnist.categorias.length > 0 && (
-                <div className="text-center">
-                  <p className="text-4xl font-bold text-primary">{columnist.categorias.length}</p>
-                  <p className="text-sm text-muted-foreground">Categorias</p>
-                </div>
-              )}
-            </div>
           </div>
         </div>
 
@@ -159,18 +179,20 @@ const Columnist = () => {
         )}
 
         {/* Posts Section */}
-        <div className="bg-card/50 rounded-2xl border-2 border-primary/10 p-8 md:p-12">
+        <div className="bg-gradient-to-br from-card/50 to-card/30 rounded-3xl border-2 border-primary/20 p-8 md:p-12 shadow-xl hover:shadow-2xl transition-shadow duration-500">
           <div className="flex items-center gap-3 mb-8">
-            <div className="h-1 w-12 bg-primary rounded-full"></div>
-            <h2 className="text-3xl font-bold">Artigos em Destaque de {columnist.nome}</h2>
+            <div className="h-1.5 w-16 bg-gradient-to-r from-primary to-accent rounded-full animate-pulse"></div>
+            <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
+              Artigos em Destaque de {columnist.nome}
+            </h2>
           </div>
-          {posts.length === 0 ? (
+          {posts.filter(post => post.destaque).length === 0 ? (
             <p className="text-muted-foreground text-center py-16 text-lg">
-              Nenhum artigo publicado ainda.
+              Nenhum artigo em destaque ainda.
             </p>
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {posts.map((post) => (
+              {posts.filter(post => post.destaque).map((post) => (
                 <Link
                   key={post.id}
                   to={`/blog/${post.slug}`}
