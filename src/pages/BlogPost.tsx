@@ -63,10 +63,10 @@ const BlogPost = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      
+
       {/* Back Button - Mobile only acima da imagem */}
       <div className="md:hidden bg-background pt-24 pb-4 px-4">
-        <Link 
+        <Link
           to="/blog"
           className="inline-flex items-center gap-2 bg-card backdrop-blur-sm border border-border text-foreground hover:text-primary hover:border-primary transition-all duration-300 px-4 py-2 rounded-full group"
         >
@@ -81,7 +81,7 @@ const BlogPost = () => {
           <div className="max-w-6xl mx-auto">
             {/* Back Button - Desktop only */}
             <div className="hidden md:block mb-6">
-              <Link 
+              <Link
                 to="/blog"
                 className="inline-flex items-center gap-2 bg-card/80 backdrop-blur-sm border border-border text-foreground hover:text-primary hover:border-primary transition-all duration-300 px-4 py-2 rounded-full group"
               >
@@ -92,7 +92,7 @@ const BlogPost = () => {
 
             <div className="relative rounded-3xl overflow-hidden border border-border">
               <img
-                src={post.featured_image || '/placeholder.svg'}
+                src={post.featured_image || "/placeholder.svg"}
                 alt={post.titulo}
                 className="w-full h-auto object-cover"
               />
@@ -106,27 +106,17 @@ const BlogPost = () => {
         <div className="md:container md:mx-auto">
           <div className="md:max-w-6xl md:mx-auto space-y-6">
             <div className="flex flex-wrap items-center gap-4">
-              <Badge className="bg-primary text-primary-foreground">
-                {post.categorias[0] || 'Blog'}
-              </Badge>
+              <Badge className="bg-primary text-primary-foreground">{post.categorias[0] || "Blog"}</Badge>
               {post.tags.map((tag) => (
-                <Badge
-                  key={tag}
-                  variant="outline"
-                  className="border-border text-foreground"
-                >
+                <Badge key={tag} variant="outline" className="border-border text-foreground">
                   {tag}
                 </Badge>
               ))}
             </div>
 
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground">
-              {post.titulo}
-            </h1>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground">{post.titulo}</h1>
 
-            <p className="text-xl text-muted-foreground">
-              {post.excerpt}
-            </p>
+            <p className="text-xl text-muted-foreground">{post.excerpt}</p>
 
             {/* Meta Info */}
             <div className="flex flex-wrap items-center gap-6 pt-4 border-t border-border">
@@ -152,11 +142,7 @@ const BlogPost = () => {
             {/* Share Buttons */}
             <div className="pt-6 border-t border-border">
               <h3 className="text-sm font-semibold text-foreground mb-3">Compartilhar:</h3>
-              <ShareButtons 
-                title={post.titulo}
-                excerpt={post.excerpt}
-                url={window.location.href}
-              />
+              <ShareButtons title={post.titulo} excerpt={post.excerpt} url={window.location.href} />
             </div>
           </div>
         </div>
@@ -167,7 +153,7 @@ const BlogPost = () => {
         <div className="md:container md:mx-auto">
           <div className="md:max-w-6xl md:mx-auto">
             <div className="bg-card md:rounded-3xl p-4 md:p-12 md:border md:border-border">
-              <div 
+              <div
                 className="prose prose-lg max-w-none
                   prose-headings:text-foreground prose-headings:font-bold prose-headings:mt-8 prose-headings:mb-4
                   prose-h2:text-3xl prose-h2:text-primary
@@ -197,17 +183,14 @@ const BlogPost = () => {
               <div className="relative overflow-hidden bg-gradient-to-br from-card via-card to-card/50 border border-border rounded-3xl p-8 md:p-12 group hover:border-primary/50 transition-all duration-500">
                 {/* Animated background effect */}
                 <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                
+
                 <div className="relative z-10 flex flex-col md:flex-row gap-6 items-start">
                   {/* Avatar */}
-                  <Link 
-                    to={`/colunista/${post.autor_id}`}
-                    className="flex-shrink-0 group/avatar"
-                  >
+                  <Link to={`/colunista/${post.autor_id}`} className="flex-shrink-0 group/avatar">
                     <div className="relative w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden bg-muted ring-4 ring-primary/20 group-hover/avatar:ring-primary/40 transition-all duration-300">
                       {post.autor_avatar ? (
-                        <img 
-                          src={post.autor_avatar} 
+                        <img
+                          src={post.autor_avatar}
                           alt={post.autor_nome}
                           className="w-full h-full object-cover group-hover/avatar:scale-110 transition-transform duration-500"
                         />
@@ -222,26 +205,17 @@ const BlogPost = () => {
                   {/* Bio Content */}
                   <div className="flex-1 space-y-4">
                     <div>
-                      <Link 
-                        to={`/colunista/${post.autor_id}`}
-                        className="inline-block"
-                      >
+                      <Link to={`/colunista/${post.autor_id}`} className="inline-block">
                         <h3 className="text-2xl md:text-3xl font-bold text-foreground group-hover:text-primary transition-colors duration-300">
                           {post.autor_nome}
                         </h3>
                       </Link>
-                      {post.autor_cargo && (
-                        <p className="text-sm text-primary font-medium mt-1">
-                          {post.autor_cargo}
-                        </p>
-                      )}
+                      {post.autor_cargo && <p className="text-sm text-primary font-medium mt-1">{post.autor_cargo}</p>}
                     </div>
-                    
-                    <p className="text-muted-foreground leading-relaxed">
-                      {post.autor_bio}
-                    </p>
 
-                    <Link 
+                    <p className="text-muted-foreground leading-relaxed">{post.autor_bio}</p>
+
+                    <Link
                       to={`/colunista/${post.autor_id}`}
                       className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:gap-3 transition-all duration-300"
                     >
@@ -259,7 +233,7 @@ const BlogPost = () => {
       )}
 
       {/* Comments Section */}
-      <section className="pb-16 px-4">
+      {/* <section className="pb-16 px-4">
         <div className="container mx-auto">
           <div className="max-w-6xl mx-auto">
             <div className="bg-card rounded-3xl p-8 md:p-12 border border-border">
@@ -267,7 +241,7 @@ const BlogPost = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Comments Section */}
       <section className="py-16 px-4">
@@ -283,17 +257,11 @@ const BlogPost = () => {
         <section className="py-16 px-4 bg-card/30">
           <div className="container mx-auto">
             <div className="max-w-6xl mx-auto">
-              <h2 className="text-3xl font-bold text-foreground mb-8">
-                Outros posts relacionados
-              </h2>
+              <h2 className="text-3xl font-bold text-foreground mb-8">Outros posts relacionados</h2>
 
               <div className="grid md:grid-cols-3 gap-6">
                 {post.related.map((relatedPost: any) => (
-                  <Link
-                    key={relatedPost.id}
-                    to={`/blog/${relatedPost.slug}`}
-                    className="group"
-                  >
+                  <Link key={relatedPost.id} to={`/blog/${relatedPost.slug}`} className="group">
                     <div className="bg-card rounded-2xl overflow-hidden border border-border hover:border-primary transition-all duration-500 hover:shadow-xl hover:shadow-primary/10 h-full flex flex-col">
                       {/* Image */}
                       <div className="relative overflow-hidden aspect-video">
@@ -301,7 +269,7 @@ const BlogPost = () => {
                           {relatedPost.categoria}
                         </Badge>
                         <img
-                          src={relatedPost.featured_image || '/placeholder.svg'}
+                          src={relatedPost.featured_image || "/placeholder.svg"}
                           alt={relatedPost.titulo}
                           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                         />
@@ -312,10 +280,8 @@ const BlogPost = () => {
                         <h3 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors duration-300 mb-2">
                           {relatedPost.titulo}
                         </h3>
-                        
-                        <p className="text-muted-foreground text-sm mb-4 flex-1">
-                          {relatedPost.excerpt}
-                        </p>
+
+                        <p className="text-muted-foreground text-sm mb-4 flex-1">{relatedPost.excerpt}</p>
 
                         {/* Meta */}
                         <div className="flex items-center gap-4 text-xs text-muted-foreground pt-4 border-t border-border">
