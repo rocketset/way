@@ -4,7 +4,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useColumnist } from "@/hooks/useColumnist";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Instagram, Linkedin, Twitter, Globe, ArrowLeft, User } from "lucide-react";
+import { Instagram, Linkedin, Twitter, Globe, User } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
@@ -47,7 +47,6 @@ const Columnist = () => {
             </p>
             <Button asChild>
               <Link to="/blog">
-                <ArrowLeft className="w-4 h-4 mr-2" />
                 Voltar para o Blog
               </Link>
             </Button>
@@ -80,12 +79,6 @@ const Columnist = () => {
       <Header />
 
       <main className="container mx-auto px-4 py-12 max-w-7xl">
-        <Button variant="ghost" asChild className="mb-8">
-          <Link to="/blog">
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Voltar para o Blog
-          </Link>
-        </Button>
 
         {/* Hero Section - Social Media Style Profile */}
         <div className="relative mb-16">
@@ -166,11 +159,19 @@ const Columnist = () => {
 
         {/* Categories */}
         {columnist.categorias.length > 0 && (
-          <div className="mb-16">
-            <h2 className="text-xl font-semibold mb-4">Categorias que escreve:</h2>
-            <div className="flex flex-wrap gap-2">
+          <div className="mb-16 animate-fade-in">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="h-1 w-8 bg-gradient-to-r from-primary to-accent rounded-full"></div>
+              <h2 className="text-2xl font-bold">Categorias que escreve</h2>
+            </div>
+            <div className="flex flex-wrap gap-3">
               {columnist.categorias.map((categoria, index) => (
-                <Badge key={index} variant="secondary" className="text-sm py-1 px-3">
+                <Badge 
+                  key={index} 
+                  variant="secondary" 
+                  className="text-base py-2 px-5 hover:scale-110 hover:bg-primary hover:text-primary-foreground transition-all duration-300 cursor-default shadow-lg hover:shadow-xl"
+                  style={{ animationDelay: `${index * 100}ms` }}
+                >
                   {categoria}
                 </Badge>
               ))}
@@ -178,59 +179,138 @@ const Columnist = () => {
           </div>
         )}
 
-        {/* Posts Section */}
-        <div className="bg-gradient-to-br from-card/50 to-card/30 rounded-3xl border-2 border-primary/20 p-8 md:p-12 shadow-xl hover:shadow-2xl transition-shadow duration-500">
-          <div className="flex items-center gap-3 mb-8">
-            <div className="h-1.5 w-16 bg-gradient-to-r from-primary to-accent rounded-full animate-pulse"></div>
-            <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
-              Artigos em Destaque de {columnist.nome}
-            </h2>
-          </div>
-          {posts.filter(post => post.destaque).length === 0 ? (
-            <p className="text-muted-foreground text-center py-16 text-lg">
-              Nenhum artigo em destaque ainda.
-            </p>
-          ) : (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {posts.filter(post => post.destaque).map((post) => (
-                <Link
-                  key={post.id}
-                  to={`/blog/${post.slug}`}
-                  className="group bg-background rounded-xl overflow-hidden border-2 border-border hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300 hover:-translate-y-1"
-                >
-                  {post.featured_image && (
-                    <div className="aspect-video overflow-hidden">
-                      <img
-                        src={post.featured_image}
-                        alt={post.titulo}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                      />
+        {/* All Posts Section */}
+        <div className="relative overflow-hidden">
+          {/* Animated background */}
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 rounded-3xl -z-10 animate-pulse" style={{ animationDuration: '3s' }} />
+          
+          <div className="bg-gradient-to-br from-card/80 to-card/60 backdrop-blur-sm rounded-3xl border-2 border-primary/30 p-8 md:p-12 shadow-2xl hover:shadow-primary/20 transition-all duration-700">
+            <div className="flex items-center gap-4 mb-10">
+              <div className="h-2 w-20 bg-gradient-to-r from-primary via-accent to-primary rounded-full animate-pulse shadow-lg shadow-primary/50"></div>
+              <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent animate-gradient" style={{ backgroundSize: '200% auto' }}>
+                Artigos de {columnist.nome}
+              </h2>
+            </div>
+            
+            {posts.length === 0 ? (
+              <div className="text-center py-24">
+                <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-br from-muted to-muted/50 flex items-center justify-center animate-bounce">
+                  <User className="w-12 h-12 text-muted-foreground" />
+                </div>
+                <p className="text-muted-foreground text-xl">
+                  Nenhum artigo publicado ainda.
+                </p>
+              </div>
+            ) : (
+              <>
+                {/* Featured Posts */}
+                {posts.filter(post => post.destaque).length > 0 && (
+                  <div className="mb-16">
+                    <div className="flex items-center gap-3 mb-8">
+                      <div className="h-1.5 w-12 bg-gradient-to-r from-accent to-primary rounded-full"></div>
+                      <h3 className="text-2xl font-bold text-foreground/90">Em Destaque</h3>
                     </div>
-                  )}
-                  <div className="p-6">
-                    <div className="flex flex-wrap gap-2 mb-3">
-                      {post.categorias.map((cat, idx) => (
-                        <Badge key={idx} variant="outline" className="text-xs">
-                          {cat}
-                        </Badge>
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                      {posts.filter(post => post.destaque).map((post, index) => (
+                        <Link
+                          key={post.id}
+                          to={`/blog/${post.slug}`}
+                          className="group relative bg-background/95 backdrop-blur-sm rounded-2xl overflow-hidden border-2 border-accent/50 hover:border-accent shadow-xl hover:shadow-2xl hover:shadow-accent/30 transition-all duration-500 hover:-translate-y-2 animate-fade-in"
+                          style={{ animationDelay: `${index * 100}ms` }}
+                        >
+                          <div className="absolute inset-0 bg-gradient-to-br from-accent/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                          
+                          {post.featured_image && (
+                            <div className="aspect-video overflow-hidden relative">
+                              <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent z-10" />
+                              <img
+                                src={post.featured_image}
+                                alt={post.titulo}
+                                className="w-full h-full object-cover group-hover:scale-125 transition-transform duration-700"
+                              />
+                            </div>
+                          )}
+                          <div className="p-6 relative z-10">
+                            <div className="flex flex-wrap gap-2 mb-3">
+                              {post.categorias.map((cat, idx) => (
+                                <Badge key={idx} variant="outline" className="text-xs border-accent/50 text-accent">
+                                  {cat}
+                                </Badge>
+                              ))}
+                            </div>
+                            <h3 className="text-xl font-bold mb-3 group-hover:text-accent transition-colors line-clamp-2">
+                              {post.titulo}
+                            </h3>
+                            <p className="text-muted-foreground text-sm mb-4 line-clamp-3 leading-relaxed">
+                              {post.excerpt}
+                            </p>
+                            <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                              <span>{new Date(post.criado_em).toLocaleDateString('pt-BR')}</span>
+                              <span>•</span>
+                              <span>{post.reading_time} min de leitura</span>
+                            </div>
+                          </div>
+                        </Link>
                       ))}
                     </div>
-                    <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors line-clamp-2">
-                      {post.titulo}
-                    </h3>
-                    <p className="text-muted-foreground text-sm mb-4 line-clamp-3 leading-relaxed">
-                      {post.excerpt}
-                    </p>
-                    <div className="flex items-center gap-4 text-xs text-muted-foreground">
-                      <span>{new Date(post.criado_em).toLocaleDateString('pt-BR')}</span>
-                      <span>•</span>
-                      <span>{post.reading_time} min de leitura</span>
+                  </div>
+                )}
+
+                {/* All Posts */}
+                {posts.filter(post => !post.destaque).length > 0 && (
+                  <div>
+                    <div className="flex items-center gap-3 mb-8">
+                      <div className="h-1.5 w-12 bg-gradient-to-r from-primary to-primary/50 rounded-full"></div>
+                      <h3 className="text-2xl font-bold text-foreground/90">Todos os Artigos</h3>
+                    </div>
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                      {posts.filter(post => !post.destaque).map((post, index) => (
+                        <Link
+                          key={post.id}
+                          to={`/blog/${post.slug}`}
+                          className="group relative bg-background/95 backdrop-blur-sm rounded-2xl overflow-hidden border-2 border-primary/20 hover:border-primary/60 shadow-lg hover:shadow-2xl hover:shadow-primary/20 transition-all duration-500 hover:-translate-y-2 animate-fade-in"
+                          style={{ animationDelay: `${index * 100}ms` }}
+                        >
+                          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                          
+                          {post.featured_image && (
+                            <div className="aspect-video overflow-hidden relative">
+                              <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent z-10" />
+                              <img
+                                src={post.featured_image}
+                                alt={post.titulo}
+                                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                              />
+                            </div>
+                          )}
+                          <div className="p-6 relative z-10">
+                            <div className="flex flex-wrap gap-2 mb-3">
+                              {post.categorias.map((cat, idx) => (
+                                <Badge key={idx} variant="outline" className="text-xs">
+                                  {cat}
+                                </Badge>
+                              ))}
+                            </div>
+                            <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors line-clamp-2">
+                              {post.titulo}
+                            </h3>
+                            <p className="text-muted-foreground text-sm mb-4 line-clamp-3 leading-relaxed">
+                              {post.excerpt}
+                            </p>
+                            <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                              <span>{new Date(post.criado_em).toLocaleDateString('pt-BR')}</span>
+                              <span>•</span>
+                              <span>{post.reading_time} min de leitura</span>
+                            </div>
+                          </div>
+                        </Link>
+                      ))}
                     </div>
                   </div>
-                </Link>
-              ))}
-            </div>
-          )}
+                )}
+              </>
+            )}
+          </div>
         </div>
       </main>
 
