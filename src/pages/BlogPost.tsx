@@ -5,7 +5,7 @@ import AuthorCard from "@/components/AuthorCard";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Calendar, Clock, ArrowLeft, Share2 } from "lucide-react";
+import { Calendar, Clock, ArrowLeft, Share2, User } from "lucide-react";
 import { useBlogPost } from "@/hooks/useBlogPost";
 import { formatDate, formatReadingTime } from "@/utils/dateUtils";
 import { renderEditorBlock } from "@/utils/blockRenderer";
@@ -206,6 +206,75 @@ const BlogPost = () => {
           </div>
         </div>
       </section>
+
+      {/* Author Bio Section */}
+      {post.autor_bio && (
+        <section className="pb-16 px-4">
+          <div className="container mx-auto">
+            <div className="max-w-4xl mx-auto">
+              <div className="relative overflow-hidden bg-gradient-to-br from-card via-card to-card/50 border border-border rounded-3xl p-8 md:p-12 group hover:border-primary/50 transition-all duration-500">
+                {/* Animated background effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                
+                <div className="relative z-10 flex flex-col md:flex-row gap-6 items-start">
+                  {/* Avatar */}
+                  <Link 
+                    to={`/colunista/${post.autor_id}`}
+                    className="flex-shrink-0 group/avatar"
+                  >
+                    <div className="relative w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden bg-muted ring-4 ring-primary/20 group-hover/avatar:ring-primary/40 transition-all duration-300">
+                      {post.autor_avatar ? (
+                        <img 
+                          src={post.autor_avatar} 
+                          alt={post.autor_nome}
+                          className="w-full h-full object-cover group-hover/avatar:scale-110 transition-transform duration-500"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center">
+                          <User className="w-12 h-12 text-muted-foreground" />
+                        </div>
+                      )}
+                    </div>
+                  </Link>
+
+                  {/* Bio Content */}
+                  <div className="flex-1 space-y-4">
+                    <div>
+                      <Link 
+                        to={`/colunista/${post.autor_id}`}
+                        className="inline-block"
+                      >
+                        <h3 className="text-2xl md:text-3xl font-bold text-foreground group-hover:text-primary transition-colors duration-300">
+                          {post.autor_nome}
+                        </h3>
+                      </Link>
+                      {post.autor_cargo && (
+                        <p className="text-sm text-primary font-medium mt-1">
+                          {post.autor_cargo}
+                        </p>
+                      )}
+                    </div>
+                    
+                    <p className="text-muted-foreground leading-relaxed">
+                      {post.autor_bio}
+                    </p>
+
+                    <Link 
+                      to={`/colunista/${post.autor_id}`}
+                      className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:gap-3 transition-all duration-300"
+                    >
+                      Ver todos os artigos
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Related Posts Section */}
       {post.related && post.related.length > 0 && (

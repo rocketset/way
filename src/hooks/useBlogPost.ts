@@ -28,10 +28,11 @@ export const useBlogPost = (slug: string | undefined) => {
       let autorEmail = '';
       let autorAvatar = null;
       let autorCargo = null;
+      let autorBio = null;
       if (post.autor_id) {
         const { data: profile } = await supabase
           .from('profiles')
-          .select('nome, email, avatar_url, cargo')
+          .select('nome, email, avatar_url, cargo, bio')
           .eq('id', post.autor_id)
           .single();
         
@@ -40,6 +41,7 @@ export const useBlogPost = (slug: string | undefined) => {
           autorEmail = profile.email;
           autorAvatar = profile.avatar_url;
           autorCargo = profile.cargo;
+          autorBio = profile.bio;
         }
       }
 
@@ -105,6 +107,7 @@ export const useBlogPost = (slug: string | undefined) => {
         autor_email: autorEmail,
         autor_avatar: autorAvatar,
         autor_cargo: autorCargo,
+        autor_bio: autorBio,
         conteudo: typeof post.conteudo === 'string' ? JSON.parse(post.conteudo) : post.conteudo,
         related,
       };
