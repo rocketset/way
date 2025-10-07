@@ -278,15 +278,6 @@ const BlogPost = () => {
         </div>
       </section>
 
-      {/* Comments Section */}
-      <section className="py-16 px-4">
-        <div className="container mx-auto">
-          <div className="max-w-6xl mx-auto">
-            <Comments postId={post.id} />
-          </div>
-        </div>
-      </section>
-
       {/* Related Posts Section */}
       {post.related && post.related.length > 0 && (
         <section className="py-16 px-4 bg-card/30">
