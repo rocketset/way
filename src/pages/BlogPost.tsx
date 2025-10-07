@@ -2,6 +2,8 @@ import { Link, useParams } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AuthorCard from "@/components/AuthorCard";
+import ShareButtons from "@/components/ShareButtons";
+import Comments from "@/components/Comments";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -9,8 +11,6 @@ import { Calendar, Clock, ArrowLeft, User } from "lucide-react";
 import { useBlogPost } from "@/hooks/useBlogPost";
 import { formatDate, formatReadingTime } from "@/utils/dateUtils";
 import { renderEditorBlock } from "@/utils/blockRenderer";
-import ShareButtons from "@/components/ShareButtons";
-import Comments from "@/components/Comments";
 
 const BlogPost = () => {
   const { slug } = useParams();
@@ -147,13 +147,16 @@ const BlogPost = () => {
                 <Clock className="w-4 h-4" />
                 <span>{formatReadingTime(post.reading_time || 5)} de leitura</span>
               </div>
-              <div className="ml-auto">
-                <ShareButtons 
-                  title={post.titulo}
-                  excerpt={post.excerpt}
-                  url={window.location.href}
-                />
-              </div>
+            </div>
+
+            {/* Share Buttons */}
+            <div className="pt-6 border-t border-border">
+              <h3 className="text-sm font-semibold text-foreground mb-3">Compartilhar:</h3>
+              <ShareButtons 
+                title={post.titulo}
+                excerpt={post.excerpt}
+                url={window.location.href}
+              />
             </div>
           </div>
         </div>
@@ -262,6 +265,24 @@ const BlogPost = () => {
             <div className="bg-card rounded-3xl p-8 md:p-12 border border-border">
               <Comments postId={post.id} />
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Comments Section */}
+      <section className="py-16 px-4">
+        <div className="container mx-auto">
+          <div className="max-w-6xl mx-auto">
+            <Comments postId={post.id} />
+          </div>
+        </div>
+      </section>
+
+      {/* Comments Section */}
+      <section className="py-16 px-4">
+        <div className="container mx-auto">
+          <div className="max-w-6xl mx-auto">
+            <Comments postId={post.id} />
           </div>
         </div>
       </section>

@@ -12,38 +12,50 @@ export interface Comment {
   parent_id: string | null;
   approved: boolean;
   criado_em: string;
+  atualizado_em: string;
   replies?: Comment[];
+}
+
+interface NewComment {
+  post_id: string;
+  author_name: string;
+  author_email: string;
+  content: string;
+  parent_id?: string | null;
 }
 
 export const useComments = (postId: string) => {
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
-  const { data: comments = [], isLoading } = useQuery({
-    queryKey: ["comments", postId],
+  const { data: comments, isLoading } = useQuery({
+    queryKey: ['comments', postId],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from("comments")
-        .select("*")
-        .eq("post_id", postId)
-        .order("criado_em", { ascending: true });
+        .from('comments')
+        .select('*')
+        .eq('post_id', postId)
+        .order('criado_em', { ascending: true });
 
       if (error) throw error;
 
-      // Organize comments into threads (parent comments with replies)
-      const commentMap = new Map<string, Comment>();
+      // Organizar comentários em árvore (comentários principais e respostas)
+      const commentsMap = new Map<string, Comment>();
       const rootComments: Comment[] = [];
 
+      // Primeiro, criar o mapa de todos os comentários
       data.forEach((comment) => {
-        commentMap.set(comment.id, { ...comment, replies: [] });
+        commentsMap.set(comment.id, { ...comment, replies: [] });
       });
 
+      // Depois, organizar em árvore
       data.forEach((comment) => {
-        const commentWithReplies = commentMap.get(comment.id)!;
+        const commentWithReplies = commentsMap.get(comment.id)!;
         if (comment.parent_id) {
-          const parent = commentMap.get(comment.parent_id);
+          const parent = commentsMap.get(comment.parent_id);
           if (parent) {
-            parent.replies!.push(commentWithReplies);
+            parent.replies = parent.replies || [];
+            parent.replies.push(commentWithReplies);
           }
         } else {
           rootComments.push(commentWithReplies);
@@ -55,42 +67,35 @@ export const useComments = (postId: string) => {
   });
 
   const addComment = useMutation({
-    mutationFn: async ({
-      author_name,
-      author_email,
-      content,
-      parent_id,
-    }: {
-      author_name: string;
-      author_email: string;
-      content: string;
-      parent_id?: string;
-    }) => {
-      const { data: { user } } = await supabase.auth.getUser();
-      
-      const { error } = await supabase.from("comments").insert({
-        post_id: postId,
-        user_id: user?.id || null,
-        author_name,
-        author_email,
-        content,
-        parent_id: parent_id || null,
-      });
+    mutationFn: async (newComment: NewComment) => {
+      const { data, error } = await supabase
+        .from('comments')
+        .insert([{
+          post_id: newComment.post_id,
+          author_name: newComment.author_name,
+          author_email: newComment.author_email,
+          content: newComment.content,
+          parent_id: newComment.parent_id || null,
+        }])
+        .select()
+        .single();
 
       if (error) throw error;
+      return data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["comments", postId] });
+      queryClient.invalidateQueries({ queryKey: ['comments', postId] });
       toast({
-        title: "Comentário enviado!",
-        description: "Seu comentário será publicado após aprovação.",
+        title: 'Comentário enviado!',
+        description: 'Seu comentário será publicado após aprovação.',
       });
     },
-    onError: () => {
+    onError: (error) => {
+      console.error('Error adding comment:', error);
       toast({
-        title: "Erro ao enviar comentário",
-        description: "Tente novamente mais tarde.",
-        variant: "destructive",
+        title: 'Erro ao enviar comentário',
+        description: 'Tente novamente mais tarde.',
+        variant: 'destructive',
       });
     },
   });
@@ -99,6 +104,6 @@ export const useComments = (postId: string) => {
     comments,
     isLoading,
     addComment: addComment.mutate,
-    isSubmitting: addComment.isPending,
+    isAddingComment: addComment.isPending,
   };
 };
