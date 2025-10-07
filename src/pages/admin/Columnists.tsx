@@ -22,9 +22,9 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Switch } from "@/components/ui/switch";
-import { Edit, User, Upload, Image as ImageIcon } from "lucide-react";
+import { Edit, User, Image as ImageIcon } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import imageCompression from 'browser-image-compression';
+import { MediaSelector } from "@/components/editor/MediaSelector";
 
 interface Profile {
   id: string;
@@ -43,9 +43,7 @@ interface Profile {
 const Columnists = () => {
   const [editingProfile, setEditingProfile] = useState<Profile | null>(null);
   const [formData, setFormData] = useState<Partial<Profile>>({});
-  const [uploadingImage, setUploadingImage] = useState(false);
-  const [previewImage, setPreviewImage] = useState<string | null>(null);
-  const [showMediaLibrary, setShowMediaLibrary] = useState(false);
+  const [mediaSelectorOpen, setMediaSelectorOpen] = useState(false);
   const queryClient = useQueryClient();
 
   const { data: profiles, isLoading } = useQuery({
@@ -103,7 +101,6 @@ const Columnists = () => {
   const handleEdit = (profile: Profile) => {
     setEditingProfile(profile);
     setFormData(profile);
-    setPreviewImage(profile.avatar_url);
   };
 
   const handleSave = () => {
@@ -112,77 +109,9 @@ const Columnists = () => {
     }
   };
 
-  // Função para fazer upload da imagem
-  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    // Validar tipo de arquivo
-    if (!file.type.startsWith('image/')) {
-      toast.error('Por favor, selecione uma imagem válida');
-      return;
-    }
-
-    setUploadingImage(true);
-
-    try {
-      // Comprimir a imagem
-      const options = {
-        maxSizeMB: 1,
-        maxWidthOrHeight: 800,
-        useWebWorker: true,
-      };
-
-      const compressedFile = await imageCompression(file, options);
-
-      // Gerar nome único para o arquivo
-      const fileExt = compressedFile.name.split('.').pop();
-      const fileName = `${Math.random().toString(36).substring(2)}-${Date.now()}.${fileExt}`;
-      const filePath = `avatars/${fileName}`;
-
-      // Upload para o Supabase Storage
-      const { error: uploadError } = await supabase.storage
-        .from('media-library')
-        .upload(filePath, compressedFile);
-
-      if (uploadError) throw uploadError;
-
-      // Obter URL pública
-      const { data: { publicUrl } } = supabase.storage
-        .from('media-library')
-        .getPublicUrl(filePath);
-
-      setFormData({ ...formData, avatar_url: publicUrl });
-      setPreviewImage(publicUrl);
-      toast.success('Imagem enviada com sucesso!');
-    } catch (error: any) {
-      console.error('Erro ao fazer upload:', error);
-      toast.error('Erro ao fazer upload da imagem');
-    } finally {
-      setUploadingImage(false);
-    }
-  };
-
-  // Função para selecionar imagem da biblioteca de mídia
-  const handleSelectFromLibrary = async () => {
-    try {
-      const { data: mediaFiles, error } = await supabase
-        .from('media_library')
-        .select('*')
-        .eq('mime_type', 'image/jpeg')
-        .or('mime_type.eq.image/png,mime_type.eq.image/webp,mime_type.eq.image/jpg')
-        .order('criado_em', { ascending: false })
-        .limit(50);
-
-      if (error) throw error;
-
-      // Aqui você pode implementar um modal para selecionar da biblioteca
-      // Por enquanto, vamos apenas abrir a biblioteca
-      setShowMediaLibrary(true);
-    } catch (error: any) {
-      console.error('Erro ao carregar biblioteca:', error);
-      toast.error('Erro ao carregar biblioteca de mídia');
-    }
+  const handleMediaSelect = (url: string) => {
+    setFormData({ ...formData, avatar_url: url });
+    setMediaSelectorOpen(false);
   };
 
   if (isLoading) {
@@ -255,14 +184,14 @@ const Columnists = () => {
                           <DialogTitle>Editar Perfil de Colunista</DialogTitle>
                         </DialogHeader>
                         <div className="space-y-4">
-                          {/* Upload de Foto */}
+                          {/* Preview e Seleção de Foto */}
                           <div className="space-y-2">
                             <Label>Foto do Perfil</Label>
                             <div className="flex items-start gap-4">
                               <div className="w-32 h-32 rounded-full overflow-hidden bg-muted flex items-center justify-center border-2 border-border flex-shrink-0">
-                                {previewImage ? (
+                                {formData.avatar_url ? (
                                   <img 
-                                    src={previewImage} 
+                                    src={formData.avatar_url} 
                                     alt="Preview"
                                     className="w-full h-full object-cover"
                                   />
@@ -270,36 +199,18 @@ const Columnists = () => {
                                   <User className="w-16 h-16 text-muted-foreground" />
                                 )}
                               </div>
-                              <div className="flex-1 space-y-2">
-                                <Input
-                                  id="avatar-upload"
-                                  type="file"
-                                  accept="image/*"
-                                  onChange={handleImageUpload}
-                                  disabled={uploadingImage}
-                                  className="hidden"
-                                />
+                              <div className="flex-1">
                                 <Button
                                   type="button"
                                   variant="outline"
-                                  onClick={() => document.getElementById('avatar-upload')?.click()}
-                                  disabled={uploadingImage}
-                                  className="w-full"
-                                >
-                                  <Upload className="w-4 h-4 mr-2" />
-                                  {uploadingImage ? 'Enviando...' : 'Enviar Nova Foto'}
-                                </Button>
-                                <Button
-                                  type="button"
-                                  variant="outline"
-                                  onClick={() => window.open('/admin/media', '_blank')}
+                                  onClick={() => setMediaSelectorOpen(true)}
                                   className="w-full"
                                 >
                                   <ImageIcon className="w-4 h-4 mr-2" />
-                                  Escolher da Biblioteca
+                                  Selecionar Imagem
                                 </Button>
-                                <p className="text-xs text-muted-foreground">
-                                  Recomendado: imagem quadrada de até 1MB
+                                <p className="text-xs text-muted-foreground mt-2">
+                                  Escolha uma imagem da biblioteca ou faça upload de uma nova
                                 </p>
                               </div>
                             </div>
@@ -375,6 +286,13 @@ const Columnists = () => {
           </TableBody>
         </Table>
       </div>
+
+      {/* Media Selector Modal */}
+      <MediaSelector
+        open={mediaSelectorOpen}
+        onClose={() => setMediaSelectorOpen(false)}
+        onSelect={handleMediaSelect}
+      />
     </div>
   );
 };

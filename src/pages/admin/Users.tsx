@@ -29,9 +29,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Plus, Pencil, Trash2, Upload, User } from 'lucide-react';
+import { Plus, Pencil, Trash2, User, Image as ImageIcon } from 'lucide-react';
 import { toast } from 'sonner';
-import imageCompression from 'browser-image-compression';
+import { MediaSelector } from '@/components/editor/MediaSelector';
 
 interface Profile {
   id: string;
@@ -56,8 +56,7 @@ export default function Users() {
     avatar_url: '',
     role: 'user' as 'user' | 'admin',
   });
-  const [uploadingImage, setUploadingImage] = useState(false);
-  const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const [mediaSelectorOpen, setMediaSelectorOpen] = useState(false);
 
   // Carrega usuários ao montar o componente
   useEffect(() => {
@@ -96,7 +95,6 @@ export default function Users() {
     }
   };
 
-  // Abre o dialog para criar novo usuário
   const handleCreate = () => {
     setEditingUser(null);
     setFormData({
@@ -106,7 +104,6 @@ export default function Users() {
       avatar_url: '',
       role: 'user',
     });
-    setPreviewImage(null);
     setDialogOpen(true);
   };
 
@@ -120,59 +117,13 @@ export default function Users() {
       avatar_url: user.avatar_url || '',
       role: (user.role as 'user' | 'admin') || 'user',
     });
-    setPreviewImage(user.avatar_url || null);
     setDialogOpen(true);
   };
 
-  // Função para fazer upload da imagem
-  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    // Validar tipo de arquivo
-    if (!file.type.startsWith('image/')) {
-      toast.error('Por favor, selecione uma imagem válida');
-      return;
-    }
-
-    setUploadingImage(true);
-
-    try {
-      // Comprimir a imagem
-      const options = {
-        maxSizeMB: 1,
-        maxWidthOrHeight: 800,
-        useWebWorker: true,
-      };
-
-      const compressedFile = await imageCompression(file, options);
-
-      // Gerar nome único para o arquivo
-      const fileExt = compressedFile.name.split('.').pop();
-      const fileName = `${Math.random().toString(36).substring(2)}-${Date.now()}.${fileExt}`;
-      const filePath = `avatars/${fileName}`;
-
-      // Upload para o Supabase Storage
-      const { error: uploadError } = await supabase.storage
-        .from('media-library')
-        .upload(filePath, compressedFile);
-
-      if (uploadError) throw uploadError;
-
-      // Obter URL pública
-      const { data: { publicUrl } } = supabase.storage
-        .from('media-library')
-        .getPublicUrl(filePath);
-
-      setFormData({ ...formData, avatar_url: publicUrl });
-      setPreviewImage(publicUrl);
-      toast.success('Imagem enviada com sucesso!');
-    } catch (error: any) {
-      console.error('Erro ao fazer upload:', error);
-      toast.error('Erro ao fazer upload da imagem');
-    } finally {
-      setUploadingImage(false);
-    }
+  // Função para selecionar imagem da biblioteca de mídia
+  const handleMediaSelect = (url: string) => {
+    setFormData({ ...formData, avatar_url: url });
+    setMediaSelectorOpen(false);
   };
 
   // Função para salvar (criar ou atualizar) usuário
@@ -386,14 +337,14 @@ export default function Users() {
           </DialogHeader>
 
           <div className="space-y-4">
-            {/* Upload de Foto */}
+            {/* Preview e Seleção de Foto */}
             <div className="space-y-2">
               <Label>Foto do Perfil</Label>
               <div className="flex items-center gap-4">
                 <div className="w-24 h-24 rounded-full overflow-hidden bg-muted flex items-center justify-center border-2 border-border">
-                  {previewImage ? (
+                  {formData.avatar_url ? (
                     <img 
-                      src={previewImage} 
+                      src={formData.avatar_url} 
                       alt="Preview"
                       className="w-full h-full object-cover"
                     />
@@ -402,26 +353,17 @@ export default function Users() {
                   )}
                 </div>
                 <div className="flex-1">
-                  <Input
-                    id="avatar-upload"
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageUpload}
-                    disabled={uploadingImage}
-                    className="hidden"
-                  />
                   <Button
                     type="button"
                     variant="outline"
-                    onClick={() => document.getElementById('avatar-upload')?.click()}
-                    disabled={uploadingImage}
+                    onClick={() => setMediaSelectorOpen(true)}
                     className="w-full"
                   >
-                    <Upload className="w-4 h-4 mr-2" />
-                    {uploadingImage ? 'Enviando...' : 'Escolher Foto'}
+                    <ImageIcon className="w-4 h-4 mr-2" />
+                    Selecionar Imagem
                   </Button>
                   <p className="text-xs text-muted-foreground mt-2">
-                    Recomendado: imagem quadrada de até 1MB
+                    Escolha uma imagem da biblioteca ou faça upload de uma nova
                   </p>
                 </div>
               </div>
@@ -499,6 +441,13 @@ export default function Users() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      {/* Media Selector Modal */}
+      <MediaSelector
+        open={mediaSelectorOpen}
+        onClose={() => setMediaSelectorOpen(false)}
+        onSelect={handleMediaSelect}
+      />
     </div>
   );
 }
