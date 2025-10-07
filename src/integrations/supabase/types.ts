@@ -495,6 +495,7 @@ export type Database = {
           categoria_id: string | null
           conteudo: string
           criado_em: string
+          destaque: boolean | null
           excerpt: string | null
           featured_image: string | null
           id: string
@@ -513,6 +514,7 @@ export type Database = {
           categoria_id?: string | null
           conteudo: string
           criado_em?: string
+          destaque?: boolean | null
           excerpt?: string | null
           featured_image?: string | null
           id?: string
@@ -531,6 +533,7 @@ export type Database = {
           categoria_id?: string | null
           conteudo?: string
           criado_em?: string
+          destaque?: boolean | null
           excerpt?: string | null
           featured_image?: string | null
           id?: string
