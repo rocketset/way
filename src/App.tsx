@@ -13,6 +13,7 @@ import WhyWay from "./pages/WhyWay";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import BlogPostPreview from "./pages/BlogPostPreview";
+import Columnist from "./pages/Columnist";
 import Cases from "./pages/Cases";
 import CaseDetail from "./pages/CaseDetail";
 import Contact from "./pages/Contact";
@@ -26,6 +27,7 @@ import BlogPosts from "./pages/admin/blog/Posts";
 import BlogPostEditor from "./pages/admin/blog/PostEditor";
 import BlogCategories from "./pages/admin/blog/Categories";
 import BlogTags from "./pages/admin/blog/Tags";
+import Columnists from "./pages/admin/Columnists";
 import CasesList from "./pages/admin/cases/List";
 import NewCase from "./pages/admin/cases/New";
 import CaseEditor from "./pages/admin/cases/Editor";
@@ -53,6 +55,7 @@ const App = () => (
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/preview/:id" element={<BlogPostPreview />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
+          <Route path="/colunista/:id" element={<Columnist />} />
           <Route path="/cases" element={<Cases />} />
           <Route path="/cases/:id" element={<CaseDetail />} />
           <Route path="/contact" element={<Contact />} />
@@ -70,6 +73,7 @@ const App = () => (
             <Route path="blog/posts/edit/:id" element={<BlogPostEditor />} />
             <Route path="blog/categories" element={<BlogCategories />} />
             <Route path="blog/tags" element={<BlogTags />} />
+            <Route path="blog/columnists" element={<Columnists />} />
             
             {/* Rotas de Cases */}
             <Route path="cases/list" element={<CasesList />} />

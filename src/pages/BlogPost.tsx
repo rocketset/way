@@ -1,10 +1,11 @@
 import { Link, useParams } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import AuthorCard from "@/components/AuthorCard";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Calendar, Clock, ArrowLeft, Share2, User } from "lucide-react";
+import { Calendar, Clock, ArrowLeft, Share2 } from "lucide-react";
 import { useBlogPost } from "@/hooks/useBlogPost";
 import { formatDate, formatReadingTime } from "@/utils/dateUtils";
 import { renderEditorBlock } from "@/utils/blockRenderer";
@@ -146,6 +147,14 @@ const BlogPost = () => {
 
             {/* Meta Info */}
             <div className="flex flex-wrap items-center gap-6 pt-4 border-t border-border">
+              <AuthorCard
+                authorId={post.autor_id}
+                authorName={post.autor_nome}
+                authorAvatar={post.autor_avatar}
+                authorRole={post.autor_cargo}
+                showRole={true}
+              />
+              <span className="text-muted-foreground">•</span>
               <div className="flex items-center gap-2 text-muted-foreground">
                 <Calendar className="w-4 h-4" />
                 <span>{formatDate(post.criado_em)}</span>
@@ -154,11 +163,6 @@ const BlogPost = () => {
               <div className="flex items-center gap-2 text-muted-foreground">
                 <Clock className="w-4 h-4" />
                 <span>{formatReadingTime(post.reading_time || 5)} de leitura</span>
-              </div>
-              <span className="text-muted-foreground">•</span>
-              <div className="flex items-center gap-2 text-muted-foreground">
-                <User className="w-4 h-4" />
-                <span>{post.autor_nome}</span>
               </div>
               <div className="ml-auto">
                 <Button

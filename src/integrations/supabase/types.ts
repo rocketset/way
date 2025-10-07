@@ -563,24 +563,48 @@ export type Database = {
       profiles: {
         Row: {
           atualizado_em: string
+          avatar_url: string | null
+          bio: string | null
+          cargo: string | null
           criado_em: string
           email: string
           id: string
+          instagram: string | null
+          is_colunista: boolean | null
+          linkedin: string | null
           nome: string
+          site_pessoal: string | null
+          twitter: string | null
         }
         Insert: {
           atualizado_em?: string
+          avatar_url?: string | null
+          bio?: string | null
+          cargo?: string | null
           criado_em?: string
           email: string
           id: string
+          instagram?: string | null
+          is_colunista?: boolean | null
+          linkedin?: string | null
           nome: string
+          site_pessoal?: string | null
+          twitter?: string | null
         }
         Update: {
           atualizado_em?: string
+          avatar_url?: string | null
+          bio?: string | null
+          cargo?: string | null
           criado_em?: string
           email?: string
           id?: string
+          instagram?: string | null
+          is_colunista?: boolean | null
+          linkedin?: string | null
           nome?: string
+          site_pessoal?: string | null
+          twitter?: string | null
         }
         Relationships: []
       }

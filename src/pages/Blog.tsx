@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import AuthorCard from "@/components/AuthorCard";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -157,6 +158,12 @@ const Blog = () => {
 
                           {/* Meta Info */}
                           <div className="flex items-center gap-6 pt-4 text-sm text-muted-foreground">
+                            <AuthorCard
+                              authorId={post.autor_id}
+                              authorName={post.autor_nome}
+                              authorAvatar={post.autor_avatar}
+                            />
+                            <span>•</span>
                             <div className="flex items-center gap-2">
                               <Calendar className="w-4 h-4" />
                               <span>{formatDate(post.criado_em)}</span>
@@ -257,13 +264,20 @@ const Blog = () => {
                           </div>
 
                           {/* Meta Info */}
-                          <div className="flex items-center gap-4 pt-4 text-sm text-muted-foreground border-t border-border mt-4">
-                            <div className="flex items-center gap-2">
-                              <Calendar className="w-4 h-4" />
-                              <span>{formatDate(post.criado_em)}</span>
+                          <div className="flex flex-col gap-3 pt-4 border-t border-border mt-4">
+                            <AuthorCard
+                              authorId={post.autor_id}
+                              authorName={post.autor_nome}
+                              authorAvatar={post.autor_avatar}
+                            />
+                            <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                              <div className="flex items-center gap-2">
+                                <Calendar className="w-4 h-4" />
+                                <span>{formatDate(post.criado_em)}</span>
+                              </div>
+                              <span>•</span>
+                              <span>{formatReadingTime(post.reading_time)}</span>
                             </div>
-                            <span>•</span>
-                            <span>{formatReadingTime(post.reading_time)}</span>
                           </div>
                         </div>
                       </div>

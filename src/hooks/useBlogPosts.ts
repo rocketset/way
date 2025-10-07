@@ -13,6 +13,8 @@ interface BlogPost {
   categorias: string[];
   tags: string[];
   autor_nome: string;
+  autor_id: string;
+  autor_avatar: string | null;
 }
 
 export const useBlogPosts = (searchQuery?: string, selectedCategory?: string) => {
@@ -44,15 +46,17 @@ export const useBlogPosts = (searchQuery?: string, selectedCategory?: string) =>
         posts.map(async (post) => {
           // Buscar autor
           let autorNome = 'Autor';
+          let autorAvatar = null;
           if (post.autor_id) {
             const { data: profile } = await supabase
               .from('profiles')
-              .select('nome')
+              .select('nome, avatar_url')
               .eq('id', post.autor_id)
               .single();
             
             if (profile) {
               autorNome = profile.nome;
+              autorAvatar = profile.avatar_url;
             }
           }
 
@@ -91,6 +95,8 @@ export const useBlogPosts = (searchQuery?: string, selectedCategory?: string) =>
             categorias,
             tags,
             autor_nome: autorNome,
+            autor_id: post.autor_id,
+            autor_avatar: autorAvatar,
           };
         })
       );

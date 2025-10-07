@@ -32,6 +32,7 @@ const menuItems = [
       { label: 'Posts', path: '/admin/blog/posts' },
       { label: 'Categorias', path: '/admin/blog/categories' },
       { label: 'Tags', path: '/admin/blog/tags' },
+      { label: 'Colunistas', path: '/admin/blog/columnists' },
     ]
   },
   { 
