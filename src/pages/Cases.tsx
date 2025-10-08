@@ -6,17 +6,16 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Search, ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight, Sparkles } from "lucide-react";
 import { useCases } from "@/hooks/useCases";
 import { useCaseCategories } from "@/hooks/useCaseCategories";
 
 const Cases = () => {
-  const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("Todos");
   const [visibleCases, setVisibleCases] = useState(6);
 
   const { data: categoriesData, isLoading: categoriesLoading } = useCaseCategories();
-  const { data: casesData, isLoading: casesLoading } = useCases(searchQuery, selectedCategory);
+  const { data: casesData, isLoading: casesLoading } = useCases("", selectedCategory);
 
   const categories = ["Todos", ...(categoriesData?.map((c) => c.nome) || [])];
   const featuredCases = casesData?.featured || [];
@@ -58,18 +57,6 @@ const Cases = () => {
       <section className="pb-12 px-4">
         <div className="container mx-auto">
           <div className="max-w-7xl mx-auto">
-            {/* Search Bar */}
-            <div className="relative mb-8">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-              <Input
-                type="text"
-                placeholder="Buscar cases..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-12 h-14 bg-card border-border text-foreground placeholder:text-muted-foreground focus:border-primary transition-all duration-300"
-              />
-            </div>
-
             {/* Category Filters */}
             <div className="flex flex-wrap gap-3">
               {categoriesLoading ? (
