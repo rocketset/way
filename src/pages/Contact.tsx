@@ -349,6 +349,26 @@ const Contact = () => {
                 ))}
               </div>
 
+              {/* WhatsApp Button */}
+              <a
+                href="https://wa.me/message/5AGVY5WZR56KA1"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center justify-between gap-4 bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-400 hover:from-yellow-500 hover:via-yellow-600 hover:to-yellow-500 text-white rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.03] animate-fade-in"
+                style={{ animationDelay: '0.2s' }}
+              >
+                <div className="flex items-center gap-4">
+                  <div className="p-3 bg-white/20 rounded-xl group-hover:bg-white/30 group-hover:scale-110 transition-all duration-300 backdrop-blur-sm">
+                    <MessageSquare className="w-7 h-7" />
+                  </div>
+                  <div>
+                    <div className="font-bold text-lg">WhatsApp</div>
+                    <div className="text-white/90 text-sm">+55 83 99666-3602</div>
+                  </div>
+                </div>
+                <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform flex-shrink-0" />
+              </a>
+
               {/* Social Links */}
               <div className="group bg-gradient-to-br from-primary/10 to-primary/5 rounded-2xl p-6 border border-primary/20 animate-fade-in hover:border-primary/40 transition-all duration-300 relative overflow-hidden">
                 {/* Animated + in background */}
