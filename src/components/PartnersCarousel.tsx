@@ -56,16 +56,16 @@ const PartnersCarousel = () => {
           {allPartners.map((partner, index) => (
             <div
               key={`${partner.name}-${index}`}
-              className="flex-shrink-0 w-52 h-28 bg-card rounded-lg border border-border hover:border-primary/50 shadow-sm hover:shadow-2xl transition-all duration-500 group cursor-pointer overflow-hidden relative"
+              className="flex-shrink-0 w-64 h-36 bg-card rounded-lg border border-border hover:border-primary/50 shadow-sm hover:shadow-md transition-all duration-500 group cursor-pointer overflow-hidden relative"
             >
               {/* Animated background gradient on hover */}
               <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-yellow-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               
               {/* Shine effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
 
               {/* Logo container */}
-              <div className="relative h-full flex items-center justify-center p-6 transform group-hover:scale-110 transition-transform duration-500">
+              <div className="relative h-full flex items-center justify-center p-6 transform group-hover:scale-105 transition-transform duration-500">
                 <img
                   src={partner.logo}
                   alt={partner.name}
@@ -74,12 +74,12 @@ const PartnersCarousel = () => {
               </div>
 
               {/* Subtle glow on hover */}
-              <div className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
-                <div className="absolute inset-0 rounded-lg shadow-[0_0_30px_rgba(255,204,0,0.3)]" />
+              <div className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-50 transition-opacity duration-500 pointer-events-none">
+                <div className="absolute inset-0 rounded-lg shadow-[0_0_15px_rgba(255,204,0,0.2)]" />
               </div>
 
               {/* Corner accent */}
-              <div className="absolute top-0 right-0 w-12 h-12 bg-gradient-to-br from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-bl-full" />
+              <div className="absolute top-0 right-0 w-12 h-12 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-bl-full" />
             </div>
           ))}
         </div>
