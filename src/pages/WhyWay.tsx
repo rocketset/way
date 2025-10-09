@@ -159,6 +159,9 @@ const WhyWay = () => {
         </div>
       </section>
 
+      {/* Logos dos Parceiros */}
+      <PartnersCarousel />
+
       {/* Nosso DNA */}
       <section className="py-20 px-4 bg-gradient-to-b from-background to-primary/5">
         <div className="container mx-auto">
@@ -320,16 +323,6 @@ Hoje, com presença nacional e foco em resultados reais, a Way transforma opera�
                   Nenhum case disponível no momento
                 </p>
               </div>}
-          </div>
-        </div>
-      </section>
-
-      {/* Logos dos Clientes */}
-      <section className="py-20 px-4">
-        <div className="container mx-auto">
-          <div className="max-w-6xl mx-auto">
-            
-            <PartnersCarousel />
           </div>
         </div>
       </section>
