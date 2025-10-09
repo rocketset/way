@@ -7,8 +7,6 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useCases } from "@/hooks/useCases";
 import PartnersCarousel from "@/components/PartnersCarousel";
-import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
-import Autoplay from "embla-carousel-autoplay";
 import whyWayHero from "@/assets/why-way-hero.jpeg";
 import leadershipPhoto from "@/assets/leadership-photo.jpg";
 import galleryTeam1 from "@/assets/gallery/team-1.jpg";
@@ -28,7 +26,7 @@ const WhyWay = () => {
     data: casesData,
     isLoading: casesLoading
   } = useCases("", "Todos");
-  const [galleryPhotos] = useState<string[]>([
+  const galleryPhotos = [
     galleryTeam1, 
     galleryTeam2, 
     galleryTeam3, 
@@ -39,7 +37,10 @@ const WhyWay = () => {
     galleryTeam8, 
     galleryTeam9, 
     galleryTeam10
-  ]);
+  ];
+
+  // Duplicate photos for seamless infinite scroll
+  const allPhotos = [...galleryPhotos, ...galleryPhotos];
   const stats = [{
     number: "500+",
     label: "Projetos Entregues"
@@ -96,37 +97,50 @@ const WhyWay = () => {
       
 
       {/* Carousel de Fotos */}
-      <section className="py-16 px-4 bg-background">
+      <section className="py-16 px-4 bg-background overflow-hidden">
         <div className="container mx-auto">
           <div className="max-w-7xl mx-auto">
-            <Carousel
-              opts={{
-                align: "start",
-                loop: true,
-              }}
-              plugins={[
-                Autoplay({
-                  delay: 3000,
-                }),
-              ]}
-              className="w-full"
-            >
-              <CarouselContent className="-ml-4">
-                {galleryPhotos.map((photo, index) => (
-                  <CarouselItem key={index} className="pl-4 md:basis-1/2 lg:basis-1/3">
-                    <div className="relative group overflow-hidden rounded-xl border border-border hover:border-primary/50 transition-all duration-500 aspect-square">
-                      <img 
-                        src={photo} 
-                        alt={`Galeria ${index + 1}`} 
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
-                      />
-                    </div>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-            </Carousel>
+            <div className="flex gap-6 animate-gallery-scroll">
+              {allPhotos.map((photo, index) => (
+                <div 
+                  key={`${photo}-${index}`} 
+                  className="flex-shrink-0 w-80 aspect-square"
+                >
+                  <div className="relative group overflow-hidden rounded-xl border border-border hover:border-primary/50 transition-all duration-500 h-full">
+                    <img 
+                      src={photo} 
+                      alt={`Galeria ${index + 1}`} 
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
+
+        <style>{`
+          @keyframes gallery-scroll {
+            0% {
+              transform: translateX(0);
+            }
+            100% {
+              transform: translateX(-50%);
+            }
+          }
+
+          .animate-gallery-scroll {
+            animation: gallery-scroll 40s linear infinite;
+            display: flex;
+            width: max-content;
+          }
+
+          @media (prefers-reduced-motion: reduce) {
+            .animate-gallery-scroll {
+              animation-duration: 60s;
+            }
+          }
+        `}</style>
       </section>
 
       {/* Nascemos para revolucionar */}
