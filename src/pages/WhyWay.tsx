@@ -7,6 +7,8 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useCases } from "@/hooks/useCases";
 import PartnersCarousel from "@/components/PartnersCarousel";
+import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
 import whyWayHero from "@/assets/why-way-hero.jpeg";
 import leadershipPhoto from "@/assets/leadership-photo.jpg";
 import galleryTeam1 from "@/assets/gallery/team-1.jpg";
@@ -97,11 +99,32 @@ const WhyWay = () => {
       <section className="py-16 px-4 bg-background">
         <div className="container mx-auto">
           <div className="max-w-7xl mx-auto">
-            <div className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide">
-              {galleryPhotos.map((photo, index) => <div key={index} className="flex-shrink-0 w-80 h-80 relative group overflow-hidden rounded-xl border border-border hover:border-primary/50 transition-all duration-500">
-                  <img src={photo} alt={`Galeria ${index + 1}`} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                </div>)}
-            </div>
+            <Carousel
+              opts={{
+                align: "start",
+                loop: true,
+              }}
+              plugins={[
+                Autoplay({
+                  delay: 3000,
+                }),
+              ]}
+              className="w-full"
+            >
+              <CarouselContent className="-ml-4">
+                {galleryPhotos.map((photo, index) => (
+                  <CarouselItem key={index} className="pl-4 md:basis-1/2 lg:basis-1/3">
+                    <div className="relative group overflow-hidden rounded-xl border border-border hover:border-primary/50 transition-all duration-500 aspect-square">
+                      <img 
+                        src={photo} 
+                        alt={`Galeria ${index + 1}`} 
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
+                      />
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+            </Carousel>
           </div>
         </div>
       </section>
