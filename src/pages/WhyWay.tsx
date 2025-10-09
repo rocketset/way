@@ -94,6 +94,19 @@ const WhyWay = () => {
         </div>
       </section>
 
+      {/* Carousel de Fotos */}
+      <section className="py-16 px-4 bg-background">
+        <div className="container mx-auto">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide">
+              {galleryPhotos.map((photo, index) => <div key={index} className="flex-shrink-0 w-80 h-80 relative group overflow-hidden rounded-xl border border-border hover:border-primary/50 transition-all duration-500">
+                  <img src={photo} alt={`Galeria ${index + 1}`} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                </div>)}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Nascemos para revolucionar */}
       <section className="py-20 px-4">
         <div className="container mx-auto">
@@ -202,19 +215,6 @@ Hoje, com presenÃ§a nacional e foco em resultados reais, a Way transforma operaÃ
                   />
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Carousel de Fotos */}
-      <section className="py-16 px-4 bg-background">
-        <div className="container mx-auto">
-          <div className="max-w-7xl mx-auto">
-            <div className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide">
-              {galleryPhotos.map((photo, index) => <div key={index} className="flex-shrink-0 w-80 h-80 relative group overflow-hidden rounded-xl border border-border hover:border-primary/50 transition-all duration-500">
-                  <img src={photo} alt={`Galeria ${index + 1}`} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                </div>)}
             </div>
           </div>
         </div>
