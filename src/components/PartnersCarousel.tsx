@@ -51,7 +51,7 @@ const PartnersCarousel = () => {
           {allPartners.map((partner, index) => (
             <div
               key={`${partner.name}-${index}`}
-              className="flex-shrink-0 w-64 h-36 bg-card rounded-lg border border-border hover:border-primary/50 shadow-sm hover:shadow-md transition-all duration-500 group cursor-pointer overflow-hidden relative"
+              className="flex-shrink-0 w-64 h-36 bg-card rounded-lg border border-border hover:border-primary/50 transition-all duration-500 group cursor-pointer overflow-hidden relative"
             >
               {/* Animated background gradient on hover */}
               <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-yellow-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -69,8 +69,8 @@ const PartnersCarousel = () => {
               </div>
 
               {/* Subtle glow on hover */}
-              <div className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-50 transition-opacity duration-500 pointer-events-none">
-                <div className="absolute inset-0 rounded-lg shadow-[0_0_15px_rgba(255,204,0,0.2)]" />
+              <div className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-25 transition-opacity duration-500 pointer-events-none">
+                <div className="absolute inset-0 rounded-lg shadow-[0_0_8px_rgba(255,204,0,0.15)]" />
               </div>
 
               {/* Corner accent */}
