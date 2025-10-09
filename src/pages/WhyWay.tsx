@@ -3,28 +3,19 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { 
-  Target, 
   Rocket, 
   Users, 
   TrendingUp, 
   Shield, 
   Zap,
   Heart,
-  Award,
-  ChevronRight,
-  Sparkles,
-  BarChart3,
-  Clock,
   Plus,
-  ArrowRight
+  ArrowRight,
+  Sparkles
 } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useCases } from "@/hooks/useCases";
-import teamImage from "@/assets/why-way-team.png";
-import innovationImage from "@/assets/why-way-innovation.png";
-import differentialsImage from "@/assets/why-way-differentials.png";
-import successImage from "@/assets/why-way-success.png";
 
 const WhyWay = () => {
   const navigate = useNavigate();
@@ -37,65 +28,11 @@ const WhyWay = () => {
     // Exemplo: "/images/foto1.jpg", "/images/foto2.jpg"
   ]);
 
-  const values = [
-    {
-      icon: Heart,
-      title: "Paixão pelo Cliente",
-      description: "Colocamos nossos clientes no centro de tudo. Seu sucesso é nossa missão.",
-      color: "from-red-500 to-pink-500",
-      bgGlow: "bg-red-500/20"
-    },
-    {
-      icon: Rocket,
-      title: "Inovação Constante",
-      description: "Sempre evoluindo com as melhores tecnologias e estratégias do mercado.",
-      color: "from-blue-500 to-cyan-500",
-      bgGlow: "bg-blue-500/20"
-    },
-    {
-      icon: Users,
-      title: "Time de Especialistas",
-      description: "Profissionais certificados e experientes dedicados ao seu crescimento.",
-      color: "from-purple-500 to-pink-500",
-      bgGlow: "bg-purple-500/20"
-    },
-    {
-      icon: TrendingUp,
-      title: "Resultados Comprovados",
-      description: "Histórico consistente de crescimento e ROI positivo para nossos clientes.",
-      color: "from-green-500 to-emerald-500",
-      bgGlow: "bg-green-500/20"
-    }
-  ];
-
-  const differentials = [
-    {
-      icon: Shield,
-      title: "Transparência Total",
-      description: "Relatórios detalhados e acesso completo aos dados das suas campanhas."
-    },
-    {
-      icon: Zap,
-      title: "Agilidade",
-      description: "Implementação rápida e otimizações constantes para máxima performance."
-    },
-    {
-      icon: Award,
-      title: "Certificações",
-      description: "Parceiros oficiais das principais plataformas de e-commerce e marketing."
-    },
-    {
-      icon: BarChart3,
-      title: "Data-Driven",
-      description: "Decisões baseadas em dados e análises aprofundadas do mercado."
-    }
-  ];
-
   const stats = [
-    { number: "500+", label: "Clientes Ativos", icon: Users },
-    { number: "R$ 100M+", label: "Faturamento Gerado", icon: TrendingUp },
-    { number: "8 Anos", label: "de Experiência", icon: Clock },
-    { number: "98%", label: "Satisfação", icon: Award }
+    { number: "500+", label: "Projetos Entregues" },
+    { number: "R$ 100M+", label: "Faturamento Gerado" },
+    { number: "8 Anos", label: "de Mercado" },
+    { number: "98%", label: "de Satisfação" }
   ];
 
   const featuredCases = casesData?.featured || [];
@@ -107,76 +44,145 @@ const WhyWay = () => {
       <Header />
       
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 overflow-hidden">
-        {/* Animated background */}
-        <div className="absolute inset-0 opacity-30">
+      <section className="relative pt-32 pb-20 px-4 overflow-hidden">
+        <div className="absolute inset-0 opacity-20">
           <div className="absolute top-20 left-10 w-72 h-72 bg-primary/30 rounded-full blur-[100px] animate-pulse" />
-          <div className="absolute bottom-20 right-10 w-96 h-96 bg-yellow-500/20 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: "1s" }} />
+          <div className="absolute bottom-20 right-10 w-96 h-96 bg-primary/20 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: "1s" }} />
         </div>
 
-        <div className="container mx-auto px-4 relative z-10">
+        <div className="container mx-auto relative z-10">
           <div className="max-w-4xl mx-auto text-center">
-            <Badge className="mb-6 px-6 py-2 text-base animate-fade-in">
-              <Sparkles className="w-4 h-4 mr-2" />
-              Conheça a Way+
-            </Badge>
-            
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-fade-in">
-              <span className="bg-gradient-to-r from-primary via-yellow-400 to-primary bg-clip-text text-transparent animate-gradient-x">
-                Por que escolher
+            <h1 className="text-5xl md:text-7xl font-bold mb-8 animate-fade-in">
+              <span className="bg-gradient-to-r from-primary via-primary/80 to-primary bg-clip-text text-transparent">
+                Por que escolher a Way+?
               </span>
-              <br />
-              <span className="text-foreground">a Way+?</span>
             </h1>
-            
-            <p className="text-xl text-muted-foreground mb-8 animate-fade-in max-w-2xl mx-auto" style={{ animationDelay: "0.2s" }}>
-              Somos mais do que uma agência de marketing digital. Somos seu parceiro estratégico 
-              para transformar seu e-commerce em uma máquina de vendas.
-            </p>
-
-            <div className="flex flex-wrap gap-4 justify-center animate-fade-in" style={{ animationDelay: "0.3s" }}>
-              <Button 
-                size="lg" 
-                className="group bg-gradient-to-r from-primary via-yellow-500 to-primary hover:shadow-2xl transition-all duration-300"
-                onClick={() => document.getElementById('contato')?.scrollIntoView({ behavior: 'smooth' })}
-              >
-                Começar Agora
-                <ChevronRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Button>
-              <Button 
-                size="lg" 
-                variant="outline"
-                className="group"
-                onClick={() => document.getElementById('nossa-historia')?.scrollIntoView({ behavior: 'smooth' })}
-              >
-                Nossa História
-              </Button>
-            </div>
           </div>
         </div>
       </section>
 
       {/* Stats Section */}
-      <section className="py-16 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-background via-primary/5 to-background" />
+      <section className="py-16 px-4 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-background to-background" />
         
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {stats.map((stat, index) => (
-              <div
-                key={index}
-                className="text-center group animate-fade-in"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                <div className="mb-4 inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 group-hover:bg-primary/20 transition-all duration-300 group-hover:scale-110">
-                  <stat.icon className="w-8 h-8 text-primary" />
+        <div className="container mx-auto relative z-10">
+          <div className="max-w-5xl mx-auto">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
+              {stats.map((stat, index) => (
+                <div
+                  key={index}
+                  className="text-center group animate-fade-in"
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  <div className="text-4xl md:text-6xl font-bold text-primary mb-2 group-hover:scale-110 transition-transform duration-300">
+                    {stat.number}
+                  </div>
+                  <div className="text-sm md:text-base text-muted-foreground font-medium">
+                    {stat.label}
+                  </div>
                 </div>
-                <div className="text-4xl md:text-5xl font-bold text-primary mb-2 group-hover:scale-110 transition-transform duration-300">
-                  {stat.number}
-                </div>
-                <div className="text-muted-foreground font-medium">{stat.label}</div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Nossa História */}
+      <section className="py-20 px-4">
+        <div className="container mx-auto">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-4xl md:text-6xl font-bold mb-8">
+              Nascemos para revolucionar
+              <br />
+              <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+                o e-commerce
+              </span>
+            </h2>
+          </div>
+        </div>
+      </section>
+
+      {/* O que nos move - Valores */}
+      <section className="py-20 px-4 bg-gradient-to-b from-background to-primary/5">
+        <div className="container mx-auto">
+          <div className="max-w-4xl mx-auto text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+              O que nos move
+            </h2>
+          </div>
+
+          <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="bg-card border border-border rounded-2xl p-8 hover:border-primary/50 transition-all duration-500 hover:shadow-xl hover:-translate-y-2 group">
+              <div className="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-primary/70 group-hover:scale-110 transition-transform duration-500">
+                <Heart className="w-8 h-8 text-primary-foreground" />
               </div>
-            ))}
+              <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors duration-300">
+                Paixão pelo Cliente
+              </h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Colocamos nossos clientes no centro de tudo. Seu sucesso é nossa missão.
+              </p>
+            </div>
+
+            <div className="bg-card border border-border rounded-2xl p-8 hover:border-primary/50 transition-all duration-500 hover:shadow-xl hover:-translate-y-2 group">
+              <div className="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-primary/70 group-hover:scale-110 transition-transform duration-500">
+                <Rocket className="w-8 h-8 text-primary-foreground" />
+              </div>
+              <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors duration-300">
+                Inovação Constante
+              </h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Sempre evoluindo com as melhores tecnologias e estratégias do mercado.
+              </p>
+            </div>
+
+            <div className="bg-card border border-border rounded-2xl p-8 hover:border-primary/50 transition-all duration-500 hover:shadow-xl hover:-translate-y-2 group">
+              <div className="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-primary/70 group-hover:scale-110 transition-transform duration-500">
+                <Users className="w-8 h-8 text-primary-foreground" />
+              </div>
+              <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors duration-300">
+                Time de Especialistas
+              </h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Profissionais certificados e experientes dedicados ao seu crescimento.
+              </p>
+            </div>
+
+            <div className="bg-card border border-border rounded-2xl p-8 hover:border-primary/50 transition-all duration-500 hover:shadow-xl hover:-translate-y-2 group">
+              <div className="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-primary/70 group-hover:scale-110 transition-transform duration-500">
+                <TrendingUp className="w-8 h-8 text-primary-foreground" />
+              </div>
+              <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors duration-300">
+                Resultados Comprovados
+              </h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Histórico consistente de crescimento e ROI positivo para nossos clientes.
+              </p>
+            </div>
+
+            <div className="bg-card border border-border rounded-2xl p-8 hover:border-primary/50 transition-all duration-500 hover:shadow-xl hover:-translate-y-2 group">
+              <div className="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-primary/70 group-hover:scale-110 transition-transform duration-500">
+                <Shield className="w-8 h-8 text-primary-foreground" />
+              </div>
+              <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors duration-300">
+                Transparência Total
+              </h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Relatórios detalhados e acesso completo aos dados das suas campanhas.
+              </p>
+            </div>
+
+            <div className="bg-card border border-border rounded-2xl p-8 hover:border-primary/50 transition-all duration-500 hover:shadow-xl hover:-translate-y-2 group">
+              <div className="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-primary/70 group-hover:scale-110 transition-transform duration-500">
+                <Zap className="w-8 h-8 text-primary-foreground" />
+              </div>
+              <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors duration-300">
+                Agilidade
+              </h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Implementação rápida e otimizações constantes para máxima performance.
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -187,18 +193,6 @@ const WhyWay = () => {
         
         <div className="container mx-auto relative z-10">
           <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-16">
-              <Badge className="mb-4 bg-primary/10 text-primary border-primary/20">
-                Galeria
-              </Badge>
-              <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
-                Nossos Momentos
-              </h2>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Conheça nossa equipe e os bastidores dos nossos projetos
-              </p>
-            </div>
-
             {galleryPhotos.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {galleryPhotos.map((photo, index) => (
@@ -230,157 +224,6 @@ const WhyWay = () => {
         </div>
       </section>
 
-      {/* Nossa História */}
-      <section id="nossa-historia" className="py-20">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="animate-fade-in">
-              <Badge className="mb-4">
-                <Target className="w-4 h-4 mr-2" />
-                Nossa História
-              </Badge>
-              <h2 className="text-4xl md:text-5xl font-bold mb-6">
-                Nascemos para
-                <span className="bg-gradient-to-r from-primary to-yellow-500 bg-clip-text text-transparent"> revolucionar </span>
-                o e-commerce
-              </h2>
-              <div className="space-y-4 text-lg text-muted-foreground">
-                <p>
-                  Fundada em 2016, a Way+ nasceu da visão de criar uma agência que realmente 
-                  entendesse as necessidades dos e-commerces brasileiros.
-                </p>
-                <p>
-                  Começamos pequenos, mas com grandes sonhos. Hoje, somos referência em 
-                  marketing digital para e-commerce, tendo ajudado centenas de empresas a 
-                  alcançarem resultados extraordinários.
-                </p>
-                <p>
-                  Nossa jornada é marcada por inovação, dedicação e, principalmente, pelo 
-                  sucesso dos nossos clientes. Cada resultado conquistado é uma vitória compartilhada.
-                </p>
-              </div>
-            </div>
-
-            <div className="relative animate-fade-in" style={{ animationDelay: "0.2s" }}>
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-yellow-500/20 rounded-3xl blur-3xl" />
-              <img 
-                src={teamImage}
-                alt="Time Way+"
-                className="relative rounded-3xl shadow-2xl w-full h-auto object-cover hover:scale-105 transition-transform duration-500"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Valores */}
-      <section className="py-20 relative overflow-hidden">
-        <div className="absolute inset-0">
-          <div className="absolute top-0 left-0 w-full h-full opacity-20"
-            style={{
-              backgroundImage: 'radial-gradient(circle, hsl(45 100% 50% / 0.3) 1px, transparent 1px)',
-              backgroundSize: '30px 30px'
-            }}
-          />
-        </div>
-
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center mb-16">
-            <Badge className="mb-4">
-              <Sparkles className="w-4 h-4 mr-2" />
-              Nossos Valores
-            </Badge>
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              O que nos move
-            </h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Princípios que guiam cada decisão e ação da Way+
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {values.map((value, index) => (
-              <div
-                key={index}
-                className="relative group animate-fade-in"
-                style={{ animationDelay: `${index * 0.1}s` }}
-                onMouseEnter={() => setHoveredCard(index)}
-                onMouseLeave={() => setHoveredCard(null)}
-              >
-                {/* Card glow effect */}
-                <div className={`absolute inset-0 ${value.bgGlow} rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
-                
-                <div className="relative bg-card border border-border rounded-2xl p-8 hover:border-primary/50 transition-all duration-500 hover:shadow-2xl hover:-translate-y-2">
-                  {/* Icon */}
-                  <div className={`mb-6 inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br ${value.color} group-hover:scale-110 transition-transform duration-500`}>
-                    <value.icon className="w-8 h-8 text-white" />
-                  </div>
-
-                  <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors duration-300">
-                    {value.title}
-                  </h3>
-                  <p className="text-muted-foreground leading-relaxed">
-                    {value.description}
-                  </p>
-
-                  {/* Hover indicator */}
-                  <div className="absolute bottom-4 right-4 w-2 h-2 bg-primary rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Diferenciais */}
-      <section className="py-20 bg-gradient-to-b from-background to-primary/5">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-12 items-center mb-20">
-            <div className="relative animate-fade-in order-2 md:order-1">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-yellow-500/20 rounded-3xl blur-3xl" />
-              <img 
-                src={differentialsImage}
-                alt="Equipe E-commerce Way+"
-                className="relative rounded-3xl shadow-2xl w-full h-auto object-cover hover:scale-105 transition-transform duration-500"
-              />
-            </div>
-
-            <div className="animate-fade-in order-1 md:order-2" style={{ animationDelay: "0.2s" }}>
-              <Badge className="mb-4">
-                <Award className="w-4 h-4 mr-2" />
-                Diferenciais
-              </Badge>
-              <h2 className="text-4xl md:text-5xl font-bold mb-6">
-                Por que somos
-                <span className="bg-gradient-to-r from-primary to-yellow-500 bg-clip-text text-transparent"> diferentes?</span>
-              </h2>
-              
-              <div className="space-y-6">
-                {differentials.map((diff, index) => (
-                  <div 
-                    key={index}
-                    className="flex gap-4 p-4 rounded-xl hover:bg-background/50 transition-all duration-300 group animate-fade-in"
-                    style={{ animationDelay: `${0.3 + index * 0.1}s` }}
-                  >
-                    <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-yellow-500 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                      <diff.icon className="w-6 h-6 text-primary-foreground" />
-                    </div>
-                    <div>
-                      <h3 className="font-bold text-lg mb-1 group-hover:text-primary transition-colors">
-                        {diff.title}
-                      </h3>
-                      <p className="text-muted-foreground">
-                        {diff.description}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Resultados que falam por si - Cases */}
       <section className="py-24 px-4 bg-gradient-to-b from-background to-primary/5 relative overflow-hidden">
         <div className="absolute inset-0">
@@ -391,11 +234,7 @@ const WhyWay = () => {
         <div className="container mx-auto relative z-10">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
-              <Badge className="mb-4 bg-primary/10 text-primary border-primary/20">
-                <TrendingUp className="w-4 h-4 mr-2" />
-                Resultados
-              </Badge>
-              <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
+              <h2 className="text-4xl md:text-5xl font-bold mb-4">
                 Os resultados falam por si
               </h2>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -493,49 +332,60 @@ const WhyWay = () => {
         </div>
       </section>
 
-      {/* CTA Final */}
-      <section className="py-20 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-yellow-500/10 to-primary/10" />
-        
-        <div className="container mx-auto px-4 relative z-10">
+      {/* Customer Success */}
+      <section className="py-20 px-4">
+        <div className="container mx-auto">
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-4xl md:text-6xl font-bold mb-6 animate-fade-in">
-              Pronto para
-              <span className="bg-gradient-to-r from-primary via-yellow-400 to-primary bg-clip-text text-transparent"> crescer com a gente?</span>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+              Customer Success
             </h2>
-            <p className="text-xl text-muted-foreground mb-8 animate-fade-in" style={{ animationDelay: "0.1s" }}>
-              Vamos conversar sobre como podemos transformar seu e-commerce
+            <p className="text-lg md:text-xl text-muted-foreground">
+              Nosso time está sempre pronto para garantir seu sucesso em cada etapa da jornada.
             </p>
-            <Button 
-              size="lg"
-              className="group bg-gradient-to-r from-primary via-yellow-500 to-primary hover:shadow-2xl transition-all duration-300 text-lg px-8 py-6 animate-fade-in"
-              style={{ animationDelay: "0.2s" }}
-              onClick={() => window.location.href = '/#contato'}
-            >
-              Falar com Especialista
-              <ChevronRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Final */}
+      <section className="py-24 px-4 relative overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-primary/5 to-primary/10" />
+          <div className="absolute top-20 left-20 w-96 h-96 bg-primary/20 rounded-full blur-[120px]" />
+          <div className="absolute bottom-20 right-20 w-96 h-96 bg-primary/10 rounded-full blur-[120px]" />
+        </div>
+
+        <div className="container mx-auto relative z-10">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-4xl md:text-6xl font-bold mb-6">
+              Pronto para crescer com a gente?
+            </h2>
+            <p className="text-xl md:text-2xl text-muted-foreground mb-8">
+              Somos para quem pensa grande e quer ir além.
+            </p>
+            
+            <div className="flex flex-wrap gap-4 justify-center">
+              <Button 
+                size="lg" 
+                className="group bg-gradient-to-r from-primary to-primary/80 hover:shadow-2xl transition-all duration-300 text-lg px-8 py-6"
+                onClick={() => navigate('/contact')}
+              >
+                Fale com a gente
+                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </Button>
+              <Button 
+                size="lg" 
+                variant="outline"
+                className="group text-lg px-8 py-6"
+                onClick={() => navigate('/cases')}
+              >
+                Ver nossos cases
+              </Button>
+            </div>
           </div>
         </div>
       </section>
 
       <Footer />
-
-      <style>{`
-        @keyframes gradient-x {
-          0%, 100% {
-            background-position: 0% 50%;
-          }
-          50% {
-            background-position: 100% 50%;
-          }
-        }
-        
-        .animate-gradient-x {
-          background-size: 200% 200%;
-          animation: gradient-x 3s ease infinite;
-        }
-      `}</style>
     </div>
   );
 };
