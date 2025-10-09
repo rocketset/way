@@ -12,6 +12,13 @@ import leadershipPhoto from "@/assets/leadership-photo.jpg";
 import galleryTeam1 from "@/assets/gallery/team-1.jpg";
 import galleryTeam2 from "@/assets/gallery/team-2.jpg";
 import galleryTeam3 from "@/assets/gallery/team-3.jpg";
+import galleryTeam4 from "@/assets/gallery/team-4.png";
+import galleryTeam5 from "@/assets/gallery/team-5.png";
+import galleryTeam6 from "@/assets/gallery/team-6.png";
+import galleryTeam7 from "@/assets/gallery/team-7.png";
+import galleryTeam8 from "@/assets/gallery/team-8.png";
+import galleryTeam9 from "@/assets/gallery/team-9.png";
+import galleryTeam10 from "@/assets/gallery/team-10.png";
 const WhyWay = () => {
   const navigate = useNavigate();
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
@@ -19,7 +26,18 @@ const WhyWay = () => {
     data: casesData,
     isLoading: casesLoading
   } = useCases("", "Todos");
-  const [galleryPhotos] = useState<string[]>([galleryTeam1, galleryTeam2, galleryTeam3]);
+  const [galleryPhotos] = useState<string[]>([
+    galleryTeam1, 
+    galleryTeam2, 
+    galleryTeam3, 
+    galleryTeam4, 
+    galleryTeam5, 
+    galleryTeam6, 
+    galleryTeam7, 
+    galleryTeam8, 
+    galleryTeam9, 
+    galleryTeam10
+  ]);
   const stats = [{
     number: "500+",
     label: "Projetos Entregues"
