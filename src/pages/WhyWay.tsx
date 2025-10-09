@@ -19,16 +19,20 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useCases } from "@/hooks/useCases";
 import PartnersCarousel from "@/components/PartnersCarousel";
+import whyWayHero from "@/assets/why-way-hero.jpeg";
+import galleryTeam1 from "@/assets/gallery/team-1.jpg";
+import galleryTeam2 from "@/assets/gallery/team-2.jpg";
+import galleryTeam3 from "@/assets/gallery/team-3.jpg";
 
 const WhyWay = () => {
   const navigate = useNavigate();
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const { data: casesData, isLoading: casesLoading } = useCases("", "Todos");
   
-  // Placeholder para fotos da galeria - você pode adicionar fotos manualmente aqui
   const [galleryPhotos] = useState<string[]>([
-    // Adicione URLs das fotos aqui conforme necessário
-    // Exemplo: "/images/foto1.jpg", "/images/foto2.jpg"
+    galleryTeam1,
+    galleryTeam2,
+    galleryTeam3,
   ]);
 
   const stats = [
@@ -46,15 +50,41 @@ const WhyWay = () => {
     <div className="min-h-screen bg-background">
       <Header />
       
-      {/* Hero Section - Por que escolher a Way+ */}
-      <section className="relative pt-32 py-20 px-4 overflow-hidden">
-        <div className="container mx-auto relative z-10">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-5xl md:text-7xl font-bold mb-8 animate-fade-in">
-              <span className="bg-gradient-to-r from-primary via-primary/80 to-primary bg-clip-text text-transparent">
-                Por que escolher a Way+?
-              </span>
-            </h1>
+      {/* Hero Section - Somos para quem pensa grande */}
+      <section className="relative pt-32 pb-20 px-4 overflow-hidden bg-background">
+        <div className="container mx-auto">
+          <div className="max-w-7xl mx-auto">
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              {/* Texto */}
+              <div className="animate-fade-in">
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 leading-tight">
+                  Somos para <span className="text-[#F5A623]">quem pensa grande</span> e quer ir além.
+                </h1>
+                
+                <div className="space-y-4 text-base md:text-lg text-muted-foreground leading-relaxed">
+                  <p>
+                    Ao longo da nossa trajetória, já aceleramos indústrias, redes de lojas e varejistas de diversos segmentos, sempre com foco em performance e crescimento sustentável.
+                  </p>
+                  <p>
+                    Com integrações robustas em tecnologias como TOTVS Modas, Winthor, Linx, Shopify, VTEX, Tray, WBuy, Magento 2 e Chiaara, adquirimos um profundo entendimento do mercado e das particularidades de cada operação.
+                  </p>
+                  <p>
+                    Nossa atuação também contempla a abertura e gestão de marketplaces, além da integração com hubs de marketplaces e centros de logística, conectando todo o ecossistema digital de forma inteligente e eficiente.
+                  </p>
+                </div>
+              </div>
+
+              {/* Imagem principal */}
+              <div className="relative animate-fade-in" style={{ animationDelay: "0.2s" }}>
+                <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-border">
+                  <img 
+                    src={whyWayHero}
+                    alt="Equipe Way+" 
+                    className="w-full h-auto object-cover"
+                  />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -239,39 +269,24 @@ const WhyWay = () => {
         </div>
       </section>
 
-      {/* Galeria de Fotos */}
-      <section className="py-24 px-4 bg-background relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent" />
-        
-        <div className="container mx-auto relative z-10">
-          <div className="max-w-6xl mx-auto">
-            {galleryPhotos.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {galleryPhotos.map((photo, index) => (
-                  <div 
-                    key={index}
-                    className="relative group overflow-hidden rounded-2xl aspect-square bg-card border border-border hover:border-primary/50 transition-all duration-500"
-                  >
-                    <img 
-                      src={photo} 
-                      alt={`Galeria ${index + 1}`}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="text-center py-16 border-2 border-dashed border-border rounded-2xl">
-                <Plus className="w-16 h-16 mx-auto mb-4 text-muted-foreground" />
-                <p className="text-muted-foreground mb-4">
-                  Nenhuma foto adicionada ainda
-                </p>
-                <p className="text-sm text-muted-foreground/70">
-                  Adicione fotos editando o array <code className="bg-muted px-2 py-1 rounded">galleryPhotos</code> no código
-                </p>
-              </div>
-            )}
+      {/* Carousel de Fotos */}
+      <section className="py-16 px-4 bg-background">
+        <div className="container mx-auto">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide">
+              {galleryPhotos.map((photo, index) => (
+                <div 
+                  key={index}
+                  className="flex-shrink-0 w-80 h-80 relative group overflow-hidden rounded-xl border border-border hover:border-primary/50 transition-all duration-500"
+                >
+                  <img 
+                    src={photo} 
+                    alt={`Galeria ${index + 1}`}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
