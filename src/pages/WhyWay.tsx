@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { 
@@ -13,17 +14,28 @@ import {
   ChevronRight,
   Sparkles,
   BarChart3,
-  Clock
+  Clock,
+  Plus,
+  ArrowRight
 } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { useCases } from "@/hooks/useCases";
 import teamImage from "@/assets/why-way-team.png";
 import innovationImage from "@/assets/why-way-innovation.png";
 import differentialsImage from "@/assets/why-way-differentials.png";
 import successImage from "@/assets/why-way-success.png";
 
 const WhyWay = () => {
+  const navigate = useNavigate();
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+  const { data: casesData, isLoading: casesLoading } = useCases("", "Todos");
+  
+  // Placeholder para fotos da galeria - você pode adicionar fotos manualmente aqui
+  const [galleryPhotos] = useState<string[]>([
+    // Adicione URLs das fotos aqui conforme necessário
+    // Exemplo: "/images/foto1.jpg", "/images/foto2.jpg"
+  ]);
 
   const values = [
     {
@@ -85,6 +97,10 @@ const WhyWay = () => {
     { number: "8 Anos", label: "de Experiência", icon: Clock },
     { number: "98%", label: "Satisfação", icon: Award }
   ];
+
+  const featuredCases = casesData?.featured || [];
+  const regularCases = casesData?.regular || [];
+  const allCases = [...featuredCases, ...regularCases].slice(0, 6);
 
   return (
     <div className="min-h-screen bg-background">
@@ -161,6 +177,55 @@ const WhyWay = () => {
                 <div className="text-muted-foreground font-medium">{stat.label}</div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Galeria de Fotos */}
+      <section className="py-24 px-4 bg-background relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent" />
+        
+        <div className="container mx-auto relative z-10">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-16">
+              <Badge className="mb-4 bg-primary/10 text-primary border-primary/20">
+                Galeria
+              </Badge>
+              <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
+                Nossos Momentos
+              </h2>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Conheça nossa equipe e os bastidores dos nossos projetos
+              </p>
+            </div>
+
+            {galleryPhotos.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {galleryPhotos.map((photo, index) => (
+                  <div 
+                    key={index}
+                    className="relative group overflow-hidden rounded-2xl aspect-square bg-card border border-border hover:border-primary/50 transition-all duration-500"
+                  >
+                    <img 
+                      src={photo} 
+                      alt={`Galeria ${index + 1}`}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-16 border-2 border-dashed border-border rounded-2xl">
+                <Plus className="w-16 h-16 mx-auto mb-4 text-muted-foreground" />
+                <p className="text-muted-foreground mb-4">
+                  Nenhuma foto adicionada ainda
+                </p>
+                <p className="text-sm text-muted-foreground/70">
+                  Adicione fotos editando o array <code className="bg-muted px-2 py-1 rounded">galleryPhotos</code> no código
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -316,48 +381,114 @@ const WhyWay = () => {
         </div>
       </section>
 
-      {/* Success Stories Preview */}
-      <section className="py-20">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="animate-fade-in">
-              <Badge className="mb-4">
+      {/* Resultados que falam por si - Cases */}
+      <section className="py-24 px-4 bg-gradient-to-b from-background to-primary/5 relative overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,hsl(var(--primary)/0.1),transparent_50%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,hsl(var(--primary)/0.05),transparent_50%)]" />
+        </div>
+
+        <div className="container mx-auto relative z-10">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-16">
+              <Badge className="mb-4 bg-primary/10 text-primary border-primary/20">
                 <TrendingUp className="w-4 h-4 mr-2" />
-                Histórias de Sucesso
+                Resultados
               </Badge>
-              <h2 className="text-4xl md:text-5xl font-bold mb-6">
-                Resultados que
-                <span className="bg-gradient-to-r from-primary to-yellow-500 bg-clip-text text-transparent"> falam por si</span>
+              <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
+                Os resultados falam por si
               </h2>
-              <div className="space-y-4 text-lg text-muted-foreground mb-8">
-                <p>
-                  Nossos clientes não crescem por acaso. Cada estratégia é cuidadosamente 
-                  planejada e executada com excelência.
-                </p>
-                <p>
-                  Do pequeno empreendedor ao grande varejista, transformamos desafios em 
-                  oportunidades e objetivos em conquistas mensuráveis.
-                </p>
-              </div>
-              
-              <Button 
-                size="lg" 
-                className="group"
-                onClick={() => window.location.href = '/#cases'}
-              >
-                Ver Cases de Sucesso
-                <ChevronRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Button>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Conheça alguns dos projetos que transformamos em histórias de sucesso
+              </p>
             </div>
 
-            <div className="relative animate-fade-in" style={{ animationDelay: "0.2s" }}>
-              <div className="absolute inset-0 bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded-3xl blur-3xl" />
-              <img 
-                src={successImage}
-                alt="Sucesso dos Clientes"
-                className="relative rounded-3xl shadow-2xl w-full h-auto object-cover hover:scale-105 transition-transform duration-500"
-              />
-            </div>
+            {casesLoading ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="animate-pulse">
+                    <div className="bg-muted rounded-2xl h-64 mb-4" />
+                    <div className="h-6 bg-muted rounded w-3/4 mb-2" />
+                    <div className="h-4 bg-muted rounded w-full" />
+                  </div>
+                ))}
+              </div>
+            ) : allCases.length > 0 ? (
+              <>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                  {allCases.map((caseItem: any, index: number) => (
+                    <div
+                      key={caseItem.id}
+                      className="group relative bg-card rounded-2xl overflow-hidden border border-border hover:border-primary/50 transition-all duration-500 cursor-pointer"
+                      onClick={() => navigate(`/cases/${caseItem.id}`)}
+                      onMouseEnter={() => setHoveredCard(100 + index)}
+                      onMouseLeave={() => setHoveredCard(null)}
+                    >
+                      {/* Imagem */}
+                      <div className="relative h-48 overflow-hidden">
+                        {caseItem.imagem_url ? (
+                          <img 
+                            src={caseItem.imagem_url} 
+                            alt={caseItem.titulo}
+                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                          />
+                        ) : (
+                          <div className="w-full h-full bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
+                            <Sparkles className="w-12 h-12 text-primary/50" />
+                          </div>
+                        )}
+                        <div className="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      </div>
+
+                      {/* Conteúdo */}
+                      <div className="p-6">
+                        {caseItem.categoria_nome && (
+                          <Badge className="mb-3 bg-primary/10 text-primary border-primary/20">
+                            {caseItem.categoria_nome}
+                          </Badge>
+                        )}
+                        <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors duration-300">
+                          {caseItem.titulo}
+                        </h3>
+                        <p className="text-muted-foreground line-clamp-2 mb-4">
+                          {caseItem.descricao}
+                        </p>
+                        
+                        <div className="flex items-center gap-2 text-primary font-medium group-hover:gap-3 transition-all duration-300">
+                          Ver case completo
+                          <ArrowRight className="w-4 h-4" />
+                        </div>
+                      </div>
+
+                      {/* Efeito de hover */}
+                      <div 
+                        className={`absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent opacity-0 transition-opacity duration-300 ${
+                          hoveredCard === 100 + index ? 'opacity-100' : ''
+                        }`} 
+                      />
+                    </div>
+                  ))}
+                </div>
+
+                <div className="text-center">
+                  <Button
+                    onClick={() => navigate('/cases')}
+                    size="lg"
+                    className="group bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg hover:shadow-xl transition-all duration-300"
+                  >
+                    Ver todos os cases
+                    <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+                  </Button>
+                </div>
+              </>
+            ) : (
+              <div className="text-center py-16 border-2 border-dashed border-border rounded-2xl">
+                <Sparkles className="w-16 h-16 mx-auto mb-4 text-muted-foreground" />
+                <p className="text-muted-foreground">
+                  Nenhum case disponível no momento
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </section>
