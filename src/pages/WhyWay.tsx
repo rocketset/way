@@ -11,11 +11,14 @@ import {
   Heart,
   Plus,
   ArrowRight,
-  Sparkles
+  Sparkles,
+  Target,
+  Award
 } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useCases } from "@/hooks/useCases";
+import PartnersCarousel from "@/components/PartnersCarousel";
 
 const WhyWay = () => {
   const navigate = useNavigate();
@@ -43,13 +46,46 @@ const WhyWay = () => {
     <div className="min-h-screen bg-background">
       <Header />
       
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-20 px-4 overflow-hidden">
+      {/* Seção 1 - Introdução */}
+      <section className="relative pt-32 pb-12 px-4 overflow-hidden">
         <div className="absolute inset-0 opacity-20">
           <div className="absolute top-20 left-10 w-72 h-72 bg-primary/30 rounded-full blur-[100px] animate-pulse" />
           <div className="absolute bottom-20 right-10 w-96 h-96 bg-primary/20 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: "1s" }} />
         </div>
 
+        <div className="container mx-auto relative z-10">
+          <div className="max-w-4xl mx-auto text-center">
+            <Badge className="mb-6 px-6 py-2 text-base animate-fade-in">
+              <Sparkles className="w-4 h-4 mr-2" />
+              Sobre a Way+
+            </Badge>
+            <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto animate-fade-in" style={{ animationDelay: "0.1s" }}>
+              Somos uma agência especializada em performance para e-commerce, com foco em resultados reais e crescimento sustentável.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Seção 2 - Missão/Visão */}
+      <section className="py-12 px-4">
+        <div className="container mx-auto">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">
+              Transformamos e-commerce em
+              <br />
+              <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+                máquinas de vendas
+              </span>
+            </h2>
+            <p className="text-lg text-muted-foreground">
+              Com estratégias personalizadas e foco em performance, ajudamos empresas a alcançarem todo seu potencial no digital.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Hero Section - Por que escolher a Way+ */}
+      <section className="relative py-20 px-4 overflow-hidden">
         <div className="container mx-auto relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-5xl md:text-7xl font-bold mb-8 animate-fade-in">
@@ -87,7 +123,7 @@ const WhyWay = () => {
         </div>
       </section>
 
-      {/* Nossa História */}
+      {/* Nascemos para revolucionar */}
       <section className="py-20 px-4">
         <div className="container mx-auto">
           <div className="max-w-4xl mx-auto text-center">
@@ -98,29 +134,47 @@ const WhyWay = () => {
                 o e-commerce
               </span>
             </h2>
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+              Fundada por especialistas apaixonados por resultados, a Way+ nasceu com o propósito de transformar a forma como e-commerces crescem no Brasil. Combinamos expertise técnica, criatividade e análise de dados para entregar resultados que realmente importam.
+            </p>
           </div>
         </div>
       </section>
 
-      {/* O que nos move - Valores */}
+      {/* Nosso DNA */}
       <section className="py-20 px-4 bg-gradient-to-b from-background to-primary/5">
         <div className="container mx-auto">
           <div className="max-w-4xl mx-auto text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              O que nos move
+              Nosso DNA
             </h2>
+            <p className="text-lg text-muted-foreground">
+              Valores que definem quem somos e como trabalhamos
+            </p>
           </div>
 
           <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <div className="bg-card border border-border rounded-2xl p-8 hover:border-primary/50 transition-all duration-500 hover:shadow-xl hover:-translate-y-2 group">
               <div className="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-primary/70 group-hover:scale-110 transition-transform duration-500">
+                <Target className="w-8 h-8 text-primary-foreground" />
+              </div>
+              <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors duration-300">
+                Foco em Resultados
+              </h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Cada estratégia é desenhada para gerar impacto mensurável e crescimento real para nossos clientes.
+              </p>
+            </div>
+
+            <div className="bg-card border border-border rounded-2xl p-8 hover:border-primary/50 transition-all duration-500 hover:shadow-xl hover:-translate-y-2 group">
+              <div className="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-primary/70 group-hover:scale-110 transition-transform duration-500">
                 <Heart className="w-8 h-8 text-primary-foreground" />
               </div>
               <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors duration-300">
-                Paixão pelo Cliente
+                Paixão pelo que Fazemos
               </h3>
               <p className="text-muted-foreground leading-relaxed">
-                Colocamos nossos clientes no centro de tudo. Seu sucesso é nossa missão.
+                Trabalhamos com dedicação e entusiasmo, tratando cada projeto como se fosse nosso.
               </p>
             </div>
 
@@ -132,7 +186,7 @@ const WhyWay = () => {
                 Inovação Constante
               </h3>
               <p className="text-muted-foreground leading-relaxed">
-                Sempre evoluindo com as melhores tecnologias e estratégias do mercado.
+                Sempre à frente, testando novas tecnologias e estratégias para manter nossos clientes na vanguarda.
               </p>
             </div>
 
@@ -141,22 +195,10 @@ const WhyWay = () => {
                 <Users className="w-8 h-8 text-primary-foreground" />
               </div>
               <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors duration-300">
-                Time de Especialistas
+                Parceria Verdadeira
               </h3>
               <p className="text-muted-foreground leading-relaxed">
-                Profissionais certificados e experientes dedicados ao seu crescimento.
-              </p>
-            </div>
-
-            <div className="bg-card border border-border rounded-2xl p-8 hover:border-primary/50 transition-all duration-500 hover:shadow-xl hover:-translate-y-2 group">
-              <div className="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-primary/70 group-hover:scale-110 transition-transform duration-500">
-                <TrendingUp className="w-8 h-8 text-primary-foreground" />
-              </div>
-              <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors duration-300">
-                Resultados Comprovados
-              </h3>
-              <p className="text-muted-foreground leading-relaxed">
-                Histórico consistente de crescimento e ROI positivo para nossos clientes.
+                Não somos apenas fornecedores, somos parceiros comprometidos com o sucesso de longo prazo.
               </p>
             </div>
 
@@ -168,7 +210,7 @@ const WhyWay = () => {
                 Transparência Total
               </h3>
               <p className="text-muted-foreground leading-relaxed">
-                Relatórios detalhados e acesso completo aos dados das suas campanhas.
+                Comunicação clara, relatórios detalhados e total acesso aos dados das campanhas.
               </p>
             </div>
 
@@ -177,11 +219,59 @@ const WhyWay = () => {
                 <Zap className="w-8 h-8 text-primary-foreground" />
               </div>
               <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors duration-300">
-                Agilidade
+                Execução Ágil
               </h3>
               <p className="text-muted-foreground leading-relaxed">
-                Implementação rápida e otimizações constantes para máxima performance.
+                Velocidade na implementação e otimização contínua para não perder oportunidades.
               </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Quem está à frente da Way+ */}
+      <section className="py-24 px-4">
+        <div className="container mx-auto">
+          <div className="max-w-6xl mx-auto">
+            <div className="grid md:grid-cols-2 gap-12 items-center">
+              <div className="animate-fade-in order-2 md:order-1">
+                <Badge className="mb-4">
+                  <Award className="w-4 h-4 mr-2" />
+                  Liderança
+                </Badge>
+                <h2 className="text-4xl md:text-5xl font-bold mb-6">
+                  Quem está à frente
+                  <br />
+                  <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+                    da Way+
+                  </span>
+                </h2>
+                <div className="space-y-4 text-lg text-muted-foreground">
+                  <p>
+                    Nossa equipe é formada por especialistas certificados pelas principais plataformas do mercado, com anos de experiência em e-commerce e marketing digital.
+                  </p>
+                  <p>
+                    Liderados por profissionais que vivem e respiram performance, cada membro do nosso time está comprometido em entregar resultados excepcionais e superar expectativas.
+                  </p>
+                  <p>
+                    Combinamos expertise técnica, visão estratégica e paixão por inovação para criar soluções que realmente transformam negócios.
+                  </p>
+                </div>
+              </div>
+
+              <div className="relative animate-fade-in order-1 md:order-2" style={{ animationDelay: "0.2s" }}>
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5 rounded-3xl blur-3xl" />
+                <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-border">
+                  <div className="aspect-square bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center">
+                    <Users className="w-32 h-32 text-primary/30" />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <p className="text-muted-foreground text-center px-8">
+                        Adicione uma foto da equipe ou liderança aqui
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -332,15 +422,32 @@ const WhyWay = () => {
         </div>
       </section>
 
-      {/* Customer Success */}
+      {/* Logos dos Clientes */}
       <section className="py-20 px-4">
         <div className="container mx-auto">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                Nossos Clientes
+              </h2>
+              <p className="text-lg text-muted-foreground">
+                Marcas que confiam na Way+ para crescer
+              </p>
+            </div>
+            <PartnersCarousel />
+          </div>
+        </div>
+      </section>
+
+      {/* Customer Success */}
+      <section className="py-20 px-4 bg-gradient-to-b from-primary/5 to-background">
+        <div className="container mx-auto">
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
               Customer Success
             </h2>
             <p className="text-lg md:text-xl text-muted-foreground">
-              Nosso time está sempre pronto para garantir seu sucesso em cada etapa da jornada.
+              Nosso time está sempre pronto para garantir seu sucesso em cada etapa da jornada. Desde o onboarding até o crescimento contínuo, estamos ao seu lado.
             </p>
           </div>
         </div>
