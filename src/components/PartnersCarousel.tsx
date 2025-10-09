@@ -7,6 +7,8 @@ import nuvemshop from "@/assets/partners/nuvemshop.png";
 import abcomm from "@/assets/partners/abcomm.png";
 import bagy from "@/assets/partners/bagy.png";
 import shopify from "@/assets/partners/shopify.png";
+import sucesu from "@/assets/partners/sucesu.png";
+import sebrae from "@/assets/partners/sebrae.png";
 
 const PartnersCarousel = () => {
   const [isPaused, setIsPaused] = useState(false);
@@ -20,6 +22,8 @@ const PartnersCarousel = () => {
     { name: "ABComm Profissional", logo: abcomm },
     { name: "Bagy Partner", logo: bagy },
     { name: "Shopify Partner", logo: shopify },
+    { name: "SUCESU PB", logo: sucesu },
+    { name: "SEBRAE", logo: sebrae },
   ];
 
   // Duplicate partners array for seamless infinite scroll
@@ -107,7 +111,7 @@ const PartnersCarousel = () => {
         }
 
         .animate-scroll {
-          animation: scroll 40s linear infinite;
+          animation: scroll 50s linear infinite;
           display: flex;
           width: max-content;
         }
