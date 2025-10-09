@@ -116,7 +116,7 @@ const WhyWay = () => {
             </p>
           </div>
 
-          <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="bg-card border border-border rounded-2xl p-8 hover:border-primary/50 transition-all duration-500 hover:shadow-xl hover:-translate-y-2 group">
               <div className="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-primary/70 group-hover:scale-110 transition-transform duration-500">
                 <Target className="w-8 h-8 text-primary-foreground" />
