@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Rocket, Users, TrendingUp, Shield, Zap, Heart, Plus, ArrowRight, Sparkles, Target, Award } from "lucide-react";
+import { Rocket, Users, TrendingUp, Shield, Zap, Heart, Plus, ArrowRight, Sparkles, Target, Award, Grid3x3, Eye, Headphones } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useCases } from "@/hooks/useCases";
@@ -155,6 +155,57 @@ const WhyWay = () => {
               </span>
             </h2>
             <p className="text-lg text-muted-foreground max-w-3xl mx-auto">Fundada por um especialista apaixonado por resultados, a Way+ nasceu com o propósito de transformar a forma como e-commerces crescem no Brasil. Combinamos expertise técnica, criatividade e análise de dados para entregar resultados que realmente importam.</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Por que escolher a Way+ */}
+      <section className="py-20 px-4 bg-background">
+        <div className="container mx-auto">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-6">
+              <h2 className="text-3xl md:text-4xl font-bold mb-6">
+                Por que escolher <span className="text-[#F5A623]">a Way+?</span>
+              </h2>
+              <p className="text-base md:text-lg text-muted-foreground max-w-4xl mx-auto leading-relaxed">
+                Estamos presentes em toda a jornada de compra, acompanhando a operação em cada etapa, da criação da loja até a evolução contínua. Nosso papel é simplificar a entrada no digital ou escalar negócios já existentes, transformando desafios em crescimento real.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+              {/* Card 1 - Soluções Modulares */}
+              <div className="bg-card border border-border rounded-2xl p-8 hover:border-primary/50 transition-all duration-500 hover:shadow-xl hover:-translate-y-1 group">
+                <div className="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-xl bg-[#F5A623] group-hover:scale-110 transition-transform duration-500">
+                  <Grid3x3 className="w-8 h-8 text-background" />
+                </div>
+                <h3 className="text-xl font-bold mb-4">Soluções Modulares</h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  Customizamos cada projeto conforme a maturidade da operação. Co-criamos com nossos parceiros, sem perder ganhos de escala e eficiência.
+                </p>
+              </div>
+
+              {/* Card 2 - Transparência */}
+              <div className="bg-card border border-border rounded-2xl p-8 hover:border-primary/50 transition-all duration-500 hover:shadow-xl hover:-translate-y-1 group">
+                <div className="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-xl bg-[#F5A623] group-hover:scale-110 transition-transform duration-500">
+                  <Eye className="w-8 h-8 text-background" />
+                </div>
+                <h3 className="text-xl font-bold mb-4">Transparência</h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  Trabalhamos como parceiros de negócio. A rentabilidade precisa ser saudável para ambos os lados, e nossas metas estão sempre alinhadas às metas de venda do cliente.
+                </p>
+              </div>
+
+              {/* Card 3 - Atendimento */}
+              <div className="bg-card border border-border rounded-2xl p-8 hover:border-primary/50 transition-all duration-500 hover:shadow-xl hover:-translate-y-1 group">
+                <div className="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-xl bg-[#F5A623] group-hover:scale-110 transition-transform duration-500">
+                  <Headphones className="w-8 h-8 text-background" />
+                </div>
+                <h3 className="text-xl font-bold mb-4">Atendimento</h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  Mais do que suporte, oferecemos direcionamento estratégico e acompanhamento próximo, garantindo evolução constante e decisões mais assertivas.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
