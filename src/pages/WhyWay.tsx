@@ -8,6 +8,7 @@ import Footer from "@/components/Footer";
 import { useCases } from "@/hooks/useCases";
 import PartnersCarousel from "@/components/PartnersCarousel";
 import whyWayHero from "@/assets/why-way-hero.jpeg";
+import leadershipPhoto from "@/assets/leadership-photo.jpg";
 import galleryTeam1 from "@/assets/gallery/team-1.jpg";
 import galleryTeam2 from "@/assets/gallery/team-2.jpg";
 import galleryTeam3 from "@/assets/gallery/team-3.jpg";
@@ -194,14 +195,11 @@ Hoje, com presença nacional e foco em resultados reais, a Way transforma opera�
             }}>
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5 rounded-3xl blur-3xl" />
                 <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-border">
-                  <div className="aspect-square bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center">
-                    <Users className="w-32 h-32 text-primary/30" />
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <p className="text-muted-foreground text-center px-8">
-                        Adicione uma foto da equipe ou liderança aqui
-                      </p>
-                    </div>
-                  </div>
+                  <img 
+                    src={leadershipPhoto} 
+                    alt="Liderança Way+" 
+                    className="w-full h-full object-cover aspect-square"
+                  />
                 </div>
               </div>
             </div>
