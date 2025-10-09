@@ -68,7 +68,7 @@ const WhyWay = () => {
               {/* Texto */}
               <div className="animate-fade-in">
                 <h1 className="text-4xl md:text-5xl font-bold mb-8 leading-tight lg:text-5xl">
-                  Somos para <span className="text-[#F5A623]">quem pensa grande</span> e quer ir além.
+                  Somos para <span className="text-primary">quem pensa grande</span> e quer ir além.
                 </h1>
                 
                 <div className="space-y-4 text-base md:text-lg text-muted-foreground leading-relaxed">
@@ -165,7 +165,7 @@ const WhyWay = () => {
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-6">
               <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                Por que escolher <span className="text-[#F5A623]">a Way+?</span>
+                Por que escolher <span className="text-primary">a Way+?</span>
               </h2>
               <p className="text-base md:text-lg text-muted-foreground max-w-4xl mx-auto leading-relaxed">
                 Estamos presentes em toda a jornada de compra, acompanhando a operação em cada etapa, da criação da loja até a evolução contínua. Nosso papel é simplificar a entrada no digital ou escalar negócios já existentes, transformando desafios em crescimento real.
@@ -175,8 +175,8 @@ const WhyWay = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
               {/* Card 1 - Soluções Modulares */}
               <div className="bg-card border border-border rounded-2xl p-8 hover:border-primary/50 transition-all duration-500 hover:shadow-xl hover:-translate-y-1 group">
-                <div className="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-xl bg-[#F5A623] group-hover:scale-110 transition-transform duration-500">
-                  <Grid3x3 className="w-8 h-8 text-background" />
+                <div className="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-xl bg-primary group-hover:scale-110 transition-transform duration-500">
+                  <Grid3x3 className="w-8 h-8 text-primary-foreground" />
                 </div>
                 <h3 className="text-xl font-bold mb-4">Soluções Modulares</h3>
                 <p className="text-muted-foreground leading-relaxed">
@@ -186,8 +186,8 @@ const WhyWay = () => {
 
               {/* Card 2 - Transparência */}
               <div className="bg-card border border-border rounded-2xl p-8 hover:border-primary/50 transition-all duration-500 hover:shadow-xl hover:-translate-y-1 group">
-                <div className="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-xl bg-[#F5A623] group-hover:scale-110 transition-transform duration-500">
-                  <Eye className="w-8 h-8 text-background" />
+                <div className="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-xl bg-primary group-hover:scale-110 transition-transform duration-500">
+                  <Eye className="w-8 h-8 text-primary-foreground" />
                 </div>
                 <h3 className="text-xl font-bold mb-4">Transparência</h3>
                 <p className="text-muted-foreground leading-relaxed">
@@ -197,8 +197,8 @@ const WhyWay = () => {
 
               {/* Card 3 - Atendimento */}
               <div className="bg-card border border-border rounded-2xl p-8 hover:border-primary/50 transition-all duration-500 hover:shadow-xl hover:-translate-y-1 group">
-                <div className="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-xl bg-[#F5A623] group-hover:scale-110 transition-transform duration-500">
-                  <Headphones className="w-8 h-8 text-background" />
+                <div className="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-xl bg-primary group-hover:scale-110 transition-transform duration-500">
+                  <Headphones className="w-8 h-8 text-primary-foreground" />
                 </div>
                 <h3 className="text-xl font-bold mb-4">Atendimento</h3>
                 <p className="text-muted-foreground leading-relaxed">
