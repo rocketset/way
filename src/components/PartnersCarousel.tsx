@@ -1,4 +1,3 @@
-import { useState } from "react";
 import wbuy from "@/assets/partners/wbuy.png";
 import skillshop from "@/assets/partners/skillshop.png";
 import meta from "@/assets/partners/meta.png";
@@ -11,7 +10,6 @@ import sucesu from "@/assets/partners/sucesu.png";
 import sebrae from "@/assets/partners/sebrae.png";
 
 const PartnersCarousel = () => {
-  const [isPaused, setIsPaused] = useState(false);
 
   const partners = [
     { name: "WBuy Partner", logo: wbuy },
@@ -49,14 +47,7 @@ const PartnersCarousel = () => {
 
       {/* Infinite scrolling carousel */}
       <div className="relative">
-        <div 
-          className="flex gap-8 animate-scroll hover:pause"
-          style={{
-            animationPlayState: isPaused ? 'paused' : 'running',
-          }}
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
-        >
+        <div className="flex gap-8 animate-scroll">
           {allPartners.map((partner, index) => (
             <div
               key={`${partner.name}-${index}`}
@@ -114,10 +105,6 @@ const PartnersCarousel = () => {
           animation: scroll 50s linear infinite;
           display: flex;
           width: max-content;
-        }
-
-        .animate-scroll:hover {
-          animation-play-state: paused;
         }
 
         @media (prefers-reduced-motion: reduce) {
