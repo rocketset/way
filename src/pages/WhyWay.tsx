@@ -26,18 +26,7 @@ const WhyWay = () => {
     data: casesData,
     isLoading: casesLoading
   } = useCases("", "Todos");
-  const galleryPhotos = [
-    galleryTeam1, 
-    galleryTeam2, 
-    galleryTeam3, 
-    galleryTeam4, 
-    galleryTeam5, 
-    galleryTeam6, 
-    galleryTeam7, 
-    galleryTeam8, 
-    galleryTeam9, 
-    galleryTeam10
-  ];
+  const galleryPhotos = [galleryTeam1, galleryTeam2, galleryTeam3, galleryTeam4, galleryTeam5, galleryTeam6, galleryTeam7, galleryTeam8, galleryTeam9, galleryTeam10];
 
   // Duplicate photos for seamless infinite scroll
   const allPhotos = [...galleryPhotos, ...galleryPhotos];
@@ -101,20 +90,11 @@ const WhyWay = () => {
         <div className="container mx-auto">
           <div className="max-w-7xl mx-auto">
             <div className="flex gap-6 animate-gallery-scroll">
-              {allPhotos.map((photo, index) => (
-                <div 
-                  key={`${photo}-${index}`} 
-                  className="flex-shrink-0 w-80 aspect-square"
-                >
+              {allPhotos.map((photo, index) => <div key={`${photo}-${index}`} className="flex-shrink-0 w-80 aspect-square">
                   <div className="relative group overflow-hidden rounded-xl border border-border hover:border-primary/50 transition-all duration-500 h-full">
-                    <img 
-                      src={photo} 
-                      alt={`Galeria ${index + 1}`} 
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
-                    />
+                    <img src={photo} alt={`Galeria ${index + 1}`} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                   </div>
-                </div>
-              ))}
+                </div>)}
             </div>
           </div>
         </div>
@@ -154,7 +134,7 @@ const WhyWay = () => {
                 o e-commerce
               </span>
             </h2>
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">Fundada por um especialista apaixonado por resultados, a Way+ nasceu com o propósito de transformar a forma como e-commerces crescem no Brasil. Combinamos expertise técnica, criatividade e análise de dados para entregar resultados que realmente importam.</p>
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">Fundada por um Cientista da Computação apaixonado por tecnologia e resultados, a Way+ nasceu com o propósito de transformar a forma como os negócios crescem no Brasil. Unimos expertise técnica, criatividade e inteligência em dados para construir estratégias que geram crescimento real e mensurável.</p>
           </div>
         </div>
       </section>

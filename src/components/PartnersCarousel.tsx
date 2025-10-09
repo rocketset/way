@@ -8,51 +8,58 @@ import bagy from "@/assets/partners/bagy.png";
 import shopify from "@/assets/partners/shopify.png";
 import sucesu from "@/assets/partners/sucesu.png";
 import sebrae from "@/assets/partners/sebrae.png";
-
 const PartnersCarousel = () => {
-
-  const partners = [
-    { name: "WBuy Partner", logo: wbuy },
-    { name: "Google SkillShop", logo: skillshop },
-    { name: "Meta Partner", logo: meta },
-    { name: "Tray Partner", logo: tray },
-    { name: "Nuvemshop Partner", logo: nuvemshop },
-    { name: "ABComm Profissional", logo: abcomm },
-    { name: "Bagy Partner", logo: bagy },
-    { name: "Shopify Partner", logo: shopify },
-    { name: "SUCESU PB", logo: sucesu },
-    { name: "SEBRAE", logo: sebrae },
-  ];
+  const partners = [{
+    name: "WBuy Partner",
+    logo: wbuy
+  }, {
+    name: "Google SkillShop",
+    logo: skillshop
+  }, {
+    name: "Meta Partner",
+    logo: meta
+  }, {
+    name: "Tray Partner",
+    logo: tray
+  }, {
+    name: "Nuvemshop Partner",
+    logo: nuvemshop
+  }, {
+    name: "ABComm Profissional",
+    logo: abcomm
+  }, {
+    name: "Bagy Partner",
+    logo: bagy
+  }, {
+    name: "Shopify Partner",
+    logo: shopify
+  }, {
+    name: "SUCESU PB",
+    logo: sucesu
+  }, {
+    name: "SEBRAE",
+    logo: sebrae
+  }];
 
   // Duplicate partners array for seamless infinite scroll
   const allPartners = [...partners, ...partners];
-
-  return (
-    <section className="relative py-20 bg-background overflow-hidden border-t border-border">
+  return <section className="relative py-20 bg-background overflow-hidden border-t border-border">
       {/* Subtle gradient overlays for fade effect */}
       <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
       <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
 
       <div className="container mx-auto px-4 mb-12">
         <div className="text-center animate-fade-in">
-          <p className="text-sm font-semibold text-primary tracking-wider mb-3">PARCEIROS OFICIAIS</p>
-          <h3 className="text-3xl font-bold text-foreground mb-2">
-            Certificados e Integrados
-          </h3>
-          <p className="text-muted-foreground">
-            Trabalhamos com as principais plataformas do mercado
-          </p>
+          <p className="text-sm font-semibold text-primary tracking-wider mb-3">Reconhecimento que Gera Confiança</p>
+          <h3 className="text-3xl font-bold text-foreground mb-2">Parceiros Oficiais e Credenciados</h3>
+          <p className="text-muted-foreground">Credenciados ao Sebrae e às principais plataformas e associações do mercado digital.</p>
         </div>
       </div>
 
       {/* Infinite scrolling carousel */}
       <div className="relative">
         <div className="flex gap-8 animate-scroll">
-          {allPartners.map((partner, index) => (
-            <div
-              key={`${partner.name}-${index}`}
-              className="flex-shrink-0 w-64 h-36 bg-card rounded-lg border border-border hover:border-primary/50 transition-all duration-500 group cursor-pointer overflow-hidden relative"
-            >
+          {allPartners.map((partner, index) => <div key={`${partner.name}-${index}`} className="flex-shrink-0 w-64 h-36 bg-card rounded-lg border border-border hover:border-primary/50 transition-all duration-500 group cursor-pointer overflow-hidden relative">
               {/* Animated background gradient on hover */}
               <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-yellow-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               
@@ -61,11 +68,7 @@ const PartnersCarousel = () => {
 
               {/* Logo container */}
               <div className="relative h-full flex items-center justify-center p-6 transform group-hover:scale-105 transition-transform duration-500">
-                <img
-                  src={partner.logo}
-                  alt={partner.name}
-                  className="max-w-full max-h-full object-contain filter brightness-90 group-hover:brightness-110 transition-all duration-500"
-                />
+                <img src={partner.logo} alt={partner.name} className="max-w-full max-h-full object-contain filter brightness-90 group-hover:brightness-110 transition-all duration-500" />
               </div>
 
               {/* Subtle glow on hover */}
@@ -75,20 +78,17 @@ const PartnersCarousel = () => {
 
               {/* Corner accent */}
               <div className="absolute top-0 right-0 w-12 h-12 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-bl-full" />
-            </div>
-          ))}
+            </div>)}
         </div>
       </div>
 
       {/* Bottom decorative elements */}
-      <div className="flex justify-center gap-2 mt-12 animate-fade-in" style={{ animationDelay: '0.3s' }}>
-        {[...Array(3)].map((_, i) => (
-          <div
-            key={i}
-            className="w-2 h-2 rounded-full bg-primary/30 animate-pulse"
-            style={{ animationDelay: `${i * 0.2}s` }}
-          />
-        ))}
+      <div className="flex justify-center gap-2 mt-12 animate-fade-in" style={{
+      animationDelay: '0.3s'
+    }}>
+        {[...Array(3)].map((_, i) => <div key={i} className="w-2 h-2 rounded-full bg-primary/30 animate-pulse" style={{
+        animationDelay: `${i * 0.2}s`
+      }} />)}
       </div>
 
       <style>{`
@@ -113,8 +113,6 @@ const PartnersCarousel = () => {
           }
         }
       `}</style>
-    </section>
-  );
+    </section>;
 };
-
 export default PartnersCarousel;
