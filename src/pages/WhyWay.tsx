@@ -9,6 +9,7 @@ import { useCases } from "@/hooks/useCases";
 import PartnersCarousel from "@/components/PartnersCarousel";
 import whyWayHero from "@/assets/why-way-hero.jpeg";
 import leadershipPhoto from "@/assets/leadership-photo.jpg";
+import brazilFlag from "@/assets/brazil-flag.png";
 import galleryTeam1 from "@/assets/gallery/team-1.jpg";
 import galleryTeam2 from "@/assets/gallery/team-2.jpg";
 import galleryTeam3 from "@/assets/gallery/team-3.jpg";
@@ -56,8 +57,9 @@ const WhyWay = () => {
     number: "+ de 1 ano",
     label: "com soluções de ponta a ponta"
   }, {
-    number: "🇧🇷",
-    label: "Atendemos todo o Brasil"
+    number: "flag",
+    label: "Atendemos todo o Brasil",
+    isFlag: true
   }, {
     number: "98%",
     label: "de Satisfação"
@@ -285,7 +287,11 @@ const WhyWay = () => {
                     <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" />
                     <div className="relative">
                       <div className="text-4xl md:text-5xl font-bold text-primary mb-2 group-hover:scale-125 transition-transform duration-500">
-                        {stat.number}
+                        {stat.isFlag ? (
+                          <img src={brazilFlag} alt="Bandeira do Brasil" className="w-20 h-14 mx-auto object-cover rounded-md" />
+                        ) : (
+                          stat.number
+                        )}
                       </div>
                       <div className="text-sm md:text-base text-muted-foreground group-hover:text-foreground transition-colors duration-300">
                         {stat.label}
