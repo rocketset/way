@@ -73,26 +73,7 @@ const WhyWay = () => {
       </section>
 
       {/* Stats Section */}
-      <section className="py-16 px-4 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-background to-background" />
-        
-        <div className="container mx-auto relative z-10">
-          <div className="max-w-5xl mx-auto">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
-              {stats.map((stat, index) => <div key={index} className="text-center group animate-fade-in" style={{
-              animationDelay: `${index * 0.1}s`
-            }}>
-                  <div className="text-4xl md:text-6xl font-bold text-primary mb-2 group-hover:scale-110 transition-transform duration-300">
-                    {stat.number}
-                  </div>
-                  <div className="text-sm md:text-base text-muted-foreground font-medium">
-                    {stat.label}
-                  </div>
-                </div>)}
-            </div>
-          </div>
-        </div>
-      </section>
+      
 
       {/* Carousel de Fotos */}
       <section className="py-16 px-4 bg-background">
@@ -118,9 +99,7 @@ const WhyWay = () => {
                 o e-commerce
               </span>
             </h2>
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-              Fundada por especialistas apaixonados por resultados, a Way+ nasceu com o propósito de transformar a forma como e-commerces crescem no Brasil. Combinamos expertise técnica, criatividade e análise de dados para entregar resultados que realmente importam.
-            </p>
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">Fundada por um especialista apaixonado por resultados, a Way+ nasceu com o propósito de transformar a forma como e-commerces crescem no Brasil. Combinamos expertise técnica, criatividade e análise de dados para entregar resultados que realmente importam.</p>
           </div>
         </div>
       </section>
@@ -208,11 +187,7 @@ Hoje, com presença nacional e foco em resultados reais, a Way transforma opera�
             }}>
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5 rounded-3xl blur-3xl" />
                 <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-border">
-                  <img 
-                    src={leadershipPhoto} 
-                    alt="Liderança Way+" 
-                    className="w-full h-full object-cover aspect-square"
-                  />
+                  <img src={leadershipPhoto} alt="Liderança Way+" className="w-full h-full object-cover aspect-square" />
                 </div>
               </div>
             </div>
