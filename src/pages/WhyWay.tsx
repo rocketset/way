@@ -56,8 +56,8 @@ const WhyWay = () => {
     number: "+ de 1 ano",
     label: "com soluções de ponta a ponta"
   }, {
-    number: "8 Anos",
-    label: "de Mercado"
+    number: "🇧🇷",
+    label: "Atendemos todo o Brasil"
   }, {
     number: "98%",
     label: "de Satisfação"
