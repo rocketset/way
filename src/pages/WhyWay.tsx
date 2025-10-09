@@ -61,8 +61,8 @@ const WhyWay = () => {
     label: "Atendemos todo o Brasil",
     isFlag: true
   }, {
-    number: "98%",
-    label: "de Satisfação"
+    number: "700",
+    label: "Clientes atendidos"
   }];
   const featuredCases = casesData?.featured || [];
   const regularCases = casesData?.regular || [];
