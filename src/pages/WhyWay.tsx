@@ -2,19 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { 
-  Rocket, 
-  Users, 
-  TrendingUp, 
-  Shield, 
-  Zap,
-  Heart,
-  Plus,
-  ArrowRight,
-  Sparkles,
-  Target,
-  Award
-} from "lucide-react";
+import { Rocket, Users, TrendingUp, Shield, Zap, Heart, Plus, ArrowRight, Sparkles, Target, Award } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useCases } from "@/hooks/useCases";
@@ -23,31 +11,31 @@ import whyWayHero from "@/assets/why-way-hero.jpeg";
 import galleryTeam1 from "@/assets/gallery/team-1.jpg";
 import galleryTeam2 from "@/assets/gallery/team-2.jpg";
 import galleryTeam3 from "@/assets/gallery/team-3.jpg";
-
 const WhyWay = () => {
   const navigate = useNavigate();
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
-  const { data: casesData, isLoading: casesLoading } = useCases("", "Todos");
-  
-  const [galleryPhotos] = useState<string[]>([
-    galleryTeam1,
-    galleryTeam2,
-    galleryTeam3,
-  ]);
-
-  const stats = [
-    { number: "500+", label: "Projetos Entregues" },
-    { number: "R$ 100M+", label: "Faturamento Gerado" },
-    { number: "8 Anos", label: "de Mercado" },
-    { number: "98%", label: "de Satisfação" }
-  ];
-
+  const {
+    data: casesData,
+    isLoading: casesLoading
+  } = useCases("", "Todos");
+  const [galleryPhotos] = useState<string[]>([galleryTeam1, galleryTeam2, galleryTeam3]);
+  const stats = [{
+    number: "500+",
+    label: "Projetos Entregues"
+  }, {
+    number: "R$ 100M+",
+    label: "Faturamento Gerado"
+  }, {
+    number: "8 Anos",
+    label: "de Mercado"
+  }, {
+    number: "98%",
+    label: "de Satisfação"
+  }];
   const featuredCases = casesData?.featured || [];
   const regularCases = casesData?.regular || [];
   const allCases = [...featuredCases, ...regularCases].slice(0, 6);
-
-  return (
-    <div className="min-h-screen bg-background">
+  return <div className="min-h-screen bg-background">
       <Header />
       
       {/* Hero Section - Somos para quem pensa grande */}
@@ -57,7 +45,7 @@ const WhyWay = () => {
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               {/* Texto */}
               <div className="animate-fade-in">
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 leading-tight">
+                <h1 className="text-4xl md:text-5xl font-bold mb-8 leading-tight lg:text-5xl">
                   Somos para <span className="text-[#F5A623]">quem pensa grande</span> e quer ir além.
                 </h1>
                 
@@ -65,23 +53,17 @@ const WhyWay = () => {
                   <p>
                     Ao longo da nossa trajetória, já aceleramos indústrias, redes de lojas e varejistas de diversos segmentos, sempre com foco em performance e crescimento sustentável.
                   </p>
-                  <p>
-                    Com integrações robustas em tecnologias como TOTVS Modas, Winthor, Linx, Shopify, VTEX, Tray, WBuy, Magento 2 e Chiaara, adquirimos um profundo entendimento do mercado e das particularidades de cada operação.
-                  </p>
-                  <p>
-                    Nossa atuação também contempla a abertura e gestão de marketplaces, além da integração com hubs de marketplaces e centros de logística, conectando todo o ecossistema digital de forma inteligente e eficiente.
-                  </p>
+                  <p>Com integrações robustas em tecnologias como TOTVS Modas, Whithor, Linx, Shopify, VTEX, Tray, WBuy, Magento 2 e Chianca, adquirimos um profundo entendimento do mercado e das particularidades de cada operação.</p>
+                  <p>Nossa atuação também contempla a abertura e gestão de marketplaces, além da integração com hubs de marketplaces e centros de logística, conectando todo o ecossistema digital de forma inteligente e eficiente.</p>
                 </div>
               </div>
 
               {/* Imagem principal */}
-              <div className="relative animate-fade-in" style={{ animationDelay: "0.2s" }}>
+              <div className="relative animate-fade-in" style={{
+              animationDelay: "0.2s"
+            }}>
                 <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-border">
-                  <img 
-                    src={whyWayHero}
-                    alt="Equipe Way+" 
-                    className="w-full h-auto object-cover"
-                  />
+                  <img src={whyWayHero} alt="Equipe Way+" className="w-full h-auto object-cover" />
                 </div>
               </div>
             </div>
@@ -96,20 +78,16 @@ const WhyWay = () => {
         <div className="container mx-auto relative z-10">
           <div className="max-w-5xl mx-auto">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
-              {stats.map((stat, index) => (
-                <div
-                  key={index}
-                  className="text-center group animate-fade-in"
-                  style={{ animationDelay: `${index * 0.1}s` }}
-                >
+              {stats.map((stat, index) => <div key={index} className="text-center group animate-fade-in" style={{
+              animationDelay: `${index * 0.1}s`
+            }}>
                   <div className="text-4xl md:text-6xl font-bold text-primary mb-2 group-hover:scale-110 transition-transform duration-300">
                     {stat.number}
                   </div>
                   <div className="text-sm md:text-base text-muted-foreground font-medium">
                     {stat.label}
                   </div>
-                </div>
-              ))}
+                </div>)}
             </div>
           </div>
         </div>
@@ -150,73 +128,37 @@ const WhyWay = () => {
               <div className="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-primary/70 group-hover:scale-110 transition-transform duration-500">
                 <Target className="w-8 h-8 text-primary-foreground" />
               </div>
-              <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors duration-300">
-                Foco em Resultados
-              </h3>
-              <p className="text-muted-foreground leading-relaxed">
-                Cada estratégia é desenhada para gerar impacto mensurável e crescimento real para nossos clientes.
-              </p>
+              <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors duration-300"> Transformar negócios em operações digitais reais</h3>
+              <p className="text-muted-foreground leading-relaxed">Nosso propósito é tirar as empresas do amadorismo digital, estruturando operações de e-commerce que vendem de verdade — com base em processos, tecnologia e estratégia.</p>
             </div>
 
             <div className="bg-card border border-border rounded-2xl p-8 hover:border-primary/50 transition-all duration-500 hover:shadow-xl hover:-translate-y-2 group">
               <div className="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-primary/70 group-hover:scale-110 transition-transform duration-500">
                 <Heart className="w-8 h-8 text-primary-foreground" />
               </div>
-              <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors duration-300">
-                Paixão pelo que Fazemos
-              </h3>
-              <p className="text-muted-foreground leading-relaxed">
-                Trabalhamos com dedicação e entusiasmo, tratando cada projeto como se fosse nosso.
-              </p>
+              <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors duration-300">Gerar performance com propósito</h3>
+              <p className="text-muted-foreground leading-relaxed">Não vendemos promessas, entregamos resultados. Cada campanha, automação e integração é pensada para gerar impacto comercial mensurável e crescimento sustentável</p>
             </div>
 
             <div className="bg-card border border-border rounded-2xl p-8 hover:border-primary/50 transition-all duration-500 hover:shadow-xl hover:-translate-y-2 group">
               <div className="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-primary/70 group-hover:scale-110 transition-transform duration-500">
                 <Rocket className="w-8 h-8 text-primary-foreground" />
               </div>
-              <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors duration-300">
-                Inovação Constante
-              </h3>
-              <p className="text-muted-foreground leading-relaxed">
-                Sempre à frente, testando novas tecnologias e estratégias para manter nossos clientes na vanguarda.
-              </p>
+              <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors duration-300">Construir com consistência e visão de longo prazo</h3>
+              <p className="text-muted-foreground leading-relaxed">Acreditamos que escalar não é sorte, é método. Por isso, acompanhamos cada cliente em uma jornada estruturada, da implantação ao alto desempenho.</p>
             </div>
 
             <div className="bg-card border border-border rounded-2xl p-8 hover:border-primary/50 transition-all duration-500 hover:shadow-xl hover:-translate-y-2 group">
               <div className="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-primary/70 group-hover:scale-110 transition-transform duration-500">
                 <Users className="w-8 h-8 text-primary-foreground" />
               </div>
-              <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors duration-300">
-                Parceria Verdadeira
-              </h3>
-              <p className="text-muted-foreground leading-relaxed">
-                Não somos apenas fornecedores, somos parceiros comprometidos com o sucesso de longo prazo.
-              </p>
+              <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors duration-300">Unir pessoas, tecnologia e estratégia</h3>
+              <p className="text-muted-foreground leading-relaxed">Nosso diferencial está na união entre equipe, processos e tecnologia — criando um ecossistema digital completo que impulsiona o crescimento de quem confia na Way.</p>
             </div>
 
-            <div className="bg-card border border-border rounded-2xl p-8 hover:border-primary/50 transition-all duration-500 hover:shadow-xl hover:-translate-y-2 group">
-              <div className="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-primary/70 group-hover:scale-110 transition-transform duration-500">
-                <Shield className="w-8 h-8 text-primary-foreground" />
-              </div>
-              <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors duration-300">
-                Transparência Total
-              </h3>
-              <p className="text-muted-foreground leading-relaxed">
-                Comunicação clara, relatórios detalhados e total acesso aos dados das campanhas.
-              </p>
-            </div>
+            
 
-            <div className="bg-card border border-border rounded-2xl p-8 hover:border-primary/50 transition-all duration-500 hover:shadow-xl hover:-translate-y-2 group">
-              <div className="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-primary/70 group-hover:scale-110 transition-transform duration-500">
-                <Zap className="w-8 h-8 text-primary-foreground" />
-              </div>
-              <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors duration-300">
-                Execução Ágil
-              </h3>
-              <p className="text-muted-foreground leading-relaxed">
-                Velocidade na implementação e otimização contínua para não perder oportunidades.
-              </p>
-            </div>
+            
           </div>
         </div>
       </section>
@@ -239,19 +181,17 @@ const WhyWay = () => {
                   </span>
                 </h2>
                 <div className="space-y-4 text-lg text-muted-foreground">
-                  <p>
-                    Nossa equipe é formada por especialistas certificados pelas principais plataformas do mercado, com anos de experiência em e-commerce e marketing digital.
-                  </p>
-                  <p>
-                    Liderados por profissionais que vivem e respiram performance, cada membro do nosso time está comprometido em entregar resultados excepcionais e superar expectativas.
-                  </p>
-                  <p>
-                    Combinamos expertise técnica, visão estratégica e paixão por inovação para criar soluções que realmente transformam negócios.
-                  </p>
+                  <p>Pablo Ramon Fabricio  – Especialista em E-commerce e Transformação Digital, com mais de 9 anos de experiência na implantação, evolução e escala de operações online em todo o Brasil. 
+Com uma trajetória marcada pela execução de mais de 180 projetos de e-commerce, Pablo já ajudou indústrias, redes de lojas e grandes varejistas a migrarem e estruturarem suas vendas digitais com consistência, previsibilidade e performance. </p>
+                  <p>Fundador e CEO da Way E-commerce, lidera um time multidisciplinar que atua desde o planejamento estratégico e integração tecnológica até a gestão de performance e automação de marketing, conectando tecnologia, processos e pessoas em uma metodologia própria e validada.</p>
+                  <p>Além da atuação à frente da Way, Pablo é mentor de startups e consultor credenciado do Sebrae, apoiando empresas em jornadas de inovação, digitalização e crescimento sustentável.
+Hoje, com presença nacional e foco em resultados reais, a Way transforma operações físicas em negócios digitais sólidos e escalávei</p>
                 </div>
               </div>
 
-              <div className="relative animate-fade-in order-1 md:order-2" style={{ animationDelay: "0.2s" }}>
+              <div className="relative animate-fade-in order-1 md:order-2" style={{
+              animationDelay: "0.2s"
+            }}>
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5 rounded-3xl blur-3xl" />
                 <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-border">
                   <div className="aspect-square bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center">
@@ -274,18 +214,9 @@ const WhyWay = () => {
         <div className="container mx-auto">
           <div className="max-w-7xl mx-auto">
             <div className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide">
-              {galleryPhotos.map((photo, index) => (
-                <div 
-                  key={index}
-                  className="flex-shrink-0 w-80 h-80 relative group overflow-hidden rounded-xl border border-border hover:border-primary/50 transition-all duration-500"
-                >
-                  <img 
-                    src={photo} 
-                    alt={`Galeria ${index + 1}`}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
-                </div>
-              ))}
+              {galleryPhotos.map((photo, index) => <div key={index} className="flex-shrink-0 w-80 h-80 relative group overflow-hidden rounded-xl border border-border hover:border-primary/50 transition-all duration-500">
+                  <img src={photo} alt={`Galeria ${index + 1}`} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                </div>)}
             </div>
           </div>
         </div>
@@ -309,50 +240,28 @@ const WhyWay = () => {
               </p>
             </div>
 
-            {casesLoading ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {[1, 2, 3].map((i) => (
-                  <div key={i} className="animate-pulse">
+            {casesLoading ? <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {[1, 2, 3].map(i => <div key={i} className="animate-pulse">
                     <div className="bg-muted rounded-2xl h-64 mb-4" />
                     <div className="h-6 bg-muted rounded w-3/4 mb-2" />
                     <div className="h-4 bg-muted rounded w-full" />
-                  </div>
-                ))}
-              </div>
-            ) : allCases.length > 0 ? (
-              <>
+                  </div>)}
+              </div> : allCases.length > 0 ? <>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-                  {allCases.map((caseItem: any, index: number) => (
-                    <div
-                      key={caseItem.id}
-                      className="group relative bg-card rounded-2xl overflow-hidden border border-border hover:border-primary/50 transition-all duration-500 cursor-pointer"
-                      onClick={() => navigate(`/cases/${caseItem.id}`)}
-                      onMouseEnter={() => setHoveredCard(100 + index)}
-                      onMouseLeave={() => setHoveredCard(null)}
-                    >
+                  {allCases.map((caseItem: any, index: number) => <div key={caseItem.id} className="group relative bg-card rounded-2xl overflow-hidden border border-border hover:border-primary/50 transition-all duration-500 cursor-pointer" onClick={() => navigate(`/cases/${caseItem.id}`)} onMouseEnter={() => setHoveredCard(100 + index)} onMouseLeave={() => setHoveredCard(null)}>
                       {/* Imagem */}
                       <div className="relative h-48 overflow-hidden">
-                        {caseItem.imagem_url ? (
-                          <img 
-                            src={caseItem.imagem_url} 
-                            alt={caseItem.titulo}
-                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                          />
-                        ) : (
-                          <div className="w-full h-full bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
+                        {caseItem.imagem_url ? <img src={caseItem.imagem_url} alt={caseItem.titulo} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" /> : <div className="w-full h-full bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
                             <Sparkles className="w-12 h-12 text-primary/50" />
-                          </div>
-                        )}
+                          </div>}
                         <div className="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                       </div>
 
                       {/* Conteúdo */}
                       <div className="p-6">
-                        {caseItem.categoria_nome && (
-                          <Badge className="mb-3 bg-primary/10 text-primary border-primary/20">
+                        {caseItem.categoria_nome && <Badge className="mb-3 bg-primary/10 text-primary border-primary/20">
                             {caseItem.categoria_nome}
-                          </Badge>
-                        )}
+                          </Badge>}
                         <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors duration-300">
                           {caseItem.titulo}
                         </h3>
@@ -367,34 +276,22 @@ const WhyWay = () => {
                       </div>
 
                       {/* Efeito de hover */}
-                      <div 
-                        className={`absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent opacity-0 transition-opacity duration-300 ${
-                          hoveredCard === 100 + index ? 'opacity-100' : ''
-                        }`} 
-                      />
-                    </div>
-                  ))}
+                      <div className={`absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent opacity-0 transition-opacity duration-300 ${hoveredCard === 100 + index ? 'opacity-100' : ''}`} />
+                    </div>)}
                 </div>
 
                 <div className="text-center">
-                  <Button
-                    onClick={() => navigate('/cases')}
-                    size="lg"
-                    className="group bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg hover:shadow-xl transition-all duration-300"
-                  >
+                  <Button onClick={() => navigate('/cases')} size="lg" className="group bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg hover:shadow-xl transition-all duration-300">
                     Ver todos os cases
                     <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
                   </Button>
                 </div>
-              </>
-            ) : (
-              <div className="text-center py-16 border-2 border-dashed border-border rounded-2xl">
+              </> : <div className="text-center py-16 border-2 border-dashed border-border rounded-2xl">
                 <Sparkles className="w-16 h-16 mx-auto mb-4 text-muted-foreground" />
                 <p className="text-muted-foreground">
                   Nenhum case disponível no momento
                 </p>
-              </div>
-            )}
+              </div>}
           </div>
         </div>
       </section>
@@ -403,32 +300,14 @@ const WhyWay = () => {
       <section className="py-20 px-4">
         <div className="container mx-auto">
           <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                Nossos Clientes
-              </h2>
-              <p className="text-lg text-muted-foreground">
-                Marcas que confiam na Way+ para crescer
-              </p>
-            </div>
+            
             <PartnersCarousel />
           </div>
         </div>
       </section>
 
       {/* Customer Success */}
-      <section className="py-20 px-4 bg-gradient-to-b from-primary/5 to-background">
-        <div className="container mx-auto">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              Customer Success
-            </h2>
-            <p className="text-lg md:text-xl text-muted-foreground">
-              Nosso time está sempre pronto para garantir seu sucesso em cada etapa da jornada. Desde o onboarding até o crescimento contínuo, estamos ao seu lado.
-            </p>
-          </div>
-        </div>
-      </section>
+      
 
       {/* CTA Final */}
       <section className="py-24 px-4 relative overflow-hidden">
@@ -440,38 +319,21 @@ const WhyWay = () => {
 
         <div className="container mx-auto relative z-10">
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-4xl md:text-6xl font-bold mb-6">
-              Pronto para crescer com a gente?
-            </h2>
-            <p className="text-xl md:text-2xl text-muted-foreground mb-8">
-              Somos para quem pensa grande e quer ir além.
-            </p>
+            <h2 className="text-4xl md:text-6xl font-bold mb-6">A Way está preparada e equipada para te receber.</h2>
+            
             
             <div className="flex flex-wrap gap-4 justify-center">
-              <Button 
-                size="lg" 
-                className="group bg-gradient-to-r from-primary to-primary/80 hover:shadow-2xl transition-all duration-300 text-lg px-8 py-6"
-                onClick={() => navigate('/contact')}
-              >
+              <Button size="lg" className="group bg-gradient-to-r from-primary to-primary/80 hover:shadow-2xl transition-all duration-300 text-lg px-8 py-6" onClick={() => navigate('/contact')}>
                 Fale com a gente
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Button>
-              <Button 
-                size="lg" 
-                variant="outline"
-                className="group text-lg px-8 py-6"
-                onClick={() => navigate('/cases')}
-              >
-                Ver nossos cases
-              </Button>
+              
             </div>
           </div>
         </div>
       </section>
 
       <Footer />
-    </div>
-  );
+    </div>;
 };
-
 export default WhyWay;
