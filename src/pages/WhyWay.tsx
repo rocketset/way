@@ -8,7 +8,6 @@ import Footer from "@/components/Footer";
 import { useCases } from "@/hooks/useCases";
 import PartnersCarousel from "@/components/PartnersCarousel";
 import whyWayHero from "@/assets/why-way-hero.jpeg";
-import leadershipPhoto from "@/assets/leadership-photo.jpg";
 import galleryTeam1 from "@/assets/gallery/team-1.jpg";
 import galleryTeam2 from "@/assets/gallery/team-2.jpg";
 import galleryTeam3 from "@/assets/gallery/team-3.jpg";
@@ -63,9 +62,7 @@ const WhyWay = () => {
               <div className="relative animate-fade-in" style={{
               animationDelay: "0.2s"
             }}>
-                <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-border">
-                  <img src={whyWayHero} alt="Equipe Way+" className="w-full h-auto object-cover" />
-                </div>
+                
               </div>
             </div>
           </div>
@@ -88,19 +85,6 @@ const WhyWay = () => {
                   <div className="text-sm md:text-base text-muted-foreground font-medium">
                     {stat.label}
                   </div>
-                </div>)}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Carousel de Fotos */}
-      <section className="py-16 px-4 bg-background">
-        <div className="container mx-auto">
-          <div className="max-w-7xl mx-auto">
-            <div className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide">
-              {galleryPhotos.map((photo, index) => <div key={index} className="flex-shrink-0 w-80 h-80 relative group overflow-hidden rounded-xl border border-border hover:border-primary/50 transition-all duration-500">
-                  <img src={photo} alt={`Galeria ${index + 1}`} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                 </div>)}
             </div>
           </div>
@@ -208,13 +192,29 @@ Hoje, com presença nacional e foco em resultados reais, a Way transforma opera�
             }}>
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5 rounded-3xl blur-3xl" />
                 <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-border">
-                  <img 
-                    src={leadershipPhoto} 
-                    alt="Liderança Way+" 
-                    className="w-full h-full object-cover aspect-square"
-                  />
+                  <div className="aspect-square bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center">
+                    <Users className="w-32 h-32 text-primary/30" />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <p className="text-muted-foreground text-center px-8">
+                        Adicione uma foto da equipe ou liderança aqui
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Carousel de Fotos */}
+      <section className="py-16 px-4 bg-background">
+        <div className="container mx-auto">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide">
+              {galleryPhotos.map((photo, index) => <div key={index} className="flex-shrink-0 w-80 h-80 relative group overflow-hidden rounded-xl border border-border hover:border-primary/50 transition-all duration-500">
+                  <img src={photo} alt={`Galeria ${index + 1}`} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                </div>)}
             </div>
           </div>
         </div>
