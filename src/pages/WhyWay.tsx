@@ -50,8 +50,8 @@ const WhyWay = () => {
   // Duplicate photos for seamless infinite scroll
   const allPhotos = [...galleryPhotos, ...galleryPhotos];
   const stats = [{
-    number: "500+",
-    label: "Projetos Entregues"
+    number: "+ de 190",
+    label: "Lojas implantadas"
   }, {
     number: "R$ 100M+",
     label: "Faturamento Gerado"
