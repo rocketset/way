@@ -1,20 +1,9 @@
 import logoWay from "@/assets/logo-way.png";
 import heroBanner from "@/assets/hero-banner.png";
-
 const Footer = () => {
-  return (
-    <footer className="bg-background border-t border-border">
+  return <footer className="bg-background border-t border-border">
       {/* Banner Section */}
-      <div className="relative h-[500px] overflow-hidden">
-        <img
-          src={heroBanner}
-          alt="Footer banner"
-          className="w-full h-full object-cover"
-        />
-        
-        {/* Gradient overlay for better visibility */}
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
-      </div>
+      
 
       {/* Links Section */}
       <div className="container mx-auto px-4 py-12">
@@ -60,8 +49,6 @@ const Footer = () => {
           </p>
         </div>
       </div>
-    </footer>
-  );
+    </footer>;
 };
-
 export default Footer;
