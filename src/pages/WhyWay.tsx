@@ -324,24 +324,16 @@ Hoje, com presença nacional e foco em resultados reais, a Way transforma opera�
       
 
       {/* CTA Final */}
-      <section className="py-24 px-4 relative overflow-hidden">
-        <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-primary/5 to-primary/10" />
-          <div className="absolute top-20 left-20 w-96 h-96 bg-primary/20 rounded-full blur-[120px]" />
-          <div className="absolute bottom-20 right-20 w-96 h-96 bg-primary/10 rounded-full blur-[120px]" />
-        </div>
-
-        <div className="container mx-auto relative z-10">
+      <section className="py-24 px-4">
+        <div className="container mx-auto">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-4xl md:text-6xl font-bold mb-6">A Way está preparada e equipada para te receber.</h2>
-            
             
             <div className="flex flex-wrap gap-4 justify-center">
               <Button size="lg" className="group bg-gradient-to-r from-primary to-primary/80 hover:shadow-2xl transition-all duration-300 text-lg px-8 py-6" onClick={() => navigate('/contact')}>
                 Fale com a gente
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Button>
-              
             </div>
           </div>
         </div>
