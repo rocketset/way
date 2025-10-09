@@ -51,10 +51,10 @@ const WhyWay = () => {
   // Duplicate photos for seamless infinite scroll
   const allPhotos = [...galleryPhotos, ...galleryPhotos];
   const stats = [{
-    number: "+ de 190",
+    number: "190",
     label: "Lojas implantadas"
   }, {
-    number: "+ de 1 ano",
+    number: "1 ano",
     label: "com soluções de ponta a ponta"
   }, {
     number: "flag",
