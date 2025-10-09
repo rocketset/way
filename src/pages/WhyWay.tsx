@@ -267,10 +267,35 @@ const WhyWay = () => {
       <section className="py-20 px-4 bg-background">
         <div className="container mx-auto">
           <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-6">
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold mb-12">
                 Por que escolher <span className="text-primary">a Way+?</span>
               </h2>
+              
+              {/* Stats Section */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
+                {stats.map((stat, index) => (
+                  <div 
+                    key={index}
+                    className="group relative bg-card border border-border rounded-2xl p-8 text-center hover:border-primary/50 transition-all duration-500 hover:scale-110 hover:shadow-2xl hover:-translate-y-2"
+                    style={{
+                      animationDelay: `${index * 0.1}s`
+                    }}
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" />
+                    <div className="relative">
+                      <div className="text-4xl md:text-5xl font-bold text-primary mb-2 group-hover:scale-125 transition-transform duration-500">
+                        {stat.number}
+                      </div>
+                      <div className="text-sm md:text-base text-muted-foreground group-hover:text-foreground transition-colors duration-300">
+                        {stat.label}
+                      </div>
+                    </div>
+                    <Plus className="absolute -top-2 -right-2 w-6 h-6 text-primary opacity-0 group-hover:opacity-100 group-hover:rotate-90 transition-all duration-500" />
+                  </div>
+                ))}
+              </div>
+
               <p className="text-base md:text-lg text-muted-foreground max-w-4xl mx-auto leading-relaxed">
                 Estamos presentes em toda a jornada de compra, acompanhando a operação em cada etapa, da criação da loja até a evolução contínua. Nosso papel é simplificar a entrada no digital ou escalar negócios já existentes, transformando desafios em crescimento real.
               </p>
@@ -321,36 +346,6 @@ const WhyWay = () => {
                   </p>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Stats Section with Counter Animation */}
-      <section className="py-16 px-4 bg-gradient-to-b from-primary/5 to-background">
-        <div className="container mx-auto">
-          <div className="max-w-6xl mx-auto">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-              {stats.map((stat, index) => (
-                <div 
-                  key={index}
-                  className="group relative bg-card border border-border rounded-2xl p-8 text-center hover:border-primary/50 transition-all duration-500 hover:scale-110 hover:shadow-2xl hover:-translate-y-2"
-                  style={{
-                    animationDelay: `${index * 0.1}s`
-                  }}
-                >
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" />
-                  <div className="relative">
-                    <div className="text-4xl md:text-5xl font-bold text-primary mb-2 group-hover:scale-125 transition-transform duration-500">
-                      {stat.number}
-                    </div>
-                    <div className="text-sm md:text-base text-muted-foreground group-hover:text-foreground transition-colors duration-300">
-                      {stat.label}
-                    </div>
-                  </div>
-                  <Plus className="absolute -top-2 -right-2 w-6 h-6 text-primary opacity-0 group-hover:opacity-100 group-hover:rotate-90 transition-all duration-500" />
-                </div>
-              ))}
             </div>
           </div>
         </div>
