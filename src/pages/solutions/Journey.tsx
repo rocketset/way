@@ -1,36 +1,13 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { ArrowRight, CheckCircle2, Target, TrendingUp, Users, Zap, BarChart3, Rocket } from "lucide-react";
+import ClientsCarousel from "@/components/ClientsCarousel";
+import { ArrowRight, CheckCircle2, Target, TrendingUp, Users, Zap, BarChart3, Rocket, DollarSign, Plus, Activity } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import journeyTeam from "@/assets/journey-team.jpg";
-import atacadao from "@/assets/clients/atacadao.png";
-import barauna from "@/assets/clients/barauna.png";
-import carretao from "@/assets/clients/carretao.png";
-import cartopel from "@/assets/clients/cartopel.png";
-import casatudo from "@/assets/clients/casatudo.png";
-import chipart from "@/assets/clients/chipart.png";
-import clubdamoda from "@/assets/clients/clubdamoda.png";
-import eletropolo from "@/assets/clients/eletropolo.png";
-import extrema from "@/assets/clients/extrema.png";
-import kingcolchoes from "@/assets/clients/kingcolchoes.png";
 import team1 from "@/assets/gallery/team-1.jpg";
 import team2 from "@/assets/gallery/team-2.jpg";
 import team3 from "@/assets/gallery/team-3.jpg";
 
 const Journey = () => {
-  const clients = [
-    { logo: atacadao, name: "Atacadão dos Eletros" },
-    { logo: barauna, name: "Baraúna" },
-    { logo: carretao, name: "O Carretão" },
-    { logo: cartopel, name: "Cartopel" },
-    { logo: casatudo, name: "Casatudo" },
-    { logo: chipart, name: "Chipart" },
-    { logo: clubdamoda, name: "Club da Moda" },
-    { logo: eletropolo, name: "Eletropolo" },
-    { logo: extrema, name: "Extrema" },
-    { logo: kingcolchoes, name: "King Colchões" }
-  ];
-
   const teamPhotos = [team1, team2, team3];
 
   const stats = [
@@ -161,19 +138,52 @@ const Journey = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background relative overflow-hidden">
+      {/* Animated Background Elements */}
+      <div className="fixed inset-0 plus-pattern opacity-30 pointer-events-none" />
+      
+      {/* Floating Growth Icons */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+        {[...Array(10)].map((_, i) => {
+          const icons = ['+', '$', '▲'];
+          const icon = icons[i % icons.length];
+          return (
+            <div
+              key={`growth-${i}`}
+              className="absolute text-primary/10 font-bold"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                fontSize: `${Math.random() * 50 + 30}px`,
+                animation: `float ${10 + Math.random() * 15}s ease-in-out infinite`,
+                animationDelay: `${Math.random() * 5}s`,
+              }}
+            >
+              {icon}
+            </div>
+          );
+        })}
+      </div>
+
       <Header />
       
-      <main className="pt-24 pb-0">
+      <main className="pt-24 pb-0 relative z-10">
         {/* Hero Section */}
         <section className="relative bg-gradient-to-br from-background via-primary/5 to-background py-20 overflow-hidden">
           <div className="absolute inset-0 opacity-10">
-            <div className="absolute top-20 left-10 w-72 h-72 bg-primary rounded-full blur-3xl"></div>
-            <div className="absolute bottom-20 right-10 w-96 h-96 bg-primary rounded-full blur-3xl"></div>
+            <div className="absolute top-20 left-10 w-72 h-72 bg-primary rounded-full blur-3xl animate-pulse"></div>
+            <div className="absolute bottom-20 right-10 w-96 h-96 bg-primary rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+          </div>
+
+          {/* Growth Symbols */}
+          <div className="absolute inset-0 opacity-5">
+            <DollarSign className="absolute top-20 right-1/4 w-32 h-32 animate-pulse" />
+            <Plus className="absolute bottom-20 left-1/4 w-40 h-40 animate-pulse" style={{ animationDelay: '0.5s' }} />
+            <Activity className="absolute top-1/2 right-1/3 w-36 h-36 animate-pulse" style={{ animationDelay: '1s' }} />
           </div>
 
           <div className="container mx-auto px-4 relative z-10">
-            <div className="text-center mb-12">
+            <div className="text-center mb-12 animate-fade-in">
               <h1 className="text-5xl md:text-7xl font-bold mb-6">
                 Jornada <span className="bg-gradient-to-r from-primary to-yellow-500 bg-clip-text text-transparent">Way</span>
               </h1>
@@ -185,15 +195,28 @@ const Journey = () => {
         </section>
 
         {/* Stats Section */}
-        <section className="bg-[#4ECDC4] py-16">
-          <div className="container mx-auto px-4">
+        <section className="bg-[#4ECDC4] py-16 relative overflow-hidden">
+          <div className="absolute inset-0 opacity-10">
+            {[...Array(5)].map((_, i) => (
+              <Plus key={i} className="absolute w-20 h-20" style={{
+                left: `${20 * i}%`,
+                top: `${Math.random() * 100}%`,
+                animation: `float ${5 + i}s ease-in-out infinite`,
+                animationDelay: `${i * 0.5}s`
+              }} />
+            ))}
+          </div>
+          <div className="container mx-auto px-4 relative z-10">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
               {stats.map((stat, index) => {
                 const Icon = stat.icon;
                 return (
-                  <div key={index} className="text-center text-white">
+                  <div key={index} className="text-center text-white animate-fade-in hover-scale" style={{ animationDelay: `${index * 0.1}s` }}>
                     <div className="flex justify-center mb-4">
-                      <Icon className="w-12 h-12" />
+                      <div className="relative">
+                        <Icon className="w-12 h-12" />
+                        <div className="absolute -top-2 -right-2 text-2xl">+</div>
+                      </div>
                     </div>
                     <div className="text-4xl md:text-5xl font-bold mb-2">{stat.number}</div>
                     <div className="text-sm md:text-base opacity-90">{stat.label}</div>
@@ -205,20 +228,26 @@ const Journey = () => {
         </section>
 
         {/* Team Photos Section */}
-        <section className="py-16 bg-muted/30">
+        <section className="py-16 bg-muted/30 relative">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 animate-fade-in">
               Nossa Equipe em Ação
             </h2>
             <div className="grid md:grid-cols-3 gap-6">
               {teamPhotos.map((photo, index) => (
-                <div key={index} className="relative group overflow-hidden rounded-2xl shadow-lg">
+                <div key={index} className="relative group overflow-hidden rounded-2xl shadow-lg hover-scale animate-fade-in" style={{ animationDelay: `${index * 0.1}s` }}>
                   <img 
                     src={photo} 
                     alt={`Equipe Way ${index + 1}`}
                     className="w-full h-80 object-cover transition-transform duration-500 group-hover:scale-110"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="absolute bottom-6 left-6 right-6 flex gap-3">
+                      <Plus className="w-8 h-8 text-white" />
+                      <DollarSign className="w-8 h-8 text-white" />
+                      <TrendingUp className="w-8 h-8 text-white" />
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>
@@ -226,9 +255,24 @@ const Journey = () => {
         </section>
 
         {/* Methodology Description */}
-        <section className="py-20 bg-background">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto text-center space-y-6">
+        <section className="py-20 bg-background relative">
+          <div className="absolute inset-0 opacity-5">
+            <TrendingUp className="absolute top-10 left-10 w-40 h-40 animate-pulse" />
+            <DollarSign className="absolute bottom-10 right-10 w-40 h-40 animate-pulse" style={{ animationDelay: '1s' }} />
+          </div>
+          <div className="container mx-auto px-4 relative z-10">
+            <div className="max-w-4xl mx-auto text-center space-y-6 animate-fade-in">
+              <div className="flex justify-center gap-4 mb-6">
+                <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center animate-pulse">
+                  <Plus className="w-8 h-8 text-primary" />
+                </div>
+                <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center animate-pulse" style={{ animationDelay: '0.3s' }}>
+                  <Activity className="w-8 h-8 text-primary" />
+                </div>
+                <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center animate-pulse" style={{ animationDelay: '0.6s' }}>
+                  <DollarSign className="w-8 h-8 text-primary" />
+                </div>
+              </div>
               <h2 className="text-3xl md:text-5xl font-bold">
                 Acelere o crescimento do seu e-commerce
               </h2>
@@ -248,12 +292,22 @@ const Journey = () => {
         </section>
 
         {/* Journey Phases - Stairway Visual */}
-        <section className="py-20 bg-muted/30 overflow-hidden">
-          <div className="container mx-auto px-4">
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">
+        <section className="py-20 bg-muted/30 overflow-hidden relative">
+          <div className="absolute inset-0 opacity-5">
+            {[...Array(8)].map((_, i) => (
+              <TrendingUp key={i} className="absolute w-24 h-24" style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animation: `float ${10 + i * 2}s ease-in-out infinite`,
+                animationDelay: `${i * 0.5}s`
+              }} />
+            ))}
+          </div>
+          <div className="container mx-auto px-4 relative z-10">
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 animate-fade-in">
               As 3 Fases da Jornada Way
             </h2>
-            <p className="text-center text-muted-foreground mb-16 max-w-2xl mx-auto">
+            <p className="text-center text-muted-foreground mb-16 max-w-2xl mx-auto animate-fade-in" style={{ animationDelay: '0.1s' }}>
               Um caminho progressivo e estruturado para o crescimento sustentável
             </p>
             
@@ -289,7 +343,7 @@ const Journey = () => {
                         marginTop: `${(journeyPhases.length - 1 - index) * 80}px`,
                       }}
                     >
-                      <div className={`bg-gradient-to-br ${phase.color} rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border-2 border-black/10 h-full min-h-[420px] flex flex-col justify-between`}>
+                      <div className={`bg-gradient-to-br ${phase.color} rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border-2 border-black/10 h-full min-h-[420px] flex flex-col justify-between animate-fade-in hover-scale`} style={{ animationDelay: `${index * 0.2}s` }}>
                         <div className="flex flex-col items-center">
                           <Icon className="w-16 h-16 text-black/70 mb-4" strokeWidth={1.5} />
                           
@@ -324,18 +378,22 @@ const Journey = () => {
         </section>
 
         {/* Detailed 3 Phases Section */}
-        <section className="py-20 bg-background">
-          <div className="container mx-auto px-4">
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">
+        <section className="py-20 bg-background relative">
+          <div className="absolute inset-0 opacity-5">
+            <Activity className="absolute top-20 left-1/4 w-32 h-32 animate-pulse" />
+            <DollarSign className="absolute bottom-20 right-1/4 w-32 h-32 animate-pulse" style={{ animationDelay: '1s' }} />
+          </div>
+          <div className="container mx-auto px-4 relative z-10">
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 animate-fade-in">
               Detalhamento das Fases
             </h2>
-            <p className="text-center text-muted-foreground mb-16 max-w-2xl mx-auto">
+            <p className="text-center text-muted-foreground mb-16 max-w-2xl mx-auto animate-fade-in" style={{ animationDelay: '0.1s' }}>
               Cada fase é cuidadosamente estruturada para garantir seu sucesso
             </p>
             
             <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
               {detailedPhases.map((phase, index) => (
-                <div key={index} className={`${phase.color} rounded-2xl p-8 border border-border hover:shadow-xl transition-all duration-300`}>
+                <div key={index} className={`${phase.color} rounded-2xl p-8 border border-border hover:shadow-xl transition-all duration-300 animate-fade-in hover-scale`} style={{ animationDelay: `${index * 0.15}s` }}>
                   <div className="text-center mb-6">
                     <h3 className="text-2xl font-bold mb-2">{phase.title}</h3>
                     <p className="text-sm text-muted-foreground">{phase.subtitle}</p>
@@ -383,33 +441,35 @@ const Journey = () => {
         </section>
 
         {/* Clients Section */}
-        <section className="py-20 bg-[#FF6B6B] text-white">
+        <section className="py-20 bg-background">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 animate-fade-in">
               Clientes que confiam na Way
             </h2>
-            <p className="text-center text-white/90 mb-12 max-w-2xl mx-auto">
+            <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto animate-fade-in" style={{ animationDelay: '0.1s' }}>
               Marcas que crescem conosco e transformam seus negócios digitais
             </p>
             
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-8 items-center">
-              {clients.map((client, index) => (
-                <div key={index} className="bg-white rounded-xl p-6 flex items-center justify-center hover:scale-105 transition-transform duration-300">
-                  <img 
-                    src={client.logo} 
-                    alt={client.name}
-                    className="max-h-12 w-auto object-contain"
-                  />
-                </div>
-              ))}
+            <div className="animate-fade-in" style={{ animationDelay: '0.2s' }}>
+              <ClientsCarousel />
             </div>
           </div>
         </section>
 
         {/* Final CTA Section */}
-        <section className="py-20 bg-gradient-to-br from-[#45B7D1] to-[#4ECDC4] text-white">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto text-center space-y-8">
+        <section className="py-20 bg-gradient-to-br from-[#45B7D1] to-[#4ECDC4] text-white relative overflow-hidden">
+          <div className="absolute inset-0 opacity-10">
+            {[...Array(6)].map((_, i) => (
+              <Plus key={i} className="absolute w-24 h-24" style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animation: `float ${8 + i * 2}s ease-in-out infinite`,
+                animationDelay: `${i * 0.5}s`
+              }} />
+            ))}
+          </div>
+          <div className="container mx-auto px-4 relative z-10">
+            <div className="max-w-4xl mx-auto text-center space-y-8 animate-fade-in">
               <h2 className="text-4xl md:text-6xl font-bold leading-tight">
                 Pronto para transformar seu e-commerce?
               </h2>
@@ -420,10 +480,10 @@ const Journey = () => {
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-8">
                 <Button 
                   size="lg"
-                  className="bg-white text-[#45B7D1] hover:bg-white/90 px-10 py-7 text-lg rounded-full shadow-2xl font-bold"
+                  className="bg-white text-[#45B7D1] hover:bg-white/90 px-10 py-7 text-lg rounded-full shadow-2xl font-bold hover-scale group"
                 >
                   Comece sua jornada agora
-                  <ArrowRight className="ml-2 w-5 h-5" />
+                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </div>
               
@@ -435,8 +495,11 @@ const Journey = () => {
                 ].map((item, i) => {
                   const Icon = item.icon;
                   return (
-                    <div key={i} className="flex flex-col items-center gap-3">
-                      <Icon className="w-12 h-12" />
+                    <div key={i} className="flex flex-col items-center gap-3 animate-fade-in hover-scale" style={{ animationDelay: `${i * 0.15}s` }}>
+                      <div className="relative">
+                        <Icon className="w-12 h-12" />
+                        <Plus className="absolute -top-2 -right-2 w-6 h-6 animate-pulse" />
+                      </div>
                       <span className="text-lg font-medium">{item.text}</span>
                     </div>
                   );
@@ -448,6 +511,17 @@ const Journey = () => {
       </main>
 
       <Footer />
+
+      <style>{`
+        @keyframes float {
+          0%, 100% {
+            transform: translateY(0px) rotate(0deg);
+          }
+          50% {
+            transform: translateY(-30px) rotate(180deg);
+          }
+        }
+      `}</style>
     </div>
   );
 };
