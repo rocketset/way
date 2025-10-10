@@ -257,9 +257,16 @@ const Header = () => {
               </div>
             </nav>
 
-            {/* CTA Button */}
-            <div className="hidden lg:block">
-            <Button 
+            {/* CTA Buttons */}
+            <div className="hidden lg:flex items-center gap-3">
+              <Button 
+                variant="outline"
+                className="font-semibold px-6 py-3 rounded-full border-2 border-primary text-primary hover:bg-primary/10 transition-all duration-300"
+              >
+                Entrar
+              </Button>
+              
+              <Button 
                 onClick={() => handleNavClick(navItems.find(item => item.id === "contato")!)}
                 className="relative bg-gradient-to-r from-primary via-yellow-500 to-primary text-gray-900 hover:shadow-2xl font-bold px-6 py-3 rounded-full transition-all duration-300 overflow-hidden group hover:scale-105"
               >
@@ -428,12 +435,21 @@ const Header = () => {
                 </button>
               ))}
               
-              <Button
-                onClick={() => handleNavClick(navItems.find(item => item.id === "contato")!)}
-                className="mt-4 bg-gradient-to-r from-primary via-yellow-500 to-primary text-gray-900 hover:shadow-2xl font-bold py-6 rounded-xl"
-              >
-                Falar com a gente
-              </Button>
+              <div className="mt-4 flex flex-col gap-3">
+                <Button
+                  variant="outline"
+                  className="font-semibold py-6 rounded-xl border-2 border-primary text-primary hover:bg-primary/10"
+                >
+                  Entrar
+                </Button>
+                
+                <Button
+                  onClick={() => handleNavClick(navItems.find(item => item.id === "contato")!)}
+                  className="bg-gradient-to-r from-primary via-yellow-500 to-primary text-gray-900 hover:shadow-2xl font-bold py-6 rounded-xl"
+                >
+                  VAMOS CONVERSAR!
+                </Button>
+              </div>
             </div>
           </nav>
         </div>
