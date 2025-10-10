@@ -31,11 +31,11 @@ const HomeBannerSlider = () => {
       </div>
 
       {/* Overlay com texto e botões */}
-      <div className="absolute inset-0 flex items-center justify-start z-10 bg-gradient-to-r from-black/60 via-black/30 to-transparent">
+      <div className="absolute inset-0 flex items-center justify-end z-10 bg-gradient-to-l from-black/60 via-black/30 to-transparent">
         <div className="container mx-auto px-4 md:px-8">
-          <div className="max-w-2xl space-y-6">
+          <div className="max-w-2xl ml-auto space-y-6">
             {/* Texto animado */}
-            <h1 className="text-4xl md:text-6xl font-light text-white leading-tight">
+            <h1 className="text-3xl md:text-5xl font-light text-white leading-tight">
               {texts.map((text, index) => (
                 <span
                   key={index}
@@ -51,16 +51,16 @@ const HomeBannerSlider = () => {
             </h1>
 
             {/* Botões */}
-            <div className="flex flex-col sm:flex-row gap-4 pt-4">
+            <div className="flex flex-col sm:flex-row gap-3 pt-4">
               <a
                 href="#solucoes"
-                className="inline-flex items-center justify-center px-8 py-4 text-lg font-normal text-primary-foreground bg-primary hover:bg-primary/90 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
+                className="inline-flex items-center justify-center px-6 py-3 text-base font-normal text-primary-foreground bg-primary hover:bg-primary/90 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
               >
                 Conheça nossas soluções
               </a>
               <a
                 href="#contato"
-                className="inline-flex items-center justify-center px-8 py-4 text-lg font-normal text-primary border-2 border-primary bg-transparent hover:bg-primary hover:text-primary-foreground rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
+                className="inline-flex items-center justify-center px-6 py-3 text-base font-normal text-primary border-2 border-primary bg-transparent hover:bg-primary hover:text-primary-foreground rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
               >
                 Fale com um especialista
               </a>
