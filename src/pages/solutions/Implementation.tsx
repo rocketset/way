@@ -262,7 +262,7 @@ const Implementation = () => {
         </section>
 
         {/* Newsletter Section */}
-        <section className="py-16 mb-20 bg-black">
+        <section className="py-16 mb-20" style={{ backgroundColor: '#1A1A1A' }}>
           <div className="container mx-auto px-12">
             <div className="max-w-6xl mx-auto bg-primary rounded-3xl shadow-2xl p-8 md:p-12">
               <div className="flex flex-col md:flex-row items-center justify-between gap-6">
