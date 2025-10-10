@@ -8,6 +8,16 @@ import chipart from "@/assets/clients/chipart.png";
 import shopar from "@/assets/clients/shopar.png";
 import carretao from "@/assets/clients/carretao.png";
 import eletropolo from "@/assets/clients/eletropolo.png";
+import ekta from "@/assets/clients/ekta.png";
+import danielCarvalho from "@/assets/clients/daniel-carvalho.png";
+import moniPratas from "@/assets/clients/moni-pratas.png";
+import inovare from "@/assets/clients/inovare.png";
+import casatudo from "@/assets/clients/casatudo.png";
+import clubDaModa from "@/assets/clients/club-da-moda.png";
+import atacadaoEletros from "@/assets/clients/atacadao-eletros.png";
+import ldf from "@/assets/clients/ldf.png";
+import coure from "@/assets/clients/coure.png";
+import cartope from "@/assets/clients/cartope.png";
 
 const ClientsCarousel = () => {
   const clients = [
@@ -21,6 +31,16 @@ const ClientsCarousel = () => {
     { name: "Shopar", logo: shopar },
     { name: "O Carretão", logo: carretao },
     { name: "Eletropolo", logo: eletropolo },
+    { name: "Ekta", logo: ekta },
+    { name: "Daniel Carvalho", logo: danielCarvalho },
+    { name: "Moni Pratas", logo: moniPratas },
+    { name: "Inovare", logo: inovare },
+    { name: "Casatudo", logo: casatudo },
+    { name: "Club da Moda", logo: clubDaModa },
+    { name: "Atacadão dos Eletros", logo: atacadaoEletros },
+    { name: "LDF", logo: ldf },
+    { name: "Coure", logo: coure },
+    { name: "Cartope", logo: cartope },
   ];
 
   // Duplicate clients array for seamless infinite scroll
