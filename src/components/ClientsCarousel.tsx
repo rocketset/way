@@ -64,13 +64,12 @@ const ClientsCarousel = () => {
               key={`${client.name}-${index}`}
               className="flex-shrink-0 h-20 flex items-center justify-center group cursor-pointer"
             >
-              {/* Logo container with white filter */}
+              {/* Logo container */}
               <div className="relative h-full flex items-center justify-center px-8">
                 <img
                   src={client.logo}
                   alt={client.name}
-                  className="max-h-16 w-auto object-contain brightness-0 invert opacity-70 group-hover:opacity-100 transition-opacity duration-500"
-                  style={{ filter: 'brightness(0) invert(1)' }}
+                  className="max-h-16 w-auto object-contain opacity-80 group-hover:opacity-100 transition-opacity duration-500"
                 />
               </div>
             </div>
