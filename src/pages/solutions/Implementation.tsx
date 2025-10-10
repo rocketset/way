@@ -4,8 +4,22 @@ import { Button } from "@/components/ui/button";
 import { ShoppingCart, Store, Cpu, CreditCard, Truck, Smile, ArrowRight, Check, Globe, MessageCircle, Bot, Plus } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import shopifyPartner from "@/assets/partners/shopify-partner.png";
+import wbuyPartner from "@/assets/partners/wbuy-partner.png";
+import trayPartner from "@/assets/partners/tray-partner.png";
+import nuvemshopPartner from "@/assets/partners/nuvemshop-partner.png";
+import bagyPartner from "@/assets/partners/bagy-partner.png";
 const Implementation = () => {
   const [hoveredService, setHoveredService] = useState<number | null>(null);
+  
+  const ecommerceLogos = [
+    shopifyPartner,
+    wbuyPartner,
+    trayPartner,
+    nuvemshopPartner,
+    bagyPartner
+  ];
+  
   const servicesList = [{
     icon: ShoppingCart,
     label: "E-commerce"
@@ -26,7 +40,8 @@ const Implementation = () => {
     icon: ShoppingCart,
     title: "E-commerce",
     subtitle: "Planejamos, desenvolvemos e gerenciamos toda a estratégia do seu e-commerce",
-    description: "Desenvolvemos e gerenciamos e-commerce com atuação ampla e entrega. Oferecendo uma experiência de qualidade para seus clientes, com estratégias focadas em resultados. Atendemos diversos modelos de negócio, como B2B, B2C, B2E, D2C."
+    description: "Desenvolvemos e gerenciamos e-commerce com atuação ampla e entrega. Oferecendo uma experiência de qualidade para seus clientes, com estratégias focadas em resultados. Atendemos diversos modelos de negócio, como B2B, B2C, B2E, D2C.",
+    hasLogos: true
   }, {
     icon: Globe,
     title: "Desenvolvimento Web",
@@ -170,9 +185,28 @@ const Implementation = () => {
                   
                   {/* Content */}
                   <div className="flex-1 pt-1">
-                    <h3 className="text-3xl font-bold mb-4 text-black group-hover:text-primary transition-colors">
-                      {service.title}
-                    </h3>
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="flex-1">
+                        <h3 className="text-3xl font-bold mb-4 text-black group-hover:text-primary transition-colors">
+                          {service.title}
+                        </h3>
+                      </div>
+                      
+                      {/* Partner Logos - Only for E-commerce */}
+                      {service.hasLogos && (
+                        <div className="flex flex-wrap gap-2 justify-end max-w-[200px]">
+                          {ecommerceLogos.map((logo, logoIndex) => (
+                            <img 
+                              key={logoIndex}
+                              src={logo} 
+                              alt="Partner logo" 
+                              className="h-8 w-auto object-contain opacity-70 hover:opacity-100 transition-opacity"
+                            />
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                    
                     <p className="text-primary font-semibold mb-4 text-lg leading-relaxed">
                       {service.subtitle}
                     </p>
