@@ -113,12 +113,24 @@ const Journey = () => {
     },
     {
       title: "Evolução",
-      subtitle: "Otimização contínua dos resultados",
-      features: [
-        "Otimização da plataforma de e-commerce",
-        "Reestruturação de integrações com ERP, CRM, logística",
-        "Ajustes no mix de produtos e precificação",
-        "Melhoria da experiência de compra"
+      subtitle: "Fase de aperfeiçoamento contínuo da operação — onde se valida performance, otimiza conversão e solidifica os processos",
+      items: [
+        {
+          title: "Performance e Métricas",
+          objective: "Analisar dados e otimizar a jornada de compra para maximizar resultados"
+        },
+        {
+          title: "Processos e Automação",
+          objective: "Garantir eficiência e previsibilidade através da automação operacional e comercial"
+        },
+        {
+          title: "Estratégia Comercial e Marketing",
+          objective: "Aprimorar as campanhas e a comunicação com foco em aumento de conversão"
+        },
+        {
+          title: "Sustentação Tecnológica",
+          objective: "Manter estabilidade e evolução da infraestrutura digital"
+        }
       ],
       color: "bg-gradient-to-br from-[#FF6B6B]/10 to-[#FF6B6B]/5"
     },
@@ -281,17 +293,6 @@ const Journey = () => {
                           <p className="text-xs text-muted-foreground pl-8">
                             Objetivo: {item.objective}
                           </p>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                  
-                  {phase.features && (
-                    <div className="space-y-3">
-                      {phase.features.map((feature, i) => (
-                        <div key={i} className="flex items-start gap-3 p-3 bg-background/50 rounded-lg">
-                          <CheckCircle2 className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                          <span className="text-sm leading-relaxed">{feature}</span>
                         </div>
                       ))}
                     </div>
