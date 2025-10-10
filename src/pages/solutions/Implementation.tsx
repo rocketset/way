@@ -72,10 +72,7 @@ const Implementation = () => {
                 </div>
                 
                 <h1 className="text-5xl lg:text-7xl font-bold text-primary leading-tight">
-                  Implantação<br />
-                  <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-                    & Desenvolvimento
-                  </span>
+                  Implantação <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">& Desenvolvimento</span>
                 </h1>
                 
                 <div className="grid grid-cols-1 gap-4">
