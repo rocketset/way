@@ -264,26 +264,26 @@ const Implementation = () => {
         {/* Newsletter Section */}
         <section className="py-16 mb-20" style={{ backgroundColor: '#F2F2F2' }}>
           <div className="container mx-auto px-12">
-            <div className="max-w-4xl mx-auto">
-              <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+            <div className="max-w-6xl mx-auto bg-primary rounded-3xl shadow-2xl p-8 md:p-12">
+              <div className="flex flex-col md:flex-row items-center justify-between gap-6">
                 <div className="flex-1">
-                  <h2 className="text-3xl md:text-4xl font-bold text-black mb-3">
+                  <h2 className="text-3xl md:text-4xl font-bold text-white mb-3">
                     Newsletter
                   </h2>
-                  <p className="text-black text-lg">
+                  <p className="text-white/90 text-lg">
                     Receba insights exclusivos e as últimas novidades diretamente no seu e-mail.
                   </p>
                 </div>
                 
-                <div className="flex gap-3 w-full md:w-auto">
+                <div className="flex gap-3 w-full md:w-auto md:min-w-[400px]">
                   <input
                     type="email"
                     placeholder="Digite seu e-mail"
-                    className="flex-1 md:w-80 px-6 py-3 rounded-lg bg-white text-black border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary"
+                    className="flex-1 px-6 py-3 rounded-lg bg-white text-black border-0 focus:outline-none focus:ring-2 focus:ring-white/50"
                   />
                   <Button 
                     size="lg" 
-                    className="bg-[#FFD700] hover:bg-[#FFC700] text-black font-semibold px-8 shadow-lg hover:shadow-xl transition-all"
+                    className="bg-[#FFD700] hover:bg-[#FFC700] text-black font-semibold px-8 shadow-lg hover:shadow-xl transition-all hover:scale-105"
                   >
                     Cadastrar
                   </Button>
