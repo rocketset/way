@@ -163,47 +163,35 @@ const Implementation = () => {
         </section>
 
         {/* Services Details */}
-        <section className="mb-20">
+        <section className="mb-20 py-20" style={{backgroundColor: '#F2F2F2'}}>
           <div className="container mx-auto px-12">
-            <div className="grid md:grid-cols-2 gap-8">
+            <div className="max-w-5xl mx-auto space-y-8">
               {services.map((service, index) => (
                 <div 
                   key={index} 
-                  className="group relative p-8 rounded-2xl bg-card border border-border hover:border-primary/50 transition-all duration-500 hover:shadow-2xl cursor-pointer"
+                  className="group flex gap-8 items-start py-8 border-b border-border/30 last:border-b-0 transition-all duration-300 hover:translate-x-2"
                   onMouseEnter={() => setHoveredService(index)}
                   onMouseLeave={() => setHoveredService(null)}
                 >
-                  {/* Decorative Plus */}
-                  <Plus 
-                    className={`absolute top-4 right-4 w-6 h-6 text-primary/20 transition-all duration-500 ${
-                      hoveredService === index ? 'rotate-90 scale-125 text-primary/40' : ''
-                    }`}
-                  />
-                  
                   {/* Icon */}
-                  <div className={`w-16 h-16 rounded-xl bg-primary/10 flex items-center justify-center mb-6 transition-all duration-500 group-hover:scale-110 group-hover:bg-primary/20 ${
+                  <div className={`flex-shrink-0 w-20 h-20 rounded-2xl bg-white flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:shadow-lg ${
                     hoveredService === index ? 'shadow-lg' : ''
                   }`}>
-                    <service.icon className="w-8 h-8 text-primary" />
+                    <service.icon className="w-10 h-10 text-primary" />
                   </div>
                   
                   {/* Content */}
-                  <h3 className="text-2xl font-bold mb-3 group-hover:text-primary transition-colors">
-                    {service.title}
-                  </h3>
-                  <p className="text-primary font-semibold mb-4 text-sm">
-                    {service.subtitle}
-                  </p>
-                  <p className="text-muted-foreground leading-relaxed">
-                    {service.description}
-                  </p>
-                  
-                  {/* Hover Arrow */}
-                  <ArrowRight 
-                    className={`absolute bottom-8 right-8 w-6 h-6 text-primary transition-all duration-500 ${
-                      hoveredService === index ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'
-                    }`}
-                  />
+                  <div className="flex-1 pt-1">
+                    <h3 className="text-3xl font-bold mb-4 text-foreground group-hover:text-primary transition-colors">
+                      {service.title}
+                    </h3>
+                    <p className="text-primary font-semibold mb-4 text-lg leading-relaxed">
+                      {service.subtitle}
+                    </p>
+                    <p className="text-muted-foreground leading-relaxed text-base">
+                      {service.description}
+                    </p>
+                  </div>
                 </div>
               ))}
             </div>
