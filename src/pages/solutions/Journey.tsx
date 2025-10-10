@@ -82,7 +82,7 @@ const Journey = () => {
   const phases = [
     {
       title: "Implantação",
-      subtitle: "Fundação sólida para seu e-commerce",
+      subtitle: "Fase de estruturação completa da operação digital, garantindo base sólida, processos claros e tecnologia integrada",
       items: [
         {
           title: "Diagnóstico e Planejamento Estratégico",
