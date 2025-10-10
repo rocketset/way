@@ -85,7 +85,7 @@ const Performance = () => {
               <div className="space-y-8 animate-fade-in">
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 hover:bg-primary/20 hover:scale-105 transition-all duration-300 cursor-pointer group">
                   <Plus className="w-4 h-4 text-primary group-hover:rotate-90 transition-transform duration-300" />
-                  <span className="text-sm font-medium text-primary">Soluções Modulares</span>
+                  <span className="text-sm font-medium text-primary">Way.Digital - Soluções Modulares </span>
                 </div>
                 
                 <h1 className="text-5xl font-bold text-primary leading-tight lg:text-4xl">
@@ -112,11 +112,7 @@ const Performance = () => {
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/30 to-primary/10 rounded-3xl blur-3xl group-hover:blur-2xl transition-all duration-500 opacity-50 group-hover:opacity-100"></div>
                 <div className="relative aspect-square rounded-3xl overflow-hidden border border-primary/20 group-hover:border-primary/40 transition-all duration-500 hover:scale-105 transform w-[70%]">
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent"></div>
-                  <img 
-                    src={performanceServices} 
-                    alt="Soluções de Performance & Marketing" 
-                    className="w-full h-full object-contain relative z-10 transition-transform duration-500"
-                  />
+                  <img src={performanceServices} alt="Soluções de Performance & Marketing" className="w-full h-full object-contain relative z-10 transition-transform duration-500" />
                   {/* Floating Plus decorations */}
                   <Plus className="absolute top-4 right-4 w-8 h-8 text-primary/30 animate-[spin_10s_linear_infinite] group-hover:text-primary/50 transition-colors" />
                   <Plus className="absolute bottom-4 left-4 w-6 h-6 text-primary/20 animate-[spin_15s_linear_infinite_reverse] group-hover:text-primary/40 transition-colors" />
@@ -151,8 +147,8 @@ const Performance = () => {
             
             <div className="flex flex-wrap justify-center gap-3 mb-12">
               {servicesList.map((service, index) => <div key={index} className="flex items-center gap-2 bg-card border border-border hover:border-primary/50 px-5 py-3 rounded-full hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 hover:scale-110 cursor-pointer group relative overflow-hidden animate-fade-in" style={{
-                animationDelay: `${index * 0.05}s`
-              }}>
+              animationDelay: `${index * 0.05}s`
+            }}>
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500"></div>
                   <service.icon className="w-4 h-4 text-primary group-hover:rotate-[360deg] transition-transform duration-500 relative z-10" />
                   <span className="text-sm font-medium relative z-10">{service.label}</span>
@@ -179,14 +175,16 @@ const Performance = () => {
           <div className="container mx-auto px-12">
             <div className="max-w-5xl mx-auto space-y-8">
               {services.map((service, index) => <div key={index} className="group flex gap-8 items-start py-8 border-b border-border/30 last:border-b-0 transition-all duration-500 hover:translate-x-4 animate-fade-in relative" style={{
-                animationDelay: `${index * 0.1}s`
-              }} onMouseEnter={() => setHoveredService(index)} onMouseLeave={() => setHoveredService(null)}>
+              animationDelay: `${index * 0.1}s`
+            }} onMouseEnter={() => setHoveredService(index)} onMouseLeave={() => setHoveredService(null)}>
                   {/* Hover background effect */}
                   <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/5 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl -mx-4"></div>
                   
                   {/* Icon */}
                   <div className={`flex-shrink-0 w-20 h-20 rounded-2xl bg-white flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:shadow-2xl group-hover:shadow-primary/20 group-hover:rotate-3 relative z-10 ${hoveredService === index ? 'shadow-xl shadow-primary/20' : ''}`}>
-                    <service.icon className="w-10 h-10 group-hover:scale-110 transition-transform duration-300" style={{ color: '#242424' }} />
+                    <service.icon className="w-10 h-10 group-hover:scale-110 transition-transform duration-300" style={{
+                  color: '#242424'
+                }} />
                   </div>
                   
                   {/* Content */}
@@ -247,9 +245,13 @@ const Performance = () => {
         </section>
 
         {/* Newsletter Section */}
-        <section className="py-16 mb-20" style={{ backgroundColor: '#1A1A1A' }}>
+        <section className="py-16 mb-20" style={{
+        backgroundColor: '#1A1A1A'
+      }}>
           <div className="container mx-auto px-12">
-            <div className="max-w-6xl mx-auto rounded-3xl shadow-2xl p-8 md:p-12 relative overflow-hidden group hover:shadow-3xl transition-all duration-500 animate-fade-in" style={{ backgroundColor: '#F2F2F2' }}>
+            <div className="max-w-6xl mx-auto rounded-3xl shadow-2xl p-8 md:p-12 relative overflow-hidden group hover:shadow-3xl transition-all duration-500 animate-fade-in" style={{
+            backgroundColor: '#F2F2F2'
+          }}>
               {/* Animated background effect */}
               <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/5 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               
