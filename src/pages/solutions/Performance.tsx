@@ -1,7 +1,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { BarChart3, Zap, Users, Palette, TrendingUp, Plug, Activity, MousePointerClick, ArrowRight, Smile, Plus } from "lucide-react";
+import { BarChart3, Zap, Users, Palette, TrendingUp, Plug, Activity, MousePointerClick, ArrowRight, Smile, Plus, Share2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 const Performance = () => {
@@ -24,6 +24,9 @@ const Performance = () => {
   }, {
     icon: Activity,
     label: "Performance"
+  }, {
+    icon: Share2,
+    label: "Social Consulting"
   }, {
     icon: MousePointerClick,
     label: "Tráfego Pago"
@@ -58,6 +61,11 @@ const Performance = () => {
     title: "Performance",
     subtitle: "Métricas, análises e otimizações focadas em resultados reais",
     description: "Monitoramos e otimizamos cada aspecto da performance digital do seu negócio. Criamos dashboards personalizados, analisamos KPIs críticos e implementamos melhorias baseadas em dados para maximizar ROI e acelerar o crescimento."
+  }, {
+    icon: Share2,
+    title: "Social Consulting",
+    subtitle: "Estratégias de redes sociais que engajam, convertem e fortalecem sua marca",
+    description: "Desenvolvemos e gerenciamos estratégias completas para redes sociais que vão além de curtidas. Criamos presença digital autêntica, conteúdo relevante e campanhas que geram conexão real com seu público, aumentando engajamento, autoridade e resultados comerciais tangíveis."
   }, {
     icon: MousePointerClick,
     title: "Tráfego Pago",
