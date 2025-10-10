@@ -59,8 +59,9 @@ const Implementation = () => {
       
       <main className="pt-32 pb-0">
         {/* Hero Section */}
-        <section className="container mx-auto px-4 mb-16">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <section className="mb-16">
+          <div className="container mx-auto px-4 lg:px-8">
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <h1 className="text-5xl lg:text-6xl font-bold mb-6 text-primary">
                 Digital Commerce
@@ -84,11 +85,12 @@ const Implementation = () => {
               </div>
             </div>
           </div>
+          </div>
         </section>
 
         {/* Purple Banner Section */}
         <section className="bg-primary text-primary-foreground py-16 mb-16">
-          <div className="container mx-auto px-4">
+          <div className="container mx-auto px-4 lg:px-8">
             <div className="grid lg:grid-cols-2 gap-8 mb-8">
               <div>
                 <h2 className="text-3xl font-bold mb-4">
@@ -123,8 +125,9 @@ const Implementation = () => {
         </section>
 
         {/* Services Details */}
-        <section className="container mx-auto px-4 mb-16">
-          <div className="space-y-16">
+        <section className="mb-16">
+          <div className="container mx-auto px-4 lg:px-8">
+            <div className="space-y-16">
             {services.map((service, index) => (
               <div key={index} className="grid lg:grid-cols-[auto_1fr] gap-8 items-start">
                 <div className="flex-shrink-0">
@@ -139,12 +142,13 @@ const Implementation = () => {
                 </div>
               </div>
             ))}
+            </div>
           </div>
         </section>
 
         {/* CTA Section */}
         <section className="bg-primary text-primary-foreground py-12 mb-16">
-          <div className="container mx-auto px-4">
+          <div className="container mx-auto px-4 lg:px-8">
             <div className="flex flex-col md:flex-row items-center justify-between gap-6">
               <div className="flex items-center gap-4">
                 <Smile className="w-12 h-12" />
