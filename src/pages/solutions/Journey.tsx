@@ -83,14 +83,19 @@ const Journey = () => {
     {
       title: "Implantação",
       subtitle: "Fundação sólida para seu e-commerce",
-      features: [
-        "Diagnóstico e Planejamento Estratégico",
-        "Presença Omnichannel",
-        "Suporte que acompanha",
-        "Personalização que escala",
-        "Segurança e confiança",
-        "Alta performance",
-        "Integração sem atrito"
+      items: [
+        {
+          title: "Diagnóstico e Planejamento Estratégico",
+          objective: "Entender o cenário atual e definir a direção do projeto"
+        },
+        {
+          title: "Estruturação de Produto e Catálogo",
+          objective: "Garantir base sólida de dados e atributos"
+        },
+        {
+          title: "Tecnologia e Integrações",
+          objective: "Garantir infraestrutura estável e escalável"
+        }
       ],
       color: "bg-gradient-to-br from-[#4ECDC4]/10 to-[#4ECDC4]/5"
     },
@@ -252,6 +257,22 @@ const Journey = () => {
                     <h3 className="text-2xl font-bold mb-2">{phase.title}</h3>
                     <p className="text-sm text-muted-foreground">{phase.subtitle}</p>
                   </div>
+                  
+                  {phase.items && (
+                    <div className="space-y-4">
+                      {phase.items.map((item, i) => (
+                        <div key={i} className="p-4 bg-background/50 rounded-lg">
+                          <div className="flex items-start gap-3 mb-2">
+                            <CheckCircle2 className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                            <h4 className="text-sm font-semibold leading-relaxed">{item.title}</h4>
+                          </div>
+                          <p className="text-xs text-muted-foreground pl-8">
+                            Objetivo: {item.objective}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                   
                   {phase.features && (
                     <div className="space-y-3">
