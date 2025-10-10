@@ -283,8 +283,8 @@ const Implementation = () => {
                   />
                   <Button 
                     size="lg" 
-                    style={{ backgroundColor: '#F2F2F2' }}
-                    className="hover:opacity-90 text-black font-semibold px-8 shadow-lg hover:shadow-xl transition-all hover:scale-105"
+                    style={{ backgroundColor: '#F2F2F2', color: '#000000' }}
+                    className="hover:opacity-90 font-semibold px-8 shadow-lg hover:shadow-xl transition-all hover:scale-105"
                   >
                     Cadastrar
                   </Button>
