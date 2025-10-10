@@ -333,7 +333,7 @@ const Journey = () => {
         </section>
 
         {/* Journey Phases - Stairway Visual */}
-        <section className="py-20 bg-muted/30 overflow-hidden relative">
+        <section className="py-20 overflow-hidden relative" style={{ backgroundColor: '#ECECEC' }}>
           <div className="absolute inset-0 opacity-5">
             {[...Array(8)].map((_, i) => (
               <TrendingUp key={i} className="absolute w-24 h-24" style={{
@@ -384,25 +384,25 @@ const Journey = () => {
                         marginTop: `${(journeyPhases.length - 1 - index) * 80}px`,
                       }}
                     >
-                      <div className={`bg-gradient-to-br ${phase.color} rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border-2 border-border h-full min-h-[420px] flex flex-col justify-between animate-fade-in hover-scale`} style={{ animationDelay: `${index * 0.2}s` }}>
+                      <div className={`bg-gradient-to-br ${phase.color} rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 border-2 border-border h-full min-h-[320px] flex flex-col justify-between animate-fade-in hover-scale`} style={{ animationDelay: `${index * 0.2}s` }}>
                         <div className="flex flex-col items-center">
-                          <Icon className="w-16 h-16 text-primary mb-4" strokeWidth={1.5} />
+                          <Icon className="w-12 h-12 text-primary mb-3" strokeWidth={1.5} />
                           
-                          <h3 className="text-2xl md:text-3xl font-bold text-center mb-3 text-foreground">
+                          <h3 className="text-xl md:text-2xl font-bold text-center mb-2 text-foreground">
                             {phase.title}
                           </h3>
                           
-                          <p className="text-center text-muted-foreground text-sm leading-relaxed">
+                          <p className="text-center text-muted-foreground text-xs leading-relaxed">
                             {phase.description}
                           </p>
                         </div>
 
                         {phase.levels && (
-                          <div className="mt-6 space-y-2 pt-4 border-t-2 border-border">
+                          <div className="mt-4 space-y-1.5 pt-3 border-t-2 border-border">
                             {phase.levels.map((level, i) => (
-                              <div key={i} className="flex items-center justify-between text-sm">
+                              <div key={i} className="flex items-center justify-between text-xs">
                                 <span className="font-bold text-foreground">{level.value}</span>
-                                <span className="text-xs text-muted-foreground uppercase tracking-wider px-2 py-1 bg-muted/50 rounded">
+                                <span className="text-[10px] text-muted-foreground uppercase tracking-wider px-2 py-0.5 bg-muted/50 rounded">
                                   {level.stage}
                                 </span>
                               </div>
