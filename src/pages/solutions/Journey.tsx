@@ -40,46 +40,38 @@ const Journey = () => {
     { number: "24/7", label: "Suporte disponível", icon: Zap }
   ];
 
-  const journeySteps = [
+  const journeyPhases = [
     {
-      number: "01",
-      title: "Diagnóstico",
-      description: "Análise completa do seu negócio, identificando oportunidades e pontos de melhoria",
-      color: "from-[#FF6B6B] to-[#FF8E8E]"
+      title: "IMPLANTAÇÃO",
+      icon: Target,
+      description: "Estruturar a operação, integrar tecnologia e definir processos",
+      color: "from-[#96CEB4]/80 to-[#96CEB4]/40",
+      position: 1
     },
     {
-      number: "02",
-      title: "Planejamento",
-      description: "Estratégia personalizada com metas claras e KPIs específicos para seu estágio",
-      color: "from-[#4ECDC4] to-[#6FE0D8]"
+      title: "EVOLUÇÃO",
+      icon: TrendingUp,
+      description: "Otimizar a conversão, solidificar processos e validar performance",
+      color: "from-[#96CEB4] to-[#96CEB4]/60",
+      position: 2
     },
     {
-      number: "03",
-      title: "Implementação",
-      description: "Execução técnica com as melhores práticas, garantindo qualidade e performance",
-      color: "from-[#45B7D1] to-[#5CC8E0]"
-    },
-    {
-      number: "04",
-      title: "Otimização",
-      description: "Análise contínua de dados para melhorar conversão e experiência do usuário",
-      color: "from-[#96CEB4] to-[#A8D8BF]"
-    },
-    {
-      number: "05",
-      title: "Escala",
-      description: "Expansão estruturada do seu e-commerce, preparado para crescer sem limites",
-      color: "from-[#FFEAA7] to-[#FFF0BA]"
-    },
-    {
-      number: "06",
-      title: "Consolidação",
-      description: "Evolução completa do negócio digital com resultados sustentáveis e mensuráveis",
-      color: "from-[#DDA0DD] to-[#E6B8E6]"
+      title: "ESCALA",
+      icon: Rocket,
+      description: "Expandir canais, audiência e receita com dados",
+      color: "from-[#7CB89D] to-[#96CEB4]",
+      position: 3,
+      levels: [
+        { value: "R$ 50 mil", stage: "Iniciante" },
+        { value: "R$ 200 mil", stage: "Iniciante" },
+        { value: "R$ 500 mil", stage: "Profissional" },
+        { value: "R$ 1 milhão", stage: "Profissional" },
+        { value: "R$ 5 milhões+", stage: "Especialista" }
+      ]
     }
   ];
 
-  const phases = [
+  const detailedPhases = [
     {
       title: "Implantação",
       subtitle: "Fase de estruturação completa da operação digital, garantindo base sólida, processos claros e tecnologia integrada",
@@ -255,47 +247,94 @@ const Journey = () => {
           </div>
         </section>
 
-        {/* Journey Steps - 6 Steps */}
-        <section className="py-20 bg-muted/30">
+        {/* Journey Phases - Stairway Visual */}
+        <section className="py-20 bg-muted/30 overflow-hidden">
           <div className="container mx-auto px-4">
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">
-              As 6 Etapas da Jornada
+              As 3 Fases da Jornada Way
             </h2>
             <p className="text-center text-muted-foreground mb-16 max-w-2xl mx-auto">
-              Um caminho claro e estruturado para transformar seu e-commerce
+              Um caminho progressivo e estruturado para o crescimento sustentável
             </p>
             
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {journeySteps.map((step, index) => (
-                <div key={index} className="group relative">
-                  <div className={`absolute inset-0 bg-gradient-to-br ${step.color} rounded-2xl opacity-0 group-hover:opacity-100 blur transition-opacity duration-300`}></div>
-                  <div className="relative bg-card border border-border hover:border-transparent rounded-2xl p-8 transition-all duration-300 h-full">
-                    <div className="flex items-start gap-4 mb-4">
-                      <div className={`text-6xl font-bold bg-gradient-to-br ${step.color} bg-clip-text text-transparent`}>
-                        {step.number}
+            <div className="relative max-w-6xl mx-auto">
+              {/* Growth Line */}
+              <div className="absolute top-0 left-0 w-full h-full pointer-events-none hidden md:block">
+                <svg className="w-full h-full" viewBox="0 0 1000 400" preserveAspectRatio="none">
+                  <path 
+                    d="M 100 350 L 350 250 L 650 150 L 900 50" 
+                    stroke="currentColor" 
+                    strokeWidth="3" 
+                    fill="none"
+                    className="text-primary/30"
+                    markerEnd="url(#arrowhead)"
+                  />
+                  <defs>
+                    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                      <polygon points="0 0, 10 3, 0 6" fill="currentColor" className="text-primary/30" />
+                    </marker>
+                  </defs>
+                </svg>
+              </div>
+
+              {/* Phase Cards */}
+              <div className="grid md:grid-cols-3 gap-6 relative">
+                {journeyPhases.map((phase, index) => {
+                  const Icon = phase.icon;
+                  return (
+                    <div 
+                      key={index} 
+                      className="relative"
+                      style={{ 
+                        marginTop: `${index * 80}px`,
+                      }}
+                    >
+                      <div className={`bg-gradient-to-br ${phase.color} rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border-2 border-black/10`}>
+                        <div className="flex justify-center mb-4">
+                          <Icon className="w-16 h-16 text-black/70" strokeWidth={1.5} />
+                        </div>
+                        
+                        <h3 className="text-2xl md:text-3xl font-bold text-center mb-3 text-black">
+                          {phase.title}
+                        </h3>
+                        
+                        <p className="text-center text-black/80 text-sm leading-relaxed mb-4">
+                          {phase.description}
+                        </p>
+
+                        {phase.levels && (
+                          <div className="mt-6 space-y-2 pt-4 border-t-2 border-black/20">
+                            {phase.levels.map((level, i) => (
+                              <div key={i} className="flex items-center justify-between text-sm">
+                                <span className="font-bold text-black">{level.value}</span>
+                                <span className="text-xs text-black/70 uppercase tracking-wider px-2 py-1 bg-black/10 rounded">
+                                  {level.stage}
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                        )}
                       </div>
                     </div>
-                    <h3 className="text-2xl font-bold mb-3">{step.title}</h3>
-                    <p className="text-muted-foreground leading-relaxed">{step.description}</p>
-                  </div>
-                </div>
-              ))}
+                  );
+                })}
+              </div>
             </div>
           </div>
         </section>
 
-        {/* 3 Phases Section */}
+        {/* Detailed 3 Phases Section */}
         <section className="py-20 bg-background">
           <div className="container mx-auto px-4">
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">
-              As 3 Fases da Jornada Way
+              Detalhamento das Fases
             </h2>
             <p className="text-center text-muted-foreground mb-16 max-w-2xl mx-auto">
               Cada fase é cuidadosamente estruturada para garantir seu sucesso
             </p>
             
             <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-              {phases.map((phase, index) => (
+              {detailedPhases.map((phase, index) => (
                 <div key={index} className={`${phase.color} rounded-2xl p-8 border border-border hover:shadow-xl transition-all duration-300`}>
                   <div className="text-center mb-6">
                     <h3 className="text-2xl font-bold mb-2">{phase.title}</h3>
