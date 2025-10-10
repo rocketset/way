@@ -267,7 +267,7 @@ const Header = () => {
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
                 
                 <span className="relative z-10 flex items-center gap-2">
-                  Falar com a gente
+                  VAMOS CONVERSAR!
                   <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
                 </span>
 
