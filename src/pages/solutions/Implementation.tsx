@@ -29,30 +29,25 @@ const Implementation = () => {
     subtitle: "Planejamos, desenvolvemos e gerenciamos toda a estratégia do seu e-commerce",
     description: "Desenvolvemos e gerenciamos e-commerce com atuação ampla e entrega. Oferecendo uma experiência de qualidade para seus clientes, com estratégias focadas em resultados. Atendemos diversos modelos de negócio, como B2B, B2C, B2E, D2C."
   }, {
+    icon: Globe,
+    title: "Desenvolvimento Web",
+    subtitle: "Soluções web personalizadas e escaláveis para o seu negócio digital",
+    description: "Criamos websites e aplicações web modernas, responsivas e otimizadas para performance. Utilizamos as melhores tecnologias e práticas de desenvolvimento para entregar soluções que impulsionam seu negócio online e proporcionam experiências excepcionais aos seus usuários."
+  }, {
+    icon: MessageCircle,
+    title: "Automações de Whatsapp",
+    subtitle: "Automatize seu atendimento e vendas através do WhatsApp",
+    description: "Implementamos soluções de automação para WhatsApp que otimizam seu atendimento, qualificam leads e aumentam suas conversões. Integração com chatbots inteligentes, respostas automáticas e fluxos personalizados para cada etapa da jornada do cliente."
+  }, {
+    icon: Bot,
+    title: "CRM e automações com I.A",
+    subtitle: "Gestão de relacionamento com clientes potencializada por inteligência artificial",
+    description: "Implementamos sistemas de CRM integrados com automações inteligentes que utilizam I.A para análise de dados, previsão de comportamento, personalização de comunicações e otimização de processos comerciais. Transforme dados em insights acionáveis e aumente a eficiência da sua equipe."
+  }, {
     icon: Store,
-    title: "Marketplace",
+    title: "Marketplaces",
     subtitle: "Aqui o objetivo é conectar seus produtos às plataformas certas, com atuação em mais de 300 marketplaces",
     description: "Expandimos o alcance dos seus negócios, criando oportunidades lucrativas capazes de ativar a cada ponto específico para seus produtos. Além disso, apresentamos histórias que possam se beneficiar da expertise da sua negócio, celebrando cada atuação qualificando sua visibilidade na sua marca."
-  }, {
-    icon: Cpu,
-    title: "Tecnologia",
-    subtitle: "Plataformas de ERP, WMS e OMS avançadas, que facilitam a automação e a análise de dados em tempo real",
-    description: "Nossa tecnologia integra APIs robustas que permitem gestão de pedidos, controle de estoque, emissão de notas fiscais automatizada, sincronização de catálogos, análises operacionais e agilidade na gestão, ajudando a transformar dados em resultados estratégicos."
-  }, {
-    icon: CreditCard,
-    title: "Pagamentos",
-    subtitle: "Pagamentos online integrados ao check-out com soluções livres de fraudes, tecnologias avançadas e equipe especializada",
-    description: "Conte com um sistema seguro para garantir pagamentos integrados no check-out, reduzindo taxas e tempo de aprovação. Utilizamos APIs de plataformas líderes no mercado de pagamento (cartões, PIX, boleto, carteiras digitais). A solução é livre de fraudes, com tecnologias avançadas e uma equipe especializada em segurança e prevenção de ataques virtuais."
-  }, {
-    icon: Truck,
-    title: "Logística",
-    subtitle: "Operações automatizadas e rastreamento contínuo, soluções rápidas e seguras, desde o despacho até o transporte",
-    description: "Uma logística eficiente é crucial para permitir a agilidade nos processos de entrega e reduzir custos operacionais, especialmente no e-commerce. Em nossa Central de Distribuição (CDA), nossos serviços operam de forma automatizada e conectada, oferecendo rastreamento de pedidos em tempo real, otimizando o picking e o packing de cada item. Com operações automatizadas e rastreamento contínuo, oferecemos soluções rápidas e seguras, desde o despacho até o transporte final. Isso economiza tempo e reduz custos, otimizando a eficiência e a satisfação do cliente."
-  }, {
-    icon: Smile,
-    title: "Customer Experience",
-    subtitle: "Soluções integradas de atendimento omnicanal que cobrem toda a jornada de compra",
-    description: "Atuação ágil, estratégias personalizadas que impactam desde o pré-venda até o pós-venda. Na pré-venda, oferecemos um diagnóstico profundo para garantir a captura de leads relevantes. Durante a venda, otimizamos processos para maximizar conversões e, no pós-venda, fidelizamos clientes — através de consultas ou inteligência artificial para atender às necessidades do cliente. Entregamos experiências de automação e inteligência artificial com personalização para otimizar cada etapa, unindo tecnologia com estratégias competitivas para o seu negócio."
   }];
   return <div className="min-h-screen bg-background overflow-hidden">
       <Header />
@@ -182,7 +177,7 @@ const Implementation = () => {
                   
                   {/* Content */}
                   <div className="flex-1 pt-1">
-                    <h3 className="text-3xl font-bold mb-4 text-foreground group-hover:text-primary transition-colors">
+                    <h3 className="text-3xl font-bold mb-4 text-black group-hover:text-primary transition-colors">
                       {service.title}
                     </h3>
                     <p className="text-primary font-semibold mb-4 text-lg leading-relaxed">
