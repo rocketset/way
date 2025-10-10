@@ -14,6 +14,69 @@ const Journey = () => {
     "transformar"
   ];
 
+  const journeyPhases = [
+    {
+      title: "Implantação",
+      color: "bg-card",
+      features: [
+        "Presença Omnichannel",
+        "Suporte que acompanha",
+        "Personalização que escala",
+        "Segurança e confiança",
+        "Alta performance",
+        "Integração sem atrito"
+      ]
+    },
+    {
+      title: "Evolução",
+      color: "bg-card",
+      items: [
+        {
+          number: "01",
+          text: "Otimização da plataforma de e-commerce"
+        },
+        {
+          number: "02",
+          text: "Reestruturação de integrações com ERP, CRM, logística..."
+        },
+        {
+          number: "03",
+          text: "Ajustes no mix de produtos e precificação"
+        },
+        {
+          number: "04",
+          text: "Melhoria da experiência de compra"
+        }
+      ]
+    },
+    {
+      title: "Escala",
+      color: "bg-card",
+      levels: [
+        {
+          value: "R$ 50 mil",
+          label: "Entrada de mercado",
+          stage: "Iniciante"
+        },
+        {
+          value: "R$ 200 mil",
+          label: "",
+          stage: "Iniciante"
+        },
+        {
+          value: "R$ 500 mil",
+          label: "",
+          stage: "Profissional"
+        },
+        {
+          value: "R$ 1 milão",
+          label: "",
+          stage: "Profissional"
+        }
+      ]
+    }
+  ];
+
   const benefits = [
     {
       number: "1",
@@ -131,6 +194,77 @@ const Journey = () => {
               automações inteligentes e otimização do funil de vendas, conseguimos promover o crescimento 
               do seu e-commerce a curto, médio e longo prazo.
             </p>
+          </div>
+        </div>
+
+        {/* Journey Phases - Visual Timeline */}
+        <div className="container mx-auto px-4 mb-24">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">
+            As 3 Fases da Jornada Way
+          </h2>
+          
+          <div className="grid md:grid-cols-3 gap-8">
+            {/* Implantação */}
+            <div className="relative">
+              <div className="sticky top-24">
+                <div className="bg-card border-2 border-primary rounded-2xl p-8 hover:shadow-xl transition-all duration-300">
+                  <div className="bg-primary text-primary-foreground text-center py-3 px-6 rounded-xl mb-6 font-bold text-xl">
+                    {journeyPhases[0].title}
+                  </div>
+                  <div className="space-y-3">
+                    {journeyPhases[0].features?.map((feature, i) => (
+                      <div key={i} className="flex items-center gap-3 p-3 bg-muted rounded-lg hover:bg-muted/70 transition-colors">
+                        <CheckCircle2 className="w-5 h-5 text-primary flex-shrink-0" />
+                        <span className="text-sm font-medium">{feature}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Evolução */}
+            <div className="relative">
+              <div className="sticky top-24">
+                <div className="bg-card border-2 border-primary rounded-2xl p-8 hover:shadow-xl transition-all duration-300">
+                  <div className="bg-primary text-primary-foreground text-center py-3 px-6 rounded-xl mb-6 font-bold text-xl">
+                    {journeyPhases[1].title}
+                  </div>
+                  <div className="space-y-4">
+                    {journeyPhases[1].items?.map((item, i) => (
+                      <div key={i} className="flex gap-3 p-3 bg-gradient-to-r from-primary/10 to-transparent rounded-lg hover:from-primary/20 transition-colors">
+                        <div className="flex-shrink-0 w-8 h-8 bg-primary text-primary-foreground rounded-lg flex items-center justify-center font-bold text-sm">
+                          {item.number}
+                        </div>
+                        <p className="text-sm leading-relaxed pt-1">{item.text}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Escala */}
+            <div className="relative">
+              <div className="sticky top-24">
+                <div className="bg-card border-2 border-primary rounded-2xl p-8 hover:shadow-xl transition-all duration-300">
+                  <div className="bg-primary text-primary-foreground text-center py-3 px-6 rounded-xl mb-6 font-bold text-xl">
+                    {journeyPhases[2].title}
+                  </div>
+                  <div className="space-y-3">
+                    {journeyPhases[2].levels?.map((level, i) => (
+                      <div key={i} className="bg-gradient-to-r from-primary to-yellow-500 p-4 rounded-xl text-white">
+                        <div className="font-bold text-lg mb-1">{level.value}</div>
+                        {level.label && <div className="text-sm opacity-90 mb-1">{level.label}</div>}
+                        <div className="text-xs bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full inline-block">
+                          {level.stage}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
