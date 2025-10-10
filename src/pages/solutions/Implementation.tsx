@@ -1,7 +1,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { ShoppingCart, Store, Cpu, CreditCard, Truck, Smile, ArrowRight, Check, Globe, MessageCircle, Bot, Plus } from "lucide-react";
+import { ShoppingCart, Store, Cpu, CreditCard, Truck, Smile, ArrowRight, Check, Globe, MessageCircle, Bot, Plus, Plug } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import shopifyPartner from "@/assets/partners/shopify-partner.png";
@@ -34,6 +34,9 @@ const Implementation = () => {
     icon: Bot,
     label: "CRM e automações com I.A"
   }, {
+    icon: Plug,
+    label: "Integrações"
+  }, {
     icon: Store,
     label: "Marketplaces"
   }];
@@ -58,6 +61,11 @@ const Implementation = () => {
     title: "CRM e automações com I.A",
     subtitle: "Gestão de relacionamento com clientes potencializada por inteligência artificial",
     description: "Implementamos sistemas de CRM integrados com automações inteligentes que utilizam I.A para análise de dados, previsão de comportamento, personalização de comunicações e otimização de processos comerciais. Transforme dados em insights acionáveis e aumente a eficiência da sua equipe."
+  }, {
+    icon: Plug,
+    title: "Integrações",
+    subtitle: "Conexões perfeitas entre ferramentas e sistemas para máxima eficiência",
+    description: "Implementamos e gerenciamos integrações entre suas principais ferramentas de marketing, vendas e gestão. Garantimos que seus dados fluam perfeitamente entre plataformas, eliminando trabalho manual e proporcionando visão unificada do negócio."
   }, {
     icon: Store,
     title: "Marketplaces",
