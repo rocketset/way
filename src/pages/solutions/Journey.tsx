@@ -242,29 +242,38 @@ const Journey = () => {
           </div>
         </section>
 
-        {/* Team Photos Section */}
-        <section className="py-16 bg-muted/30 relative">
+        {/* Team Photos Section - Carousel */}
+        <section className="py-16 bg-muted/30 relative overflow-hidden">
           <div className="container mx-auto px-4">
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 animate-fade-in">
               Nossa Equipe em Ação
             </h2>
-            <div className="grid md:grid-cols-3 gap-6">
-              {teamPhotos.map((photo, index) => (
-                <div key={index} className="relative group overflow-hidden rounded-2xl shadow-lg hover-scale animate-fade-in" style={{ animationDelay: `${index * 0.1}s` }}>
-                  <img 
-                    src={photo} 
-                    alt={`Equipe Way ${index + 1}`}
-                    className="w-full h-80 object-cover transition-transform duration-500 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <div className="absolute bottom-6 left-6 right-6 flex gap-3">
-                      <Plus className="w-8 h-8 text-primary" />
-                      <DollarSign className="w-8 h-8 text-primary" />
-                      <TrendingUp className="w-8 h-8 text-primary" />
+            
+            {/* Carousel Container */}
+            <div className="relative">
+              {/* Gradient overlays */}
+              <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-muted/30 to-transparent z-10 pointer-events-none" />
+              <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-muted/30 to-transparent z-10 pointer-events-none" />
+              
+              {/* Scrolling Images */}
+              <div className="flex gap-6 animate-scroll-team">
+                {[...teamPhotos, ...teamPhotos, ...teamPhotos].map((photo, index) => (
+                  <div key={index} className="relative group flex-shrink-0 w-[400px] overflow-hidden rounded-2xl shadow-lg hover-scale">
+                    <img 
+                      src={photo} 
+                      alt={`Equipe Way ${(index % teamPhotos.length) + 1}`}
+                      className="w-full h-80 object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <div className="absolute bottom-6 left-6 right-6 flex gap-3">
+                        <Plus className="w-8 h-8 text-primary" />
+                        <DollarSign className="w-8 h-8 text-primary" />
+                        <TrendingUp className="w-8 h-8 text-primary" />
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
         </section>
@@ -302,6 +311,23 @@ const Journey = () => {
                 funil de vendas, conseguimos promover o crescimento do seu e-commerce a curto, médio 
                 e longo prazo.
               </p>
+            </div>
+          </div>
+        </section>
+
+        {/* CTA Button Before 3 Phases */}
+        <section className="py-12 bg-background">
+          <div className="container mx-auto px-4">
+            <div className="flex justify-center animate-fade-in">
+              <Button 
+                size="lg"
+                className="bg-primary text-primary-foreground hover:bg-primary/90 px-12 py-8 text-lg rounded-full shadow-2xl font-bold hover-scale group relative overflow-hidden"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary-foreground/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
+                <Plus className="mr-3 w-6 h-6 group-hover:rotate-[360deg] transition-transform duration-500" />
+                QUERO APLICAR A JORNADA NA MINHA EMPRESA
+                <ArrowRight className="ml-3 w-6 h-6 group-hover:translate-x-2 transition-transform" />
+              </Button>
             </div>
           </div>
         </section>
@@ -547,6 +573,31 @@ const Journey = () => {
           }
           to {
             transform: rotate(360deg);
+          }
+        }
+        
+        @keyframes scroll-team {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(calc(-400px * 3 - 24px * 3));
+          }
+        }
+
+        .animate-scroll-team {
+          animation: scroll-team 30s linear infinite;
+          display: flex;
+          width: max-content;
+        }
+
+        .animate-scroll-team:hover {
+          animation-play-state: paused;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .animate-scroll-team {
+            animation-duration: 60s;
           }
         }
       `}</style>
