@@ -89,7 +89,7 @@ const Consulting = () => {
                     >
                       <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/5 to-primary/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
                       <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-all duration-300 group-hover:rotate-3 relative z-10">
-                        <service.icon className="w-6 h-6 text-primary group-hover:scale-110 transition-transform" style={{ color: '#242424' }} />
+                        <service.icon className="w-6 h-6 text-primary group-hover:scale-110 transition-transform" />
                       </div>
                       <span className="font-medium text-foreground group-hover:text-primary transition-colors relative z-10">{service.label}</span>
                       <ArrowRight className="ml-auto w-5 h-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-2 transition-all relative z-10" />
