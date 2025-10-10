@@ -181,7 +181,7 @@ const Header = () => {
                           to={solution.path}
                           className="flex items-center gap-3 px-4 py-3 cursor-pointer hover:bg-primary/10 transition-all duration-300 rounded-lg group"
                         >
-                          <span className="font-medium group-hover:text-primary transition-colors duration-300">
+                          <span className="font-medium group-hover:text-gray-900 transition-colors duration-300">
                             {solution.label}
                           </span>
                         </Link>
