@@ -5,10 +5,8 @@ import { Target, TrendingUp, Store, Brain, Network, ArrowRight, Check, Smile, Pl
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import consultingHero from "@/assets/consulting-hero.png";
-
 const Consulting = () => {
   const [hoveredService, setHoveredService] = useState<number | null>(null);
-  
   const servicesList = [{
     icon: Target,
     label: "Estratégia Digital"
@@ -25,7 +23,6 @@ const Consulting = () => {
     icon: Network,
     label: "Omnichannel"
   }];
-  
   const services = [{
     icon: Target,
     title: "Estratégia Digital",
@@ -52,9 +49,7 @@ const Consulting = () => {
     subtitle: "Integração perfeita entre todos os canais de venda e comunicação",
     description: "Desenvolvemos estratégias omnichannel que conectam todos os pontos de contato com seus clientes de forma integrada e fluida. Sincronizamos lojas físicas, e-commerce, marketplaces, redes sociais e aplicativos para criar uma experiência unificada, permitindo que seus clientes comprem quando, onde e como preferirem, aumentando vendas e satisfação."
   }];
-  
-  return (
-    <div className="min-h-screen bg-background overflow-hidden">
+  return <div className="min-h-screen bg-background overflow-hidden">
       <Header />
       
       <main className="pt-32 pb-0">
@@ -74,7 +69,7 @@ const Consulting = () => {
               <div className="space-y-8 animate-fade-in">
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 hover:bg-primary/20 hover:scale-105 transition-all duration-300 cursor-pointer group">
                   <Plus className="w-4 h-4 text-primary group-hover:rotate-90 transition-transform duration-300" />
-                  <span className="text-sm font-medium text-primary">Soluções Modulares</span>
+                  <span className="text-sm font-medium text-primary">Way.consulting - Soluções Modulares</span>
                 </div>
                 
                 <h1 className="text-5xl font-bold text-primary leading-tight lg:text-4xl">
@@ -82,32 +77,26 @@ const Consulting = () => {
                 </h1>
                 
                 <div className="grid grid-cols-1 gap-4">
-                  {servicesList.map((service, index) => (
-                    <div 
-                      key={index}
-                      className="group flex items-center gap-4 p-4 rounded-xl bg-card border border-border hover:border-primary/50 transition-all duration-300 hover:shadow-xl hover:shadow-primary/10 hover:scale-105 cursor-pointer animate-fade-in relative overflow-hidden"
-                      style={{ animationDelay: `${index * 0.1}s` }}
-                    >
+                  {servicesList.map((service, index) => <div key={index} className="group flex items-center gap-4 p-4 rounded-xl bg-card border border-border hover:border-primary/50 transition-all duration-300 hover:shadow-xl hover:shadow-primary/10 hover:scale-105 cursor-pointer animate-fade-in relative overflow-hidden" style={{
+                  animationDelay: `${index * 0.1}s`
+                }}>
                       <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/5 to-primary/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
                       <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-all duration-300 group-hover:rotate-3 relative z-10">
                         <service.icon className="w-6 h-6 text-primary group-hover:scale-110 transition-transform" />
                       </div>
                       <span className="font-medium text-foreground group-hover:text-primary transition-colors relative z-10">{service.label}</span>
                       <ArrowRight className="ml-auto w-5 h-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-2 transition-all relative z-10" />
-                    </div>
-                  ))}
+                    </div>)}
                 </div>
               </div>
               
-              <div className="relative animate-fade-in group flex items-center justify-center" style={{ animationDelay: '0.3s' }}>
+              <div className="relative animate-fade-in group flex items-center justify-center" style={{
+              animationDelay: '0.3s'
+            }}>
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/30 to-primary/10 rounded-3xl blur-3xl group-hover:blur-2xl transition-all duration-500 opacity-50 group-hover:opacity-100"></div>
                 <div className="relative aspect-square rounded-3xl overflow-hidden border border-primary/20 group-hover:border-primary/40 transition-all duration-500 hover:scale-105 transform w-[70%]">
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent"></div>
-                  <img 
-                    src={consultingHero} 
-                    alt="Consultorias Especializadas" 
-                    className="w-full h-full object-contain relative z-10"
-                  />
+                  <img src={consultingHero} alt="Consultorias Especializadas" className="w-full h-full object-contain relative z-10" />
                   <Plus className="absolute top-4 right-4 w-8 h-8 text-primary/30 animate-[spin_10s_linear_infinite] group-hover:text-primary/50 transition-colors" />
                   <Plus className="absolute bottom-4 left-4 w-6 h-6 text-primary/20 animate-[spin_15s_linear_infinite_reverse] group-hover:text-primary/40 transition-colors" />
                 </div>
@@ -130,7 +119,9 @@ const Consulting = () => {
                   </h2>
                 </div>
               </div>
-              <div className="flex items-center animate-fade-in" style={{ animationDelay: '0.2s' }}>
+              <div className="flex items-center animate-fade-in" style={{
+              animationDelay: '0.2s'
+            }}>
                 <p className="text-lg leading-relaxed text-muted-foreground">
                   Nossos consultores especializados analisam profundamente seu negócio, identificam oportunidades de crescimento e desenvolvem estratégias personalizadas. Combinamos expertise técnica com visão de mercado para entregar soluções que geram resultados mensuráveis e transformam seu e-commerce em uma máquina de vendas.
                 </p>
@@ -138,17 +129,13 @@ const Consulting = () => {
             </div>
             
             <div className="flex flex-wrap justify-center gap-3 mb-12">
-              {servicesList.map((service, index) => (
-                <div 
-                  key={index}
-                  className="flex items-center gap-2 bg-card border border-border hover:border-primary/50 px-5 py-3 rounded-full hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 hover:scale-110 cursor-pointer group relative overflow-hidden animate-fade-in"
-                  style={{ animationDelay: `${index * 0.05}s` }}
-                >
+              {servicesList.map((service, index) => <div key={index} className="flex items-center gap-2 bg-card border border-border hover:border-primary/50 px-5 py-3 rounded-full hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 hover:scale-110 cursor-pointer group relative overflow-hidden animate-fade-in" style={{
+              animationDelay: `${index * 0.05}s`
+            }}>
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500"></div>
                   <service.icon className="w-4 h-4 text-primary group-hover:rotate-[360deg] transition-transform duration-500 relative z-10" />
                   <span className="text-sm font-medium relative z-10">{service.label}</span>
-                </div>
-              ))}
+                </div>)}
             </div>
 
             <div className="text-center">
@@ -165,21 +152,20 @@ const Consulting = () => {
         </section>
 
         {/* Services Details */}
-        <section className="py-20" style={{ backgroundColor: '#F2F2F2' }}>
+        <section className="py-20" style={{
+        backgroundColor: '#F2F2F2'
+      }}>
           <div className="container mx-auto px-12">
             <div className="max-w-5xl mx-auto space-y-8">
-              {services.map((service, index) => (
-                <div 
-                  key={index}
-                  className="group flex gap-8 items-start py-8 border-b border-border/30 last:border-b-0 transition-all duration-500 hover:translate-x-4 animate-fade-in relative"
-                  style={{ animationDelay: `${index * 0.1}s` }}
-                  onMouseEnter={() => setHoveredService(index)}
-                  onMouseLeave={() => setHoveredService(null)}
-                >
+              {services.map((service, index) => <div key={index} className="group flex gap-8 items-start py-8 border-b border-border/30 last:border-b-0 transition-all duration-500 hover:translate-x-4 animate-fade-in relative" style={{
+              animationDelay: `${index * 0.1}s`
+            }} onMouseEnter={() => setHoveredService(index)} onMouseLeave={() => setHoveredService(null)}>
                   <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/5 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl -mx-4"></div>
                   
                   <div className={`flex-shrink-0 w-20 h-20 rounded-2xl bg-white flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:shadow-2xl group-hover:shadow-primary/20 group-hover:rotate-3 relative z-10 ${hoveredService === index ? 'shadow-xl shadow-primary/20' : ''}`}>
-                    <service.icon className="w-10 h-10 group-hover:scale-110 transition-transform duration-300" style={{ color: '#242424' }} />
+                    <service.icon className="w-10 h-10 group-hover:scale-110 transition-transform duration-300" style={{
+                  color: '#242424'
+                }} />
                   </div>
                   
                   <div className="flex-1 pt-1 relative z-10">
@@ -193,8 +179,7 @@ const Consulting = () => {
                       {service.description}
                     </p>
                   </div>
-                </div>
-              ))}
+                </div>)}
             </div>
           </div>
         </section>
@@ -239,9 +224,13 @@ const Consulting = () => {
         </section>
 
         {/* Newsletter Section */}
-        <section className="py-16 mb-20" style={{ backgroundColor: '#1A1A1A' }}>
+        <section className="py-16 mb-20" style={{
+        backgroundColor: '#1A1A1A'
+      }}>
           <div className="container mx-auto px-12">
-            <div className="max-w-6xl mx-auto rounded-3xl shadow-2xl p-8 md:p-12 relative overflow-hidden group hover:shadow-3xl transition-all duration-500 animate-fade-in" style={{ backgroundColor: '#F2F2F2' }}>
+            <div className="max-w-6xl mx-auto rounded-3xl shadow-2xl p-8 md:p-12 relative overflow-hidden group hover:shadow-3xl transition-all duration-500 animate-fade-in" style={{
+            backgroundColor: '#F2F2F2'
+          }}>
               <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/5 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               
               <Plus className="absolute top-4 right-4 w-8 h-8 text-primary/10 animate-[spin_15s_linear_infinite]" />
@@ -258,15 +247,8 @@ const Consulting = () => {
                 </div>
                 
                 <div className="flex gap-3 w-full md:w-auto md:min-w-[400px]">
-                  <input
-                    type="email"
-                    placeholder="Digite seu e-mail"
-                    className="flex-1 px-6 py-3 rounded-lg bg-white text-black border-2 border-transparent focus:border-primary focus:outline-none transition-all duration-300 hover:shadow-md"
-                  />
-                  <Button 
-                    size="lg" 
-                    className="bg-[#FFD700] hover:bg-[#FFC700] text-black font-semibold px-8 shadow-lg hover:shadow-2xl transition-all hover:scale-110 relative overflow-hidden group/btn"
-                  >
+                  <input type="email" placeholder="Digite seu e-mail" className="flex-1 px-6 py-3 rounded-lg bg-white text-black border-2 border-transparent focus:border-primary focus:outline-none transition-all duration-300 hover:shadow-md" />
+                  <Button size="lg" className="bg-[#FFD700] hover:bg-[#FFC700] text-black font-semibold px-8 shadow-lg hover:shadow-2xl transition-all hover:scale-110 relative overflow-hidden group/btn">
                     <span className="relative z-10">Cadastrar</span>
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover/btn:translate-x-[100%] transition-transform duration-700"></div>
                   </Button>
@@ -278,8 +260,6 @@ const Consulting = () => {
       </main>
 
       <Footer />
-    </div>
-  );
+    </div>;
 };
-
 export default Consulting;
