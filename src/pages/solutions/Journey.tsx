@@ -260,18 +260,18 @@ const Journey = () => {
             <div className="relative max-w-6xl mx-auto">
               {/* Growth Line */}
               <div className="absolute top-0 left-0 w-full h-full pointer-events-none hidden md:block">
-                <svg className="w-full h-full" viewBox="0 0 1000 400" preserveAspectRatio="none">
+                <svg className="w-full h-full" viewBox="0 0 1000 500" preserveAspectRatio="none">
                   <path 
-                    d="M 100 50 L 350 150 L 650 250 L 900 350" 
+                    d="M 100 450 L 400 300 L 700 150" 
                     stroke="currentColor" 
                     strokeWidth="3" 
                     fill="none"
-                    className="text-primary/30"
+                    className="text-primary"
                     markerEnd="url(#arrowhead)"
                   />
                   <defs>
                     <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
-                      <polygon points="0 0, 10 3, 0 6" fill="currentColor" className="text-primary/30" />
+                      <polygon points="0 0, 10 3, 0 6" fill="currentColor" className="text-primary" />
                     </marker>
                   </defs>
                 </svg>
@@ -289,21 +289,21 @@ const Journey = () => {
                         marginTop: `${(journeyPhases.length - 1 - index) * 80}px`,
                       }}
                     >
-                      <div className={`bg-gradient-to-br ${phase.color} rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border-2 border-black/10 h-full min-h-[420px] flex flex-col`}>
-                        <div className="flex justify-center mb-4">
-                          <Icon className="w-16 h-16 text-black/70" strokeWidth={1.5} />
+                      <div className={`bg-gradient-to-br ${phase.color} rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border-2 border-black/10 h-full min-h-[420px] flex flex-col justify-between`}>
+                        <div className="flex flex-col items-center">
+                          <Icon className="w-16 h-16 text-black/70 mb-4" strokeWidth={1.5} />
+                          
+                          <h3 className="text-2xl md:text-3xl font-bold text-center mb-3 text-black">
+                            {phase.title}
+                          </h3>
+                          
+                          <p className="text-center text-black/80 text-sm leading-relaxed">
+                            {phase.description}
+                          </p>
                         </div>
-                        
-                        <h3 className="text-2xl md:text-3xl font-bold text-center mb-3 text-black">
-                          {phase.title}
-                        </h3>
-                        
-                        <p className="text-center text-black/80 text-sm leading-relaxed mb-4 flex-grow">
-                          {phase.description}
-                        </p>
 
                         {phase.levels && (
-                          <div className="mt-auto space-y-2 pt-4 border-t-2 border-black/20">
+                          <div className="mt-6 space-y-2 pt-4 border-t-2 border-black/20">
                             {phase.levels.map((level, i) => (
                               <div key={i} className="flex items-center justify-between text-sm">
                                 <span className="font-bold text-black">{level.value}</span>
