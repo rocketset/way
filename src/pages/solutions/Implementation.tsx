@@ -262,7 +262,7 @@ const Implementation = () => {
         </section>
 
         {/* Newsletter Section */}
-        <section className="py-16 mb-20" style={{ backgroundColor: '#F2F2F2' }}>
+        <section className="py-16 mb-20 bg-black">
           <div className="container mx-auto px-12">
             <div className="max-w-6xl mx-auto bg-primary rounded-3xl shadow-2xl p-8 md:p-12">
               <div className="flex flex-col md:flex-row items-center justify-between gap-6">
@@ -283,7 +283,8 @@ const Implementation = () => {
                   />
                   <Button 
                     size="lg" 
-                    className="bg-[#FFD700] hover:bg-[#FFC700] text-black font-semibold px-8 shadow-lg hover:shadow-xl transition-all hover:scale-105"
+                    style={{ backgroundColor: '#F2F2F2' }}
+                    className="hover:opacity-90 text-black font-semibold px-8 shadow-lg hover:shadow-xl transition-all hover:scale-105"
                   >
                     Cadastrar
                   </Button>
