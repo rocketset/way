@@ -5,20 +5,49 @@ import Autoplay from "embla-carousel-autoplay";
 import banner1Desktop from "@/assets/home-banner-1.png";
 import banner2Desktop from "@/assets/home-banner-2.png";
 
+type ImageBanner = {
+  id: number;
+  type: 'image';
+  desktopImage: string;
+  mobileImage: string;
+  alt: string;
+};
+
+type VideoBanner = {
+  id: number;
+  type: 'video';
+  desktopVideo: string;
+  mobileVideo: string;
+  alt: string;
+};
+
+type Banner = ImageBanner | VideoBanner;
+
 // Array de banners - futuramente virá do admin
-const banners = [
+// Suporta tanto imagens (type: 'image') quanto vídeos (type: 'video')
+const banners: Banner[] = [
   {
     id: 1,
+    type: 'image',
     desktopImage: banner1Desktop,
     mobileImage: banner1Desktop,
     alt: "Banner Way+ E-commerce 1",
   },
   {
     id: 2,
+    type: 'image',
     desktopImage: banner2Desktop,
     mobileImage: banner2Desktop,
     alt: "Banner Way+ E-commerce 2",
   },
+  // Exemplo de banner com vídeo:
+  // {
+  //   id: 3,
+  //   type: 'video',
+  //   desktopVideo: "/videos/banner-desktop.mp4",
+  //   mobileVideo: "/videos/banner-mobile.mp4",
+  //   alt: "Vídeo Banner Way+ E-commerce",
+  // },
 ];
 
 const HomeBannerSlider = () => {
@@ -63,11 +92,23 @@ const HomeBannerSlider = () => {
           {banners.map((banner) => (
             <div key={banner.id} className="embla__slide flex-[0_0_100%] min-w-0">
               <div className="relative w-full aspect-[16/9] md:aspect-[21/9]">
-                <img
-                  src={isMobile ? banner.mobileImage : banner.desktopImage}
-                  alt={banner.alt}
-                  className="w-full h-full object-cover"
-                />
+                {banner.type === 'video' ? (
+                  <video
+                    src={isMobile ? banner.mobileVideo : banner.desktopVideo}
+                    className="w-full h-full object-cover"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    preload="auto"
+                  />
+                ) : (
+                  <img
+                    src={isMobile ? banner.mobileImage : banner.desktopImage}
+                    alt={banner.alt}
+                    className="w-full h-full object-cover"
+                  />
+                )}
               </div>
             </div>
           ))}
