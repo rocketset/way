@@ -23,21 +23,21 @@ const Journey = () => {
       title: "IMPLANTAÇÃO",
       icon: Target,
       description: "Estruturar a operação, integrar tecnologia e definir processos",
-      color: "from-primary/20 to-primary/10",
+      color: "from-primary/60 via-primary/30 to-background/90",
       position: 1
     },
     {
       title: "EVOLUÇÃO",
       icon: TrendingUp,
       description: "Otimizar a conversão, solidificar processos e validar performance",
-      color: "from-primary/30 to-primary/15",
+      color: "from-primary/60 via-primary/30 to-background/90",
       position: 2
     },
     {
       title: "ESCALA",
       icon: Rocket,
       description: "Expandir canais, audiência e receita com dados",
-      color: "from-primary/40 to-primary/20",
+      color: "from-primary/60 via-primary/30 to-background/90",
       position: 3,
       levels: [
         { value: "R$ 50 mil", stage: "Iniciante" },
