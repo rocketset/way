@@ -185,7 +185,7 @@ const Implementation = () => {
                   
                   {/* Icon */}
                   <div className={`flex-shrink-0 w-20 h-20 rounded-2xl bg-white flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:shadow-2xl group-hover:shadow-primary/20 group-hover:rotate-3 relative z-10 ${hoveredService === index ? 'shadow-xl shadow-primary/20' : ''}`}>
-                    <service.icon className="w-10 h-10 text-primary group-hover:scale-110 transition-transform duration-300" />
+                    <service.icon className="w-10 h-10 group-hover:scale-110 transition-transform duration-300" style={{ color: '#242424' }} />
                   </div>
                   
                   {/* Content */}
