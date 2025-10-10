@@ -261,7 +261,7 @@ const Header = () => {
             <div className="hidden lg:flex items-center gap-3">
               <Button 
                 variant="outline"
-                className="font-semibold px-6 py-3 rounded-full border-2 border-primary text-primary hover:bg-primary/10 transition-all duration-300"
+                className="font-semibold px-6 py-3 rounded-full border-2 border-primary text-primary hover:bg-primary/10 hover:text-[#F3F3F3] transition-all duration-300"
               >
                 Entrar
               </Button>
@@ -438,7 +438,7 @@ const Header = () => {
               <div className="mt-4 flex flex-col gap-3">
                 <Button
                   variant="outline"
-                  className="font-semibold py-6 rounded-xl border-2 border-primary text-primary hover:bg-primary/10"
+                  className="font-semibold py-6 rounded-xl border-2 border-primary text-primary hover:bg-primary/10 hover:text-[#F3F3F3]"
                 >
                   Entrar
                 </Button>
