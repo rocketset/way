@@ -9,6 +9,8 @@ export interface ColumnistSummary {
   cargo: string | null;
   bio: string | null;
   totalPosts: number;
+  last_post_date: string | null;
+  last_post_excerpt: string | null;
 }
 
 export const useColumnists = () => {
@@ -28,7 +30,7 @@ export const useColumnists = () => {
 
       if (!profiles) return [];
 
-      // Para cada colunista, contar quantos posts publicados ele tem
+      // Para cada colunista, contar quantos posts publicados ele tem e buscar o último
       const columnistsWithPosts = await Promise.all(
         profiles.map(async (profile) => {
           const { count } = await supabase
@@ -38,9 +40,22 @@ export const useColumnists = () => {
             .eq('publicado', true)
             .eq('status', 'published');
 
+          // Buscar último post
+          const { data: lastPost } = await supabase
+            .from('posts')
+            .select('criado_em, excerpt')
+            .eq('autor_id', profile.id)
+            .eq('publicado', true)
+            .eq('status', 'published')
+            .order('criado_em', { ascending: false })
+            .limit(1)
+            .maybeSingle();
+
           return {
             ...profile,
             totalPosts: count || 0,
+            last_post_date: lastPost?.criado_em || null,
+            last_post_excerpt: lastPost?.excerpt || null,
           };
         })
       );
