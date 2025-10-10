@@ -31,9 +31,9 @@ const HomeBannerSlider = () => {
       </div>
 
       {/* Overlay com texto e botões */}
-      <div className="absolute inset-0 flex items-center justify-end z-10 bg-gradient-to-l from-black/60 via-black/30 to-transparent">
+      <div className="absolute inset-0 flex items-center justify-start z-10 bg-gradient-to-r from-black/60 via-black/30 to-transparent">
         <div className="container mx-auto px-4 md:px-8">
-          <div className="max-w-2xl ml-auto space-y-6">
+          <div className="max-w-2xl space-y-6">
             {/* Texto animado */}
             <h1 className="text-3xl md:text-5xl font-light text-white leading-tight">
               {texts.map((text, index) => (
