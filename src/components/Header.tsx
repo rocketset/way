@@ -18,6 +18,7 @@ const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("inicio");
   const [isPlatformMenuOpen, setIsPlatformMenuOpen] = useState(false);
+  const [isSolutionsMenuOpen, setIsSolutionsMenuOpen] = useState(false);
 
   // Handle scroll detection for all pages
   useEffect(() => {
@@ -62,10 +63,16 @@ const Header = () => {
   const navItems = [
     { id: "inicio", label: "Início", type: "link", path: "/" },
     { id: "por-que-way", label: "Sobre", type: "link", path: "/why-way" },
-    { id: "solucoes", label: "Soluções", type: "scroll" },
     { id: "cases", label: "Cases", type: "link", path: "/cases" },
     { id: "blog", label: "Blog", type: "link", path: "/blog" },
     { id: "contato", label: "Contato", type: "link", path: "/contact" },
+  ];
+
+  const solutionItems = [
+    { label: "Implantação e Desenvolvimento", path: "/solucoes/implantacao-desenvolvimento" },
+    { label: "Consultorias", path: "/solucoes/consultorias" },
+    { label: "Performance & Marketing", path: "/solucoes/performance-marketing" },
+    { label: "Jornada Way", path: "/solucoes/jornada-way" },
   ];
 
   const platformItems = [
@@ -118,8 +125,8 @@ const Header = () => {
             {/* Desktop Navigation - Centered */}
             <nav className="hidden lg:flex items-center justify-center flex-1 mx-8">
               <div className="flex items-center gap-1 bg-background/50 backdrop-blur-sm px-4 py-2 rounded-full border border-border/50">
-                {/* First 3 items: INÍCIO, POR QUE A WAY?, SOLUÇÕES */}
-                {navItems.slice(0, 3).map((item, index) => (
+                {/* First 2 items: INÍCIO, SOBRE */}
+                {navItems.slice(0, 2).map((item, index) => (
                   <button
                     key={item.id}
                     onClick={() => handleNavClick(item)}
@@ -148,6 +155,40 @@ const Header = () => {
                     }`} />
                   </button>
                 ))}
+                
+                {/* Soluções Dropdown */}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <button className="relative px-4 py-2 text-sm font-medium transition-all duration-300 rounded-full group text-foreground/70 hover:text-foreground">
+                      <div className="absolute inset-0 bg-primary/5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      <span className="relative z-10 flex items-center gap-1">
+                        Soluções
+                        <ChevronDown className="w-3 h-3 transition-transform duration-300 group-hover:rotate-180" />
+                      </span>
+                      <div className="absolute bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
+                    </button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent 
+                    align="center" 
+                    className="w-72 bg-background/95 backdrop-blur-xl border-border/50 shadow-xl"
+                  >
+                    {solutionItems.map((solution) => (
+                      <DropdownMenuItem 
+                        key={solution.label}
+                        asChild
+                      >
+                        <Link
+                          to={solution.path}
+                          className="flex items-center gap-3 px-4 py-3 cursor-pointer hover:bg-primary/10 transition-all duration-300 rounded-lg group"
+                        >
+                          <span className="font-medium group-hover:text-primary transition-colors duration-300">
+                            {solution.label}
+                          </span>
+                        </Link>
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
                 
                 {/* Plataformas Dropdown */}
                 <DropdownMenu>
@@ -183,8 +224,8 @@ const Header = () => {
                   </DropdownMenuContent>
                 </DropdownMenu>
 
-                {/* Last 3 items: CASES, BLOG, CONTATO */}
-                {navItems.slice(3).map((item, index) => (
+                {/* Remaining items: CASES, BLOG, CONTATO */}
+                {navItems.slice(2).map((item, index) => (
                   <button
                     key={item.id}
                     onClick={() => handleNavClick(item)}
@@ -277,7 +318,7 @@ const Header = () => {
         >
           <nav className="container mx-auto px-4 py-8">
             <div className="flex flex-col gap-2">
-              {navItems.slice(0, 3).map((item, index) => (
+              {navItems.slice(0, 2).map((item, index) => (
                 <button
                   key={item.id}
                   onClick={() => handleNavClick(item)}
@@ -297,13 +338,46 @@ const Header = () => {
                 </button>
               ))}
               
+              {/* Soluções Menu */}
+              <div className="flex flex-col gap-2">
+                <button
+                  onClick={() => setIsSolutionsMenuOpen(!isSolutionsMenuOpen)}
+                  className="flex items-center justify-between px-6 py-4 text-left font-medium rounded-xl transition-all duration-300 bg-background/50 text-foreground hover:bg-primary/5"
+                  style={{
+                    animationDelay: `0.10s`,
+                  }}
+                >
+                  <span>Soluções</span>
+                  <ChevronDown className={`w-5 h-5 transition-transform duration-300 ${
+                    isSolutionsMenuOpen ? "rotate-180" : ""
+                  }`} />
+                </button>
+                
+                {/* Submenu de Soluções */}
+                <div className={`overflow-hidden transition-all duration-300 ${
+                  isSolutionsMenuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+                }`}>
+                  <div className="flex flex-col gap-2 pl-4">
+                    {solutionItems.map((solution) => (
+                      <Link
+                        key={solution.label}
+                        to={solution.path}
+                        className="flex items-center gap-3 px-6 py-3 text-left font-medium rounded-xl transition-all duration-300 bg-background/30 text-foreground hover:bg-primary/5"
+                      >
+                        <span>{solution.label}</span>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              
               {/* Plataformas Menu */}
               <div className="flex flex-col gap-2">
                 <button
                   onClick={() => setIsPlatformMenuOpen(!isPlatformMenuOpen)}
                   className="flex items-center justify-between px-6 py-4 text-left font-medium rounded-xl transition-all duration-300 bg-background/50 text-foreground hover:bg-primary/5"
                   style={{
-                    animationDelay: `0.15s`,
+                    animationDelay: `0.20s`,
                   }}
                 >
                   <span>Plataformas</span>
@@ -334,7 +408,7 @@ const Header = () => {
                 </div>
               </div>
               
-              {navItems.slice(3).map((item, index) => (
+              {navItems.slice(2).map((item, index) => (
                 <button
                   key={item.id}
                   onClick={() => handleNavClick(item)}

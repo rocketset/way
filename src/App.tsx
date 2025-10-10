@@ -19,6 +19,12 @@ import CaseDetail from "./pages/CaseDetail";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 
+// Páginas de Soluções
+import Implementation from "./pages/solutions/Implementation";
+import Consulting from "./pages/solutions/Consulting";
+import Performance from "./pages/solutions/Performance";
+import Journey from "./pages/solutions/Journey";
+
 // Páginas administrativas
 import Auth from "./pages/admin/Auth";
 import AdminLayout from "./components/admin/AdminLayout";
@@ -59,6 +65,12 @@ const App = () => (
           <Route path="/cases" element={<Cases />} />
           <Route path="/cases/:id" element={<CaseDetail />} />
           <Route path="/contact" element={<Contact />} />
+          
+          {/* Rotas de Soluções */}
+          <Route path="/solucoes/implantacao-desenvolvimento" element={<Implementation />} />
+          <Route path="/solucoes/consultorias" element={<Consulting />} />
+          <Route path="/solucoes/performance-marketing" element={<Performance />} />
+          <Route path="/solucoes/jornada-way" element={<Journey />} />
           
           {/* Rota de autenticação (login/registro) */}
           <Route path="/auth/login" element={<Auth />} />
