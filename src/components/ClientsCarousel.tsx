@@ -18,6 +18,8 @@ import atacadaoEletros from "@/assets/clients/atacadao-eletros.png";
 import ldf from "@/assets/clients/ldf.png";
 import coure from "@/assets/clients/coure.png";
 import cartope from "@/assets/clients/cartope.png";
+import kingFlex from "@/assets/clients/king-flex.png";
+import ektaProfessional from "@/assets/clients/ekta-professional.png";
 
 const ClientsCarousel = () => {
   const clients = [
@@ -41,6 +43,8 @@ const ClientsCarousel = () => {
     { name: "LDF", logo: ldf },
     { name: "Coure", logo: coure },
     { name: "Cartope", logo: cartope },
+    { name: "King Flex", logo: kingFlex },
+    { name: "Ekta Professional", logo: ektaProfessional },
   ];
 
   // Duplicate clients array for seamless infinite scroll
@@ -54,18 +58,18 @@ const ClientsCarousel = () => {
 
       {/* Infinite scrolling carousel */}
       <div className="relative">
-        <div className="flex gap-12 animate-scroll-left">
+        <div className="flex gap-6 animate-scroll-left">
           {allClients.map((client, index) => (
             <div
               key={`${client.name}-${index}`}
-              className="flex-shrink-0 h-64 flex items-center justify-center group cursor-pointer"
+              className="flex-shrink-0 h-32 flex items-center justify-center group cursor-pointer"
             >
               {/* Logo container */}
-              <div className="relative h-full flex items-center justify-center px-16">
+              <div className="relative h-full flex items-center justify-center px-6">
                 <img
                   src={client.logo}
                   alt={client.name}
-                  className="max-h-48 w-auto object-contain brightness-0 invert opacity-80 group-hover:opacity-100 transition-opacity duration-500"
+                  className="max-h-24 w-auto object-contain brightness-0 invert opacity-80 group-hover:opacity-100 transition-opacity duration-500"
                 />
               </div>
             </div>
