@@ -84,6 +84,7 @@ const Journey = () => {
       title: "Implantação",
       subtitle: "Fundação sólida para seu e-commerce",
       features: [
+        "Diagnóstico e Planejamento Estratégico",
         "Presença Omnichannel",
         "Suporte que acompanha",
         "Personalização que escala",
