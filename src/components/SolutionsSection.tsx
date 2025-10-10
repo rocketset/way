@@ -8,9 +8,10 @@ const SolutionsSection = () => {
   const solutions = [
     {
       icon: ShoppingCart,
-      badge: "Way.tech",
+      badge: "Way.tech - Soluções Modulares",
       title: "Implantação & Desenvolvimento",
-      description: "Estruturamos, migramos e desenvolvemos soluções personalizadas para que seu e-commerce nasça forte e já pronto para escalar.",
+      subtitle: "Do planejamento estratégico à integração com marketplaces",
+      description: "Estruturamos, migramos e desenvolvemos soluções personalizadas para que seu e-commerce nasça forte e já pronto para escalar. Conectamos todos os seus canais de venda para impulsionar o crescimento do seu negócio.",
       services: [
         { icon: ShoppingCart, label: "E-commerce" },
         { icon: Globe, label: "Desenvolvimento Web" },
@@ -19,14 +20,14 @@ const SolutionsSection = () => {
         { icon: Plug, label: "Integrações" },
         { icon: Store, label: "Marketplaces" }
       ],
-      gradient: "from-blue-500 via-cyan-500 to-teal-500",
       link: "/solucoes/implantacao-desenvolvimento"
     },
     {
       icon: Target,
-      badge: "Way.consulting",
+      badge: "Way.consulting - Soluções Modulares",
       title: "Consultoria",
-      description: "Orientação estratégica para impulsionar o crescimento sustentável do seu e-commerce com expertise técnica e visão de mercado.",
+      subtitle: "Orientação estratégica e visão de mercado especializada",
+      description: "Orientação estratégica para impulsionar o crescimento sustentável do seu e-commerce. Nossos consultores especializados analisam profundamente seu negócio, identificam oportunidades e desenvolvem estratégias personalizadas que geram resultados mensuráveis.",
       services: [
         { icon: Target, label: "Estratégia Digital" },
         { icon: TrendingUp, label: "Otimização de Conversão" },
@@ -34,14 +35,14 @@ const SolutionsSection = () => {
         { icon: Brain, label: "Análise de Mercado" },
         { icon: Network, label: "Omnichannel" }
       ],
-      gradient: "from-violet-500 via-purple-500 to-fuchsia-500",
       link: "/solucoes/consultoria"
     },
     {
       icon: BarChart3,
-      badge: "Way.Digital",
+      badge: "Way.Digital - Soluções Modulares",
       title: "Performance & Marketing",
-      description: "Núcleo estratégico que transforma objetivos em planos práticos, mensuráveis e sustentáveis através de operação data-driven.",
+      subtitle: "Operação Data-Driven para crescimento sustentável",
+      description: "Núcleo estratégico que transforma objetivos em planos práticos e mensuráveis. Combinamos criatividade e inteligência de dados para desenvolver estratégias e campanhas que geram resultados reais, otimizando investimentos e ampliando conversões.",
       services: [
         { icon: Zap, label: "Automação" },
         { icon: Users, label: "CRM" },
@@ -51,20 +52,19 @@ const SolutionsSection = () => {
         { icon: Share2, label: "Social Consulting" },
         { icon: MousePointerClick, label: "Tráfego Pago" }
       ],
-      gradient: "from-amber-500 via-orange-500 to-red-500",
       link: "/solucoes/performance-marketing"
     },
     {
       icon: Compass,
-      badge: "Way Journey",
+      badge: "Way Journey - Metodologia Completa",
       title: "Jornada Way",
-      description: "Uma metodologia completa para transformar seu e-commerce com diagnóstico, roadmap personalizado e acompanhamento contínuo.",
+      subtitle: "Metodologia completa de transformação digital",
+      description: "Uma metodologia completa para transformar seu e-commerce com análise 360° do seu negócio, plano de ação estruturado com metas e prazos definidos, além de suporte e mentoria em todas as etapas da transformação digital.",
       services: [
         { icon: Map, label: "Diagnóstico Completo" },
         { icon: Route, label: "Roadmap Personalizado" },
         { icon: Compass, label: "Acompanhamento Contínuo" }
       ],
-      gradient: "from-emerald-500 via-green-500 to-lime-500",
       link: "/solucoes/jornada"
     }
   ];
@@ -107,8 +107,8 @@ const SolutionsSection = () => {
           </p>
         </div>
 
-        {/* Solutions Grid */}
-        <div className="grid md:grid-cols-2 gap-8 max-w-7xl mx-auto mb-12">
+        {/* Solutions List */}
+        <div className="space-y-8 max-w-6xl mx-auto">
           {solutions.map((solution, index) => {
             const Icon = solution.icon;
             const isHovered = hoveredCard === index;
@@ -118,95 +118,65 @@ const SolutionsSection = () => {
                 to={solution.link}
                 key={index}
                 className="group relative animate-fade-in block"
-                style={{ animationDelay: `${index * 0.1}s` }}
+                style={{ animationDelay: `${index * 0.15}s` }}
                 onMouseEnter={() => setHoveredCard(index)}
                 onMouseLeave={() => setHoveredCard(null)}
               >
-                {/* Animated glow effect */}
-                <div className={`absolute -inset-1 bg-gradient-to-r ${solution.gradient} rounded-2xl blur-xl opacity-0 group-hover:opacity-60 transition-all duration-700`} />
-
-                {/* Main card */}
-                <div className="relative bg-card/95 backdrop-blur-sm border-2 border-border hover:border-transparent rounded-2xl overflow-hidden transition-all duration-500 group-hover:scale-[1.02] group-hover:shadow-2xl h-full">
-                  {/* Top gradient line */}
-                  <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${solution.gradient}`} />
-
-                  <div className="p-8">
-                    {/* Header with Icon and Badge */}
-                    <div className="flex items-start gap-4 mb-6">
-                      {/* Icon */}
-                      <div className="relative">
-                        <div 
-                          className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${solution.gradient} shadow-xl flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:rotate-6`}
-                        >
-                          <Icon className="w-8 h-8 text-white relative z-10" />
-                          
-                          {/* Pulse rings */}
-                          <div className="absolute inset-0 rounded-2xl border-2 border-white/30 animate-ping opacity-20" />
-                        </div>
-
-                        {/* Floating Plus decoration */}
-                        {isHovered && (
-                          <Plus className="absolute -top-2 -right-2 w-5 h-5 text-primary animate-spin" style={{ animationDuration: '3s' }} />
-                        )}
-                      </div>
-
-                      {/* Badge */}
-                      <div className="flex-1">
-                        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 mb-2">
-                          <Plus className="w-3 h-3 text-primary group-hover:rotate-90 transition-transform duration-300" />
-                          <span className="text-xs font-medium text-primary">{solution.badge}</span>
-                        </div>
-                      </div>
+                {/* Hover background effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/5 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl -mx-4"></div>
+                
+                <div className="flex gap-8 items-start py-8 border-b border-border/30 last:border-b-0 transition-all duration-500 group-hover:translate-x-4 relative">
+                  {/* Icon */}
+                  <div className={`flex-shrink-0 w-20 h-20 rounded-2xl bg-white flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:shadow-2xl group-hover:shadow-primary/20 group-hover:rotate-3 relative z-10 ${isHovered ? 'shadow-xl shadow-primary/20' : ''}`}>
+                    <Icon className="w-10 h-10 group-hover:scale-110 transition-transform duration-300" style={{ color: '#242424' }} />
+                  </div>
+                  
+                  {/* Content */}
+                  <div className="flex-1 pt-1 relative z-10">
+                    {/* Badge */}
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 hover:bg-primary/20 hover:scale-105 transition-all duration-300 mb-4">
+                      <Plus className="w-4 h-4 text-primary group-hover:rotate-90 transition-transform duration-300" />
+                      <span className="text-sm font-medium text-primary">{solution.badge}</span>
                     </div>
-
+                    
                     {/* Title */}
-                    <h3 className="text-2xl font-bold text-foreground mb-3 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-primary group-hover:to-yellow-500 transition-all duration-300">
+                    <h3 className="text-3xl font-bold mb-3 text-black group-hover:text-primary transition-all duration-500 group-hover:translate-x-2">
                       {solution.title}
                     </h3>
-
+                    
+                    {/* Subtitle */}
+                    <p className="text-primary font-semibold mb-4 text-lg leading-relaxed">
+                      {solution.subtitle}
+                    </p>
+                    
                     {/* Description */}
-                    <p className="text-muted-foreground mb-6 leading-relaxed group-hover:text-foreground transition-colors duration-300">
+                    <p className="text-muted-foreground leading-relaxed text-base mb-6">
                       {solution.description}
                     </p>
-
+                    
                     {/* Services tags */}
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {solution.services.slice(0, 4).map((service, idx) => {
+                    <div className="flex flex-wrap gap-3 mb-4">
+                      {solution.services.map((service, idx) => {
                         const ServiceIcon = service.icon;
                         return (
                           <div
                             key={idx}
-                            className="group/tag relative overflow-hidden"
+                            className="flex items-center gap-2 bg-card border border-border hover:border-primary/50 px-4 py-2 rounded-full hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 hover:scale-110 cursor-pointer group/tag relative overflow-hidden"
                           >
-                            <div className={`absolute inset-0 bg-gradient-to-r ${solution.gradient} opacity-10 group-hover/tag:opacity-20 transition-opacity duration-300`} />
-                            
-                            <div className="relative px-3 py-2 bg-background/50 backdrop-blur-sm border border-border group-hover/tag:border-transparent rounded-full transition-all duration-300 flex items-center gap-2">
-                              <ServiceIcon className="w-3 h-3 text-primary" />
-                              <span className="text-xs font-medium text-foreground">
-                                {service.label}
-                              </span>
-                            </div>
+                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/10 to-transparent translate-x-[-100%] group-hover/tag:translate-x-[100%] transition-transform duration-500"></div>
+                            <ServiceIcon className="w-4 h-4 text-primary group-hover/tag:rotate-[360deg] transition-transform duration-500 relative z-10" />
+                            <span className="text-sm font-medium relative z-10">{service.label}</span>
                           </div>
                         );
                       })}
-                      {solution.services.length > 4 && (
-                        <div className="px-3 py-2 bg-background/50 backdrop-blur-sm border border-border rounded-full">
-                          <span className="text-xs font-medium text-muted-foreground">
-                            +{solution.services.length - 4} mais
-                          </span>
-                        </div>
-                      )}
                     </div>
-
-                    {/* Call to action */}
-                    <div className="flex items-center gap-2 text-primary opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-2 group-hover:translate-y-0 mt-4">
+                    
+                    {/* Interactive arrow indicator */}
+                    <div className="flex items-center gap-2 text-primary opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-2 group-hover:translate-y-0">
                       <span className="text-sm font-semibold">Saiba mais sobre esta solução</span>
-                      <ArrowRight className="w-4 h-4 animate-pulse" />
+                      <ArrowRight className="w-5 h-5 animate-pulse" />
                     </div>
                   </div>
-
-                  {/* Bottom decorative element */}
-                  <div className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${solution.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
                 </div>
               </Link>
             );
