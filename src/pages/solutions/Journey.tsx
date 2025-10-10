@@ -184,6 +184,12 @@ const Journey = () => {
 
           <div className="container mx-auto px-4 relative z-10">
             <div className="text-center mb-12 animate-fade-in">
+              {/* Method Tag */}
+              <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full border-2 border-primary/30 bg-primary/10 mb-8 animate-fade-in hover-scale">
+                <Plus className="w-5 h-5 text-primary" />
+                <span className="text-primary font-semibold">Way.journey - Método exclusivo</span>
+              </div>
+              
               <h1 className="text-5xl md:text-7xl font-bold mb-6">
                 Jornada <span className="bg-gradient-to-r from-primary to-yellow-500 bg-clip-text text-transparent">Way</span>
               </h1>
