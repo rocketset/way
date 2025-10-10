@@ -1,5 +1,27 @@
+import daniel from "@/assets/clients/daniel.png";
+import atacadao from "@/assets/clients/atacadao.png";
+import barauna from "@/assets/clients/barauna.png";
+import carretao from "@/assets/clients/carretao.png";
+import cartopel from "@/assets/clients/cartopel.png";
+import casatudo from "@/assets/clients/casatudo.png";
+import chipart from "@/assets/clients/chipart.png";
+import clubdamoda from "@/assets/clients/clubdamoda.png";
+import colorsign from "@/assets/clients/colorsign.png";
+import coure from "@/assets/clients/coure.png";
+
 const ClientsCarousel = () => {
-  const clients: { name: string; logo: string }[] = [];
+  const clients = [
+    { name: "Daniel Carvalho", logo: daniel },
+    { name: "Atacadão dos Eletros", logo: atacadao },
+    { name: "Baraúna", logo: barauna },
+    { name: "O Carretão", logo: carretao },
+    { name: "Cartopel", logo: cartopel },
+    { name: "Casatudo", logo: casatudo },
+    { name: "Chipart", logo: chipart },
+    { name: "Club da Moda", logo: clubdamoda },
+    { name: "Colorsign", logo: colorsign },
+    { name: "Couré", logo: coure },
+  ];
 
   // Duplicate clients array for seamless infinite scroll
   const allClients = [...clients, ...clients, ...clients];
