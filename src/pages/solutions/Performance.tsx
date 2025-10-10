@@ -1,52 +1,68 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { BarChart3, Megaphone, Search, Share2, Mail, ArrowRight, Check, Smile, Plus } from "lucide-react";
+import { BarChart3, Zap, Users, Palette, TrendingUp, Plug, Activity, MousePointerClick, ArrowRight, Smile, Plus } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 const Performance = () => {
   const [hoveredService, setHoveredService] = useState<number | null>(null);
   const servicesList = [{
-    icon: Megaphone,
-    label: "Marketing Digital"
+    icon: Zap,
+    label: "Automação"
   }, {
-    icon: Search,
-    label: "SEO & Tráfego Orgânico"
+    icon: Users,
+    label: "CRM"
   }, {
-    icon: BarChart3,
-    label: "Analytics & Performance"
+    icon: Palette,
+    label: "Criativos"
   }, {
-    icon: Share2,
-    label: "Social Media"
+    icon: TrendingUp,
+    label: "Evolução"
   }, {
-    icon: Mail,
-    label: "Email Marketing"
+    icon: Plug,
+    label: "Integrações"
+  }, {
+    icon: Activity,
+    label: "Performance"
+  }, {
+    icon: MousePointerClick,
+    label: "Tráfego Pago"
   }];
   const services = [{
-    icon: Megaphone,
-    title: "Marketing Digital",
-    subtitle: "Campanhas integradas em Google Ads, Meta Ads e principais canais digitais",
-    description: "Criamos e gerenciamos campanhas de alta performance em múltiplos canais digitais. Nossa abordagem data-driven garante que cada real investido em mídia paga traga o máximo retorno possível. Combinamos criatividade com análise constante para otimizar resultados, reduzir custos de aquisição e escalar suas vendas de forma sustentável."
+    icon: Zap,
+    title: "Automação",
+    subtitle: "Fluxos inteligentes que economizam tempo e potencializam resultados",
+    description: "Implementamos sistemas de automação que otimizam processos repetitivos, liberando sua equipe para focar em estratégia. Criamos workflows inteligentes que nutrem leads, personalizam comunicações e maximizam conversões de forma escalável e eficiente."
   }, {
-    icon: Search,
-    title: "SEO & Tráfego Orgânico",
-    subtitle: "Otimização para mecanismos de busca e estratégias de conteúdo",
-    description: "Desenvolvemos estratégias completas de SEO que aumentam a visibilidade do seu e-commerce nos mecanismos de busca. Através de otimizações técnicas, criação de conteúdo relevante e estratégias de link building, garantimos que seus produtos sejam encontrados pelo público certo no momento certo, gerando tráfego qualificado e vendas recorrentes."
+    icon: Users,
+    title: "CRM",
+    subtitle: "Gestão estratégica de relacionamento e dados de clientes",
+    description: "Estruturamos e otimizamos seu CRM para centralizar informações, automatizar processos e melhorar o relacionamento com clientes. Transformamos dados em insights acionáveis que aumentam retenção, lifetime value e satisfação do cliente."
   }, {
-    icon: BarChart3,
-    title: "Analytics & Performance",
-    subtitle: "Análise de dados e otimização contínua para melhor ROI",
-    description: "Transformamos dados em insights acionáveis através de análises profundas do comportamento do usuário, funil de vendas e performance de campanhas. Implementamos ferramentas avançadas de tracking e criamos dashboards customizados que permitem acompanhar KPIs em tempo real e tomar decisões baseadas em dados concretos."
+    icon: Palette,
+    title: "Criativos",
+    subtitle: "Peças impactantes que convertem e fortalecem sua marca",
+    description: "Desenvolvemos criativos de alta performance baseados em dados e testes constantes. Nossa equipe combina design, copy persuasivo e estratégia para criar anúncios, landing pages e materiais que capturam atenção e geram resultados mensuráveis."
   }, {
-    icon: Share2,
-    title: "Social Media",
-    subtitle: "Gestão estratégica de redes sociais para engajamento e conversão",
-    description: "Desenvolvemos presença digital forte e engajadora nas principais redes sociais. Criamos conteúdo autêntico que conecta sua marca com o público-alvo, geramos engajamento genuíno e convertemos seguidores em clientes. Nossa estratégia integra branding, performance e atendimento para maximizar resultados em cada plataforma."
+    icon: TrendingUp,
+    title: "Evolução",
+    subtitle: "Otimização contínua para crescimento sustentável e escalável",
+    description: "Analisamos, testamos e evoluímos constantemente suas estratégias digitais. Através de metodologias ágeis e análise de dados, identificamos oportunidades de melhoria e implementamos otimizações que aceleram seu crescimento de forma consistente."
   }, {
-    icon: Mail,
-    title: "Email Marketing",
-    subtitle: "Automações inteligentes e campanhas que convertem e fidelizam",
-    description: "Implementamos estratégias avançadas de email marketing com automações personalizadas, segmentação inteligente e design responsivo. Criamos jornadas automatizadas que nutrem leads, recuperam carrinhos abandonados, aumentam ticket médio e transformam clientes em compradores recorrentes, gerando receita previsível e escalável."
+    icon: Plug,
+    title: "Integrações",
+    subtitle: "Conexões perfeitas entre ferramentas e sistemas para máxima eficiência",
+    description: "Implementamos e gerenciamos integrações entre suas principais ferramentas de marketing, vendas e gestão. Garantimos que seus dados fluam perfeitamente entre plataformas, eliminando trabalho manual e proporcionando visão unificada do negócio."
+  }, {
+    icon: Activity,
+    title: "Performance",
+    subtitle: "Métricas, análises e otimizações focadas em resultados reais",
+    description: "Monitoramos e otimizamos cada aspecto da performance digital do seu negócio. Criamos dashboards personalizados, analisamos KPIs críticos e implementamos melhorias baseadas em dados para maximizar ROI e acelerar o crescimento."
+  }, {
+    icon: MousePointerClick,
+    title: "Tráfego Pago",
+    subtitle: "Campanhas estratégicas em Google Ads, Meta Ads e outras plataformas",
+    description: "Gerenciamos investimentos em mídia paga com foco em máximo retorno. Nossa expertise em múltiplas plataformas, combinada com análise constante e otimização, garante que cada real investido traga resultados mensuráveis e escale suas vendas de forma lucrativa."
   }];
   return <div className="min-h-screen bg-background overflow-hidden">
       <Header />
@@ -81,9 +97,7 @@ const Performance = () => {
                 }}>
                       <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/5 to-primary/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
                       <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-all duration-300 group-hover:rotate-3 relative z-10">
-                        <service.icon className="w-6 h-6 text-primary group-hover:scale-110 transition-transform" style={{
-                      color: '#242424'
-                    }} />
+                        <service.icon className="w-6 h-6 text-primary group-hover:scale-110 transition-transform" />
                       </div>
                       <span className="font-medium text-foreground group-hover:text-primary transition-colors relative z-10">{service.label}</span>
                       <ArrowRight className="ml-auto w-5 h-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-2 transition-all relative z-10" />
@@ -165,9 +179,7 @@ Somos o núcleo estratégico da Way+, onde transformamos objetivos em planos pr�
                   <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/5 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl -mx-4"></div>
                   
                   <div className={`flex-shrink-0 w-20 h-20 rounded-2xl bg-white flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:shadow-2xl group-hover:shadow-primary/20 group-hover:rotate-3 relative z-10 ${hoveredService === index ? 'shadow-xl shadow-primary/20' : ''}`}>
-                    <service.icon className="w-10 h-10 group-hover:scale-110 transition-transform duration-300" style={{
-                  color: '#242424'
-                }} />
+                    <service.icon className="w-10 h-10 text-primary group-hover:scale-110 transition-transform duration-300" />
                   </div>
                   
                   <div className="flex-1 pt-1 relative z-10">
