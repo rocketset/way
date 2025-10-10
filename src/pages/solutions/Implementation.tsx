@@ -172,7 +172,7 @@ const Implementation = () => {
         </section>
 
         {/* Services Details */}
-        <section className="mb-20 py-20" style={{
+        <section className="py-20" style={{
         backgroundColor: '#F2F2F2'
       }}>
           <div className="container mx-auto px-12">
