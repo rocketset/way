@@ -1,27 +1,24 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { ShoppingCart, Store, Cpu, CreditCard, Truck, Smile, ArrowRight, Check } from "lucide-react";
+import { ShoppingCart, Store, Cpu, CreditCard, Truck, Smile, ArrowRight, Check, Globe, MessageCircle, Bot } from "lucide-react";
 import { Link } from "react-router-dom";
 const Implementation = () => {
   const servicesList = [{
     icon: ShoppingCart,
     label: "E-commerce"
   }, {
-    icon: CreditCard,
-    label: "Pagamentos"
+    icon: Globe,
+    label: "Desenvolvimento Web"
+  }, {
+    icon: MessageCircle,
+    label: "Automações de Whatsapp"
+  }, {
+    icon: Bot,
+    label: "CRM e automações com I.A"
   }, {
     icon: Store,
-    label: "Marketplace"
-  }, {
-    icon: Truck,
-    label: "Logística"
-  }, {
-    icon: Cpu,
-    label: "Tecnologia"
-  }, {
-    icon: Smile,
-    label: "Customer Experience"
+    label: "Marketplaces"
   }];
   const services = [{
     icon: ShoppingCart,
