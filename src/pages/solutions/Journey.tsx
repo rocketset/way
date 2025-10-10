@@ -384,7 +384,7 @@ const Journey = () => {
                         marginTop: `${(journeyPhases.length - 1 - index) * 80}px`,
                       }}
                     >
-                      <div className={`bg-gradient-to-br ${phase.color} rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 border-2 border-border h-full min-h-[320px] flex flex-col justify-between animate-fade-in hover-scale bg-black`} style={{ animationDelay: `${index * 0.2}s` }}>
+                      <div className={`bg-gradient-to-br ${phase.color} rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 border-2 border-border h-full min-h-[320px] flex flex-col justify-between animate-fade-in hover-scale`} style={{ animationDelay: `${index * 0.2}s`, backgroundColor: '#1A1A1A' }}>
                         <div className="flex flex-col items-center">
                           <Icon className="w-12 h-12 text-primary mb-3" strokeWidth={1.5} />
                           
