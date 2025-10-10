@@ -95,6 +95,18 @@ const Journey = () => {
         {
           title: "Tecnologia e Integrações",
           objective: "Garantir infraestrutura estável e escalável"
+        },
+        {
+          title: "Operação e Processos",
+          objective: "Estruturar os processos que sustentam a operação diária do e-commerce"
+        },
+        {
+          title: "Branding, Conteúdo e Comunicação",
+          objective: "Fortalecer o posicionamento da marca e construir uma comunicação coerente e atrativa"
+        },
+        {
+          title: "Go-to-Market (Lançamento)",
+          objective: "Validar o funcionamento da operação e iniciar o processo de vendas com segurança e consistência"
         }
       ],
       color: "bg-gradient-to-br from-[#4ECDC4]/10 to-[#4ECDC4]/5"
