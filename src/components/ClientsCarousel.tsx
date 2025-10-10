@@ -8,6 +8,16 @@ import chipart from "@/assets/clients/chipart.png";
 import clubdamoda from "@/assets/clients/clubdamoda.png";
 import colorsign from "@/assets/clients/colorsign.png";
 import coure from "@/assets/clients/coure.png";
+import shopar from "@/assets/clients/shopar.png";
+import ekta from "@/assets/clients/ekta.png";
+import eletropolo from "@/assets/clients/eletropolo.png";
+import extrema from "@/assets/clients/extrema.png";
+import inovare from "@/assets/clients/inovare.png";
+import kingcolchoes from "@/assets/clients/kingcolchoes.png";
+import ldf from "@/assets/clients/ldf.png";
+import monipratas from "@/assets/clients/monipratas.png";
+import nectar from "@/assets/clients/nectar.png";
+import rutra from "@/assets/clients/rutra.png";
 
 const ClientsCarousel = () => {
   const clients = [
@@ -21,6 +31,16 @@ const ClientsCarousel = () => {
     { name: "Club da Moda", logo: clubdamoda },
     { name: "Colorsign", logo: colorsign },
     { name: "Couré", logo: coure },
+    { name: "Shopar", logo: shopar },
+    { name: "Ekta Professional", logo: ekta },
+    { name: "Eletropolo", logo: eletropolo },
+    { name: "Extrema", logo: extrema },
+    { name: "Inovare Nutrition", logo: inovare },
+    { name: "King Colchões", logo: kingcolchoes },
+    { name: "LDF", logo: ldf },
+    { name: "Moni Pratas", logo: monipratas },
+    { name: "Néctar Plus", logo: nectar },
+    { name: "Rutra", logo: rutra },
   ];
 
   // Duplicate clients array for seamless infinite scroll
@@ -34,18 +54,18 @@ const ClientsCarousel = () => {
 
       {/* Infinite scrolling carousel */}
       <div className="relative">
-        <div className="flex gap-12 animate-scroll-left">
+        <div className="flex gap-6 animate-scroll-left">
           {allClients.map((client, index) => (
             <div
               key={`${client.name}-${index}`}
-              className="flex-shrink-0 h-64 flex items-center justify-center group cursor-pointer"
+              className="flex-shrink-0 h-32 flex items-center justify-center group cursor-pointer"
             >
               {/* Logo container */}
-              <div className="relative h-full flex items-center justify-center px-16">
+              <div className="relative h-full flex items-center justify-center px-8">
                 <img
                   src={client.logo}
                   alt={client.name}
-                  className="max-h-48 w-auto object-contain brightness-0 invert opacity-80 group-hover:opacity-100 transition-opacity duration-500"
+                  className="max-h-20 w-auto object-contain brightness-0 invert opacity-80 group-hover:opacity-100 transition-opacity duration-500"
                 />
               </div>
             </div>
