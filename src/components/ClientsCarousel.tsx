@@ -20,38 +20,78 @@ import nectar from "@/assets/clients/nectar.png";
 import rutra from "@/assets/clients/rutra.png";
 import verona from "@/assets/clients/verona.png";
 import verazo from "@/assets/clients/verazo.png";
-
 const ClientsCarousel = () => {
-  const clients = [
-    { name: "Daniel Carvalho", logo: daniel },
-    { name: "Atacadão dos Eletros", logo: atacadao },
-    { name: "Baraúna", logo: barauna },
-    { name: "O Carretão", logo: carretao },
-    { name: "Cartopel", logo: cartopel },
-    { name: "Casatudo", logo: casatudo },
-    { name: "Chipart", logo: chipart },
-    { name: "Club da Moda", logo: clubdamoda },
-    { name: "Colorsign", logo: colorsign },
-    { name: "Couré", logo: coure },
-    { name: "Shopar", logo: shopar },
-    { name: "Ekta Professional", logo: ekta },
-    { name: "Eletropolo", logo: eletropolo },
-    { name: "Extrema", logo: extrema },
-    { name: "Inovare Nutrition", logo: inovare },
-    { name: "King Colchões", logo: kingcolchoes },
-    { name: "LDF", logo: ldf },
-    { name: "Moni Pratas", logo: monipratas },
-    { name: "Néctar Plus", logo: nectar },
-    { name: "Rutra", logo: rutra },
-    { name: "Verona", logo: verona },
-    { name: "Verazo", logo: verazo },
-  ];
+  const clients = [{
+    name: "Daniel Carvalho",
+    logo: daniel
+  }, {
+    name: "Atacadão dos Eletros",
+    logo: atacadao
+  }, {
+    name: "Baraúna",
+    logo: barauna
+  }, {
+    name: "O Carretão",
+    logo: carretao
+  }, {
+    name: "Cartopel",
+    logo: cartopel
+  }, {
+    name: "Casatudo",
+    logo: casatudo
+  }, {
+    name: "Chipart",
+    logo: chipart
+  }, {
+    name: "Club da Moda",
+    logo: clubdamoda
+  }, {
+    name: "Colorsign",
+    logo: colorsign
+  }, {
+    name: "Couré",
+    logo: coure
+  }, {
+    name: "Shopar",
+    logo: shopar
+  }, {
+    name: "Ekta Professional",
+    logo: ekta
+  }, {
+    name: "Eletropolo",
+    logo: eletropolo
+  }, {
+    name: "Extrema",
+    logo: extrema
+  }, {
+    name: "Inovare Nutrition",
+    logo: inovare
+  }, {
+    name: "King Colchões",
+    logo: kingcolchoes
+  }, {
+    name: "LDF",
+    logo: ldf
+  }, {
+    name: "Moni Pratas",
+    logo: monipratas
+  }, {
+    name: "Néctar Plus",
+    logo: nectar
+  }, {
+    name: "Rutra",
+    logo: rutra
+  }, {
+    name: "Verona",
+    logo: verona
+  }, {
+    name: "Verazo",
+    logo: verazo
+  }];
 
   // Duplicate clients array for seamless infinite scroll
   const allClients = [...clients, ...clients, ...clients];
-
-  return (
-    <section className="relative py-16 bg-transparent overflow-hidden">
+  return <section className="relative bg-transparent overflow-hidden py-[7px]">
       {/* Subtle gradient overlays for fade effect */}
       <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
       <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
@@ -59,21 +99,12 @@ const ClientsCarousel = () => {
       {/* Infinite scrolling carousel */}
       <div className="relative">
         <div className="flex gap-8 animate-scroll-left">
-          {allClients.map((client, index) => (
-            <div
-              key={`${client.name}-${index}`}
-              className="flex-shrink-0 h-40 flex items-center justify-center group cursor-pointer"
-            >
+          {allClients.map((client, index) => <div key={`${client.name}-${index}`} className="flex-shrink-0 h-40 flex items-center justify-center group cursor-pointer">
               {/* Logo container */}
               <div className="relative h-full flex items-center justify-center px-10">
-                <img
-                  src={client.logo}
-                  alt={client.name}
-                  className="max-h-28 w-auto object-contain brightness-0 invert opacity-80 group-hover:opacity-100 transition-opacity duration-500"
-                />
+                <img src={client.logo} alt={client.name} className="max-h-28 w-auto object-contain brightness-0 invert opacity-80 group-hover:opacity-100 transition-opacity duration-500" />
               </div>
-            </div>
-          ))}
+            </div>)}
         </div>
       </div>
 
@@ -99,8 +130,6 @@ const ClientsCarousel = () => {
           }
         }
       `}</style>
-    </section>
-  );
+    </section>;
 };
-
 export default ClientsCarousel;
