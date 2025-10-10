@@ -5,11 +5,11 @@ import WhyChooseSection from "@/components/WhyChooseSection";
 import SolutionsSection from "@/components/SolutionsSection";
 import PartnersCarousel from "@/components/PartnersCarousel";
 import WhyWaySection from "@/components/WhyWaySection";
-import ResultsSection from "@/components/ResultsSection";
 import CasesSection from "@/components/CasesSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import NewsSection from "@/components/NewsSection";
-import ContactSection from "@/components/ContactSection";
+import CtaResultsSection from "@/components/CtaResultsSection";
+import NewsletterSection from "@/components/NewsletterSection";
 import Footer from "@/components/Footer";
 
 const Index = () => {
@@ -21,11 +21,11 @@ const Index = () => {
       <PartnersCarousel />
       <SolutionsSection />
       <WhyWaySection />
-      <ResultsSection />
       <CasesSection />
       <TestimonialsSection />
       <NewsSection />
-      <ContactSection />
+      <CtaResultsSection />
+      <NewsletterSection />
       <Footer />
     </div>
   );
