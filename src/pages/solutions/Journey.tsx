@@ -11,10 +11,10 @@ const Journey = () => {
   const teamPhotos = [team1, team2, team3];
 
   const stats = [
-    { number: "+150", label: "Projetos entregues", icon: Target },
-    { number: "+300%", label: "Crescimento médio", icon: TrendingUp },
-    { number: "98%", label: "Satisfação dos clientes", icon: Users },
-    { number: "24/7", label: "Suporte disponível", icon: Zap }
+    { number: "+150", label: "Projetos entregues" },
+    { number: "+300%", label: "Crescimento médio" },
+    { number: "98%", label: "Satisfação dos clientes" },
+    { number: "24/7", label: "Suporte disponível" }
   ];
 
   const journeyPhases = [
@@ -201,34 +201,34 @@ const Journey = () => {
         </section>
 
         {/* Stats Section */}
-        <section className="bg-[#4ECDC4] py-16 relative overflow-hidden">
-          <div className="absolute inset-0 opacity-10">
-            {[...Array(5)].map((_, i) => (
-              <Plus key={i} className="absolute w-20 h-20" style={{
-                left: `${20 * i}%`,
-                top: `${Math.random() * 100}%`,
-                animation: `float ${5 + i}s ease-in-out infinite`,
-                animationDelay: `${i * 0.5}s`
-              }} />
-            ))}
-          </div>
+        <section className="py-16 bg-background relative overflow-hidden">
+          <div className="absolute top-1/4 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '6s' }} />
+          <div className="absolute bottom-1/4 left-0 w-96 h-96 bg-yellow-500/5 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '8s', animationDelay: '2s' }} />
+          
           <div className="container mx-auto px-4 relative z-10">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-              {stats.map((stat, index) => {
-                const Icon = stat.icon;
-                return (
-                  <div key={index} className="text-center text-white animate-fade-in hover-scale" style={{ animationDelay: `${index * 0.1}s` }}>
-                    <div className="flex justify-center mb-4">
-                      <div className="relative">
-                        <Icon className="w-12 h-12" />
-                        <div className="absolute -top-2 -right-2 text-2xl">+</div>
-                      </div>
+              {stats.map((stat, index) => (
+                <div 
+                  key={index} 
+                  className="group relative bg-card border border-border rounded-2xl p-8 text-center hover:border-primary/50 transition-all duration-500 hover-scale cursor-pointer animate-fade-in"
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" />
+                  
+                  {/* Plus icon decorations */}
+                  <div className="absolute -top-3 -left-3 text-primary text-2xl opacity-0 group-hover:opacity-100 plus-rotate">+</div>
+                  <div className="absolute -bottom-3 -right-3 text-primary text-2xl opacity-0 group-hover:opacity-100 plus-rotate">+</div>
+                  
+                  <div className="relative">
+                    <div className="text-4xl md:text-5xl font-bold text-primary mb-2 group-hover:scale-125 transition-transform duration-500">
+                      {stat.number}
                     </div>
-                    <div className="text-4xl md:text-5xl font-bold mb-2">{stat.number}</div>
-                    <div className="text-sm md:text-base opacity-90">{stat.label}</div>
+                    <div className="text-sm md:text-base text-muted-foreground group-hover:text-foreground transition-colors duration-300">
+                      {stat.label}
+                    </div>
                   </div>
-                );
-              })}
+                </div>
+              ))}
             </div>
           </div>
         </section>
@@ -525,6 +525,19 @@ const Journey = () => {
           }
           50% {
             transform: translateY(-30px) rotate(180deg);
+          }
+        }
+        
+        .plus-rotate {
+          animation: rotate 10s linear infinite;
+        }
+        
+        @keyframes rotate {
+          from {
+            transform: rotate(0deg);
+          }
+          to {
+            transform: rotate(360deg);
           }
         }
       `}</style>
