@@ -16,29 +16,41 @@ const WhyChooseSection = () => {
     number: "700",
     label: "Clientes atendidos"
   }];
-  return <section className="py-20 px-4 bg-background">
-      <div className="container mx-auto">
+  return <section className="py-20 px-4 bg-background relative overflow-hidden">
+      {/* Animated background elements */}
+      <div className="absolute top-1/4 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '6s' }} />
+      <div className="absolute bottom-1/4 left-0 w-96 h-96 bg-yellow-500/5 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '8s', animationDelay: '2s' }} />
+      
+      <div className="container mx-auto relative z-10">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-12">
-              Por que escolher <span className="text-primary">a Way+?</span>
-            </h2>
-            
+            {/* Section Header with Plus */}
+            <div className="inline-flex items-center gap-3 mb-6">
+              <span className="text-primary text-3xl plus-rotate inline-block">+</span>
+              <h2 className="text-3xl md:text-4xl font-bold">
+                Por que escolher <span className="gradient-text">a Way+?</span>
+              </h2>
+              <span className="text-primary text-3xl plus-rotate inline-block">+</span>
+            </div>
             {/* Stats Section */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
-              {stats.map((stat, index) => <div key={index} className="group relative bg-card border border-border rounded-2xl p-8 text-center hover:border-primary/50 transition-all duration-500 hover:scale-110 hover:shadow-2xl hover:-translate-y-2" style={{
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16 mt-12">
+              {stats.map((stat, index) => <div key={index} className="group relative bg-card border border-border rounded-2xl p-8 text-center hover:border-primary/50 transition-all duration-500 hover-lift cursor-pointer" style={{
               animationDelay: `${index * 0.1}s`
             }}>
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" />
+                  
+                  {/* Plus icon decorations */}
+                  <div className="absolute -top-3 -left-3 text-primary text-2xl opacity-0 group-hover:opacity-100 plus-rotate">+</div>
+                  <div className="absolute -bottom-3 -right-3 text-primary text-2xl opacity-0 group-hover:opacity-100 plus-rotate">+</div>
+                  
                   <div className="relative">
                     <div className="text-4xl md:text-5xl font-bold text-primary mb-2 group-hover:scale-125 transition-transform duration-500">
-                      {stat.isFlag ? <img src={brazilFlag} alt="Bandeira do Brasil" className="w-20 h-14 mx-auto object-cover rounded-md" /> : stat.number}
+                      {stat.isFlag ? <img src={brazilFlag} alt="Bandeira do Brasil" className="w-20 h-14 mx-auto object-cover rounded-md glow-primary" /> : stat.number}
                     </div>
                     <div className="text-sm md:text-base text-muted-foreground group-hover:text-foreground transition-colors duration-300">
                       {stat.label}
                     </div>
                   </div>
-                  <Plus className="absolute -top-2 -right-2 w-6 h-6 text-primary opacity-0 group-hover:opacity-100 group-hover:rotate-90 transition-all duration-500" />
                 </div>)}
             </div>
 
@@ -52,11 +64,15 @@ const WhyChooseSection = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
             {/* Card 1 - Soluções Modulares */}
-            <div className="relative bg-card border border-border rounded-2xl p-8 hover:border-primary transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 group overflow-hidden">
+            <div className="relative bg-card border border-border rounded-2xl p-8 hover:border-primary transition-all duration-500 hover-lift group overflow-hidden cursor-pointer">
               <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <Plus className="absolute -top-8 -right-8 w-32 h-32 text-primary/5 group-hover:text-primary/10 group-hover:rotate-90 transition-all duration-700" />
+              <Plus className="absolute -top-8 -right-8 w-32 h-32 text-primary/5 group-hover:text-primary/10 transition-all duration-700 plus-rotate" />
+              
+              {/* Animated corner Plus */}
+              <div className="absolute top-4 right-4 text-primary text-xl opacity-0 group-hover:opacity-100 plus-rotate transition-all duration-500">+</div>
+              
               <div className="relative">
-                <div className="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-xl bg-primary group-hover:scale-110 group-hover:rotate-12 transition-all duration-500 shadow-lg">
+                <div className="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-xl bg-primary group-hover:scale-110 group-hover:rotate-12 transition-all duration-500 shadow-lg glow-primary">
                   <Grid3x3 className="w-8 h-8 text-primary-foreground" />
                 </div>
                 <h3 className="text-xl font-bold mb-4 group-hover:text-primary transition-colors duration-300">Soluções Modulares</h3>
@@ -67,11 +83,15 @@ const WhyChooseSection = () => {
             </div>
 
             {/* Card 2 - Transparência */}
-            <div className="relative bg-card border border-border rounded-2xl p-8 hover:border-primary transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 group overflow-hidden">
+            <div className="relative bg-card border border-border rounded-2xl p-8 hover:border-primary transition-all duration-500 hover-lift group overflow-hidden cursor-pointer">
               <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <Plus className="absolute -top-8 -right-8 w-32 h-32 text-primary/5 group-hover:text-primary/10 group-hover:rotate-90 transition-all duration-700" />
+              <Plus className="absolute -top-8 -right-8 w-32 h-32 text-primary/5 group-hover:text-primary/10 transition-all duration-700 plus-rotate" />
+              
+              {/* Animated corner Plus */}
+              <div className="absolute top-4 right-4 text-primary text-xl opacity-0 group-hover:opacity-100 plus-rotate transition-all duration-500">+</div>
+              
               <div className="relative">
-                <div className="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-xl bg-primary group-hover:scale-110 group-hover:rotate-12 transition-all duration-500 shadow-lg">
+                <div className="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-xl bg-primary group-hover:scale-110 group-hover:rotate-12 transition-all duration-500 shadow-lg glow-primary">
                   <Eye className="w-8 h-8 text-primary-foreground" />
                 </div>
                 <h3 className="text-xl font-bold mb-4 group-hover:text-primary transition-colors duration-300">Transparência</h3>
@@ -82,11 +102,15 @@ const WhyChooseSection = () => {
             </div>
 
             {/* Card 3 - Atendimento */}
-            <div className="relative bg-card border border-border rounded-2xl p-8 hover:border-primary transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 group overflow-hidden">
+            <div className="relative bg-card border border-border rounded-2xl p-8 hover:border-primary transition-all duration-500 hover-lift group overflow-hidden cursor-pointer">
               <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <Plus className="absolute -top-8 -right-8 w-32 h-32 text-primary/5 group-hover:text-primary/10 group-hover:rotate-90 transition-all duration-700" />
+              <Plus className="absolute -top-8 -right-8 w-32 h-32 text-primary/5 group-hover:text-primary/10 transition-all duration-700 plus-rotate" />
+              
+              {/* Animated corner Plus */}
+              <div className="absolute top-4 right-4 text-primary text-xl opacity-0 group-hover:opacity-100 plus-rotate transition-all duration-500">+</div>
+              
               <div className="relative">
-                <div className="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-xl bg-primary group-hover:scale-110 group-hover:rotate-12 transition-all duration-500 shadow-lg">
+                <div className="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-xl bg-primary group-hover:scale-110 group-hover:rotate-12 transition-all duration-500 shadow-lg glow-primary">
                   <Headphones className="w-8 h-8 text-primary-foreground" />
                 </div>
                 <h3 className="text-xl font-bold mb-4 group-hover:text-primary transition-colors duration-300">Atendimento</h3>

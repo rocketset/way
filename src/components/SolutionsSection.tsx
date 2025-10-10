@@ -78,26 +78,31 @@ const SolutionsSection = () => {
         <div className="absolute bottom-20 right-10 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '5s', animationDelay: '1s' }} />
         
         {/* Animated Plus Icons */}
-        <div className="opacity-5">
+        <div className="opacity-10">
           <Plus className="absolute top-10 left-10 w-20 h-20 text-primary animate-[spin_20s_linear_infinite]" />
           <Plus className="absolute top-32 right-20 w-32 h-32 text-primary animate-[spin_25s_linear_infinite_reverse]" />
           <Plus className="absolute bottom-20 left-1/4 w-16 h-16 text-primary animate-[spin_15s_linear_infinite]" />
+          <Plus className="absolute top-1/2 left-10 w-24 h-24 text-primary/50 animate-[spin_18s_linear_infinite]" />
+          <Plus className="absolute bottom-32 right-32 w-28 h-28 text-primary/50 animate-[spin_22s_linear_infinite_reverse]" />
         </div>
+        
+        {/* Grid pattern overlay */}
+        <div className="absolute inset-0 plus-pattern opacity-20" />
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Header */}
         <div className="text-center mb-20">
           <div className="inline-flex items-center gap-2 mb-6 animate-fade-in">
-            <Plus className="w-6 h-6 text-primary animate-pulse" />
+            <Plus className="w-6 h-6 text-primary plus-rotate" />
             <span className="text-sm font-bold text-primary tracking-wider">SOLUÇÕES INTEGRADAS</span>
-            <Plus className="w-6 h-6 text-primary animate-pulse" />
+            <Plus className="w-6 h-6 text-primary plus-rotate" />
           </div>
           
           <h2 className="text-5xl md:text-6xl font-bold mb-6 animate-fade-in" style={{ animationDelay: '0.1s' }}>
             <span className="text-foreground">Soluções modulares</span>
             <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-yellow-400 to-primary">
+            <span className="gradient-text">
               para seu e-commerce
             </span>
           </h2>
@@ -123,19 +128,23 @@ const SolutionsSection = () => {
                 onMouseLeave={() => setHoveredCard(null)}
               >
                 {/* Hover background effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/5 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl -mx-4"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/5 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl -mx-4">
+                  {/* Animated Plus decorations on hover */}
+                  <div className="absolute -top-4 left-1/4 text-primary text-2xl opacity-0 group-hover:opacity-100 plus-rotate transition-all duration-500">+</div>
+                  <div className="absolute -bottom-4 right-1/4 text-primary text-2xl opacity-0 group-hover:opacity-100 plus-rotate transition-all duration-500">+</div>
+                </div>
                 
                 <div className="flex gap-8 items-start py-8 border-b border-border/30 last:border-b-0 transition-all duration-500 group-hover:translate-x-4 relative">
                   {/* Icon */}
-                  <div className={`flex-shrink-0 w-20 h-20 rounded-2xl bg-white flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:shadow-2xl group-hover:shadow-primary/20 group-hover:rotate-3 relative z-10 ${isHovered ? 'shadow-xl shadow-primary/20' : ''}`}>
+                  <div className={`flex-shrink-0 w-20 h-20 rounded-2xl bg-white flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:shadow-2xl group-hover:shadow-primary/20 group-hover:rotate-3 relative z-10 glow-primary ${isHovered ? 'shadow-xl shadow-primary/20' : ''}`}>
                     <Icon className="w-10 h-10 group-hover:scale-110 transition-transform duration-300" style={{ color: '#242424' }} />
                   </div>
                   
                   {/* Content */}
                   <div className="flex-1 pt-1 relative z-10">
                     {/* Badge */}
-                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 hover:bg-primary/20 hover:scale-105 transition-all duration-300 mb-4">
-                      <Plus className="w-4 h-4 text-primary group-hover:rotate-90 transition-transform duration-300" />
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 hover:bg-primary/20 hover:scale-105 transition-all duration-300 mb-4 cursor-pointer glow-primary">
+                      <Plus className="w-4 h-4 text-primary plus-rotate" />
                       <span className="text-sm font-medium text-primary">{solution.badge}</span>
                     </div>
                     
@@ -161,11 +170,14 @@ const SolutionsSection = () => {
                         return (
                           <div
                             key={idx}
-                            className="flex items-center gap-2 bg-card border border-border hover:border-primary/50 px-4 py-2 rounded-full hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 hover:scale-110 cursor-pointer group/tag relative overflow-hidden"
+                            className="flex items-center gap-2 bg-card border border-border hover:border-primary/50 px-4 py-2 rounded-full hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 hover-lift cursor-pointer group/tag relative overflow-hidden"
                           >
                             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/10 to-transparent translate-x-[-100%] group-hover/tag:translate-x-[100%] transition-transform duration-500"></div>
                             <ServiceIcon className="w-4 h-4 text-primary group-hover/tag:rotate-[360deg] transition-transform duration-500 relative z-10" />
                             <span className="text-sm font-medium relative z-10">{service.label}</span>
+                            
+                            {/* Mini plus icon on hover */}
+                            <span className="text-primary text-xs opacity-0 group-hover/tag:opacity-100 transition-opacity duration-300 relative z-10">+</span>
                           </div>
                         );
                       })}

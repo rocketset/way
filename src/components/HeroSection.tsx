@@ -127,18 +127,44 @@ const HeroSection = () => {
 
       {/* Main content */}
       <div className="relative z-10 text-center px-4">
-        {/* Logo symbol with animation */}
+        {/* Enhanced Logo symbol with Plus icons */}
         <div 
-          className="mb-8 animate-fade-in transition-transform duration-700 ease-out"
+          className="mb-8 animate-fade-in transition-transform duration-700 ease-out relative"
           style={{
             transform: `translate(${mousePosition.x * 0.3}px, ${mousePosition.y * 0.3}px) scale(${isHovered ? 1.05 : 1})`,
           }}
         >
-          <div className="inline-flex items-start gap-2">
-            <span className="text-8xl font-bold text-primary animate-pulse" style={{ animationDuration: '3s' }}>
+          {/* Orbiting Plus Icons */}
+          <div className="absolute inset-0 flex items-center justify-center">
+            {[...Array(8)].map((_, i) => {
+              const angle = (i / 8) * Math.PI * 2;
+              const radius = 120;
+              const x = Math.cos(angle) * radius;
+              const y = Math.sin(angle) * radius;
+              
+              return (
+                <div
+                  key={`orbit-${i}`}
+                  className="absolute text-primary/20"
+                  style={{
+                    left: `calc(50% + ${x}px)`,
+                    top: `calc(50% + ${y}px)`,
+                    fontSize: '24px',
+                    animation: `orbit ${15}s linear infinite`,
+                    animationDelay: `${i * -1.875}s`,
+                  }}
+                >
+                  +
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="inline-flex items-start gap-2 relative z-10">
+            <span className="text-8xl font-bold gradient-text" style={{ animationDuration: '3s' }}>
               ///
             </span>
-            <span className="text-2xl text-primary mt-2 animate-pulse" style={{ animationDuration: '3s', animationDelay: '0.5s' }}>
+            <span className="text-2xl text-primary mt-2 plus-rotate inline-block cursor-pointer">
               +
             </span>
           </div>
@@ -244,6 +270,15 @@ const HeroSection = () => {
           100% {
             transform: translateY(-100vh) translateX(${Math.random() * 100 - 50}px);
             opacity: 0;
+          }
+        }
+
+        @keyframes orbit {
+          0% {
+            transform: rotate(0deg) translateX(120px) rotate(0deg);
+          }
+          100% {
+            transform: rotate(360deg) translateX(120px) rotate(-360deg);
           }
         }
       `}</style>
