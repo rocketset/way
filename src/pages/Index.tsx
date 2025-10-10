@@ -1,10 +1,11 @@
 import Header from "@/components/Header";
 import HomeBannerSlider from "@/components/HomeBannerSlider";
 import ClientsCarousel from "@/components/ClientsCarousel";
+import WhyChooseSection from "@/components/WhyChooseSection";
+import SolutionsSection from "@/components/SolutionsSection";
+import PartnersCarousel from "@/components/PartnersCarousel";
 import WhyWaySection from "@/components/WhyWaySection";
 import ResultsSection from "@/components/ResultsSection";
-import PartnersCarousel from "@/components/PartnersCarousel";
-import SolutionsSection from "@/components/SolutionsSection";
 import CasesSection from "@/components/CasesSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import NewsSection from "@/components/NewsSection";
@@ -17,10 +18,11 @@ const Index = () => {
       <Header />
       <HomeBannerSlider />
       <ClientsCarousel />
+      <WhyChooseSection />
+      <SolutionsSection />
+      <PartnersCarousel />
       <WhyWaySection />
       <ResultsSection />
-      <PartnersCarousel />
-      <SolutionsSection />
       <CasesSection />
       <TestimonialsSection />
       <NewsSection />
