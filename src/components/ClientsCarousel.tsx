@@ -1,6 +1,27 @@
+import colorsign from "@/assets/clients/colorsign.png";
+import verona from "@/assets/clients/verona.png";
+import rutra from "@/assets/clients/rutra.png";
+import verazo from "@/assets/clients/verazo.png";
+import nectarPlus from "@/assets/clients/nectar-plus.png";
+import extrema from "@/assets/clients/extrema.png";
+import chipart from "@/assets/clients/chipart.png";
+import shopar from "@/assets/clients/shopar.png";
+import carretao from "@/assets/clients/carretao.png";
+import eletropolo from "@/assets/clients/eletropolo.png";
+
 const ClientsCarousel = () => {
-  // Logos will be added here
-  const clients: { name: string; logo: string }[] = [];
+  const clients = [
+    { name: "Colorsign", logo: colorsign },
+    { name: "Verona", logo: verona },
+    { name: "Rutra", logo: rutra },
+    { name: "Verazo", logo: verazo },
+    { name: "Néctar Plus", logo: nectarPlus },
+    { name: "Extrema", logo: extrema },
+    { name: "Chipart", logo: chipart },
+    { name: "Shopar", logo: shopar },
+    { name: "O Carretão", logo: carretao },
+    { name: "Eletropolo", logo: eletropolo },
+  ];
 
   // Duplicate clients array for seamless infinite scroll
   const allClients = [...clients, ...clients, ...clients];
