@@ -8,42 +8,53 @@ const Journey = () => {
   const journeyPhases = [{
     title: "Implantação",
     color: "bg-card",
+    subtitle: "Base sólida para iniciar no digital",
     features: ["Presença Omnichannel", "Suporte que acompanha", "Personalização que escala", "Segurança e confiança", "Alta performance", "Integração sem atrito"]
   }, {
     title: "Evolução",
     color: "bg-card",
+    subtitle: "Fase de aperfeiçoamento contínuo da operação — onde se valida performance, otimiza conversão e solidifica os processos.",
     items: [{
       number: "01",
-      text: "Otimização da plataforma de e-commerce"
+      title: "Performance e Métricas",
+      text: "Analisar dados e otimizar a jornada de compra para maximizar resultados."
     }, {
       number: "02",
-      text: "Reestruturação de integrações com ERP, CRM, logística..."
+      title: "Processos e Automação",
+      text: "Garantir eficiência e previsibilidade através da automação operacional e comercial."
     }, {
       number: "03",
-      text: "Ajustes no mix de produtos e precificação"
+      title: "Estratégia Comercial e Marketing",
+      text: "Aprimorar as campanhas e a comunicação com foco em aumento de conversão."
     }, {
       number: "04",
-      text: "Melhoria da experiência de compra"
+      title: "Sustentação Tecnológica",
+      text: "Manter estabilidade e evolução da infraestrutura digital."
     }]
   }, {
     title: "Escala",
     color: "bg-card",
+    subtitle: "Fase de crescimento e consolidação — expandindo canais, audiência e receita com previsibilidade e dados.",
     levels: [{
       value: "R$ 50 mil",
-      label: "Entrada de mercado",
-      stage: "Iniciante"
+      stage: "Nível 1 - Iniciante",
+      focus: "Estruturação e validação inicial"
     }, {
       value: "R$ 200 mil",
-      label: "",
-      stage: "Iniciante"
+      stage: "Nível 2 - Emergente",
+      focus: "Otimização e crescimento"
     }, {
       value: "R$ 500 mil",
-      label: "",
-      stage: "Profissional"
+      stage: "Nível 3 - Profissional",
+      focus: "Consolidação e expansão"
     }, {
-      value: "R$ 1 milão",
-      label: "",
-      stage: "Profissional"
+      value: "R$ 1 milhão",
+      stage: "Nível 4 - Avançado",
+      focus: "Escalabilidade e liderança"
+    }, {
+      value: "R$ 5 milhões+",
+      stage: "Nível 5 - Enterprise",
+      focus: "Domínio de mercado e inovação"
     }]
   }];
   const benefits = [{
@@ -181,11 +192,14 @@ const Journey = () => {
                     {journeyPhases[1].title}
                   </div>
                   <div className="space-y-4">
-                    {journeyPhases[1].items?.map((item, i) => <div key={i} className="flex gap-3 p-3 bg-gradient-to-r from-primary/10 to-transparent rounded-lg hover:from-primary/20 transition-colors">
+                    {journeyPhases[1].items?.map((item, i) => <div key={i} className="flex gap-3 p-4 bg-gradient-to-r from-primary/10 to-transparent rounded-lg hover:from-primary/20 transition-colors">
                         <div className="flex-shrink-0 w-8 h-8 bg-primary text-primary-foreground rounded-lg flex items-center justify-center font-bold text-sm">
                           {item.number}
                         </div>
-                        <p className="text-sm leading-relaxed pt-1">{item.text}</p>
+                        <div className="flex-1">
+                          <h4 className="font-bold text-sm mb-1">{item.title}</h4>
+                          <p className="text-sm text-muted-foreground leading-relaxed">{item.text}</p>
+                        </div>
                       </div>)}
                   </div>
                 </div>
@@ -201,9 +215,9 @@ const Journey = () => {
                   </div>
                   <div className="space-y-3">
                     {journeyPhases[2].levels?.map((level, i) => <div key={i} className="bg-gradient-to-r from-primary to-yellow-500 p-4 rounded-xl text-white">
-                        <div className="font-bold text-lg mb-1">{level.value}</div>
-                        {level.label && <div className="text-sm opacity-90 mb-1">{level.label}</div>}
-                        
+                        <div className="font-bold text-xl mb-2">{level.value}</div>
+                        <div className="text-sm font-semibold mb-1 opacity-95">{level.stage}</div>
+                        <div className="text-sm opacity-90">{level.focus}</div>
                       </div>)}
                   </div>
                 </div>
