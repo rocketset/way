@@ -1,10 +1,26 @@
-// Import client logos here
-// Example: import clientName from "@/assets/clients/client-name.png";
+import colorsign from "@/assets/clients/colorsign.png";
+import verona from "@/assets/clients/verona.png";
+import rutra from "@/assets/clients/rutra.png";
+import verazo from "@/assets/clients/verazo.png";
+import nectarPlus from "@/assets/clients/nectar-plus.png";
+import ekta from "@/assets/clients/ekta.png";
+import extrema from "@/assets/clients/extrema.png";
+import shopar from "@/assets/clients/shopar.png";
+import chipart from "@/assets/clients/chipart.png";
+import eletropolo from "@/assets/clients/eletropolo.png";
 
 const ClientsCarousel = () => {
   const clients = [
-    // Add client logos here
-    // Example: { name: "Client Name", logo: clientName },
+    { name: "Colorsign", logo: colorsign },
+    { name: "Verona", logo: verona },
+    { name: "Rutra", logo: rutra },
+    { name: "Verazo", logo: verazo },
+    { name: "Néctar Plus", logo: nectarPlus },
+    { name: "Ekta", logo: ekta },
+    { name: "Extrema", logo: extrema },
+    { name: "Shopar", logo: shopar },
+    { name: "Chipart", logo: chipart },
+    { name: "Eletropolo", logo: eletropolo },
   ];
 
   // Duplicate clients array for seamless infinite scroll
