@@ -1,50 +1,10 @@
-import malavazi from "@/assets/clients/malavazi.webp";
-import coure from "@/assets/clients/coure.png";
-import ldf from "@/assets/clients/ldf.png";
-import atacadaoEletros from "@/assets/clients/atacadao-eletros.png";
-import cartope from "@/assets/clients/cartope.png";
-import catfish from "@/assets/clients/catfish.png";
-import barauna from "@/assets/clients/barauna.jpg";
-import colorsign from "@/assets/clients/colorsign.webp";
-import casatudo from "@/assets/clients/casatudo.png";
-import inovare from "@/assets/clients/inovare.png";
-import clubDaModa from "@/assets/clients/club-da-moda.png";
-import eletropolo from "@/assets/clients/eletropolo.png";
-import moniPratas from "@/assets/clients/moni-pratas.png";
-import carretao from "@/assets/clients/carretao.png";
-import shopar from "@/assets/clients/shopar.png";
-import chipart from "@/assets/clients/chipart.webp";
-import ekta from "@/assets/clients/ekta.webp";
-import extrema from "@/assets/clients/extrema.webp";
-import nectarPlus from "@/assets/clients/nectar-plus.png";
-import rutra from "@/assets/clients/rutra.png";
-import verazo from "@/assets/clients/verazo.png";
-import verona from "@/assets/clients/verona.png";
+// Import client logos here
+// Example: import clientName from "@/assets/clients/client-name.png";
 
 const ClientsCarousel = () => {
   const clients = [
-    { name: "Malavazi", logo: malavazi },
-    { name: "Coure", logo: coure },
-    { name: "LDF", logo: ldf },
-    { name: "Atacadão dos Eletros", logo: atacadaoEletros },
-    { name: "Cartope", logo: cartope },
-    { name: "Catfish", logo: catfish },
-    { name: "Baraúna", logo: barauna },
-    { name: "Colorsign", logo: colorsign },
-    { name: "Casatudo", logo: casatudo },
-    { name: "Inovare", logo: inovare },
-    { name: "Club da Moda", logo: clubDaModa },
-    { name: "Eletropolo", logo: eletropolo },
-    { name: "Moni Pratas", logo: moniPratas },
-    { name: "O Carretão", logo: carretao },
-    { name: "Shopar", logo: shopar },
-    { name: "Chipart", logo: chipart },
-    { name: "Ekta", logo: ekta },
-    { name: "Extrema", logo: extrema },
-    { name: "Néctar Plus", logo: nectarPlus },
-    { name: "Rutra", logo: rutra },
-    { name: "Verazo", logo: verazo },
-    { name: "Verona", logo: verona },
+    // Add client logos here
+    // Example: { name: "Client Name", logo: clientName },
   ];
 
   // Duplicate clients array for seamless infinite scroll
