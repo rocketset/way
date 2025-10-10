@@ -140,7 +140,7 @@ const SolutionsSection = () => {
                     </div>
                     
                     {/* Title */}
-                    <h3 className="text-3xl font-bold mb-3 text-black group-hover:text-primary transition-all duration-500 group-hover:translate-x-2">
+                    <h3 className="text-3xl font-bold mb-3 text-white group-hover:text-primary transition-all duration-500 group-hover:translate-x-2">
                       {solution.title}
                     </h3>
                     
