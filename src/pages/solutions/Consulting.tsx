@@ -1,7 +1,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { Target, TrendingUp, Users, Brain, LineChart, ArrowRight, Check, Smile, Plus } from "lucide-react";
+import { Target, TrendingUp, Users, Brain, Network, ArrowRight, Check, Smile, Plus } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
@@ -21,8 +21,8 @@ const Consulting = () => {
     icon: Brain,
     label: "Análise de Mercado"
   }, {
-    icon: LineChart,
-    label: "Growth Hacking"
+    icon: Network,
+    label: "Omnichannel"
   }];
   
   const services = [{
@@ -46,10 +46,10 @@ const Consulting = () => {
     subtitle: "Inteligência competitiva e insights estratégicos para tomada de decisão",
     description: "Realizamos estudos aprofundados do seu mercado, concorrência e público-alvo. Utilizamos ferramentas avançadas de business intelligence para fornecer insights acionáveis que orientam decisões estratégicas, identificam tendências e revelam oportunidades de crescimento antes da concorrência."
   }, {
-    icon: LineChart,
-    title: "Growth Hacking",
-    subtitle: "Estratégias inovadoras para crescimento acelerado e escalável",
-    description: "Implementamos técnicas de growth hacking testadas e validadas para acelerar o crescimento do seu negócio. Combinamos criatividade, análise de dados e automação para identificar os canais mais eficientes, otimizar investimentos e criar loops de crescimento sustentável que impulsionam resultados exponenciais."
+    icon: Network,
+    title: "Omnichannel",
+    subtitle: "Integração perfeita entre todos os canais de venda e comunicação",
+    description: "Desenvolvemos estratégias omnichannel que conectam todos os pontos de contato com seus clientes de forma integrada e fluida. Sincronizamos lojas físicas, e-commerce, marketplaces, redes sociais e aplicativos para criar uma experiência unificada, permitindo que seus clientes comprem quando, onde e como preferirem, aumentando vendas e satisfação."
   }];
   
   return (
