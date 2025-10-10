@@ -1,7 +1,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { Target, TrendingUp, Users, Brain, Network, ArrowRight, Check, Smile, Plus } from "lucide-react";
+import { Target, TrendingUp, Store, Brain, Network, ArrowRight, Check, Smile, Plus } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
@@ -15,8 +15,8 @@ const Consulting = () => {
     icon: TrendingUp,
     label: "Otimização de Conversão"
   }, {
-    icon: Users,
-    label: "Experiência do Cliente"
+    icon: Store,
+    label: "Marketplaces"
   }, {
     icon: Brain,
     label: "Análise de Mercado"
@@ -36,10 +36,10 @@ const Consulting = () => {
     subtitle: "Análise e melhorias para aumentar as vendas e reduzir o abandono de carrinho",
     description: "Através de análises detalhadas do comportamento do usuário, testes A/B e otimizações contínuas, aumentamos suas taxas de conversão. Identificamos pontos de fricção na jornada de compra e implementamos melhorias que transformam visitantes em clientes fiéis, maximizando o retorno sobre o investimento."
   }, {
-    icon: Users,
-    title: "Experiência do Cliente",
-    subtitle: "Melhore a jornada de compra e fidelize seus clientes",
-    description: "Criamos experiências memoráveis em todos os pontos de contato com seus clientes. Desde o primeiro acesso até o pós-venda, desenvolvemos estratégias que encantam, engajam e fidelizam, transformando compradores ocasionais em promotores da sua marca e aumentando o lifetime value."
+    icon: Store,
+    title: "Marketplaces",
+    subtitle: "Estratégias completas para vender nos principais marketplaces do Brasil",
+    description: "Desenvolvemos estratégias especializadas para posicionar e vender seus produtos nos principais marketplaces brasileiros como Mercado Livre, Amazon, Shopee e Magazine Luiza. Otimizamos catálogos, criamos campanhas eficientes, gerenciamos reputação e implementamos processos que maximizam vendas e rentabilidade em cada canal."
   }, {
     icon: Brain,
     title: "Análise de Mercado",
