@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 const Implementation = () => {
   const [hoveredService, setHoveredService] = useState<number | null>(null);
-  
   const servicesList = [{
     icon: ShoppingCart,
     label: "E-commerce"
@@ -58,9 +57,15 @@ const Implementation = () => {
           {/* Decorative Plus Icons */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-5">
             <Plus className="absolute top-10 left-10 w-20 h-20 text-primary animate-pulse" />
-            <Plus className="absolute top-32 right-20 w-32 h-32 text-primary animate-pulse" style={{animationDelay: '1s'}} />
-            <Plus className="absolute bottom-20 left-1/4 w-16 h-16 text-primary animate-pulse" style={{animationDelay: '2s'}} />
-            <Plus className="absolute top-1/2 right-1/3 w-24 h-24 text-primary animate-pulse" style={{animationDelay: '0.5s'}} />
+            <Plus className="absolute top-32 right-20 w-32 h-32 text-primary animate-pulse" style={{
+            animationDelay: '1s'
+          }} />
+            <Plus className="absolute bottom-20 left-1/4 w-16 h-16 text-primary animate-pulse" style={{
+            animationDelay: '2s'
+          }} />
+            <Plus className="absolute top-1/2 right-1/3 w-24 h-24 text-primary animate-pulse" style={{
+            animationDelay: '0.5s'
+          }} />
           </div>
           
           <div className="container mx-auto px-12 relative z-10">
@@ -68,31 +73,29 @@ const Implementation = () => {
               <div className="space-y-8 animate-fade-in">
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20">
                   <Plus className="w-4 h-4 text-primary" />
-                  <span className="text-sm font-medium text-primary">Way Digital Solutions</span>
+                  <span className="text-sm font-medium text-primary">Way E-commerce - Digital Solutions</span>
                 </div>
                 
-                <h1 className="text-5xl lg:text-7xl font-bold text-primary leading-tight">
+                <h1 className="text-5xl font-bold text-primary leading-tight lg:text-4xl">
                   Implantação <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">& Desenvolvimento</span>
                 </h1>
                 
                 <div className="grid grid-cols-1 gap-4">
-                  {servicesList.map((service, index) => (
-                    <div 
-                      key={index} 
-                      className="group flex items-center gap-4 p-4 rounded-xl bg-card border border-border hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:scale-105 cursor-pointer"
-                      style={{animationDelay: `${index * 0.1}s`}}
-                    >
+                  {servicesList.map((service, index) => <div key={index} className="group flex items-center gap-4 p-4 rounded-xl bg-card border border-border hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:scale-105 cursor-pointer" style={{
+                  animationDelay: `${index * 0.1}s`
+                }}>
                       <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
                         <service.icon className="w-6 h-6 text-primary" />
                       </div>
                       <span className="font-medium text-foreground group-hover:text-primary transition-colors">{service.label}</span>
                       <ArrowRight className="ml-auto w-5 h-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
-                    </div>
-                  ))}
+                    </div>)}
                 </div>
               </div>
               
-              <div className="relative animate-fade-in" style={{animationDelay: '0.3s'}}>
+              <div className="relative animate-fade-in" style={{
+              animationDelay: '0.3s'
+            }}>
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5 rounded-3xl blur-3xl"></div>
                 <div className="relative aspect-square rounded-3xl bg-gradient-to-br from-primary/10 via-primary/5 to-transparent border border-primary/20 flex items-center justify-center overflow-hidden group">
                   <div className="absolute inset-0 bg-gradient-to-tr from-primary/0 via-primary/10 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
@@ -101,7 +104,9 @@ const Implementation = () => {
                     <Plus className="w-16 h-16 text-primary/20 animate-pulse" />
                   </div>
                   <div className="absolute bottom-10 left-10">
-                    <Plus className="w-12 h-12 text-primary/20 animate-pulse" style={{animationDelay: '1s'}} />
+                    <Plus className="w-12 h-12 text-primary/20 animate-pulse" style={{
+                    animationDelay: '1s'
+                  }} />
                   </div>
                 </div>
               </div>
@@ -123,7 +128,9 @@ const Implementation = () => {
                   </h2>
                 </div>
               </div>
-              <div className="flex items-center animate-fade-in" style={{animationDelay: '0.2s'}}>
+              <div className="flex items-center animate-fade-in" style={{
+              animationDelay: '0.2s'
+            }}>
                 <p className="text-lg leading-relaxed text-muted-foreground">
                   Do planejamento estratégico à integração com marketplaces, conectamos todos os seus canais de venda para impulsionar o crescimento do seu negócio. Nossas soluções integram sistemas de gestão, logística e meios de pagamento, simplificando toda a operação e garantindo uma jornada de compra fluida e completa.
                 </p>
@@ -131,15 +138,10 @@ const Implementation = () => {
             </div>
             
             <div className="flex flex-wrap justify-center gap-3 mb-12">
-              {servicesList.map((service, index) => (
-                <div 
-                  key={index} 
-                  className="flex items-center gap-2 bg-card border border-border hover:border-primary/50 px-5 py-3 rounded-full hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer group"
-                >
+              {servicesList.map((service, index) => <div key={index} className="flex items-center gap-2 bg-card border border-border hover:border-primary/50 px-5 py-3 rounded-full hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer group">
                   <service.icon className="w-4 h-4 text-primary group-hover:rotate-12 transition-transform" />
                   <span className="text-sm font-medium">{service.label}</span>
-                </div>
-              ))}
+                </div>)}
             </div>
 
             <div className="text-center">
@@ -155,20 +157,14 @@ const Implementation = () => {
         </section>
 
         {/* Services Details */}
-        <section className="mb-20 py-20" style={{backgroundColor: '#F2F2F2'}}>
+        <section className="mb-20 py-20" style={{
+        backgroundColor: '#F2F2F2'
+      }}>
           <div className="container mx-auto px-12">
             <div className="max-w-5xl mx-auto space-y-8">
-              {services.map((service, index) => (
-                <div 
-                  key={index} 
-                  className="group flex gap-8 items-start py-8 border-b border-border/30 last:border-b-0 transition-all duration-300 hover:translate-x-2"
-                  onMouseEnter={() => setHoveredService(index)}
-                  onMouseLeave={() => setHoveredService(null)}
-                >
+              {services.map((service, index) => <div key={index} className="group flex gap-8 items-start py-8 border-b border-border/30 last:border-b-0 transition-all duration-300 hover:translate-x-2" onMouseEnter={() => setHoveredService(index)} onMouseLeave={() => setHoveredService(null)}>
                   {/* Icon */}
-                  <div className={`flex-shrink-0 w-20 h-20 rounded-2xl bg-white flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:shadow-lg ${
-                    hoveredService === index ? 'shadow-lg' : ''
-                  }`}>
+                  <div className={`flex-shrink-0 w-20 h-20 rounded-2xl bg-white flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:shadow-lg ${hoveredService === index ? 'shadow-lg' : ''}`}>
                     <service.icon className="w-10 h-10 text-primary" />
                   </div>
                   
@@ -184,8 +180,7 @@ const Implementation = () => {
                       {service.description}
                     </p>
                   </div>
-                </div>
-              ))}
+                </div>)}
             </div>
           </div>
         </section>
@@ -197,8 +192,12 @@ const Implementation = () => {
           {/* Animated Plus Icons */}
           <div className="absolute inset-0 overflow-hidden opacity-10">
             <Plus className="absolute top-10 left-10 w-24 h-24 text-primary-foreground animate-pulse" />
-            <Plus className="absolute bottom-10 right-10 w-32 h-32 text-primary-foreground animate-pulse" style={{animationDelay: '1s'}} />
-            <Plus className="absolute top-1/2 left-1/3 w-16 h-16 text-primary-foreground animate-pulse" style={{animationDelay: '0.5s'}} />
+            <Plus className="absolute bottom-10 right-10 w-32 h-32 text-primary-foreground animate-pulse" style={{
+            animationDelay: '1s'
+          }} />
+            <Plus className="absolute top-1/2 left-1/3 w-16 h-16 text-primary-foreground animate-pulse" style={{
+            animationDelay: '0.5s'
+          }} />
           </div>
           
           <div className="container mx-auto px-12 relative z-10">
