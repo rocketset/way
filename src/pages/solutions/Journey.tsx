@@ -136,13 +136,33 @@ const Journey = () => {
     },
     {
       title: "Escala",
-      subtitle: "Crescimento exponencial sustentável",
+      subtitle: "Fase de crescimento e consolidação — expandindo canais, audiência e receita com previsibilidade e dados",
       levels: [
-        { value: "R$ 50 mil", stage: "Iniciante" },
-        { value: "R$ 200 mil", stage: "Iniciante" },
-        { value: "R$ 500 mil", stage: "Profissional" },
-        { value: "R$ 1 milhão", stage: "Profissional" },
-        { value: "R$ 5 milhões+", stage: "Especialista" }
+        { 
+          value: "R$ 50 mil/mês", 
+          stage: "Iniciante",
+          focus: "Validação de produto e canal principal. Ajuste de pricing e logística."
+        },
+        { 
+          value: "R$ 200 mil/mês", 
+          stage: "Iniciante",
+          focus: "Formação de time interno e estruturação de performance contínua."
+        },
+        { 
+          value: "R$ 500 mil/mês", 
+          stage: "Profissional",
+          focus: "Otimização de margens, escalonamento via mídia e CRM."
+        },
+        { 
+          value: "R$ 1 milhão/mês", 
+          stage: "Profissional",
+          focus: "Expansão para marketplaces e consolidação omnichannel."
+        },
+        { 
+          value: "R$ 5 milhões+/mês", 
+          stage: "Especialista",
+          focus: "Escala nacional, gestão data-driven e diversificação de canais."
+        }
       ],
       color: "bg-gradient-to-br from-[#45B7D1]/10 to-[#45B7D1]/5"
     }
@@ -301,11 +321,18 @@ const Journey = () => {
                   {phase.levels && (
                     <div className="space-y-3">
                       {phase.levels.map((level, i) => (
-                        <div key={i} className="bg-background/50 p-4 rounded-lg">
-                          <div className="font-bold text-lg text-primary mb-1">{level.value}</div>
-                          <div className="text-xs text-muted-foreground uppercase tracking-wider">
-                            {level.stage}
+                        <div key={i} className="bg-background/50 p-4 rounded-lg space-y-2">
+                          <div className="flex items-center justify-between gap-3">
+                            <div className="font-bold text-base text-primary">{level.value}</div>
+                            <div className="text-xs text-muted-foreground uppercase tracking-wider px-2 py-1 bg-primary/10 rounded">
+                              {level.stage}
+                            </div>
                           </div>
+                          {level.focus && (
+                            <p className="text-xs text-muted-foreground leading-relaxed">
+                              {level.focus}
+                            </p>
+                          )}
                         </div>
                       ))}
                     </div>
