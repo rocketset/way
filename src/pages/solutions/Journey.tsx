@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import ClientsCarousel from "@/components/ClientsCarousel";
 import { ArrowRight, CheckCircle2, Target, TrendingUp, Users, Zap, BarChart3, Rocket, DollarSign, Plus, Activity } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import brazilFlag from "@/assets/brazil-flag.png";
 import team1 from "@/assets/gallery/team-1.jpg";
 import team2 from "@/assets/gallery/team-2.jpg";
 import team3 from "@/assets/gallery/team-3.jpg";
@@ -11,10 +12,10 @@ const Journey = () => {
   const teamPhotos = [team1, team2, team3];
 
   const stats = [
-    { number: "+150", label: "Projetos entregues" },
-    { number: "+300%", label: "Crescimento médio" },
-    { number: "98%", label: "Satisfação dos clientes" },
-    { number: "24/7", label: "Suporte disponível" }
+    { number: "190", label: "Lojas implantadas" },
+    { number: "1 ano", label: "com soluções de ponta a ponta" },
+    { number: "flag", label: "Atendemos todo o Brasil", isFlag: true },
+    { number: "700", label: "Clientes atendidos" }
   ];
 
   const journeyPhases = [
@@ -221,7 +222,15 @@ const Journey = () => {
                   
                   <div className="relative">
                     <div className="text-4xl md:text-5xl font-bold text-primary mb-2 group-hover:scale-125 transition-transform duration-500">
-                      {stat.number}
+                      {stat.isFlag ? (
+                        <img 
+                          src={brazilFlag} 
+                          alt="Bandeira do Brasil" 
+                          className="w-20 h-14 mx-auto object-cover rounded-md" 
+                        />
+                      ) : (
+                        stat.number
+                      )}
                     </div>
                     <div className="text-sm md:text-base text-muted-foreground group-hover:text-foreground transition-colors duration-300">
                       {stat.label}
