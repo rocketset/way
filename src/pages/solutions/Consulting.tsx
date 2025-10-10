@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Target, TrendingUp, Store, Brain, Network, ArrowRight, Check, Smile, Plus } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import consultingHero from "@/assets/consulting-hero.png";
 
 const Consulting = () => {
   const [hoveredService, setHoveredService] = useState<number | null>(null);
@@ -101,9 +102,9 @@ const Consulting = () => {
               <div className="relative animate-fade-in group flex items-center justify-center" style={{ animationDelay: '0.3s' }}>
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/30 to-primary/10 rounded-3xl blur-3xl group-hover:blur-2xl transition-all duration-500 opacity-50 group-hover:opacity-100"></div>
                 <div className="relative aspect-square rounded-3xl overflow-hidden border border-primary/20 group-hover:border-primary/40 transition-all duration-500 hover:scale-105 transform w-[70%]">
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent"></div>
+                  <div className="absolute inset-0 bg-gradient-to-br from-background to-background/95"></div>
                   <div className="w-full h-full flex items-center justify-center p-12">
-                    <Target className="w-full h-full text-primary/20" />
+                    <img src={consultingHero} alt="Consultorias Especializadas" className="w-full h-full object-contain" />
                   </div>
                   <Plus className="absolute top-4 right-4 w-8 h-8 text-primary/30 animate-[spin_10s_linear_infinite] group-hover:text-primary/50 transition-colors" />
                   <Plus className="absolute bottom-4 left-4 w-6 h-6 text-primary/20 animate-[spin_15s_linear_infinite_reverse] group-hover:text-primary/40 transition-colors" />
