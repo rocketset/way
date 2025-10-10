@@ -9,6 +9,7 @@ import wbuyPartner from "@/assets/partners/wbuy-partner.png";
 import trayPartner from "@/assets/partners/tray-partner.png";
 import nuvemshopPartner from "@/assets/partners/nuvemshop-partner.png";
 import bagyPartner from "@/assets/partners/bagy-partner.png";
+import implementationDevices from "@/assets/implementation-devices.png";
 const Implementation = () => {
   const [hoveredService, setHoveredService] = useState<number | null>(null);
   
@@ -111,18 +112,12 @@ const Implementation = () => {
               <div className="relative animate-fade-in" style={{
               animationDelay: '0.3s'
             }}>
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5 rounded-3xl blur-3xl"></div>
-                <div className="relative aspect-square rounded-3xl bg-gradient-to-br from-primary/10 via-primary/5 to-transparent border border-primary/20 flex items-center justify-center overflow-hidden group">
-                  <div className="absolute inset-0 bg-gradient-to-tr from-primary/0 via-primary/10 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  <Plus className="w-48 h-48 text-primary/30 group-hover:rotate-90 group-hover:scale-110 transition-all duration-500" />
-                  <div className="absolute top-10 right-10">
-                    <Plus className="w-16 h-16 text-primary/20 animate-pulse" />
-                  </div>
-                  <div className="absolute bottom-10 left-10">
-                    <Plus className="w-12 h-12 text-primary/20 animate-pulse" style={{
-                    animationDelay: '1s'
-                  }} />
-                  </div>
+                <div className="relative aspect-square rounded-3xl overflow-hidden">
+                  <img 
+                    src={implementationDevices} 
+                    alt="E-commerce em múltiplos dispositivos" 
+                    className="w-full h-full object-contain"
+                  />
                 </div>
               </div>
             </div>
