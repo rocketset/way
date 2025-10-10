@@ -23,21 +23,21 @@ const Journey = () => {
       title: "IMPLANTAÇÃO",
       icon: Target,
       description: "Estruturar a operação, integrar tecnologia e definir processos",
-      color: "from-[#96CEB4]/80 to-[#96CEB4]/40",
+      color: "from-primary/20 to-primary/10",
       position: 1
     },
     {
       title: "EVOLUÇÃO",
       icon: TrendingUp,
       description: "Otimizar a conversão, solidificar processos e validar performance",
-      color: "from-[#96CEB4] to-[#96CEB4]/60",
+      color: "from-primary/30 to-primary/15",
       position: 2
     },
     {
       title: "ESCALA",
       icon: Rocket,
       description: "Expandir canais, audiência e receita com dados",
-      color: "from-[#7CB89D] to-[#96CEB4]",
+      color: "from-primary/40 to-primary/20",
       position: 3,
       levels: [
         { value: "R$ 50 mil", stage: "Iniciante" },
@@ -79,7 +79,7 @@ const Journey = () => {
           objective: "Validar o funcionamento da operação e iniciar o processo de vendas com segurança e consistência"
         }
       ],
-      color: "bg-gradient-to-br from-[#4ECDC4]/10 to-[#4ECDC4]/5"
+      color: "bg-gradient-to-br from-primary/5 to-transparent"
     },
     {
       title: "Evolução",
@@ -102,7 +102,7 @@ const Journey = () => {
           objective: "Manter estabilidade e evolução da infraestrutura digital"
         }
       ],
-      color: "bg-gradient-to-br from-[#FF6B6B]/10 to-[#FF6B6B]/5"
+      color: "bg-gradient-to-br from-primary/10 to-transparent"
     },
     {
       title: "Escala",
@@ -134,7 +134,7 @@ const Journey = () => {
           focus: "Escala nacional, gestão data-driven e diversificação de canais."
         }
       ],
-      color: "bg-gradient-to-br from-[#45B7D1]/10 to-[#45B7D1]/5"
+      color: "bg-gradient-to-br from-primary/15 to-transparent"
     }
   ];
 
@@ -192,7 +192,7 @@ const Journey = () => {
               </div>
               
               <h1 className="text-5xl md:text-7xl font-bold mb-6">
-                Jornada <span className="bg-gradient-to-r from-primary to-yellow-500 bg-clip-text text-transparent">Way</span>
+                Jornada <span className="bg-gradient-to-r from-primary via-primary/80 to-primary bg-clip-text text-transparent">Way</span>
               </h1>
               <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto">
                 Método exclusivo e validado, criado com base em experiências reais em e-commerces
@@ -204,7 +204,7 @@ const Journey = () => {
         {/* Stats Section */}
         <section className="py-16 bg-background relative overflow-hidden">
           <div className="absolute top-1/4 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '6s' }} />
-          <div className="absolute bottom-1/4 left-0 w-96 h-96 bg-yellow-500/5 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '8s', animationDelay: '2s' }} />
+          <div className="absolute bottom-1/4 left-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '8s', animationDelay: '2s' }} />
           
           <div className="container mx-auto px-4 relative z-10">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
@@ -256,11 +256,11 @@ const Journey = () => {
                     alt={`Equipe Way ${index + 1}`}
                     className="w-full h-80 object-cover transition-transform duration-500 group-hover:scale-110"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <div className="absolute bottom-6 left-6 right-6 flex gap-3">
-                      <Plus className="w-8 h-8 text-white" />
-                      <DollarSign className="w-8 h-8 text-white" />
-                      <TrendingUp className="w-8 h-8 text-white" />
+                      <Plus className="w-8 h-8 text-primary" />
+                      <DollarSign className="w-8 h-8 text-primary" />
+                      <TrendingUp className="w-8 h-8 text-primary" />
                     </div>
                   </div>
                 </div>
@@ -358,25 +358,25 @@ const Journey = () => {
                         marginTop: `${(journeyPhases.length - 1 - index) * 80}px`,
                       }}
                     >
-                      <div className={`bg-gradient-to-br ${phase.color} rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border-2 border-black/10 h-full min-h-[420px] flex flex-col justify-between animate-fade-in hover-scale`} style={{ animationDelay: `${index * 0.2}s` }}>
+                      <div className={`bg-gradient-to-br ${phase.color} rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border-2 border-border h-full min-h-[420px] flex flex-col justify-between animate-fade-in hover-scale`} style={{ animationDelay: `${index * 0.2}s` }}>
                         <div className="flex flex-col items-center">
-                          <Icon className="w-16 h-16 text-black/70 mb-4" strokeWidth={1.5} />
+                          <Icon className="w-16 h-16 text-primary mb-4" strokeWidth={1.5} />
                           
-                          <h3 className="text-2xl md:text-3xl font-bold text-center mb-3 text-black">
+                          <h3 className="text-2xl md:text-3xl font-bold text-center mb-3 text-foreground">
                             {phase.title}
                           </h3>
                           
-                          <p className="text-center text-black/80 text-sm leading-relaxed">
+                          <p className="text-center text-muted-foreground text-sm leading-relaxed">
                             {phase.description}
                           </p>
                         </div>
 
                         {phase.levels && (
-                          <div className="mt-6 space-y-2 pt-4 border-t-2 border-black/20">
+                          <div className="mt-6 space-y-2 pt-4 border-t-2 border-border">
                             {phase.levels.map((level, i) => (
                               <div key={i} className="flex items-center justify-between text-sm">
-                                <span className="font-bold text-black">{level.value}</span>
-                                <span className="text-xs text-black/70 uppercase tracking-wider px-2 py-1 bg-black/10 rounded">
+                                <span className="font-bold text-foreground">{level.value}</span>
+                                <span className="text-xs text-muted-foreground uppercase tracking-wider px-2 py-1 bg-muted/50 rounded">
                                   {level.stage}
                                 </span>
                               </div>
@@ -472,7 +472,7 @@ const Journey = () => {
         </section>
 
         {/* Final CTA Section */}
-        <section className="py-20 bg-gradient-to-br from-[#45B7D1] to-[#4ECDC4] text-white relative overflow-hidden">
+        <section className="py-20 bg-gradient-to-br from-primary/20 to-primary/10 text-foreground relative overflow-hidden">
           <div className="absolute inset-0 opacity-10">
             {[...Array(6)].map((_, i) => (
               <Plus key={i} className="absolute w-24 h-24" style={{
@@ -488,14 +488,14 @@ const Journey = () => {
               <h2 className="text-4xl md:text-6xl font-bold leading-tight">
                 Pronto para transformar seu e-commerce?
               </h2>
-              <p className="text-xl md:text-2xl text-white/90">
+              <p className="text-xl md:text-2xl text-muted-foreground">
                 Junte-se às marcas que já estão crescendo com a Jornada Way
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-8">
                 <Button 
                   size="lg"
-                  className="bg-white text-[#45B7D1] hover:bg-white/90 px-10 py-7 text-lg rounded-full shadow-2xl font-bold hover-scale group"
+                  className="bg-primary text-primary-foreground hover:bg-primary/90 px-10 py-7 text-lg rounded-full shadow-2xl font-bold hover-scale group"
                 >
                   Comece sua jornada agora
                   <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -512,8 +512,8 @@ const Journey = () => {
                   return (
                     <div key={i} className="flex flex-col items-center gap-3 animate-fade-in hover-scale" style={{ animationDelay: `${i * 0.15}s` }}>
                       <div className="relative">
-                        <Icon className="w-12 h-12" />
-                        <Plus className="absolute -top-2 -right-2 w-6 h-6 animate-pulse" />
+                        <Icon className="w-12 h-12 text-primary" />
+                        <Plus className="absolute -top-2 -right-2 w-6 h-6 text-primary animate-pulse" />
                       </div>
                       <span className="text-lg font-medium">{item.text}</span>
                     </div>
