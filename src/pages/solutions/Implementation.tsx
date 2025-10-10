@@ -1,24 +1,27 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { ShoppingCart, Store, Cpu, CreditCard, Truck, Smile, ArrowRight, Check, Globe, MessageCircle, Bot } from "lucide-react";
+import { ShoppingCart, Store, Cpu, CreditCard, Truck, Smile, ArrowRight, Check } from "lucide-react";
 import { Link } from "react-router-dom";
 const Implementation = () => {
   const servicesList = [{
     icon: ShoppingCart,
     label: "E-commerce"
   }, {
-    icon: Globe,
-    label: "Desenvolvimento Web"
-  }, {
-    icon: MessageCircle,
-    label: "Automações de Whatsapp"
-  }, {
-    icon: Bot,
-    label: "CRM e automações com I.A"
+    icon: CreditCard,
+    label: "Pagamentos"
   }, {
     icon: Store,
-    label: "Marketplaces"
+    label: "Marketplace"
+  }, {
+    icon: Truck,
+    label: "Logística"
+  }, {
+    icon: Cpu,
+    label: "Tecnologia"
+  }, {
+    icon: Smile,
+    label: "Customer Experience"
   }];
   const services = [{
     icon: ShoppingCart,
@@ -61,10 +64,7 @@ const Implementation = () => {
             <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
               <h1 className="text-5xl lg:text-6xl font-bold mb-6 text-primary">Implantação & Desenvolvimento</h1>
-              <p className="text-lg text-foreground mb-8">
-                Soluções integradas e uma jornada de compra totalmente otimizada. 
-                Tudo o que você precisa para crescer no digital, em um só lugar.
-              </p>
+              
               <div className="space-y-3">
                 {servicesList.map((service, index) => <div key={index} className="flex items-center gap-3">
                     <service.icon className="w-5 h-5 text-primary" />
