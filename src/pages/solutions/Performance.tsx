@@ -1,7 +1,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { BarChart3, Zap, Users, Palette, TrendingUp, Plug, Activity, MousePointerClick, ArrowRight, Smile, Plus, Share2 } from "lucide-react";
+import { BarChart3, Zap, Users, Palette, TrendingUp, Activity, MousePointerClick, ArrowRight, Smile, Plus, Share2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 const Performance = () => {
@@ -18,9 +18,6 @@ const Performance = () => {
   }, {
     icon: TrendingUp,
     label: "Evolução"
-  }, {
-    icon: Plug,
-    label: "Integrações"
   }, {
     icon: Activity,
     label: "Performance"
@@ -51,11 +48,6 @@ const Performance = () => {
     title: "Evolução",
     subtitle: "Otimização contínua para crescimento sustentável e escalável",
     description: "Analisamos, testamos e evoluímos constantemente suas estratégias digitais. Através de metodologias ágeis e análise de dados, identificamos oportunidades de melhoria e implementamos otimizações que aceleram seu crescimento de forma consistente."
-  }, {
-    icon: Plug,
-    title: "Integrações",
-    subtitle: "Conexões perfeitas entre ferramentas e sistemas para máxima eficiência",
-    description: "Implementamos e gerenciamos integrações entre suas principais ferramentas de marketing, vendas e gestão. Garantimos que seus dados fluam perfeitamente entre plataformas, eliminando trabalho manual e proporcionando visão unificada do negócio."
   }, {
     icon: Activity,
     title: "Performance",
