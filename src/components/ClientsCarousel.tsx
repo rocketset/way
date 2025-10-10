@@ -1,47 +1,6 @@
-import colorsign from "@/assets/clients/colorsign.png";
-import verona from "@/assets/clients/verona.png";
-import rutra from "@/assets/clients/rutra.png";
-import verazo from "@/assets/clients/verazo.png";
-import nectarPlus from "@/assets/clients/nectar-plus.png";
-import ekta from "@/assets/clients/ekta.png";
-import extrema from "@/assets/clients/extrema.png";
-import shopar from "@/assets/clients/shopar.png";
-import chipart from "@/assets/clients/chipart.png";
-import eletropolo from "@/assets/clients/eletropolo.png";
-import carretao from "@/assets/clients/carretao.png";
-import moniPratas from "@/assets/clients/moni-pratas.png";
-import inovare from "@/assets/clients/inovare.png";
-import casatudo from "@/assets/clients/casatudo.png";
-import clubDaModa from "@/assets/clients/club-da-moda.png";
-import atacadaoEletros from "@/assets/clients/atacadao-eletros.png";
-import ldf from "@/assets/clients/ldf.png";
-import coure from "@/assets/clients/coure.png";
-import cartope from "@/assets/clients/cartope.png";
-import malavazi from "@/assets/clients/malavazi.png";
-
 const ClientsCarousel = () => {
-  const clients = [
-    { name: "Colorsign", logo: colorsign },
-    { name: "Verona", logo: verona },
-    { name: "Rutra", logo: rutra },
-    { name: "Verazo", logo: verazo },
-    { name: "Néctar Plus", logo: nectarPlus },
-    { name: "Ekta", logo: ekta },
-    { name: "Extrema", logo: extrema },
-    { name: "Shopar", logo: shopar },
-    { name: "Chipart", logo: chipart },
-    { name: "Eletropolo", logo: eletropolo },
-    { name: "O Carretão", logo: carretao },
-    { name: "Moni Pratas", logo: moniPratas },
-    { name: "Inovare", logo: inovare },
-    { name: "Casatudo", logo: casatudo },
-    { name: "Club da Moda", logo: clubDaModa },
-    { name: "Atacadão dos Eletros", logo: atacadaoEletros },
-    { name: "LDF", logo: ldf },
-    { name: "Coure", logo: coure },
-    { name: "Cartope", logo: cartope },
-    { name: "Malavazi", logo: malavazi },
-  ];
+  // Logos will be added here
+  const clients: { name: string; logo: string }[] = [];
 
   // Duplicate clients array for seamless infinite scroll
   const allClients = [...clients, ...clients, ...clients];
