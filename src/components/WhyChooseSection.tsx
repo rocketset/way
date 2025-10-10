@@ -1,5 +1,6 @@
 import { Plus, Grid3x3, Eye, Headphones } from "lucide-react";
 import brazilFlag from "@/assets/brazil-flag.png";
+import ClientsCarousel from "./ClientsCarousel";
 
 const WhyChooseSection = () => {
   const stats = [
@@ -59,7 +60,10 @@ const WhyChooseSection = () => {
               ))}
             </div>
 
-            <p className="text-base md:text-lg text-muted-foreground max-w-4xl mx-auto leading-relaxed">
+            {/* Logos dos Clientes */}
+            <ClientsCarousel />
+
+            <p className="text-base md:text-lg text-muted-foreground max-w-4xl mx-auto leading-relaxed mt-12">
               Estamos presentes em toda a jornada de compra, acompanhando a operação em cada etapa, da criação da loja até a evolução contínua. Nosso papel é simplificar a entrada no digital ou escalar negócios já existentes, transformando desafios em crescimento real.
             </p>
           </div>

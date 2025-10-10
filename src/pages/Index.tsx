@@ -18,7 +18,6 @@ const Index = () => {
       <Header />
       <HomeBannerSlider />
       <WhyChooseSection />
-      <ClientsCarousel />
       <SolutionsSection />
       <PartnersCarousel />
       <WhyWaySection />
