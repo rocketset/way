@@ -262,7 +262,7 @@ const Journey = () => {
               <div className="absolute top-0 left-0 w-full h-full pointer-events-none hidden md:block">
                 <svg className="w-full h-full" viewBox="0 0 1000 400" preserveAspectRatio="none">
                   <path 
-                    d="M 100 350 L 350 250 L 650 150 L 900 50" 
+                    d="M 100 50 L 350 150 L 650 250 L 900 350" 
                     stroke="currentColor" 
                     strokeWidth="3" 
                     fill="none"
@@ -286,7 +286,7 @@ const Journey = () => {
                       key={index} 
                       className="relative"
                       style={{ 
-                        marginTop: `${index * 80}px`,
+                        marginTop: `${(journeyPhases.length - 1 - index) * 80}px`,
                       }}
                     >
                       <div className={`bg-gradient-to-br ${phase.color} rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border-2 border-black/10`}>
