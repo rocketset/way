@@ -9,7 +9,7 @@ import wbuyPartner from "@/assets/partners/wbuy-partner.png";
 import trayPartner from "@/assets/partners/tray-partner.png";
 import nuvemshopPartner from "@/assets/partners/nuvemshop-partner.png";
 import bagyPartner from "@/assets/partners/bagy-partner.png";
-import implementationDevices from "@/assets/implementation-devices.png";
+import implementationHero from "@/assets/implementation-hero.png";
 const Implementation = () => {
   const [hoveredService, setHoveredService] = useState<number | null>(null);
   
@@ -112,8 +112,8 @@ const Implementation = () => {
                 <div className="relative aspect-square rounded-3xl overflow-hidden border border-primary/20 group-hover:border-primary/40 transition-all duration-500 hover:scale-105 transform">
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent"></div>
                   <img 
-                    src={implementationDevices} 
-                    alt="E-commerce em múltiplos dispositivos" 
+                    src={implementationHero} 
+                    alt="Soluções de Implementação e Desenvolvimento" 
                     className="w-full h-full object-contain relative z-10 transition-transform duration-500"
                   />
                   {/* Floating Plus decorations */}
