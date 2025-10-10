@@ -73,7 +73,7 @@ const Journey = () => {
     },
     {
       number: "06",
-      title: "Transformação",
+      title: "Consolidação",
       description: "Evolução completa do negócio digital com resultados sustentáveis e mensuráveis",
       color: "from-[#DDA0DD] to-[#E6B8E6]"
     }
