@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import HomeBannerSlider from "@/components/HomeBannerSlider";
+import ClientsCarousel from "@/components/ClientsCarousel";
 import WhyWaySection from "@/components/WhyWaySection";
 import ResultsSection from "@/components/ResultsSection";
 import PartnersCarousel from "@/components/PartnersCarousel";
@@ -15,6 +16,7 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       <Header />
       <HomeBannerSlider />
+      <ClientsCarousel />
       <WhyWaySection />
       <ResultsSection />
       <PartnersCarousel />
