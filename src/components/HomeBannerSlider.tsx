@@ -54,13 +54,13 @@ const HomeBannerSlider = () => {
             <div className="flex flex-col sm:flex-row gap-3 pt-4">
               <a
                 href="#solucoes"
-                className="inline-flex items-center justify-center px-6 py-3 text-base font-normal text-primary-foreground bg-primary hover:bg-primary/90 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
+                className="inline-flex items-center justify-center px-6 py-3 text-base font-normal text-primary-foreground bg-primary hover:bg-primary/90 rounded-sm transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
               >
                 Conheça nossas soluções
               </a>
               <a
                 href="#contato"
-                className="inline-flex items-center justify-center px-6 py-3 text-base font-normal text-primary border-2 border-primary bg-transparent hover:bg-primary hover:text-primary-foreground rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
+                className="inline-flex items-center justify-center px-6 py-3 text-base font-normal text-primary border-2 border-primary bg-transparent hover:bg-primary hover:text-primary-foreground rounded-sm transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
               >
                 Fale com um especialista
               </a>

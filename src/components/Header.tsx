@@ -261,14 +261,14 @@ const Header = () => {
             <div className="hidden lg:flex items-center gap-3">
               <Button 
                 variant="outline"
-                className="font-semibold px-6 py-3 rounded-full border-2 border-primary text-primary hover:bg-primary/10 hover:text-[#F3F3F3] transition-all duration-300"
+                className="font-semibold px-6 py-3 border-2 border-primary text-primary hover:bg-primary/10 hover:text-[#F3F3F3] transition-all duration-300"
               >
                 Entrar
               </Button>
               
               <Button 
                 onClick={() => handleNavClick(navItems.find(item => item.id === "contato")!)}
-                className="relative bg-gradient-to-r from-primary via-yellow-500 to-primary text-gray-900 hover:shadow-2xl font-bold px-6 py-3 rounded-full transition-all duration-300 overflow-hidden group hover:scale-105"
+                className="relative bg-gradient-to-r from-primary via-yellow-500 to-primary text-gray-900 hover:shadow-2xl font-bold px-6 py-3 transition-all duration-300 overflow-hidden group hover:scale-105"
               >
                 {/* Animated shine effect */}
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
@@ -279,7 +279,7 @@ const Header = () => {
                 </span>
 
                 {/* Pulse ring */}
-                <div className="absolute inset-0 rounded-full border-2 border-primary/50 animate-ping opacity-20" />
+                <div className="absolute inset-0 border-2 border-primary/50 animate-ping opacity-20" />
               </Button>
             </div>
 

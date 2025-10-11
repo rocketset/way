@@ -143,7 +143,7 @@ const CasesSection = () => {
 
                         {/* CTA Button */}
                         <div className="relative">
-                          <button className={`w-full flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r ${gradient} text-white font-bold rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105 overflow-hidden group/btn`}>
+                          <button className={`w-full flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r ${gradient} text-white font-bold rounded-sm shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105 overflow-hidden group/btn`}>
                             {/* Shine effect */}
                             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700" />
                             
@@ -184,7 +184,7 @@ const CasesSection = () => {
         <div className="text-center mt-20 animate-fade-in" style={{ animationDelay: '0.8s' }}>
           <Button 
             onClick={() => navigate('/cases')}
-            className="bg-gray-900 text-white hover:bg-gray-800 px-10 py-6 text-lg font-bold rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 group"
+            className="bg-gray-900 text-white hover:bg-gray-800 px-10 py-6 text-lg font-bold shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 group"
           >
             <span>VER TODOS OS CASES</span>
             <ExternalLink className="w-5 h-5 ml-2 group-hover:rotate-45 transition-transform duration-300" />
