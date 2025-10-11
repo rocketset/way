@@ -1,6 +1,12 @@
-import logoWay from "@/assets/logo-way.png";
+import { useTheme } from "@/contexts/ThemeContext";
+import logoWayLight from "@/assets/logo-way-light.png";
+import logoWayDark from "@/assets/logo-way-dark.png";
 import heroBanner from "@/assets/hero-banner.png";
+
 const Footer = () => {
+  const { actualTheme } = useTheme();
+  const logoWay = actualTheme === 'dark' ? logoWayDark : logoWayLight;
+  
   return <footer className="bg-background border-t border-border">
       {/* Banner Section */}
       

@@ -1,8 +1,12 @@
 import { useState, useEffect } from "react";
 import { ChevronDown } from "lucide-react";
-import logoWay from "@/assets/logo-way.png";
+import { useTheme } from "@/contexts/ThemeContext";
+import logoWayLight from "@/assets/logo-way-light.png";
+import logoWayDark from "@/assets/logo-way-dark.png";
 
 const HeroSection = () => {
+  const { actualTheme } = useTheme();
+  const logoWay = actualTheme === 'dark' ? logoWayDark : logoWayLight;
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
 

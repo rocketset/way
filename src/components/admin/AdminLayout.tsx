@@ -47,7 +47,9 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
-import logoWay from '@/assets/logo-way.png';
+import { useTheme } from '@/contexts/ThemeContext';
+import logoWayLight from '@/assets/logo-way-light.png';
+import logoWayDark from '@/assets/logo-way-dark.png';
 import { ThemeSelector } from './ThemeSelector';
 
 // Definição dos itens do menu lateral com permissões
@@ -586,6 +588,8 @@ function MobileSidebar() {
 // Layout principal que envolve todas as páginas admin
 export default function AdminLayout() {
   const { user, loading, viewMode, setViewMode, signOut } = useAuth();
+  const { actualTheme } = useTheme();
+  const logoWay = actualTheme === 'dark' ? logoWayDark : logoWayLight;
   const navigate = useNavigate();
   const [notificationCount, setNotificationCount] = useState(1);
   const [searchQuery, setSearchQuery] = useState('');
