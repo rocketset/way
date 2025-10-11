@@ -22,11 +22,11 @@ const HomeBannerSlider = () => {
   return (
     <section id="inicio" className="relative w-full overflow-hidden bg-background">
       {/* Imagem de fundo fixa */}
-      <div className="relative w-full min-h-[500px] sm:min-h-[600px] md:min-h-0 md:aspect-[21/9]">
+      <div className="relative w-full h-[70vh] sm:h-[75vh] md:h-auto md:aspect-[21/9]">
         <img
           src={heroBg}
           alt="Soluções Way E-commerce"
-          className="w-full h-full object-cover object-center"
+          className="w-full h-full object-cover object-[center_30%] md:object-center"
         />
       </div>
 
