@@ -26,6 +26,7 @@ import {
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { Plus, Edit, Trash2, Video, FileText } from 'lucide-react';
+import FileUpload from '@/components/admin/FileUpload';
 
 type AcademyContent = {
   id: string;
@@ -245,8 +246,20 @@ export default function AcademyManage() {
                 />
               </div>
 
+              <FileUpload
+                label="Capa do Material"
+                accept="image/*"
+                currentUrl={formData.capa_url}
+                onUploadComplete={(url) =>
+                  setFormData({ ...formData, capa_url: url })
+                }
+                folder="academy/capas"
+                maxSizeMB={3}
+                helperText="Recomendado: 400x300px, máximo 3MB"
+              />
+
               <div className="space-y-2">
-                <Label htmlFor="capa_url">URL da Capa</Label>
+                <Label htmlFor="capa_url">Ou Cole a URL da Capa</Label>
                 <Input
                   id="capa_url"
                   type="url"
@@ -254,9 +267,6 @@ export default function AcademyManage() {
                   value={formData.capa_url}
                   onChange={(e) => setFormData({ ...formData, capa_url: e.target.value })}
                 />
-                <p className="text-xs text-muted-foreground">
-                  Imagem de capa do material (recomendado: 400x300px)
-                </p>
               </div>
 
               <div className="space-y-2">
@@ -344,8 +354,29 @@ export default function AcademyManage() {
                 </div>
               </div>
 
+              <FileUpload
+                label="Arquivo do Curso/Material"
+                accept={
+                  formData.formato === 'video'
+                    ? 'video/*'
+                    : formData.formato === 'pdf'
+                    ? 'application/pdf'
+                    : formData.formato === 'zip'
+                    ? 'application/zip,.rar'
+                    : '*'
+                }
+                currentUrl={formData.arquivo_url}
+                onUploadComplete={(url) =>
+                  setFormData({ ...formData, arquivo_url: url })
+                }
+                folder="academy/arquivos"
+                maxSizeMB={100}
+                showPreview={formData.formato === 'video'}
+                helperText={`Formato: ${formData.formato.toUpperCase()}, máximo 100MB`}
+              />
+
               <div className="space-y-2">
-                <Label htmlFor="arquivo_url">URL do Arquivo</Label>
+                <Label htmlFor="arquivo_url">Ou Cole a URL do Arquivo</Label>
                 <Input
                   id="arquivo_url"
                   type="url"

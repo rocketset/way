@@ -10,6 +10,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { Save } from 'lucide-react';
+import FileUpload from '@/components/admin/FileUpload';
 
 export default function AcademySettings() {
   const [loading, setLoading] = useState(true);
@@ -101,8 +102,20 @@ export default function AcademySettings() {
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
+            <FileUpload
+              label="Imagem do Banner"
+              accept="image/*"
+              currentUrl={formData.banner_url}
+              onUploadComplete={(url) =>
+                setFormData({ ...formData, banner_url: url })
+              }
+              folder="academy/banners"
+              maxSizeMB={5}
+              helperText="Recomendado: 1920x400px, máximo 5MB"
+            />
+
             <div className="space-y-2">
-              <Label htmlFor="banner_url">URL da Imagem do Banner</Label>
+              <Label htmlFor="banner_url">Ou Cole a URL da Imagem</Label>
               <Input
                 id="banner_url"
                 type="url"
@@ -112,9 +125,6 @@ export default function AcademySettings() {
                 }
                 placeholder="https://exemplo.com/banner.jpg"
               />
-              <p className="text-xs text-muted-foreground">
-                Recomendado: 1920x400px
-              </p>
             </div>
 
             <div className="space-y-2">
