@@ -45,7 +45,7 @@ const WhyChooseSection = () => {
                   
                   <div className="relative">
                     <div className="text-4xl md:text-5xl font-bold text-primary mb-2 group-hover:scale-125 transition-transform duration-500">
-                      {stat.isFlag ? <img src={brazilFlag} alt="Bandeira do Brasil" className="w-20 h-14 mx-auto object-cover rounded-md glow-primary" /> : stat.number}
+                      {stat.isFlag ? <img src={brazilFlag} alt="Bandeira do Brasil" className="w-20 h-14 mx-auto object-cover rounded-md" /> : stat.number}
                     </div>
                     <div className="text-sm md:text-base text-muted-foreground group-hover:text-foreground transition-colors duration-300">
                       {stat.label}
@@ -72,7 +72,7 @@ const WhyChooseSection = () => {
               <div className="absolute top-4 right-4 text-primary text-xl opacity-0 group-hover:opacity-100 plus-rotate transition-all duration-500">+</div>
               
               <div className="relative">
-                <div className="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-xl bg-primary group-hover:scale-110 group-hover:rotate-12 transition-all duration-500 shadow-lg glow-primary">
+                <div className="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-xl bg-primary group-hover:scale-110 group-hover:rotate-12 transition-all duration-500 shadow-lg">
                   <Grid3x3 className="w-8 h-8 text-primary-foreground" />
                 </div>
                 <h3 className="text-xl font-bold mb-4 group-hover:text-primary transition-colors duration-300">Soluções Modulares</h3>
@@ -91,7 +91,7 @@ const WhyChooseSection = () => {
               <div className="absolute top-4 right-4 text-primary text-xl opacity-0 group-hover:opacity-100 plus-rotate transition-all duration-500">+</div>
               
               <div className="relative">
-                <div className="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-xl bg-primary group-hover:scale-110 group-hover:rotate-12 transition-all duration-500 shadow-lg glow-primary">
+                <div className="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-xl bg-primary group-hover:scale-110 group-hover:rotate-12 transition-all duration-500 shadow-lg">
                   <Eye className="w-8 h-8 text-primary-foreground" />
                 </div>
                 <h3 className="text-xl font-bold mb-4 group-hover:text-primary transition-colors duration-300">Transparência</h3>
@@ -110,7 +110,7 @@ const WhyChooseSection = () => {
               <div className="absolute top-4 right-4 text-primary text-xl opacity-0 group-hover:opacity-100 plus-rotate transition-all duration-500">+</div>
               
               <div className="relative">
-                <div className="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-xl bg-primary group-hover:scale-110 group-hover:rotate-12 transition-all duration-500 shadow-lg glow-primary">
+                <div className="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-xl bg-primary group-hover:scale-110 group-hover:rotate-12 transition-all duration-500 shadow-lg">
                   <Headphones className="w-8 h-8 text-primary-foreground" />
                 </div>
                 <h3 className="text-xl font-bold mb-4 group-hover:text-primary transition-colors duration-300">Atendimento</h3>
