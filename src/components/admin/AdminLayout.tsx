@@ -21,8 +21,8 @@ import {
   Shield,
   PenTool,
   GraduationCap,
-  Settings,
   HeadphonesIcon,
+  Bell,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -76,7 +76,6 @@ const menuItems = [
   { icon: ImageIcon, label: 'Mídia', path: '/admin/media', roles: ['administrador', 'gestor_conteudo', 'colunista'] },
   { icon: Mail, label: 'Solicitações', path: '/admin/contacts', roles: ['administrador'] },
   { icon: Users, label: 'Usuários', path: '/admin/users', roles: ['administrador'] },
-  { icon: UserIcon, label: 'Minha Conta', path: '/admin/account', roles: ['administrador', 'gestor_conteudo', 'colunista', 'membro'] },
   { icon: HeadphonesIcon, label: 'Atendimento', path: '/admin/support', roles: ['administrador', 'gestor_conteudo', 'colunista', 'membro'] },
 ];
 
@@ -568,6 +567,7 @@ function MobileSidebar() {
 export default function AdminLayout() {
   const { user, loading, viewMode, setViewMode } = useAuth();
   const navigate = useNavigate();
+  const [hasNotifications, setHasNotifications] = useState(true);
 
   // Protege as rotas - redireciona se não estiver logado
   useEffect(() => {
@@ -602,10 +602,42 @@ export default function AdminLayout() {
 
       {/* Conteúdo Principal */}
       <div className="flex-1 flex flex-col overflow-hidden">
-        {/* Header Mobile */}
-        <header className="md:hidden flex items-center gap-4 border-b p-4 bg-card">
-          <MobileSidebar />
-          <h1 className="text-lg font-semibold">Admin Panel</h1>
+        {/* Header Desktop e Mobile */}
+        <header className="flex items-center justify-between border-b p-4 bg-card">
+          <div className="flex items-center gap-4">
+            <div className="md:hidden">
+              <MobileSidebar />
+            </div>
+            <h1 className="text-lg font-semibold md:hidden">Admin Panel</h1>
+          </div>
+          
+          {/* Ações do Header - Notificações e Conta */}
+          <div className="flex items-center gap-2">
+            {/* Sino de Notificações */}
+            <Button
+              variant="ghost"
+              size="icon"
+              className="relative"
+              onClick={() => {
+                setHasNotifications(false);
+                navigate('/admin/academy');
+              }}
+            >
+              <Bell className="h-5 w-5" />
+              {hasNotifications && (
+                <span className="absolute top-1 right-1 h-2 w-2 bg-red-500 rounded-full" />
+              )}
+            </Button>
+
+            {/* Minha Conta */}
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => navigate('/admin/account')}
+            >
+              <UserIcon className="h-5 w-5" />
+            </Button>
+          </div>
         </header>
 
         {/* Banner de Modo de Visualização */}
