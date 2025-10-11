@@ -120,7 +120,7 @@ const CasesSection = () => {
         <div className="text-center mt-20 animate-fade-in" style={{
         animationDelay: '0.8s'
       }}>
-          <Button onClick={() => navigate('/cases')} className="bg-gray-900 text-white hover:bg-gray-800 px-10 py-6 text-lg font-bold shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 group">
+          <Button onClick={() => navigate('/cases')} className="px-10 py-6 text-lg font-bold shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 group bg-[#1a1a1a] text-[#fbbd02]">
             <span>VER TODOS OS CASES</span>
             <ExternalLink className="w-5 h-5 ml-2 group-hover:rotate-45 transition-transform duration-300" />
           </Button>
