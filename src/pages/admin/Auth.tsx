@@ -84,7 +84,7 @@ export default function Auth() {
           </CardTitle>
           <CardDescription className="text-center">
             {isLogin 
-              ? 'Entre com suas credenciais para acessar o painel administrativo' 
+              ? 'Entre com suas credenciais para acessar o painel' 
               : 'Preencha os dados abaixo para criar sua conta'
             }
           </CardDescription>
