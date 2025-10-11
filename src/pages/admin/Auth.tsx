@@ -9,6 +9,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useAuth } from '@/hooks/useAuth';
 import { Loader2 } from 'lucide-react';
+import logoWay from '@/assets/logo-way.png';
 
 export default function Auth() {
   const [isLogin, setIsLogin] = useState(true); // Controla se está em modo login ou registro
@@ -51,7 +52,14 @@ export default function Auth() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/5 via-background to-secondary/5 p-4">
       <Card className="w-full max-w-md">
-        <CardHeader className="space-y-1">
+        <CardHeader className="space-y-4">
+          <div className="flex justify-center">
+            <img 
+              src={logoWay} 
+              alt="Way+ E-commerce" 
+              className="h-12"
+            />
+          </div>
           <CardTitle className="text-2xl font-bold text-center">
             {isLogin ? 'Login' : 'Criar Conta'}
           </CardTitle>
