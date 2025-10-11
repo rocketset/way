@@ -150,9 +150,10 @@ function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
                 <span>Visualizar como:</span>
               </div>
               <Select
+                open={isRoleSelectOpen}
+                onOpenChange={setIsRoleSelectOpen}
                 value={viewMode || 'real'}
                 onValueChange={(value) => setViewMode(value === 'real' ? null : value as any)}
-                onOpenChange={setIsRoleSelectOpen}
               >
                 <SelectTrigger className="w-full bg-background">
                   <SelectValue />
@@ -332,6 +333,7 @@ function MobileSidebar() {
   const location = useLocation();
   const [openSubmenus, setOpenSubmenus] = useState<string[]>([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [isRoleSelectOpen, setIsRoleSelectOpen] = useState(false);
 
   // Função para renderizar ícone do perfil
   const getRoleIcon = (role: string | null) => {
@@ -410,6 +412,8 @@ function MobileSidebar() {
                   <span>Visualizar como:</span>
                 </div>
                 <Select
+                  open={isRoleSelectOpen}
+                  onOpenChange={setIsRoleSelectOpen}
                   value={viewMode || 'real'}
                   onValueChange={(value) => setViewMode(value === 'real' ? null : value as any)}
                 >

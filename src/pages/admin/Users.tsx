@@ -59,6 +59,7 @@ export default function Users() {
     role: 'membro' as UserRole,
   });
   const [mediaSelectorOpen, setMediaSelectorOpen] = useState(false);
+  const [roleSelectOpen, setRoleSelectOpen] = useState(false);
 
   // Carrega usuários ao montar o componente
   useEffect(() => {
@@ -452,6 +453,8 @@ export default function Users() {
             <div className="space-y-2">
               <Label htmlFor="role">Tipo de Usuário</Label>
               <Select
+                open={roleSelectOpen}
+                onOpenChange={setRoleSelectOpen}
                 value={formData.role}
                 onValueChange={(value: UserRole) => setFormData({ ...formData, role: value })}
               >
