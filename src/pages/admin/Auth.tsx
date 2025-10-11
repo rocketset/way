@@ -9,6 +9,8 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useAuth } from '@/hooks/useAuth';
 import { Loader2 } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
 import logoWay from '@/assets/logo-way.png';
 
 export default function Auth() {
@@ -17,6 +19,7 @@ export default function Auth() {
   const [password, setPassword] = useState('');
   const [nome, setNome] = useState('');
   const [loading, setLoading] = useState(false);
+  const [resetLoading, setResetLoading] = useState(false);
   const { signIn, signUp, user } = useAuth();
   const navigate = useNavigate();
 
@@ -46,6 +49,29 @@ export default function Auth() {
       }
     } finally {
       setLoading(false);
+    }
+  };
+
+  // Função para enviar email de redefinição de senha
+  const handleResetPassword = async () => {
+    if (!email) {
+      toast.error('Por favor, digite seu e-mail primeiro');
+      return;
+    }
+
+    setResetLoading(true);
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/admin/auth`,
+      });
+
+      if (error) throw error;
+
+      toast.success('Email de redefinição enviado! Verifique sua caixa de entrada.');
+    } catch (error: any) {
+      toast.error('Erro ao enviar email: ' + error.message);
+    } finally {
+      setResetLoading(false);
     }
   };
 
@@ -121,6 +147,20 @@ export default function Auth() {
                 isLogin ? 'Entrar' : 'Criar Conta'
               )}
             </Button>
+
+            {/* Link de esqueci senha - apenas no login */}
+            {isLogin && (
+              <div className="text-center text-sm">
+                <button
+                  type="button"
+                  onClick={handleResetPassword}
+                  className="text-muted-foreground hover:text-primary transition-colors"
+                  disabled={loading || resetLoading}
+                >
+                  {resetLoading ? 'Enviando...' : 'Esqueci minha senha'}
+                </button>
+              </div>
+            )}
 
             {/* Botão para alternar entre login e registro */}
             <div className="text-center text-sm">
