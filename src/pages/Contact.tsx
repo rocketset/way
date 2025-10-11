@@ -363,7 +363,7 @@ const Contact = () => {
                 href="https://wa.me/message/5AGVY5WZR56KA1"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex items-center justify-between gap-4 bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-400 hover:from-yellow-500 hover:via-yellow-600 hover:to-yellow-500 text-white rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.03] animate-fade-in"
+                className="group flex items-center justify-between gap-4 bg-gradient-to-r from-[#43E460] via-[#3ACC54] to-[#43E460] hover:from-[#3ACC54] hover:via-[#32B849] hover:to-[#3ACC54] text-white rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.03] animate-fade-in"
                 style={{ animationDelay: '0.2s' }}
               >
                 <div className="flex items-center gap-4">
