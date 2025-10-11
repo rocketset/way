@@ -458,7 +458,7 @@ export default function Users() {
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-popover border shadow-md z-[100] pointer-events-auto">
                   <SelectItem value="administrador">Administrador</SelectItem>
                   <SelectItem value="colunista">Colunista</SelectItem>
                   <SelectItem value="membro">Membro</SelectItem>
