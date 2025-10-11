@@ -80,103 +80,59 @@ const CasesSection = () => {
         </div>
 
         {/* Cases Grid */}
-        <div className="grid md:grid-cols-1 gap-12 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 gap-6 max-w-5xl mx-auto">
           {cases.length === 0 ? (
             <p className="text-center text-gray-500 py-12">
               Nenhum case em destaque no momento.
             </p>
           ) : (
-            cases.map((caseItem, index) => {
-              const isHovered = hoveredCase === index;
-              const gradient = gradients[index % gradients.length];
-              
-              return (
-                <div
-                  key={caseItem.id}
-                  className="group relative animate-fade-in cursor-pointer"
-                  style={{ animationDelay: `${index * 0.2}s` }}
-                  onMouseEnter={() => setHoveredCase(index)}
-                  onMouseLeave={() => setHoveredCase(null)}
-                  onClick={() => navigate(`/cases/${caseItem.id}`)}
-                >
-                  {/* Glow effect */}
-                  <div className={`absolute -inset-2 bg-gradient-to-r ${gradient} rounded-3xl blur-2xl opacity-0 group-hover:opacity-30 transition-all duration-700`} />
-
-                  {/* Main card */}
-                  <div className="relative bg-white rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 border-2 border-gray-100 group-hover:border-transparent">
-                    <div className="grid md:grid-cols-2 gap-0">
-                      {/* Image side */}
-                      <div className="relative h-80 md:h-auto overflow-hidden">
-                        <img
-                          src={caseItem.imagem_url || "/placeholder.svg"}
-                          alt={caseItem.titulo}
-                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                        />
-                        
-                        {/* Gradient overlay */}
-                        <div className={`absolute inset-0 bg-gradient-to-br ${gradient} opacity-20 group-hover:opacity-40 transition-opacity duration-500`} />
-                        
-                        {/* Tag floating */}
-                        {caseItem.categories?.nome && (
-                          <div className="absolute top-6 left-6 animate-fade-in">
-                            <span className="inline-block px-6 py-2 bg-white text-gray-900 font-bold rounded-full shadow-lg transform group-hover:scale-110 transition-all duration-300 uppercase">
-                              {caseItem.categories.nome}
-                            </span>
-                          </div>
-                        )}
-
-                        {/* Animated corner accent */}
-                        <div className={`absolute bottom-0 right-0 w-32 h-32 bg-gradient-to-tl ${gradient} opacity-30 group-hover:opacity-60 transition-all duration-500`} />
-                      </div>
-
-                      {/* Content side */}
-                      <div className="p-10 flex flex-col justify-between">
-                        {/* Brand and description */}
-                        <div className="mb-8">
-                          <h3 className={`text-4xl font-bold mb-4 transition-all duration-300 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:${gradient}`}>
-                            {caseItem.titulo}
-                          </h3>
-                          <p className="text-lg text-gray-600 leading-relaxed group-hover:text-gray-900 transition-colors duration-300">
-                            {caseItem.descricao}
-                          </p>
-                        </div>
-
-                        {/* CTA Button */}
-                        <div className="relative">
-                          <button className={`w-full flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r ${gradient} text-white font-bold rounded-sm shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105 overflow-hidden group/btn`}>
-                            {/* Shine effect */}
-                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700" />
-                            
-                            <span className="relative z-10">Ver caso completo</span>
-                            <ExternalLink className="w-5 h-5 relative z-10 group-hover/btn:rotate-45 transition-transform duration-300" />
-                            
-                            {/* Animated particles */}
-                            {isHovered && (
-                              <>
-                                {[...Array(8)].map((_, i) => (
-                                  <div
-                                    key={`particle-${i}`}
-                                    className="absolute w-1 h-1 bg-white rounded-full animate-ping"
-                                    style={{
-                                      top: `${Math.random() * 100}%`,
-                                      left: `${Math.random() * 100}%`,
-                                      animationDelay: `${i * 0.1}s`,
-                                    }}
-                                  />
-                                ))}
-                              </>
-                            )}
-                          </button>
-                        </div>
-                      </div>
+            cases.map((caseItem, index) => (
+              <div
+                key={caseItem.id}
+                className="group relative animate-fade-in cursor-pointer h-64 rounded-2xl overflow-hidden"
+                style={{ animationDelay: `${index * 0.15}s` }}
+                onMouseEnter={() => setHoveredCase(index)}
+                onMouseLeave={() => setHoveredCase(null)}
+                onClick={() => navigate(`/cases/${caseItem.id}`)}
+              >
+                {/* Background Image */}
+                <img
+                  src={caseItem.imagem_url || "/placeholder.svg"}
+                  alt={caseItem.titulo}
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+                
+                {/* Dark overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20 group-hover:from-black/90 transition-all duration-500" />
+                
+                {/* Content */}
+                <div className="relative h-full flex flex-col justify-between p-8">
+                  {/* Tags */}
+                  {caseItem.categories?.nome && (
+                    <div className="flex gap-2">
+                      <span className="inline-block px-4 py-2 bg-white/90 backdrop-blur-sm text-gray-900 text-sm font-bold rounded-sm shadow-lg uppercase">
+                        {caseItem.categories.nome}
+                      </span>
                     </div>
-
-                    {/* Decorative line */}
-                    <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${gradient}`} />
+                  )}
+                  
+                  {/* Title */}
+                  <div>
+                    <h3 className="text-4xl md:text-5xl font-bold text-white mb-2 group-hover:text-primary transition-colors duration-300">
+                      {caseItem.titulo}
+                    </h3>
+                    <p className="text-white/80 text-lg max-w-2xl">
+                      {caseItem.descricao}
+                    </p>
                   </div>
                 </div>
-              );
-            })
+
+                {/* Hover indicator */}
+                <div className="absolute bottom-8 right-8 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <ExternalLink className="w-8 h-8 text-white" />
+                </div>
+              </div>
+            ))
           )}
         </div>
 
