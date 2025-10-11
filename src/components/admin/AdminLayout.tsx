@@ -46,6 +46,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
+import logoWay from '@/assets/logo-way.png';
 
 // Definição dos itens do menu lateral com permissões
 const menuItems = [
@@ -619,6 +620,16 @@ export default function AdminLayout() {
           {/* Menu Mobile */}
           <div className="md:hidden">
             <MobileSidebar />
+          </div>
+
+          {/* Logo Way */}
+          <div className="flex items-center gap-3">
+            <img 
+              src={logoWay} 
+              alt="Way+ E-commerce" 
+              className="h-8 w-auto cursor-pointer"
+              onClick={() => navigate('/admin')}
+            />
           </div>
 
           {/* Barra de Pesquisa */}
