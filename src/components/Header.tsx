@@ -262,8 +262,9 @@ const Header = () => {
               <Button 
                 variant="outline"
                 className="font-semibold px-6 py-3 border-2 border-primary text-primary hover:bg-primary/10 hover:text-[#F3F3F3] transition-all duration-300"
+                asChild
               >
-                Entrar
+                <Link to="/admin">Entrar</Link>
               </Button>
               
               <Button 
@@ -439,8 +440,9 @@ const Header = () => {
                 <Button
                   variant="outline"
                   className="font-semibold py-6 rounded-xl border-2 border-primary text-primary hover:bg-primary/10 hover:text-[#F3F3F3]"
+                  asChild
                 >
-                  Entrar
+                  <Link to="/admin">Entrar</Link>
                 </Button>
                 
                 <Button
