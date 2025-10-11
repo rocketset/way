@@ -73,10 +73,10 @@ const Header = () => {
   ];
 
   const solutionItems = [
-    { label: "Implantação e Desenvolvimento", path: "/solucoes/implantacao-desenvolvimento" },
-    { label: "Consultorias", path: "/solucoes/consultorias" },
-    { label: "Performance & Marketing", path: "/solucoes/performance-marketing" },
-    { label: "Jornada Way", path: "/solucoes/jornada-way" },
+    { label: "Implantação e Desenvolvimento", path: "/solucoes/implantacao-desenvolvimento", isExternal: false },
+    { label: "Consultorias", path: "https://preview--way.lovable.app/solucoes/consultoria", isExternal: true },
+    { label: "Performance & Marketing", path: "/solucoes/performance-marketing", isExternal: false },
+    { label: "Jornada Way", path: "https://preview--way.lovable.app/solucoes/jornada", isExternal: true },
   ];
 
   const platformItems = [
@@ -181,14 +181,25 @@ const Header = () => {
                         key={solution.label}
                         asChild
                       >
-                        <Link
-                          to={solution.path}
-                          className="flex items-center gap-3 px-4 py-3 cursor-pointer hover:bg-primary/10 transition-all duration-300 rounded-lg group"
-                        >
-                          <span className="font-medium group-hover:text-gray-900 transition-colors duration-300">
-                            {solution.label}
-                          </span>
-                        </Link>
+                        {solution.isExternal ? (
+                          <a
+                            href={solution.path}
+                            className="flex items-center gap-3 px-4 py-3 cursor-pointer hover:bg-primary/10 transition-all duration-300 rounded-lg group"
+                          >
+                            <span className="font-medium group-hover:text-gray-900 transition-colors duration-300">
+                              {solution.label}
+                            </span>
+                          </a>
+                        ) : (
+                          <Link
+                            to={solution.path}
+                            className="flex items-center gap-3 px-4 py-3 cursor-pointer hover:bg-primary/10 transition-all duration-300 rounded-lg group"
+                          >
+                            <span className="font-medium group-hover:text-gray-900 transition-colors duration-300">
+                              {solution.label}
+                            </span>
+                          </Link>
+                        )}
                       </DropdownMenuItem>
                     ))}
                   </DropdownMenuContent>
@@ -384,13 +395,23 @@ const Header = () => {
                 }`}>
                   <div className="flex flex-col gap-2 pl-4">
                     {solutionItems.map((solution) => (
-                      <Link
-                        key={solution.label}
-                        to={solution.path}
-                        className="flex items-center gap-3 px-6 py-3 text-left font-medium rounded-xl transition-all duration-300 bg-background/30 text-foreground hover:bg-primary/5"
-                      >
-                        <span>{solution.label}</span>
-                      </Link>
+                      solution.isExternal ? (
+                        <a
+                          key={solution.label}
+                          href={solution.path}
+                          className="flex items-center gap-3 px-6 py-3 text-left font-medium rounded-xl transition-all duration-300 bg-background/30 text-foreground hover:bg-primary/5"
+                        >
+                          <span>{solution.label}</span>
+                        </a>
+                      ) : (
+                        <Link
+                          key={solution.label}
+                          to={solution.path}
+                          className="flex items-center gap-3 px-6 py-3 text-left font-medium rounded-xl transition-all duration-300 bg-background/30 text-foreground hover:bg-primary/5"
+                        >
+                          <span>{solution.label}</span>
+                        </Link>
+                      )
                     ))}
                   </div>
                 </div>
