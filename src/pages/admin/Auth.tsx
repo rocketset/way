@@ -66,12 +66,12 @@ export default function Auth() {
     setResetLoading(true);
     try {
       const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${window.location.origin}/auth/login`,
+        redirectTo: `${window.location.origin}/auth/reset-password`,
       });
 
       if (error) throw error;
 
-      toast.success('Email de redefinição enviado! Verifique sua caixa de entrada.');
+      toast.success('Email enviado! Verifique sua caixa de entrada e clique no link para redefinir sua senha.');
     } catch (error: any) {
       toast.error('Erro ao enviar email: ' + error.message);
     } finally {

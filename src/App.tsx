@@ -28,6 +28,7 @@ import Journey from "./pages/solutions/Journey";
 
 // Páginas administrativas
 import Auth from "./pages/admin/Auth";
+import ResetPassword from "./pages/admin/ResetPassword";
 import AdminLayout from "./components/admin/AdminLayout";
 import Dashboard from "./pages/admin/Dashboard";
 import BlogPosts from "./pages/admin/blog/Posts";
@@ -84,6 +85,7 @@ const App = () => (
           
           {/* Rota de autenticação (login/registro) */}
           <Route path="/auth/login" element={<Auth />} />
+          <Route path="/auth/reset-password" element={<ResetPassword />} />
           
           {/* Rotas administrativas protegidas */}
           <Route path="/admin" element={<AdminLayout />}>
