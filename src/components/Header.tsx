@@ -9,15 +9,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useTheme } from "@/contexts/ThemeContext";
-import logoWayLight from "@/assets/logo-way-light.png";
-import logoWayDark from "@/assets/logo-way-dark.png";
+import logoWay from "@/assets/logo-way-yellow-simple.png";
 import iconNuvemshop from "@/assets/icon-nuvemshop.svg";
 import iconWordpress from "@/assets/icon-wordpress.svg";
 
 const Header = () => {
   const location = useLocation();
   const { actualTheme, setTheme } = useTheme();
-  const logoWay = actualTheme === 'dark' ? logoWayDark : logoWayLight;
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("inicio");
