@@ -48,6 +48,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import logoWay from '@/assets/logo-way.png';
+import { ThemeSelector } from './ThemeSelector';
 
 // Definição dos itens do menu lateral com permissões
 const menuItems = [
@@ -672,6 +673,9 @@ export default function AdminLayout() {
                 className="pl-10 bg-muted/50 border-none h-9"
               />
             </div>
+            
+            {/* Seletor de Tema */}
+            <ThemeSelector />
             
             {/* Sino de Notificações */}
             <Button
