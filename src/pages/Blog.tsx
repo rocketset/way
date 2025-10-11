@@ -150,7 +150,7 @@ const Blog = () => {
                               <Badge
                                 key={tag}
                                 variant="secondary"
-                                className="bg-primary/10 text-primary border-primary/20 hover:bg-primary/20 transition-colors duration-300"
+                                className="bg-primary/10 text-primary border-primary/20 hover:bg-primary/20 hover:text-foreground transition-colors duration-300"
                               >
                                 {tag}
                               </Badge>
@@ -252,11 +252,11 @@ const Blog = () => {
 
                             {/* Tags */}
                             <div className="flex flex-wrap gap-2 pt-2">
-                              {post.tags.slice(0, 3).map((tag) => (
+                            {post.tags.slice(0, 3).map((tag) => (
                                 <Badge
                                   key={tag}
                                   variant="secondary"
-                                  className="bg-primary/10 text-primary border-primary/20 text-xs"
+                                  className="bg-primary/10 text-primary border-primary/20 text-xs hover:bg-primary/20 hover:text-foreground transition-colors duration-300"
                                 >
                                   {tag}
                                 </Badge>
