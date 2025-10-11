@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLocation, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, ChevronRight, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronRight, ChevronDown, Moon, Sun } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,7 +16,7 @@ import iconWordpress from "@/assets/icon-wordpress.svg";
 
 const Header = () => {
   const location = useLocation();
-  const { actualTheme } = useTheme();
+  const { actualTheme, setTheme } = useTheme();
   const logoWay = actualTheme === 'dark' ? logoWayDark : logoWayLight;
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -263,6 +263,19 @@ const Header = () => {
 
             {/* CTA Buttons */}
             <div className="hidden lg:flex items-center gap-3">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setTheme(actualTheme === 'dark' ? 'light' : 'dark')}
+                className="rounded-full hover:bg-primary/10 transition-all duration-300"
+              >
+                {actualTheme === 'dark' ? (
+                  <Sun className="h-5 w-5 text-primary" />
+                ) : (
+                  <Moon className="h-5 w-5 text-primary" />
+                )}
+              </Button>
+              
               <Button 
                 variant="outline"
                 className="font-semibold px-6 py-3 border-2 border-primary text-primary hover:bg-primary/10 hover:text-[#F3F3F3] transition-all duration-300"
@@ -441,13 +454,28 @@ const Header = () => {
               ))}
               
               <div className="mt-4 flex flex-col gap-3">
-                <Button
-                  variant="outline"
-                  className="font-semibold py-6 rounded-xl border-2 border-primary text-primary hover:bg-primary/10 hover:text-[#F3F3F3]"
-                  asChild
-                >
-                  <Link to="/admin">Entrar</Link>
-                </Button>
+                <div className="flex gap-3">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => setTheme(actualTheme === 'dark' ? 'light' : 'dark')}
+                    className="rounded-full hover:bg-primary/10 transition-all duration-300"
+                  >
+                    {actualTheme === 'dark' ? (
+                      <Sun className="h-5 w-5 text-primary" />
+                    ) : (
+                      <Moon className="h-5 w-5 text-primary" />
+                    )}
+                  </Button>
+                  
+                  <Button
+                    variant="outline"
+                    className="flex-1 font-semibold py-6 rounded-xl border-2 border-primary text-primary hover:bg-primary/10 hover:text-[#F3F3F3]"
+                    asChild
+                  >
+                    <Link to="/admin">Entrar</Link>
+                  </Button>
+                </div>
                 
                 <Button
                   onClick={() => handleNavClick(navItems.find(item => item.id === "contato")!)}
