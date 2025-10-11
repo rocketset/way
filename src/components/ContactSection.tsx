@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Mail, Phone, User, MessageSquare, Send, Sparkles } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Mail, Phone, User, MessageSquare, Send, Sparkles, Briefcase } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
@@ -11,6 +12,7 @@ const contactSchema = z.object({
   nome: z.string().trim().min(2, "Nome muito curto").max(100),
   email: z.string().trim().email("E-mail inválido").max(255),
   telefone: z.string().trim().min(10, "Telefone inválido").max(20),
+  assunto: z.string().min(1, "Selecione um assunto"),
   mensagem: z.string().trim().min(10, "Mensagem muito curta").max(1000),
 });
 
@@ -20,6 +22,7 @@ const ContactSection = () => {
     nome: "",
     email: "",
     telefone: "",
+    assunto: "",
     mensagem: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -37,6 +40,7 @@ const ContactSection = () => {
         email: validatedData.email,
         telefone: validatedData.telefone,
         empresa: null,
+        assunto: validatedData.assunto,
         mensagem: validatedData.mensagem,
       }]);
 
@@ -46,7 +50,7 @@ const ContactSection = () => {
         title: "Mensagem enviada!",
         description: "Em breve entraremos em contato.",
       });
-      setFormData({ nome: "", email: "", telefone: "", mensagem: "" });
+      setFormData({ nome: "", email: "", telefone: "", assunto: "", mensagem: "" });
     } catch (error: any) {
       console.error("Erro ao enviar:", error);
       toast({
@@ -61,6 +65,10 @@ const ContactSection = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSelectChange = (value: string) => {
+    setFormData({ ...formData, assunto: value });
   };
 
   return (
@@ -181,6 +189,33 @@ const ContactSection = () => {
                       required
                       className="pl-12 pr-4 py-6 bg-gray-50 border-2 border-gray-200 focus:border-primary focus:bg-white text-gray-900 rounded-lg transition-all duration-300 hover:border-primary/50"
                     />
+                  </div>
+                </div>
+
+                {/* Assunto Field */}
+                <div className="relative group/field">
+                  <div className={`absolute -inset-0.5 bg-gradient-to-r from-primary/50 to-yellow-400/50 rounded-lg blur opacity-0 ${focusedField === 'assunto' ? 'opacity-30' : ''} group-hover/field:opacity-20 transition-opacity duration-300`} />
+                  <div className="relative">
+                    <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 group-hover/field:text-primary transition-colors duration-300 z-10 pointer-events-none">
+                      <Briefcase className={`w-5 h-5 ${focusedField === 'assunto' ? 'text-primary' : ''}`} />
+                    </div>
+                    <Select 
+                      value={formData.assunto} 
+                      onValueChange={handleSelectChange}
+                      onOpenChange={(open) => setFocusedField(open ? 'assunto' : null)}
+                      required
+                    >
+                      <SelectTrigger className="pl-12 pr-4 py-6 bg-gray-50 border-2 border-gray-200 focus:border-primary focus:bg-white text-gray-900 rounded-lg transition-all duration-300 hover:border-primary/50 h-auto">
+                        <SelectValue placeholder="Assunto" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-white">
+                        <SelectItem value="loja-virtual">Quero fazer uma loja virtual</SelectItem>
+                        <SelectItem value="vender-mais">Quero vender mais pelo meu E-commerce</SelectItem>
+                        <SelectItem value="marketplace">Quero vender em marketplace</SelectItem>
+                        <SelectItem value="parceiro">Quero me tornar um parceiro</SelectItem>
+                        <SelectItem value="sac">Quero falar com o SAC</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
                 </div>
 
