@@ -4,6 +4,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, Outlet, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
+import { supabase } from '@/integrations/supabase/client';
 import {
   LayoutDashboard,
   FileText,
@@ -581,6 +582,26 @@ export default function AdminLayout() {
   const navigate = useNavigate();
   const [notificationCount, setNotificationCount] = useState(1);
   const [searchQuery, setSearchQuery] = useState('');
+  const [profileData, setProfileData] = useState<{ nome: string; avatar_url: string } | null>(null);
+
+  // Busca dados do perfil do usuário
+  useEffect(() => {
+    const fetchProfile = async () => {
+      if (!user) return;
+      
+      const { data } = await supabase
+        .from('profiles')
+        .select('nome, avatar_url')
+        .eq('id', user.id)
+        .single();
+      
+      if (data) {
+        setProfileData(data);
+      }
+    };
+
+    fetchProfile();
+  }, [user]);
 
   // Protege as rotas - redireciona se não estiver logado
   useEffect(() => {
@@ -672,9 +693,9 @@ export default function AdminLayout() {
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="relative h-10 w-10 rounded-full p-0">
                   <Avatar className="h-10 w-10">
-                    <AvatarImage src="" alt="Usuário" />
+                    <AvatarImage src={profileData?.avatar_url || ''} alt={profileData?.nome || 'Usuário'} />
                     <AvatarFallback className="bg-primary text-primary-foreground">
-                      {user?.email?.charAt(0).toUpperCase() || 'U'}
+                      {profileData?.nome?.charAt(0).toUpperCase() || user?.email?.charAt(0).toUpperCase() || 'U'}
                     </AvatarFallback>
                   </Avatar>
                 </Button>
