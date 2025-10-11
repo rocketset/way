@@ -204,6 +204,9 @@ export type Database = {
           id: string
           imagem_url: string | null
           is_featured: boolean | null
+          moderated_at: string | null
+          moderated_by: string | null
+          moderation_status: string | null
           publicado: boolean | null
           titulo: string
         }
@@ -215,6 +218,9 @@ export type Database = {
           id?: string
           imagem_url?: string | null
           is_featured?: boolean | null
+          moderated_at?: string | null
+          moderated_by?: string | null
+          moderation_status?: string | null
           publicado?: boolean | null
           titulo: string
         }
@@ -226,6 +232,9 @@ export type Database = {
           id?: string
           imagem_url?: string | null
           is_featured?: boolean | null
+          moderated_at?: string | null
+          moderated_by?: string | null
+          moderation_status?: string | null
           publicado?: boolean | null
           titulo?: string
         }
@@ -398,6 +407,48 @@ export type Database = {
           original_filename?: string
           user_id?: string | null
           width?: number | null
+        }
+        Relationships: []
+      }
+      notifications: {
+        Row: {
+          avatar_url: string | null
+          created_at: string | null
+          icon: string | null
+          id: string
+          link: string | null
+          message: string
+          read: boolean | null
+          title: string
+          type: string
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string | null
+          icon?: string | null
+          id?: string
+          link?: string | null
+          message: string
+          read?: boolean | null
+          title: string
+          type: string
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string | null
+          icon?: string | null
+          id?: string
+          link?: string | null
+          message?: string
+          read?: boolean | null
+          title?: string
+          type?: string
+          updated_at?: string | null
+          user_id?: string | null
         }
         Relationships: []
       }
@@ -667,6 +718,9 @@ export type Database = {
           featured_image: string | null
           id: string
           is_featured: boolean | null
+          moderated_at: string | null
+          moderated_by: string | null
+          moderation_status: string | null
           publicado: boolean | null
           reading_time: number | null
           scheduled_at: string | null
@@ -686,6 +740,9 @@ export type Database = {
           featured_image?: string | null
           id?: string
           is_featured?: boolean | null
+          moderated_at?: string | null
+          moderated_by?: string | null
+          moderation_status?: string | null
           publicado?: boolean | null
           reading_time?: number | null
           scheduled_at?: string | null
@@ -705,6 +762,9 @@ export type Database = {
           featured_image?: string | null
           id?: string
           is_featured?: boolean | null
+          moderated_at?: string | null
+          moderated_by?: string | null
+          moderation_status?: string | null
           publicado?: boolean | null
           reading_time?: number | null
           scheduled_at?: string | null
