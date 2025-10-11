@@ -148,6 +148,26 @@ const SolutionsSection = () => {
                       <span className="text-sm font-medium text-primary">{solution.badge}</span>
                     </div>
                     
+                    {/* Services tags */}
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {solution.services.map((service, idx) => {
+                        const ServiceIcon = service.icon;
+                        return (
+                          <div
+                            key={idx}
+                            className="flex items-center gap-1.5 bg-card border border-border hover:border-primary/50 px-3 py-1.5 rounded-full hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 hover-lift cursor-pointer group/tag relative overflow-hidden"
+                          >
+                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/10 to-transparent translate-x-[-100%] group-hover/tag:translate-x-[100%] transition-transform duration-500"></div>
+                            <ServiceIcon className="w-3.5 h-3.5 text-primary group-hover/tag:rotate-[360deg] transition-transform duration-500 relative z-10" />
+                            <span className="text-xs font-medium relative z-10">{service.label}</span>
+                            
+                            {/* Mini plus icon on hover */}
+                            <span className="text-primary text-xs opacity-0 group-hover/tag:opacity-100 transition-opacity duration-300 relative z-10">+</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                    
                     {/* Title */}
                     <h3 className="text-3xl font-bold mb-3 text-white group-hover:text-primary transition-all duration-500 group-hover:translate-x-2">
                       {solution.title}
@@ -162,26 +182,6 @@ const SolutionsSection = () => {
                     <p className="text-muted-foreground leading-relaxed text-base mb-6">
                       {solution.description}
                     </p>
-                    
-                    {/* Services tags */}
-                    <div className="flex flex-wrap gap-3 mb-4">
-                      {solution.services.map((service, idx) => {
-                        const ServiceIcon = service.icon;
-                        return (
-                          <div
-                            key={idx}
-                            className="flex items-center gap-2 bg-card border border-border hover:border-primary/50 px-4 py-2 rounded-full hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 hover-lift cursor-pointer group/tag relative overflow-hidden"
-                          >
-                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/10 to-transparent translate-x-[-100%] group-hover/tag:translate-x-[100%] transition-transform duration-500"></div>
-                            <ServiceIcon className="w-4 h-4 text-primary group-hover/tag:rotate-[360deg] transition-transform duration-500 relative z-10" />
-                            <span className="text-sm font-medium relative z-10">{service.label}</span>
-                            
-                            {/* Mini plus icon on hover */}
-                            <span className="text-primary text-xs opacity-0 group-hover/tag:opacity-100 transition-opacity duration-300 relative z-10">+</span>
-                          </div>
-                        );
-                      })}
-                    </div>
                     
                     {/* Interactive arrow indicator */}
                     <div className="flex items-center gap-2 text-primary opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-2 group-hover:translate-y-0">
