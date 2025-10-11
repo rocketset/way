@@ -7,8 +7,9 @@ import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { Mail, Phone, Send, CheckCircle2, Sparkles, MessageSquare, Instagram, Linkedin, Plus, ArrowRight } from "lucide-react";
+import { Mail, Phone, Send, CheckCircle2, Sparkles, MessageSquare, Instagram, Linkedin, Plus, ArrowRight, Briefcase } from "lucide-react";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 const contactSchema = z.object({
   name: z.string().trim().min(2, {
@@ -29,6 +30,9 @@ const contactSchema = z.object({
   company: z.string().trim().max(100, {
     message: "Empresa deve ter no máximo 100 caracteres"
   }).optional(),
+  subject: z.string().min(1, {
+    message: "Selecione um assunto"
+  }),
   message: z.string().trim().min(10, {
     message: "Mensagem deve ter pelo menos 10 caracteres"
   }).max(1000, {
@@ -48,6 +52,7 @@ const Contact = () => {
       email: "",
       phone: "",
       company: "",
+      subject: "",
       message: ""
     }
   });
@@ -67,6 +72,7 @@ const Contact = () => {
         email: data.email,
         telefone: data.phone,
         empresa: data.company || null,
+        assunto: data.subject,
         mensagem: data.message
       }]);
       if (error) throw error;
@@ -218,6 +224,27 @@ const Contact = () => {
                           <FormControl>
                             <Input placeholder="Nome da sua empresa" {...field} className="h-12 transition-all duration-300 focus:scale-[1.01] hover:border-primary/50" />
                           </FormControl>
+                          <FormMessage />
+                        </FormItem>} />
+
+                    <FormField control={form.control} name="subject" render={({
+                    field
+                  }) => <FormItem>
+                          <FormLabel className="text-sm font-semibold">Assunto *</FormLabel>
+                          <Select onValueChange={field.onChange} value={field.value}>
+                            <FormControl>
+                              <SelectTrigger className="h-12 transition-all duration-300 focus:scale-[1.01] hover:border-primary/50">
+                                <SelectValue placeholder="Selecione um assunto" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              <SelectItem value="loja-virtual">Quero fazer uma loja virtual</SelectItem>
+                              <SelectItem value="vender-mais">Quero vender mais pelo meu E-commerce</SelectItem>
+                              <SelectItem value="marketplace">Quero vender em marketplace</SelectItem>
+                              <SelectItem value="parceiro">Quero me tornar um parceiro</SelectItem>
+                              <SelectItem value="sac">Quero falar com o SAC</SelectItem>
+                            </SelectContent>
+                          </Select>
                           <FormMessage />
                         </FormItem>} />
 
