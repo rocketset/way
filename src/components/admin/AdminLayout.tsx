@@ -15,11 +15,23 @@ import {
   ChevronDown,
   ChevronRight,
   Image as ImageIcon,
+  Eye,
+  UserCog,
+  User as UserIcon,
+  Shield,
+  PenTool,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 // Definição dos itens do menu lateral
 const menuItems = [
@@ -52,10 +64,42 @@ const menuItems = [
 
 // Componente da Sidebar com hover expand
 function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
-  const { signOut, user } = useAuth();
+  const { signOut, user, isAdmin, viewMode, setViewMode, effectiveRole } = useAuth();
   const location = useLocation();
   const [isExpanded, setIsExpanded] = useState(false);
   const [openSubmenus, setOpenSubmenus] = useState<string[]>([]);
+
+  // Função para renderizar ícone do perfil
+  const getRoleIcon = (role: string | null) => {
+    switch (role) {
+      case 'administrador':
+        return <Shield className="h-4 w-4" />;
+      case 'colunista':
+        return <PenTool className="h-4 w-4" />;
+      case 'membro':
+        return <UserIcon className="h-4 w-4" />;
+      case 'gestor_conteudo':
+        return <UserCog className="h-4 w-4" />;
+      default:
+        return <Eye className="h-4 w-4" />;
+    }
+  };
+
+  // Função para renderizar label do perfil
+  const getRoleLabel = (role: string | null) => {
+    switch (role) {
+      case 'administrador':
+        return 'Administrador';
+      case 'colunista':
+        return 'Colunista';
+      case 'membro':
+        return 'Membro';
+      case 'gestor_conteudo':
+        return 'Gestor de Conteúdo';
+      default:
+        return 'Visão Real';
+    }
+  };
 
   // Alterna submenu aberto/fechado
   const toggleSubmenu = (path: string) => {
@@ -94,6 +138,71 @@ function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
           </div>
         )}
       </div>
+
+      {/* Seletor de Visualização - Apenas para Admin */}
+      {isAdmin && (
+        <div className="p-3 border-b bg-muted/30">
+          {isExpanded ? (
+            <div className="space-y-2">
+              <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground px-1">
+                <Eye className="h-3.5 w-3.5" />
+                <span>Visualizar como:</span>
+              </div>
+              <Select
+                value={viewMode || 'real'}
+                onValueChange={(value) => setViewMode(value === 'real' ? null : value as any)}
+              >
+                <SelectTrigger className="w-full bg-background">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className="bg-background">
+                  <SelectItem value="real">
+                    <div className="flex items-center gap-2">
+                      {getRoleIcon(null)}
+                      <span>Visão Real (Admin)</span>
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="colunista">
+                    <div className="flex items-center gap-2">
+                      {getRoleIcon('colunista')}
+                      <span>Colunista</span>
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="membro">
+                    <div className="flex items-center gap-2">
+                      {getRoleIcon('membro')}
+                      <span>Membro</span>
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="gestor_conteudo">
+                    <div className="flex items-center gap-2">
+                      {getRoleIcon('gestor_conteudo')}
+                      <span>Gestor de Conteúdo</span>
+                    </div>
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+              {viewMode && (
+                <p className="text-xs text-muted-foreground px-1">
+                  Simulando visão de {getRoleLabel(viewMode).toLowerCase()}
+                </p>
+              )}
+            </div>
+          ) : (
+            <Button
+              variant="ghost"
+              size="icon"
+              className="w-full relative group"
+              onClick={() => setIsExpanded(true)}
+            >
+              {getRoleIcon(viewMode)}
+              <div className="absolute left-full ml-2 px-2 py-1 bg-popover text-popover-foreground rounded-md shadow-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50 text-xs">
+                {viewMode ? `Visualizando: ${getRoleLabel(viewMode)}` : 'Visualizar como...'}
+              </div>
+            </Button>
+          )}
+        </div>
+      )}
 
       {/* Menu de Navegação */}
       <ScrollArea className="flex-1 px-3 py-4">
@@ -217,10 +326,42 @@ function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
 
 // Sidebar Mobile (usa o componente completo dentro de um Sheet)
 function MobileSidebar() {
-  const { signOut, user } = useAuth();
+  const { signOut, user, isAdmin, viewMode, setViewMode } = useAuth();
   const location = useLocation();
   const [openSubmenus, setOpenSubmenus] = useState<string[]>([]);
   const [isOpen, setIsOpen] = useState(false);
+
+  // Função para renderizar ícone do perfil
+  const getRoleIcon = (role: string | null) => {
+    switch (role) {
+      case 'administrador':
+        return <Shield className="h-4 w-4" />;
+      case 'colunista':
+        return <PenTool className="h-4 w-4" />;
+      case 'membro':
+        return <UserIcon className="h-4 w-4" />;
+      case 'gestor_conteudo':
+        return <UserCog className="h-4 w-4" />;
+      default:
+        return <Eye className="h-4 w-4" />;
+    }
+  };
+
+  // Função para renderizar label do perfil
+  const getRoleLabel = (role: string | null) => {
+    switch (role) {
+      case 'administrador':
+        return 'Administrador';
+      case 'colunista':
+        return 'Colunista';
+      case 'membro':
+        return 'Membro';
+      case 'gestor_conteudo':
+        return 'Gestor de Conteúdo';
+      default:
+        return 'Visão Real';
+    }
+  };
 
   const toggleSubmenu = (path: string) => {
     setOpenSubmenus(prev => 
@@ -257,6 +398,57 @@ function MobileSidebar() {
               {user?.email}
             </p>
           </div>
+
+          {/* Seletor de Visualização - Apenas para Admin */}
+          {isAdmin && (
+            <div className="p-4 border-b bg-muted/30">
+              <div className="space-y-2">
+                <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
+                  <Eye className="h-3.5 w-3.5" />
+                  <span>Visualizar como:</span>
+                </div>
+                <Select
+                  value={viewMode || 'real'}
+                  onValueChange={(value) => setViewMode(value === 'real' ? null : value as any)}
+                >
+                  <SelectTrigger className="w-full bg-background">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className="bg-background">
+                    <SelectItem value="real">
+                      <div className="flex items-center gap-2">
+                        {getRoleIcon(null)}
+                        <span>Visão Real (Admin)</span>
+                      </div>
+                    </SelectItem>
+                    <SelectItem value="colunista">
+                      <div className="flex items-center gap-2">
+                        {getRoleIcon('colunista')}
+                        <span>Colunista</span>
+                      </div>
+                    </SelectItem>
+                    <SelectItem value="membro">
+                      <div className="flex items-center gap-2">
+                        {getRoleIcon('membro')}
+                        <span>Membro</span>
+                      </div>
+                    </SelectItem>
+                    <SelectItem value="gestor_conteudo">
+                      <div className="flex items-center gap-2">
+                        {getRoleIcon('gestor_conteudo')}
+                        <span>Gestor de Conteúdo</span>
+                      </div>
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+                {viewMode && (
+                  <p className="text-xs text-muted-foreground">
+                    Simulando visão de {getRoleLabel(viewMode).toLowerCase()}
+                  </p>
+                )}
+              </div>
+            </div>
+          )}
 
           {/* Menu */}
           <ScrollArea className="flex-1 px-3 py-4">
@@ -350,7 +542,7 @@ function MobileSidebar() {
 
 // Layout principal que envolve todas as páginas admin
 export default function AdminLayout() {
-  const { user, loading } = useAuth();
+  const { user, loading, viewMode, setViewMode } = useAuth();
   const navigate = useNavigate();
 
   // Protege as rotas - redireciona se não estiver logado
@@ -391,6 +583,35 @@ export default function AdminLayout() {
           <MobileSidebar />
           <h1 className="text-lg font-semibold">Admin Panel</h1>
         </header>
+
+        {/* Banner de Modo de Visualização */}
+        {viewMode && (
+          <div className="bg-orange-100 dark:bg-orange-950 border-b border-orange-200 dark:border-orange-900 px-6 py-3">
+            <div className="flex items-center gap-2 text-sm">
+              <Eye className="h-4 w-4 text-orange-700 dark:text-orange-300" />
+              <span className="font-medium text-orange-900 dark:text-orange-100">
+                Modo de Visualização Ativo:
+              </span>
+              <span className="text-orange-700 dark:text-orange-300">
+                Você está visualizando como{' '}
+                <strong>
+                  {viewMode === 'administrador' && 'Administrador'}
+                  {viewMode === 'colunista' && 'Colunista'}
+                  {viewMode === 'membro' && 'Membro'}
+                  {viewMode === 'gestor_conteudo' && 'Gestor de Conteúdo'}
+                </strong>
+              </span>
+              <Button
+                variant="outline"
+                size="sm"
+                className="ml-auto text-xs h-7"
+                onClick={() => setViewMode(null)}
+              >
+                Voltar à Visão Real
+              </Button>
+            </div>
+          </div>
+        )}
 
         {/* Área de Conteúdo - renderiza as páginas filhas */}
         <main className="flex-1 overflow-y-auto">

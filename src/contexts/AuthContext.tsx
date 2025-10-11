@@ -18,6 +18,9 @@ interface AuthContextType {
   isColunista: boolean;
   isMembro: boolean;
   isGestorConteudo: boolean;
+  viewMode: UserRole | null;
+  setViewMode: (role: UserRole | null) => void;
+  effectiveRole: UserRole | null;
   signIn: (email: string, password: string) => Promise<{ error: any }>;
   signUp: (email: string, password: string, nome: string) => Promise<{ error: any }>;
   signOut: () => Promise<void>;
@@ -34,7 +37,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isColunista, setIsColunista] = useState(false);
   const [isMembro, setIsMembro] = useState(false);
   const [isGestorConteudo, setIsGestorConteudo] = useState(false);
+  const [viewMode, setViewMode] = useState<UserRole | null>(null);
   const navigate = useNavigate();
+
+  // Role efetivo: viewMode se admin estiver simulando, senão o role real
+  const effectiveRole = (isAdmin && viewMode) ? viewMode : userRole;
 
   // Controle para evitar múltiplas chamadas simultâneas
   const [isCheckingAdmin, setIsCheckingAdmin] = useState(false);
@@ -190,6 +197,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         isColunista,
         isMembro,
         isGestorConteudo,
+        viewMode,
+        setViewMode,
+        effectiveRole,
         signIn,
         signUp,
         signOut,
