@@ -155,7 +155,7 @@ function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
                 <SelectTrigger className="w-full bg-background">
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent className="bg-background">
+                <SelectContent className="bg-popover border shadow-md z-[100] pointer-events-auto">
                   <SelectItem value="real">
                     <div className="flex items-center gap-2">
                       {getRoleIcon(null)}
@@ -414,7 +414,7 @@ function MobileSidebar() {
                   <SelectTrigger className="w-full bg-background">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent className="bg-background">
+                  <SelectContent className="bg-popover border shadow-md z-[100] pointer-events-auto">
                     <SelectItem value="real">
                       <div className="flex items-center gap-2">
                         {getRoleIcon(null)}
