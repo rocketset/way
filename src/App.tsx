@@ -68,9 +68,9 @@ const App = () => (
           
           {/* Rotas de Soluções */}
           <Route path="/solucoes/implantacao-desenvolvimento" element={<Implementation />} />
-          <Route path="/solucoes/consultorias" element={<Consulting />} />
+          <Route path="/solucoes/consultoria" element={<Consulting />} />
           <Route path="/solucoes/performance-marketing" element={<Performance />} />
-          <Route path="/solucoes/jornada-way" element={<Journey />} />
+          <Route path="/solucoes/jornada" element={<Journey />} />
           
           {/* Rota de autenticação (login/registro) */}
           <Route path="/auth/login" element={<Auth />} />
