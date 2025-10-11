@@ -2,11 +2,11 @@ import { useTheme } from "@/contexts/ThemeContext";
 import logoWayLight from "@/assets/logo-way-light.png";
 import logoWayDark from "@/assets/logo-way-dark.png";
 import heroBanner from "@/assets/hero-banner.png";
-
 const Footer = () => {
-  const { actualTheme } = useTheme();
+  const {
+    actualTheme
+  } = useTheme();
   const logoWay = actualTheme === 'dark' ? logoWayDark : logoWayLight;
-  
   return <footer className="bg-background border-t border-border">
       {/* Banner Section */}
       
@@ -50,9 +50,8 @@ const Footer = () => {
 
         <div className="mt-12 pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4">
           <img src={logoWay} alt="Way+" className="h-6" />
-          <p className="text-sm text-muted-foreground">
-            © 2025 Way+ E-commerce. Todos os direitos reservados.
-          </p>
+          <p className="text-sm text-muted-foreground">© 2025 Way
+ E-commerce. Todos os direitos reservados.</p>
         </div>
       </div>
     </footer>;
