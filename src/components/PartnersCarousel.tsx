@@ -62,8 +62,8 @@ const PartnersCarousel = () => {
           {allPartners.map((partner, index) => <div key={`${partner.name}-${index}`} className="flex-shrink-0 w-48 h-28 bg-card rounded-lg border border-border hover:border-primary/50 transition-all duration-500 group cursor-pointer overflow-hidden relative">
 
               {/* Logo container */}
-              <div className="relative h-full flex items-center justify-center p-4 transform group-hover:scale-105 transition-transform duration-500">
-                <img src={partner.logo} alt={partner.name} className="max-w-full max-h-full object-contain filter brightness-90 group-hover:brightness-110 transition-all duration-500" />
+              <div className="relative h-full flex items-center justify-center p-4">
+                <img src={partner.logo} alt={partner.name} className="max-w-full max-h-full object-contain" />
               </div>
 
 
