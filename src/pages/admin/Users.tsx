@@ -33,13 +33,15 @@ import { Plus, Pencil, Trash2, User, Image as ImageIcon } from 'lucide-react';
 import { toast } from 'sonner';
 import { MediaSelector } from '@/components/editor/MediaSelector';
 
+type UserRole = 'administrador' | 'colunista' | 'membro' | 'gestor_conteudo';
+
 interface Profile {
   id: string;
   nome: string;
   email: string;
   avatar_url?: string | null;
   criado_em: string;
-  role?: string;
+  role?: UserRole;
 }
 
 export default function Users() {
@@ -54,7 +56,7 @@ export default function Users() {
     email: '',
     senha: '',
     avatar_url: '',
-    role: 'user' as 'user' | 'admin',
+    role: 'membro' as UserRole,
   });
   const [mediaSelectorOpen, setMediaSelectorOpen] = useState(false);
 
@@ -102,7 +104,7 @@ export default function Users() {
       email: '',
       senha: '',
       avatar_url: '',
-      role: 'user',
+      role: 'membro',
     });
     setDialogOpen(true);
   };
@@ -115,7 +117,7 @@ export default function Users() {
       email: user.email,
       senha: '',
       avatar_url: user.avatar_url || '',
-      role: (user.role as 'user' | 'admin') || 'user',
+      role: user.role || 'membro',
     });
     setDialogOpen(true);
   };
@@ -160,17 +162,16 @@ export default function Users() {
             await supabase
               .from('user_roles')
               .delete()
-              .eq('user_id', editingUser.id)
-              .eq('role', currentRole as 'admin' | 'user');
+              .eq('user_id', editingUser.id);
           }
 
           // Adiciona nova role
           const { error: roleError } = await supabase
             .from('user_roles')
-            .insert({
+            .insert([{
               user_id: editingUser.id,
-              role: formData.role as 'admin' | 'user',
-            });
+              role: formData.role,
+            }]);
           
           if (roleError) throw roleError;
         }
@@ -194,10 +195,10 @@ export default function Users() {
         if (authData.user) {
           await supabase
             .from('user_roles')
-            .insert({
+            .insert([{
               user_id: authData.user.id,
               role: formData.role,
-            });
+            }]);
         }
 
         toast.success('Usuário criado com sucesso!');
@@ -230,10 +231,22 @@ export default function Users() {
 
   // Função auxiliar para obter o badge de role
   const getRoleBadge = (user: Profile) => {
-    if (user.role === 'admin') {
-      return <span className="inline-flex px-2 py-1 rounded-full text-xs bg-purple-100 text-purple-800">Admin</span>;
+    if (!user.role) {
+      return <span className="inline-flex px-2 py-1 rounded-full text-xs bg-gray-100 text-gray-800">Sem papel</span>;
     }
-    return <span className="inline-flex px-2 py-1 rounded-full text-xs bg-gray-100 text-gray-800">Usuário</span>;
+    
+    switch (user.role) {
+      case 'administrador':
+        return <span className="inline-flex px-2 py-1 rounded-full text-xs bg-purple-100 text-purple-800">Administrador</span>;
+      case 'colunista':
+        return <span className="inline-flex px-2 py-1 rounded-full text-xs bg-blue-100 text-blue-800">Colunista</span>;
+      case 'membro':
+        return <span className="inline-flex px-2 py-1 rounded-full text-xs bg-green-100 text-green-800">Membro</span>;
+      case 'gestor_conteudo':
+        return <span className="inline-flex px-2 py-1 rounded-full text-xs bg-orange-100 text-orange-800">Gestor de Conteúdo</span>;
+      default:
+        return <span className="inline-flex px-2 py-1 rounded-full text-xs bg-gray-100 text-gray-800">{user.role}</span>;
+    }
   };
 
   if (loading) {
@@ -418,14 +431,16 @@ export default function Users() {
               <Label htmlFor="role">Tipo de Usuário</Label>
               <Select
                 value={formData.role}
-                onValueChange={(value: 'user' | 'admin') => setFormData({ ...formData, role: value })}
+                onValueChange={(value: UserRole) => setFormData({ ...formData, role: value })}
               >
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="user">Usuário</SelectItem>
-                  <SelectItem value="admin">Administrador</SelectItem>
+                  <SelectItem value="administrador">Administrador</SelectItem>
+                  <SelectItem value="colunista">Colunista</SelectItem>
+                  <SelectItem value="membro">Membro</SelectItem>
+                  <SelectItem value="gestor_conteudo">Gestor de Conteúdo</SelectItem>
                 </SelectContent>
               </Select>
             </div>

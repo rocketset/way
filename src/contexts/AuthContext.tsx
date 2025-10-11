@@ -7,11 +7,17 @@ import { supabase } from '@/integrations/supabase/client';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 
+type UserRole = 'administrador' | 'colunista' | 'membro' | 'gestor_conteudo';
+
 interface AuthContextType {
   user: User | null;
   session: Session | null;
   loading: boolean;
+  userRole: UserRole | null;
   isAdmin: boolean;
+  isColunista: boolean;
+  isMembro: boolean;
+  isGestorConteudo: boolean;
   signIn: (email: string, password: string) => Promise<{ error: any }>;
   signUp: (email: string, password: string, nome: string) => Promise<{ error: any }>;
   signOut: () => Promise<void>;
@@ -23,15 +29,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
+  const [userRole, setUserRole] = useState<UserRole | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isColunista, setIsColunista] = useState(false);
+  const [isMembro, setIsMembro] = useState(false);
+  const [isGestorConteudo, setIsGestorConteudo] = useState(false);
   const navigate = useNavigate();
 
   // Controle para evitar múltiplas chamadas simultâneas
   const [isCheckingAdmin, setIsCheckingAdmin] = useState(false);
   const [lastCheckedUserId, setLastCheckedUserId] = useState<string | null>(null);
 
-  // Função para verificar se usuário tem papel de admin
-  const checkIfAdmin = async (userId: string) => {
+  // Função para verificar role do usuário
+  const checkUserRole = async (userId: string) => {
     // Evita chamadas duplicadas para o mesmo usuário
     if (isCheckingAdmin || lastCheckedUserId === userId) {
       return;
@@ -45,19 +55,31 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         .from('user_roles')
         .select('role')
         .eq('user_id', userId)
-        .eq('role', 'admin')
         .maybeSingle();
 
       if (error) {
         console.error('Erro ao verificar role do usuário:', error);
+        setUserRole(null);
         setIsAdmin(false);
+        setIsColunista(false);
+        setIsMembro(false);
+        setIsGestorConteudo(false);
         return;
       }
 
-      setIsAdmin(!!data);
+      const role = data?.role as UserRole | null;
+      setUserRole(role);
+      setIsAdmin(role === 'administrador');
+      setIsColunista(role === 'colunista');
+      setIsMembro(role === 'membro');
+      setIsGestorConteudo(role === 'gestor_conteudo');
     } catch (error) {
       console.error('Erro ao verificar role:', error);
+      setUserRole(null);
       setIsAdmin(false);
+      setIsColunista(false);
+      setIsMembro(false);
+      setIsGestorConteudo(false);
     } finally {
       setIsCheckingAdmin(false);
     }
@@ -71,13 +93,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setUser(session?.user ?? null);
         setLoading(false);
 
-        // Verifica admin apenas no evento SIGNED_IN
+        // Verifica role apenas no evento SIGNED_IN
         if (event === 'SIGNED_IN' && session?.user) {
           setTimeout(() => {
-            checkIfAdmin(session.user.id);
+            checkUserRole(session.user.id);
           }, 150);
         } else if (!session?.user) {
+          setUserRole(null);
           setIsAdmin(false);
+          setIsColunista(false);
+          setIsMembro(false);
+          setIsGestorConteudo(false);
           setLastCheckedUserId(null);
         }
       }
@@ -90,7 +116,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setLoading(false);
 
       if (session?.user) {
-        checkIfAdmin(session.user.id);
+        checkUserRole(session.user.id);
       }
     });
 
@@ -159,7 +185,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         user,
         session,
         loading,
+        userRole,
         isAdmin,
+        isColunista,
+        isMembro,
+        isGestorConteudo,
         signIn,
         signUp,
         signOut,
