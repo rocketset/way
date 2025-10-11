@@ -35,13 +35,21 @@ type AcademyContent = {
   formato: 'video' | 'documento' | 'pdf' | 'zip';
   duracao: string | null;
   arquivo_url: string | null;
+  capa_url: string | null;
+  categoria_id: string | null;
   ordem: number;
   publicado: boolean;
+};
+
+type AcademyCategory = {
+  id: string;
+  nome: string;
 };
 
 export default function AcademyManage() {
   const navigate = useNavigate();
   const [contents, setContents] = useState<AcademyContent[]>([]);
+  const [categories, setCategories] = useState<AcademyCategory[]>([]);
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -52,12 +60,15 @@ export default function AcademyManage() {
     formato: 'video' as 'video' | 'documento' | 'pdf' | 'zip',
     duracao: '',
     arquivo_url: '',
+    capa_url: '',
+    categoria_id: '',
     ordem: 0,
     publicado: false,
   });
 
   useEffect(() => {
     fetchContents();
+    fetchCategories();
   }, []);
 
   const fetchContents = async () => {
@@ -74,6 +85,21 @@ export default function AcademyManage() {
       toast.error('Erro ao carregar conteúdos');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchCategories = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('academy_categories')
+        .select('id, nome')
+        .eq('ativo', true)
+        .order('ordem', { ascending: true });
+
+      if (error) throw error;
+      setCategories((data || []) as AcademyCategory[]);
+    } catch (error: any) {
+      console.error('Erro ao carregar categorias:', error);
     }
   };
 
@@ -119,6 +145,8 @@ export default function AcademyManage() {
       formato: content.formato,
       duracao: content.duracao || '',
       arquivo_url: content.arquivo_url || '',
+      capa_url: content.capa_url || '',
+      categoria_id: content.categoria_id || '',
       ordem: content.ordem,
       publicado: content.publicado,
     });
@@ -151,6 +179,8 @@ export default function AcademyManage() {
       formato: 'video',
       duracao: '',
       arquivo_url: '',
+      capa_url: '',
+      categoria_id: '',
       ordem: 0,
       publicado: false,
     });
@@ -213,6 +243,41 @@ export default function AcademyManage() {
                   rows={3}
                   required
                 />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="capa_url">URL da Capa</Label>
+                <Input
+                  id="capa_url"
+                  type="url"
+                  placeholder="https://exemplo.com/capa.jpg"
+                  value={formData.capa_url}
+                  onChange={(e) => setFormData({ ...formData, capa_url: e.target.value })}
+                />
+                <p className="text-xs text-muted-foreground">
+                  Imagem de capa do material (recomendado: 400x300px)
+                </p>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="categoria">Categoria</Label>
+                <Select
+                  value={formData.categoria_id}
+                  onValueChange={(value) =>
+                    setFormData({ ...formData, categoria_id: value })
+                  }
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Selecione uma categoria" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {categories.map((cat) => (
+                      <SelectItem key={cat.id} value={cat.id}>
+                        {cat.nome}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
 
               <div className="grid grid-cols-2 gap-4">

@@ -14,11 +14,43 @@ export type Database = {
   }
   public: {
     Tables: {
+      academy_categories: {
+        Row: {
+          ativo: boolean | null
+          atualizado_em: string
+          criado_em: string
+          descricao: string | null
+          id: string
+          nome: string
+          ordem: number | null
+        }
+        Insert: {
+          ativo?: boolean | null
+          atualizado_em?: string
+          criado_em?: string
+          descricao?: string | null
+          id?: string
+          nome: string
+          ordem?: number | null
+        }
+        Update: {
+          ativo?: boolean | null
+          atualizado_em?: string
+          criado_em?: string
+          descricao?: string | null
+          id?: string
+          nome?: string
+          ordem?: number | null
+        }
+        Relationships: []
+      }
       academy_content: {
         Row: {
           arquivo_url: string | null
           atualizado_em: string
           autor_id: string | null
+          capa_url: string | null
+          categoria_id: string | null
           criado_em: string
           descricao: string
           duracao: string | null
@@ -33,6 +65,8 @@ export type Database = {
           arquivo_url?: string | null
           atualizado_em?: string
           autor_id?: string | null
+          capa_url?: string | null
+          categoria_id?: string | null
           criado_em?: string
           descricao: string
           duracao?: string | null
@@ -47,6 +81,8 @@ export type Database = {
           arquivo_url?: string | null
           atualizado_em?: string
           autor_id?: string | null
+          capa_url?: string | null
+          categoria_id?: string | null
           criado_em?: string
           descricao?: string
           duracao?: string | null
@@ -56,6 +92,38 @@ export type Database = {
           publicado?: boolean | null
           tipo?: string
           titulo?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "academy_content_categoria_id_fkey"
+            columns: ["categoria_id"]
+            isOneToOne: false
+            referencedRelation: "academy_categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      academy_settings: {
+        Row: {
+          atualizado_em: string
+          banner_descricao: string | null
+          banner_titulo: string | null
+          banner_url: string | null
+          id: string
+        }
+        Insert: {
+          atualizado_em?: string
+          banner_descricao?: string | null
+          banner_titulo?: string | null
+          banner_url?: string | null
+          id?: string
+        }
+        Update: {
+          atualizado_em?: string
+          banner_descricao?: string | null
+          banner_titulo?: string | null
+          banner_url?: string | null
+          id?: string
         }
         Relationships: []
       }

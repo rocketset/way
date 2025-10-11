@@ -1,32 +1,52 @@
 // Página Way Academy
-// Seção de cursos e materiais sobre E-commerce
+// Seção de cursos e materiais sobre E-commerce com categorias e banner
 // Visível para: membros, gestor_conteudo e administrador
 
 import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { GraduationCap, BookOpen, Video, FileText, Download } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
-import { toast } from 'sonner';
+import { Video, FileText, Download } from 'lucide-react';
 
 type AcademyContent = {
   id: string;
   titulo: string;
   descricao: string;
-  tipo: 'curso' | 'material';
-  formato: 'video' | 'documento' | 'pdf' | 'zip';
+  tipo: string;
+  formato: string;
   duracao: string | null;
   arquivo_url: string | null;
+  capa_url: string | null;
+  categoria_id: string | null;
+  publicado: boolean;
+};
+
+type AcademyCategory = {
+  id: string;
+  nome: string;
+  descricao: string | null;
+};
+
+type BannerSettings = {
+  banner_url: string | null;
+  banner_titulo: string | null;
+  banner_descricao: string | null;
 };
 
 export default function Academy() {
-  const [courses, setCourses] = useState<AcademyContent[]>([]);
-  const [materials, setMaterials] = useState<AcademyContent[]>([]);
+  const [contents, setContents] = useState<AcademyContent[]>([]);
+  const [categories, setCategories] = useState<AcademyCategory[]>([]);
+  const [banner, setBanner] = useState<BannerSettings | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchContents();
+    fetchData();
   }, []);
+
+  const fetchData = async () => {
+    await Promise.all([fetchContents(), fetchCategories(), fetchBanner()]);
+    setLoading(false);
+  };
 
   const fetchContents = async () => {
     try {
@@ -37,38 +57,47 @@ export default function Academy() {
         .order('ordem', { ascending: true });
 
       if (error) throw error;
-
-      const coursesData = (data?.filter((item) => item.tipo === 'curso') || []) as AcademyContent[];
-      const materialsData = (data?.filter((item) => item.tipo === 'material') || []) as AcademyContent[];
-
-      setCourses(coursesData);
-      setMaterials(materialsData);
+      setContents((data || []) as AcademyContent[]);
     } catch (error: any) {
       console.error('Erro ao carregar conteúdos:', error);
-      toast.error('Erro ao carregar conteúdos');
-    } finally {
-      setLoading(false);
     }
   };
 
-  const getIcon = (formato: string) => {
-    switch (formato) {
-      case 'video':
-        return Video;
-      case 'documento':
-      case 'pdf':
-      case 'zip':
-      default:
-        return FileText;
+  const fetchCategories = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('academy_categories')
+        .select('*')
+        .eq('ativo', true)
+        .order('ordem', { ascending: true });
+
+      if (error) throw error;
+      setCategories((data || []) as AcademyCategory[]);
+    } catch (error: any) {
+      console.error('Erro ao carregar categorias:', error);
     }
   };
 
-  const handleAccessContent = (url: string | null) => {
-    if (url) {
-      window.open(url, '_blank');
-    } else {
-      toast.info('URL do conteúdo não disponível');
+  const fetchBanner = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('academy_settings')
+        .select('banner_url, banner_titulo, banner_descricao')
+        .single();
+
+      if (error) throw error;
+      setBanner(data);
+    } catch (error: any) {
+      console.error('Erro ao carregar banner:', error);
     }
+  };
+
+  const getContentsByCategory = (categoryId: string) => {
+    return contents.filter((content) => content.categoria_id === categoryId);
+  };
+
+  const getContentsWithoutCategory = () => {
+    return contents.filter((content) => !content.categoria_id);
   };
 
   if (loading) {
@@ -84,141 +113,174 @@ export default function Academy() {
 
   return (
     <div className="space-y-6">
-      {/* Cabeçalho */}
-      <div className="flex items-center gap-3">
-        <div className="p-3 bg-primary/10 rounded-lg">
-          <GraduationCap className="h-8 w-8 text-primary" />
+      {/* Banner */}
+      {banner && banner.banner_url && (
+        <div
+          className="relative h-[300px] rounded-lg overflow-hidden bg-cover bg-center"
+          style={{ backgroundImage: `url(${banner.banner_url})` }}
+        >
+          <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/30 flex items-center">
+            <div className="container mx-auto px-6">
+              <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+                {banner.banner_titulo || 'Way Academy'}
+              </h1>
+              <p className="text-xl text-white/90 max-w-2xl">
+                {banner.banner_descricao ||
+                  'Desenvolva suas habilidades com nossos cursos e materiais exclusivos'}
+              </p>
+            </div>
+          </div>
         </div>
+      )}
+
+      {!banner?.banner_url && (
         <div>
           <h1 className="text-3xl font-bold">Way Academy</h1>
-          <p className="text-muted-foreground mt-1">
-            Cursos e materiais exclusivos sobre E-commerce
+          <p className="text-muted-foreground mt-2">
+            Acesse nossos cursos e materiais exclusivos para desenvolvimento profissional
           </p>
         </div>
-      </div>
+      )}
 
-      {/* Seção de Cursos */}
-      {courses.length > 0 && (
-        <div className="space-y-4">
-          <div className="flex items-center gap-2">
-            <BookOpen className="h-5 w-5 text-primary" />
-            <h2 className="text-2xl font-semibold">Cursos Disponíveis</h2>
-          </div>
+      {/* Conteúdos por categoria */}
+      {categories.map((category) => {
+        const categoryContents = getContentsByCategory(category.id);
+        if (categoryContents.length === 0) return null;
 
-          <div className="grid gap-4 md:grid-cols-2">
-            {courses.map((course) => {
-              const Icon = getIcon(course.formato);
-              return (
-                <Card key={course.id} className="hover:shadow-lg transition-shadow">
+        return (
+          <div key={category.id} className="space-y-4">
+            <div>
+              <h2 className="text-2xl font-bold">{category.nome}</h2>
+              {category.descricao && (
+                <p className="text-muted-foreground mt-1">{category.descricao}</p>
+              )}
+            </div>
+
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {categoryContents.map((content) => (
+                <Card key={content.id} className="hover:shadow-lg transition-shadow overflow-hidden">
+                  {content.capa_url && (
+                    <div className="relative h-48 overflow-hidden">
+                      <img
+                        src={content.capa_url}
+                        alt={content.titulo}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  )}
                   <CardHeader>
                     <div className="flex items-start justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className="p-2 bg-primary/10 rounded-lg">
-                          <Icon className="h-5 w-5 text-primary" />
-                        </div>
-                        <div>
-                          <CardTitle className="text-lg">{course.titulo}</CardTitle>
-                          {course.duracao && (
-                            <p className="text-sm text-muted-foreground mt-1">
-                              {course.duracao}
-                            </p>
-                          )}
-                        </div>
+                      <div className="p-2 bg-primary/10 rounded-lg">
+                        {content.formato === 'video' ? (
+                          <Video className="h-5 w-5 text-primary" />
+                        ) : (
+                          <FileText className="h-5 w-5 text-primary" />
+                        )}
                       </div>
+                      <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded">
+                        {content.tipo}
+                      </span>
                     </div>
+                    <CardTitle className="mt-4">{content.titulo}</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm text-muted-foreground mb-4">
-                      {course.descricao}
+                      {content.descricao}
                     </p>
-                    <Button
-                      className="w-full"
-                      onClick={() => handleAccessContent(course.arquivo_url)}
-                    >
-                      Acessar Curso
-                    </Button>
+                    <div className="flex items-center justify-between">
+                      {content.duracao && (
+                        <span className="text-xs text-muted-foreground">
+                          {content.duracao}
+                        </span>
+                      )}
+                      {content.arquivo_url && (
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => window.open(content.arquivo_url!, '_blank')}
+                        >
+                          <Download className="h-4 w-4 mr-2" />
+                          Acessar
+                        </Button>
+                      )}
+                    </div>
                   </CardContent>
                 </Card>
-              );
-            })}
+              ))}
+            </div>
           </div>
-        </div>
-      )}
+        );
+      })}
 
-      {/* Seção de Materiais */}
-      {materials.length > 0 && (
+      {/* Conteúdos sem categoria */}
+      {getContentsWithoutCategory().length > 0 && (
         <div className="space-y-4">
-          <div className="flex items-center gap-2">
-            <Download className="h-5 w-5 text-primary" />
-            <h2 className="text-2xl font-semibold">Materiais para Download</h2>
-          </div>
+          <h2 className="text-2xl font-bold">Outros Conteúdos</h2>
 
-          <Card>
-            <CardContent className="p-6">
-              <div className="space-y-3">
-                {materials.map((material) => (
-                  <div
-                    key={material.id}
-                    className="flex items-center justify-between p-4 border rounded-lg hover:bg-accent transition-colors"
-                  >
-                    <div className="flex items-center gap-3">
-                      <FileText className="h-5 w-5 text-primary" />
-                      <div>
-                        <h3 className="font-medium">{material.titulo}</h3>
-                        <p className="text-sm text-muted-foreground">
-                          {material.descricao}
-                        </p>
-                      </div>
-                    </div>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => handleAccessContent(material.arquivo_url)}
-                    >
-                      <Download className="h-4 w-4 mr-2" />
-                      Baixar {material.formato.toUpperCase()}
-                    </Button>
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {getContentsWithoutCategory().map((content) => (
+              <Card key={content.id} className="hover:shadow-lg transition-shadow overflow-hidden">
+                {content.capa_url && (
+                  <div className="relative h-48 overflow-hidden">
+                    <img
+                      src={content.capa_url}
+                      alt={content.titulo}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
+                )}
+                <CardHeader>
+                  <div className="flex items-start justify-between">
+                    <div className="p-2 bg-primary/10 rounded-lg">
+                      {content.formato === 'video' ? (
+                        <Video className="h-5 w-5 text-primary" />
+                      ) : (
+                        <FileText className="h-5 w-5 text-primary" />
+                      )}
+                    </div>
+                    <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded">
+                      {content.tipo}
+                    </span>
+                  </div>
+                  <CardTitle className="mt-4">{content.titulo}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    {content.descricao}
+                  </p>
+                  <div className="flex items-center justify-between">
+                    {content.duracao && (
+                      <span className="text-xs text-muted-foreground">
+                        {content.duracao}
+                      </span>
+                    )}
+                    {content.arquivo_url && (
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => window.open(content.arquivo_url!, '_blank')}
+                      >
+                        <Download className="h-4 w-4 mr-2" />
+                        Acessar
+                      </Button>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
         </div>
       )}
 
-      {/* Mensagem quando não há conteúdos */}
-      {courses.length === 0 && materials.length === 0 && (
+      {contents.length === 0 && (
         <Card>
           <CardContent className="p-12 text-center">
-            <GraduationCap className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
-            <h3 className="text-xl font-semibold mb-2">
-              Nenhum conteúdo disponível
-            </h3>
             <p className="text-muted-foreground">
-              Os cursos e materiais estarão disponíveis em breve.
+              Nenhum conteúdo disponível no momento.
             </p>
           </CardContent>
         </Card>
       )}
-
-      {/* Banner de Suporte */}
-      <Card className="bg-primary/5 border-primary/20">
-        <CardContent className="p-6">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div>
-              <h3 className="text-lg font-semibold mb-2">
-                Precisa de ajuda com algum curso?
-              </h3>
-              <p className="text-muted-foreground">
-                Nossa equipe está pronta para te auxiliar no seu aprendizado
-              </p>
-            </div>
-            <Button>
-              Falar com Suporte
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
     </div>
   );
 }

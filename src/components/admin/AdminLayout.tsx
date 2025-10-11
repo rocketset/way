@@ -63,8 +63,10 @@ const menuItems = [
     path: '/admin/academy',
     roles: ['administrador', 'gestor_conteudo', 'membro'],
     subItems: [
-      { label: 'Cursos e Materiais', path: '/admin/academy' },
-      { label: 'Gerenciar', path: '/admin/academy/manage' },
+      { label: 'Visualizar', path: '/admin/academy' },
+      { label: 'Gerenciar Conteúdos', path: '/admin/academy/manage', roles: ['administrador', 'gestor_conteudo'] },
+      { label: 'Categorias', path: '/admin/academy/categories', roles: ['administrador'] },
+      { label: 'Configurações', path: '/admin/academy/settings', roles: ['administrador'] },
     ]
   },
   { 
