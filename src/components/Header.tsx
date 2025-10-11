@@ -74,9 +74,9 @@ const Header = () => {
 
   const solutionItems = [
     { label: "Implantação e Desenvolvimento", path: "/solucoes/implantacao-desenvolvimento" },
-    { label: "Consultorias", path: "/solucoes/consultoria" },
+    { label: "Consultorias", path: "/solucoes/consultorias" },
     { label: "Performance & Marketing", path: "/solucoes/performance-marketing" },
-    { label: "Jornada Way", path: "/solucoes/jornada" },
+    { label: "Jornada Way", path: "/solucoes/jornada-way" },
   ];
 
   const platformItems = [
