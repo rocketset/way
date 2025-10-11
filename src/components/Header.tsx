@@ -9,15 +9,15 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useTheme } from "@/contexts/ThemeContext";
-import logoWayLight from "@/assets/logo-way-light.png";
-import logoWayDark from "@/assets/logo-way-dark.png";
+import logoWay from "@/assets/logo-way.png";
+import logoWayBlack from "@/assets/logo-way-black.png";
 import iconNuvemshop from "@/assets/icon-nuvemshop.svg";
 import iconWordpress from "@/assets/icon-wordpress.svg";
 
 const Header = () => {
   const location = useLocation();
   const { actualTheme, setTheme } = useTheme();
-  const logoWay = actualTheme === 'dark' ? logoWayDark : logoWayLight;
+  const currentLogo = actualTheme === 'dark' ? logoWayBlack : logoWay;
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("inicio");
@@ -120,7 +120,7 @@ const Header = () => {
               className="flex items-center gap-3 cursor-pointer group"
             >
               <img 
-                src={logoWay} 
+                src={currentLogo} 
                 alt="Way+ E-commerce" 
                 className="h-10 transition-all duration-300 group-hover:scale-110 group-hover:drop-shadow-[0_0_8px_rgba(255,215,0,0.5)]" 
               />
