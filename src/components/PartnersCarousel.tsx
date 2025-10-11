@@ -60,11 +60,6 @@ const PartnersCarousel = () => {
       <div className="relative">
         <div className="flex gap-8 animate-scroll">
           {allPartners.map((partner, index) => <div key={`${partner.name}-${index}`} className="flex-shrink-0 w-48 h-28 bg-card rounded-lg border border-border hover:border-primary/50 transition-all duration-500 group cursor-pointer overflow-hidden relative">
-              {/* Animated background gradient on hover */}
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-yellow-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              
-              {/* Shine effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
 
               {/* Logo container */}
               <div className="relative h-full flex items-center justify-center p-4 transform group-hover:scale-105 transition-transform duration-500">
@@ -72,8 +67,6 @@ const PartnersCarousel = () => {
               </div>
 
 
-              {/* Corner accent */}
-              <div className="absolute top-0 right-0 w-12 h-12 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-bl-full" />
             </div>)}
         </div>
       </div>
