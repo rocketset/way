@@ -42,6 +42,9 @@ import CasesTags from "./pages/admin/cases/Tags";
 import Contacts from "./pages/admin/Contacts";
 import Users from "./pages/admin/Users";
 import MediaLibrary from "./pages/admin/media/MediaLibrary";
+import Academy from "./pages/admin/Academy";
+import Account from "./pages/admin/Account";
+import Support from "./pages/admin/Support";
 
 // Configuração do React Query
 const queryClient = new QueryClient();
@@ -100,6 +103,11 @@ const App = () => (
             {/* Outras rotas admin */}
             <Route path="contacts" element={<Contacts />} />
             <Route path="users" element={<Users />} />
+            
+            {/* Novas seções */}
+            <Route path="academy" element={<Academy />} />
+            <Route path="account" element={<Account />} />
+            <Route path="support" element={<Support />} />
           </Route>
           
           {/* Rota 404 - deve ser sempre a última */}

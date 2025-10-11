@@ -20,6 +20,9 @@ import {
   User as UserIcon,
   Shield,
   PenTool,
+  GraduationCap,
+  Settings,
+  HeadphonesIcon,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -33,13 +36,19 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 
-// Definição dos itens do menu lateral
+// Definição dos itens do menu lateral com permissões
 const menuItems = [
-  { icon: LayoutDashboard, label: 'Dashboard', path: '/admin' },
+  { 
+    icon: LayoutDashboard, 
+    label: 'Dashboard', 
+    path: '/admin',
+    roles: ['administrador', 'gestor_conteudo', 'colunista', 'membro']
+  },
   { 
     icon: FileText, 
     label: 'Blog', 
     path: '/admin/blog/posts',
+    roles: ['administrador', 'gestor_conteudo', 'colunista'],
     subItems: [
       { label: 'Posts', path: '/admin/blog/posts' },
       { label: 'Categorias', path: '/admin/blog/categories' },
@@ -51,20 +60,29 @@ const menuItems = [
     icon: Briefcase, 
     label: 'Cases', 
     path: '/admin/cases/list',
+    roles: ['administrador', 'gestor_conteudo'],
     subItems: [
       { label: 'Lista', path: '/admin/cases/list' },
       { label: 'Categorias', path: '/admin/cases/categories' },
       { label: 'Tags', path: '/admin/cases/tags' },
     ]
   },
-  { icon: ImageIcon, label: 'Mídia', path: '/admin/media' },
-  { icon: Mail, label: 'Solicitações', path: '/admin/contacts' },
-  { icon: Users, label: 'Usuários', path: '/admin/users' },
+  { 
+    icon: GraduationCap, 
+    label: 'Way Academy', 
+    path: '/admin/academy',
+    roles: ['administrador', 'gestor_conteudo', 'membro']
+  },
+  { icon: ImageIcon, label: 'Mídia', path: '/admin/media', roles: ['administrador', 'gestor_conteudo', 'colunista'] },
+  { icon: Mail, label: 'Solicitações', path: '/admin/contacts', roles: ['administrador'] },
+  { icon: Users, label: 'Usuários', path: '/admin/users', roles: ['administrador'] },
+  { icon: Settings, label: 'Minha Conta', path: '/admin/account', roles: ['administrador', 'gestor_conteudo', 'colunista', 'membro'] },
+  { icon: HeadphonesIcon, label: 'Atendimento', path: '/admin/support', roles: ['administrador', 'gestor_conteudo', 'colunista', 'membro'] },
 ];
 
 // Componente da Sidebar com hover expand
 function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
-  const { signOut, user, isAdmin, viewMode, setViewMode, effectiveRole } = useAuth();
+  const { signOut, user, isAdmin, viewMode, setViewMode, effectiveRole, userRole } = useAuth();
   const location = useLocation();
   const [isExpanded, setIsExpanded] = useState(false);
   const [openSubmenus, setOpenSubmenus] = useState<string[]>([]);
@@ -210,7 +228,7 @@ function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
       {/* Menu de Navegação */}
       <ScrollArea className="flex-1 px-3 py-4">
         <nav className="space-y-2">
-          {menuItems.map((item) => {
+          {menuItems.filter(item => item.roles.includes(effectiveRole || 'membro')).map((item) => {
             const Icon = item.icon;
             const isActive = isItemActive(item);
             const hasSubmenu = !!item.subItems;
@@ -329,7 +347,7 @@ function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
 
 // Sidebar Mobile (usa o componente completo dentro de um Sheet)
 function MobileSidebar() {
-  const { signOut, user, isAdmin, viewMode, setViewMode } = useAuth();
+  const { signOut, user, isAdmin, viewMode, setViewMode, effectiveRole } = useAuth();
   const location = useLocation();
   const [openSubmenus, setOpenSubmenus] = useState<string[]>([]);
   const [isOpen, setIsOpen] = useState(false);
@@ -459,7 +477,7 @@ function MobileSidebar() {
           {/* Menu */}
           <ScrollArea className="flex-1 px-3 py-4">
             <nav className="space-y-2">
-              {menuItems.map((item) => {
+              {menuItems.filter(item => item.roles.includes(effectiveRole || 'membro')).map((item) => {
                 const Icon = item.icon;
                 const isActive = isItemActive(item);
                 const hasSubmenu = !!item.subItems;
