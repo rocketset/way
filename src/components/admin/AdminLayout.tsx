@@ -45,6 +45,12 @@ const menuItems = [
     roles: ['administrador', 'gestor_conteudo', 'colunista', 'membro']
   },
   { 
+    icon: GraduationCap, 
+    label: 'Way Academy', 
+    path: '/admin/academy',
+    roles: ['administrador', 'gestor_conteudo', 'membro']
+  },
+  { 
     icon: FileText, 
     label: 'Blog', 
     path: '/admin/blog/posts',
@@ -67,16 +73,10 @@ const menuItems = [
       { label: 'Tags', path: '/admin/cases/tags' },
     ]
   },
-  { 
-    icon: GraduationCap, 
-    label: 'Way Academy', 
-    path: '/admin/academy',
-    roles: ['administrador', 'gestor_conteudo', 'membro']
-  },
   { icon: ImageIcon, label: 'Mídia', path: '/admin/media', roles: ['administrador', 'gestor_conteudo', 'colunista'] },
   { icon: Mail, label: 'Solicitações', path: '/admin/contacts', roles: ['administrador'] },
   { icon: Users, label: 'Usuários', path: '/admin/users', roles: ['administrador'] },
-  { icon: Settings, label: 'Minha Conta', path: '/admin/account', roles: ['administrador', 'gestor_conteudo', 'colunista', 'membro'] },
+  { icon: UserIcon, label: 'Minha Conta', path: '/admin/account', roles: ['administrador', 'gestor_conteudo', 'colunista', 'membro'] },
   { icon: HeadphonesIcon, label: 'Atendimento', path: '/admin/support', roles: ['administrador', 'gestor_conteudo', 'colunista', 'membro'] },
 ];
 
