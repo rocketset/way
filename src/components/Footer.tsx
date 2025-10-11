@@ -51,7 +51,7 @@ const Footer = () => {
         <div className="mt-12 pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4">
           <img src={logoWay} alt="Way+" className="h-6" />
           <p className="text-sm text-muted-foreground">
-            © 2025 Way+. Todos os direitos reservados.
+            © 2025 Way+ E-commerce. Todos os direitos reservados.
           </p>
         </div>
       </div>

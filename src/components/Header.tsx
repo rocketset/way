@@ -121,7 +121,7 @@ const Header = () => {
             >
               <img 
                 src={logoWay} 
-                alt="Way+" 
+                alt="Way+ E-commerce" 
                 className="h-10 transition-all duration-300 group-hover:scale-110 group-hover:drop-shadow-[0_0_8px_rgba(255,215,0,0.5)]" 
               />
             </Link>
