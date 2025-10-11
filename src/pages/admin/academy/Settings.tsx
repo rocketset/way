@@ -31,7 +31,7 @@ export default function AcademySettings() {
       const { data, error } = await supabase
         .from('academy_settings')
         .select('*')
-        .single();
+        .maybeSingle();
 
       if (error) throw error;
       
@@ -42,6 +42,22 @@ export default function AcademySettings() {
           banner_titulo: data.banner_titulo || '',
           banner_descricao: data.banner_descricao || '',
         });
+      } else {
+        // Criar registro inicial se não existir
+        const { data: newData, error: insertError } = await supabase
+          .from('academy_settings')
+          .insert({
+            banner_url: '',
+            banner_titulo: '',
+            banner_descricao: '',
+          })
+          .select()
+          .single();
+        
+        if (insertError) throw insertError;
+        if (newData) {
+          setSettingsId(newData.id);
+        }
       }
     } catch (error: any) {
       console.error('Erro ao carregar configurações:', error);
