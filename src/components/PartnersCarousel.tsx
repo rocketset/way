@@ -59,11 +59,11 @@ const PartnersCarousel = () => {
       {/* Infinite scrolling carousel */}
       <div className="relative">
         <div className="flex gap-8 animate-scroll">
-          {allPartners.map((partner, index) => <div key={`${partner.name}-${index}`} className="flex-shrink-0 w-48 h-28 bg-card rounded-lg border border-border hover:border-primary/50 transition-all duration-500 group cursor-pointer overflow-hidden relative">
+          {allPartners.map((partner, index) => <div key={`${partner.name}-${index}`} className="flex-shrink-0 w-48 h-28 bg-card rounded-lg border border-border hover:border-primary hover:shadow-xl hover:shadow-primary/20 transition-all duration-300 group cursor-pointer overflow-hidden relative hover:scale-110">
 
               {/* Logo container */}
               <div className="relative h-full flex items-center justify-center p-4">
-                <img src={partner.logo} alt={partner.name} className="max-w-full max-h-full object-contain" />
+                <img src={partner.logo} alt={partner.name} className="max-w-full max-h-full object-contain opacity-70 group-hover:opacity-100 transition-opacity duration-300" />
               </div>
 
 

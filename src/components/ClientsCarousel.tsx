@@ -101,8 +101,8 @@ const ClientsCarousel = () => {
         <div className="flex gap-8 animate-scroll-left">
           {allClients.map((client, index) => <div key={`${client.name}-${index}`} className="flex-shrink-0 h-40 flex items-center justify-center group cursor-pointer">
               {/* Logo container */}
-              <div className="relative h-full flex items-center justify-center px-10">
-                <img src={client.logo} alt={client.name} className="max-h-28 w-auto object-contain brightness-0 invert opacity-80 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="relative h-full flex items-center justify-center px-10 transition-all duration-300 group-hover:scale-110">
+                <img src={client.logo} alt={client.name} className="max-h-28 w-auto object-contain brightness-0 invert opacity-60 group-hover:opacity-100 transition-all duration-300 group-hover:drop-shadow-2xl" />
               </div>
             </div>)}
         </div>
