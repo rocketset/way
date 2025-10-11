@@ -687,8 +687,7 @@ export default function AdminLayout() {
               size="icon"
               className="relative"
               onClick={() => {
-                setNotificationCount(0);
-                navigate('/admin/academy');
+                navigate('/admin/notifications');
               }}
             >
               <Bell className="h-5 w-5" />
