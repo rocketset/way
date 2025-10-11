@@ -74,7 +74,7 @@ const Cases = () => {
                     className={`rounded-full transition-all duration-300 ${
                       selectedCategory === category
                         ? "bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg shadow-primary/20"
-                        : "bg-card border-border text-foreground hover:bg-card/80 hover:border-primary"
+                        : "bg-card border-border text-foreground hover:bg-primary/10 hover:border-primary hover:text-foreground"
                     }`}
                   >
                     {category}
@@ -132,7 +132,7 @@ const Cases = () => {
                                 <Badge
                                   key={tag}
                                   variant="secondary"
-                                  className="bg-primary/10 text-primary border-primary/20 hover:bg-primary/20 transition-colors duration-300"
+                                  className="bg-primary/10 text-primary border-primary/20 hover:bg-primary/20 hover:text-foreground transition-colors duration-300"
                                 >
                                   {tag}
                                 </Badge>
@@ -224,7 +224,7 @@ const Cases = () => {
                                   <Badge
                                     key={tag}
                                     variant="secondary"
-                                    className="bg-primary/10 text-primary border-primary/20 text-xs"
+                                    className="bg-primary/10 text-primary border-primary/20 text-xs hover:bg-primary/20 hover:text-foreground transition-colors duration-300"
                                   >
                                     {tag}
                                   </Badge>
