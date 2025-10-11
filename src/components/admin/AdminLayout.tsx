@@ -23,11 +23,13 @@ import {
   GraduationCap,
   HeadphonesIcon,
   Bell,
+  Search,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Input } from '@/components/ui/input';
 import {
   Select,
   SelectContent,
@@ -35,6 +37,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
 
 // Definição dos itens do menu lateral com permissões
 const menuItems = [
@@ -565,9 +576,10 @@ function MobileSidebar() {
 
 // Layout principal que envolve todas as páginas admin
 export default function AdminLayout() {
-  const { user, loading, viewMode, setViewMode } = useAuth();
+  const { user, loading, viewMode, setViewMode, signOut } = useAuth();
   const navigate = useNavigate();
-  const [hasNotifications, setHasNotifications] = useState(true);
+  const [notificationCount, setNotificationCount] = useState(1);
+  const [searchQuery, setSearchQuery] = useState('');
 
   // Protege as rotas - redireciona se não estiver logado
   useEffect(() => {
@@ -603,40 +615,73 @@ export default function AdminLayout() {
       {/* Conteúdo Principal */}
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Header Desktop e Mobile */}
-        <header className="flex items-center justify-between border-b p-4 bg-card">
-          <div className="flex items-center gap-4">
-            <div className="md:hidden">
-              <MobileSidebar />
+        <header className="flex items-center gap-4 border-b px-6 py-3 bg-card">
+          {/* Menu Mobile */}
+          <div className="md:hidden">
+            <MobileSidebar />
+          </div>
+
+          {/* Barra de Pesquisa */}
+          <div className="flex-1 max-w-xl">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                type="text"
+                placeholder="Pesquisar"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-10 bg-muted/50 border-none"
+              />
             </div>
-            <h1 className="text-lg font-semibold md:hidden">Admin Panel</h1>
           </div>
           
           {/* Ações do Header - Notificações e Conta */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             {/* Sino de Notificações */}
             <Button
               variant="ghost"
               size="icon"
               className="relative"
               onClick={() => {
-                setHasNotifications(false);
+                setNotificationCount(0);
                 navigate('/admin/academy');
               }}
             >
               <Bell className="h-5 w-5" />
-              {hasNotifications && (
-                <span className="absolute top-1 right-1 h-2 w-2 bg-red-500 rounded-full" />
+              {notificationCount > 0 && (
+                <Badge 
+                  variant="destructive" 
+                  className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 text-xs"
+                >
+                  {notificationCount}
+                </Badge>
               )}
             </Button>
 
-            {/* Minha Conta */}
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => navigate('/admin/account')}
-            >
-              <UserIcon className="h-5 w-5" />
-            </Button>
+            {/* Dropdown da Conta do Usuário */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="relative h-10 w-10 rounded-full p-0">
+                  <Avatar className="h-10 w-10">
+                    <AvatarImage src="" alt="Usuário" />
+                    <AvatarFallback className="bg-primary text-primary-foreground">
+                      {user?.email?.charAt(0).toUpperCase() || 'U'}
+                    </AvatarFallback>
+                  </Avatar>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-48 bg-popover">
+                <DropdownMenuItem onClick={() => navigate('/admin/account')} className="cursor-pointer">
+                  <UserIcon className="mr-2 h-4 w-4" />
+                  Minha conta
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={signOut} className="cursor-pointer text-red-600">
+                  <LogOut className="mr-2 h-4 w-4" />
+                  Sair
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </header>
 
