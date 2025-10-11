@@ -28,7 +28,7 @@ const WhyChooseSection = () => {
             <div className="inline-flex items-center gap-3 mb-6">
               <span className="text-primary text-3xl plus-rotate inline-block">+</span>
               <h2 className="text-3xl md:text-4xl font-bold">
-                Por que escolher <span className="gradient-text">a Way+?</span>
+                Por que escolher <span className="gradient-text">a Way E-commerce?</span>
               </h2>
               <span className="text-primary text-3xl plus-rotate inline-block">+</span>
             </div>
