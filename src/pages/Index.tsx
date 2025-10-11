@@ -4,7 +4,6 @@ import ClientsCarousel from "@/components/ClientsCarousel";
 import WhyChooseSection from "@/components/WhyChooseSection";
 import SolutionsSection from "@/components/SolutionsSection";
 import PartnersCarousel from "@/components/PartnersCarousel";
-import WhyWaySection from "@/components/WhyWaySection";
 import CasesSection from "@/components/CasesSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import NewsSection from "@/components/NewsSection";
@@ -52,9 +51,6 @@ const Index = () => {
           <SolutionsSection />
         </div>
         <div className="animate-fade-in" style={{ animationDelay: '0.4s' }}>
-          <WhyWaySection />
-        </div>
-        <div className="animate-fade-in" style={{ animationDelay: '0.5s' }}>
           <CasesSection />
         </div>
         <div className="animate-fade-in" style={{ animationDelay: '0.6s' }}>
