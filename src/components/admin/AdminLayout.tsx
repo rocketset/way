@@ -61,7 +61,11 @@ const menuItems = [
     icon: GraduationCap, 
     label: 'Way Academy', 
     path: '/admin/academy',
-    roles: ['administrador', 'gestor_conteudo', 'membro']
+    roles: ['administrador', 'gestor_conteudo', 'membro'],
+    subItems: [
+      { label: 'Cursos e Materiais', path: '/admin/academy' },
+      { label: 'Gerenciar', path: '/admin/academy/manage' },
+    ]
   },
   { 
     icon: FileText, 

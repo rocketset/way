@@ -14,6 +14,51 @@ export type Database = {
   }
   public: {
     Tables: {
+      academy_content: {
+        Row: {
+          arquivo_url: string | null
+          atualizado_em: string
+          autor_id: string | null
+          criado_em: string
+          descricao: string
+          duracao: string | null
+          formato: string
+          id: string
+          ordem: number | null
+          publicado: boolean | null
+          tipo: string
+          titulo: string
+        }
+        Insert: {
+          arquivo_url?: string | null
+          atualizado_em?: string
+          autor_id?: string | null
+          criado_em?: string
+          descricao: string
+          duracao?: string | null
+          formato: string
+          id?: string
+          ordem?: number | null
+          publicado?: boolean | null
+          tipo: string
+          titulo: string
+        }
+        Update: {
+          arquivo_url?: string | null
+          atualizado_em?: string
+          autor_id?: string | null
+          criado_em?: string
+          descricao?: string
+          duracao?: string | null
+          formato?: string
+          id?: string
+          ordem?: number | null
+          publicado?: boolean | null
+          tipo?: string
+          titulo?: string
+        }
+        Relationships: []
+      }
       case_content_blocks: {
         Row: {
           atualizado_em: string
