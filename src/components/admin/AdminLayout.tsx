@@ -68,6 +68,7 @@ function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
   const location = useLocation();
   const [isExpanded, setIsExpanded] = useState(false);
   const [openSubmenus, setOpenSubmenus] = useState<string[]>([]);
+  const [isRoleSelectOpen, setIsRoleSelectOpen] = useState(false);
 
   // Função para renderizar ícone do perfil
   const getRoleIcon = (role: string | null) => {
@@ -125,7 +126,7 @@ function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
         isExpanded ? "w-64" : "w-20"
       )}
       onMouseEnter={() => setIsExpanded(true)}
-      onMouseLeave={() => setIsExpanded(false)}
+      onMouseLeave={() => { if (!isRoleSelectOpen) setIsExpanded(false); }}
     >
       {/* Header da Sidebar */}
       <div className="p-4 border-b h-16 flex items-center justify-center">
@@ -151,6 +152,7 @@ function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
               <Select
                 value={viewMode || 'real'}
                 onValueChange={(value) => setViewMode(value === 'real' ? null : value as any)}
+                onOpenChange={setIsRoleSelectOpen}
               >
                 <SelectTrigger className="w-full bg-background">
                   <SelectValue />
