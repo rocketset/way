@@ -176,9 +176,9 @@ const Contact = () => {
               <Plus className="w-5 h-5 text-primary animate-spin" style={{ animationDuration: "3s", animationDirection: "reverse" }} />
             </div>
             
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-foreground via-primary to-foreground bg-clip-text text-transparent animate-fade-in">
-              Vamos Crescer Juntos?
-            </h1>
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-foreground via-primary to-foreground bg-clip-text text-transparent animate-fade-in">
+                Vamos juntos dar o próximo passo.
+              </h1>
             
             <p className="text-xl text-muted-foreground mb-8 animate-fade-in leading-relaxed">
               Estamos prontos para transformar seu e-commerce em uma máquina de vendas.
