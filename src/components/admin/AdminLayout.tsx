@@ -616,14 +616,14 @@ export default function AdminLayout() {
       {/* Conteúdo Principal */}
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Header Desktop e Mobile */}
-        <header className="flex items-center gap-4 border-b px-6 py-3 bg-card">
-          {/* Menu Mobile */}
-          <div className="md:hidden">
-            <MobileSidebar />
-          </div>
-
-          {/* Logo Way */}
-          <div className="flex items-center gap-3">
+        <header className="flex items-center justify-between gap-4 border-b px-6 py-3 bg-card">
+          {/* Logo Way - Lado Esquerdo */}
+          <div className="flex items-center gap-4">
+            {/* Menu Mobile */}
+            <div className="md:hidden">
+              <MobileSidebar />
+            </div>
+            
             <img 
               src={logoWay} 
               alt="Way+ E-commerce" 
@@ -632,22 +632,20 @@ export default function AdminLayout() {
             />
           </div>
 
-          {/* Barra de Pesquisa */}
-          <div className="flex-1 max-w-xl">
-            <div className="relative">
+          {/* Barra de Pesquisa e Ações - Lado Direito */}
+          <div className="flex items-center gap-3">
+            {/* Barra de Pesquisa - Reduzida */}
+            <div className="relative w-64">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
                 type="text"
                 placeholder="Pesquisar"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 bg-muted/50 border-none"
+                className="pl-10 bg-muted/50 border-none h-9"
               />
             </div>
-          </div>
-          
-          {/* Ações do Header - Notificações e Conta */}
-          <div className="flex items-center gap-3">
+            
             {/* Sino de Notificações */}
             <Button
               variant="ghost"
