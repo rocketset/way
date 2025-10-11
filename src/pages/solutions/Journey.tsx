@@ -191,9 +191,12 @@ const Journey = () => {
                 <span className="text-primary font-semibold">Way.journey - Método exclusivo</span>
               </div>
               
-              <h1 className="text-5xl md:text-7xl font-bold mb-6">
-                Jornada <span className="bg-gradient-to-r from-primary via-primary/80 to-primary bg-clip-text text-transparent">Way</span>
-              </h1>
+              <div className="flex items-center justify-center gap-3 mb-6 flex-wrap">
+                <Rocket className="w-10 h-10 md:w-12 md:h-12 text-primary flex-shrink-0" />
+                <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold">
+                  Jornada <span className="bg-gradient-to-r from-primary via-primary/80 to-primary bg-clip-text text-transparent">Way</span>
+                </h1>
+              </div>
               <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto">
                 Método exclusivo e validado, criado com base em experiências reais em e-commerces
               </p>

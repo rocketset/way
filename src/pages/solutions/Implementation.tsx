@@ -79,17 +79,20 @@ const Implementation = () => {
             <Plus className="absolute top-1/4 left-1/2 w-12 h-12 text-primary animate-[spin_18s_linear_infinite]" />
           </div>
           
-          <div className="container mx-auto px-12 relative z-10">
-            <div className="grid lg:grid-cols-2 gap-16 items-center">
-              <div className="space-y-8 animate-fade-in">
+          <div className="container mx-auto px-4 md:px-12 relative z-10">
+            <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+              <div className="space-y-6 md:space-y-8 animate-fade-in">
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 hover:bg-primary/20 hover:scale-105 transition-all duration-300 cursor-pointer group">
                   <Plus className="w-4 h-4 text-primary group-hover:rotate-90 transition-transform duration-300" />
                   <span className="text-sm font-medium text-primary">Way.tech - Soluções Modulares</span>
                 </div>
                 
-                <h1 className="text-5xl font-bold text-primary leading-tight lg:text-4xl">
-                  Implantação <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">& Desenvolvimento</span>
-                </h1>
+                <div className="flex items-center gap-3 flex-wrap">
+                  <ShoppingCart className="w-10 h-10 md:w-12 md:h-12 text-primary flex-shrink-0" />
+                  <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary leading-tight">
+                    Implantação <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">& Desenvolvimento</span>
+                  </h1>
+                </div>
                 
                 <div className="grid grid-cols-1 gap-4">
                   {servicesList.map((service, index) => <div key={index} className="group flex items-center gap-4 p-4 rounded-xl bg-card border border-border hover:border-primary/50 transition-all duration-300 hover:shadow-xl hover:shadow-primary/10 hover:scale-105 cursor-pointer animate-fade-in relative overflow-hidden" style={{
@@ -125,12 +128,12 @@ const Implementation = () => {
         <section className="py-20 mb-20 relative">
           <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-transparent"></div>
           
-          <div className="container mx-auto px-12 relative z-10">
-            <div className="grid lg:grid-cols-2 gap-12 mb-12">
-              <div className="space-y-6 animate-fade-in">
+          <div className="container mx-auto px-4 md:px-12 relative z-10">
+            <div className="grid lg:grid-cols-2 gap-8 md:gap-12 mb-8 md:mb-12">
+              <div className="space-y-4 md:space-y-6 animate-fade-in">
                 <div className="flex items-start gap-3">
-                  <Plus className="w-8 h-8 text-primary flex-shrink-0 mt-1" />
-                  <h2 className="text-3xl lg:text-4xl font-bold leading-tight">
+                  <Plus className="w-6 h-6 md:w-8 md:h-8 text-primary flex-shrink-0 mt-1" />
+                  <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold leading-tight">
                     É aqui que estruturamos, migramos e desenvolvemos soluções personalizadas para que seu e-commerce nasça forte e já pronto para escalar.
                   </h2>
                 </div>
@@ -171,17 +174,17 @@ const Implementation = () => {
         <section className="py-20" style={{
         backgroundColor: '#F2F2F2'
       }}>
-          <div className="container mx-auto px-12">
-            <div className="max-w-5xl mx-auto space-y-8">
-              {services.map((service, index) => <div key={index} className="group flex gap-8 items-start py-8 border-b border-border/30 last:border-b-0 transition-all duration-500 hover:translate-x-4 animate-fade-in relative" style={{
+          <div className="container mx-auto px-4 md:px-12">
+            <div className="max-w-5xl mx-auto space-y-6 md:space-y-8">
+              {services.map((service, index) => <div key={index} className="group flex flex-col md:flex-row gap-4 md:gap-8 items-start py-6 md:py-8 border-b border-border/30 last:border-b-0 transition-all duration-500 md:hover:translate-x-4 animate-fade-in relative" style={{
               animationDelay: `${index * 0.1}s`
             }} onMouseEnter={() => setHoveredService(index)} onMouseLeave={() => setHoveredService(null)}>
                   {/* Hover background effect */}
                   <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/5 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl -mx-4"></div>
                   
                   {/* Icon */}
-                  <div className={`flex-shrink-0 w-20 h-20 rounded-2xl bg-white flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:shadow-2xl group-hover:shadow-primary/20 group-hover:rotate-3 relative z-10 ${hoveredService === index ? 'shadow-xl shadow-primary/20' : ''}`}>
-                    <service.icon className="w-10 h-10 group-hover:scale-110 transition-transform duration-300" style={{
+                  <div className={`flex-shrink-0 w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-white flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:shadow-2xl group-hover:shadow-primary/20 group-hover:rotate-3 relative z-10 ${hoveredService === index ? 'shadow-xl shadow-primary/20' : ''}`}>
+                    <service.icon className="w-8 h-8 md:w-10 md:h-10 group-hover:scale-110 transition-transform duration-300" style={{
                   color: '#242424'
                 }} />
                   </div>
@@ -190,23 +193,23 @@ const Implementation = () => {
                   <div className="flex-1 pt-1 relative z-10">
                     <div className="flex items-start justify-between gap-4">
                       <div className="flex-1">
-                        <h3 className="text-3xl font-bold mb-4 text-black group-hover:text-primary transition-all duration-500 group-hover:translate-x-2">
+                        <h3 className="text-2xl md:text-3xl font-bold mb-3 md:mb-4 text-black group-hover:text-primary transition-all duration-500 md:group-hover:translate-x-2">
                           {service.title}
                         </h3>
                       </div>
                       
                       {/* Partner Logos - Only for E-commerce */}
-                      {service.hasLogos && <div className="flex flex-wrap gap-2 justify-end max-w-[200px]">
-                          {ecommerceLogos.map((logo, logoIndex) => <img key={logoIndex} src={logo} alt="Partner logo" className="h-8 w-auto object-contain opacity-70 hover:opacity-100 hover:scale-110 transition-all duration-300 cursor-pointer" style={{
+                      {service.hasLogos && <div className="flex flex-wrap gap-2 justify-start md:justify-end max-w-full md:max-w-[200px]">
+                          {ecommerceLogos.map((logo, logoIndex) => <img key={logoIndex} src={logo} alt="Partner logo" className="h-6 md:h-8 w-auto object-contain opacity-70 hover:opacity-100 hover:scale-110 transition-all duration-300 cursor-pointer" style={{
                       animationDelay: `${logoIndex * 0.05}s`
                     }} />)}
                         </div>}
                     </div>
                     
-                    <p className="text-primary font-semibold mb-4 text-lg leading-relaxed">
+                    <p className="text-primary font-semibold mb-3 md:mb-4 text-base md:text-lg leading-relaxed">
                       {service.subtitle}
                     </p>
-                    <p className="text-muted-foreground leading-relaxed text-base">
+                    <p className="text-muted-foreground leading-relaxed text-sm md:text-base">
                       {service.description}
                     </p>
                   </div>
