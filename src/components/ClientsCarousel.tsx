@@ -119,7 +119,7 @@ const ClientsCarousel = () => {
         }
 
         .animate-scroll-left {
-          animation: scroll-left 60s linear infinite;
+          animation: scroll-left 30s linear infinite;
           display: flex;
           width: max-content;
         }
