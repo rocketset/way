@@ -140,6 +140,11 @@ export default function Users() {
       return;
     }
 
+    if (formData.senha && formData.senha.length < 6) {
+      toast.error('A senha deve ter no mínimo 6 caracteres');
+      return;
+    }
+
     try {
       if (editingUser) {
         // Atualiza usuário existente
@@ -153,6 +158,17 @@ export default function Users() {
           .eq('id', editingUser.id);
 
         if (error) throw error;
+
+        // Atualiza senha se fornecida
+        if (formData.senha) {
+          const { error: passwordError } = await supabase.auth.admin.updateUserById(
+            editingUser.id,
+            { password: formData.senha }
+          );
+          
+          if (passwordError) throw passwordError;
+          toast.success('Senha atualizada com sucesso!');
+        }
 
         // Atualiza role se necessário
         const currentRole = editingUser.role;
@@ -185,7 +201,8 @@ export default function Users() {
           options: {
             data: {
               nome: formData.nome,
-            }
+            },
+            emailRedirectTo: `${window.location.origin}/auth/login`,
           }
         });
 
@@ -411,20 +428,25 @@ export default function Users() {
               )}
             </div>
 
-            {/* Campo Senha - apenas para novo usuário */}
-            {!editingUser && (
-              <div className="space-y-2">
-                <Label htmlFor="senha">Senha *</Label>
-                <Input
-                  id="senha"
-                  type="password"
-                  value={formData.senha}
-                  onChange={(e) => setFormData({ ...formData, senha: e.target.value })}
-                  placeholder="Mínimo 6 caracteres"
-                  minLength={6}
-                />
-              </div>
-            )}
+            {/* Campo Senha */}
+            <div className="space-y-2">
+              <Label htmlFor="senha">
+                {editingUser ? 'Nova Senha (opcional)' : 'Senha *'}
+              </Label>
+              <Input
+                id="senha"
+                type="password"
+                value={formData.senha}
+                onChange={(e) => setFormData({ ...formData, senha: e.target.value })}
+                placeholder={editingUser ? 'Deixe em branco para manter a senha atual' : 'Mínimo 6 caracteres'}
+                minLength={6}
+              />
+              {editingUser && (
+                <p className="text-xs text-muted-foreground">
+                  Preencha apenas se deseja alterar a senha do usuário
+                </p>
+              )}
+            </div>
 
             {/* Campo Tipo de Usuário */}
             <div className="space-y-2">
