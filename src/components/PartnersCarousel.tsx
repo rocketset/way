@@ -71,10 +71,6 @@ const PartnersCarousel = () => {
                 <img src={partner.logo} alt={partner.name} className="max-w-full max-h-full object-contain filter brightness-90 group-hover:brightness-110 transition-all duration-500" />
               </div>
 
-              {/* Subtle glow on hover */}
-              <div className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-25 transition-opacity duration-500 pointer-events-none">
-                <div className="absolute inset-0 rounded-lg shadow-[0_0_8px_rgba(255,204,0,0.15)]" />
-              </div>
 
               {/* Corner accent */}
               <div className="absolute top-0 right-0 w-12 h-12 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-bl-full" />

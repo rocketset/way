@@ -138,14 +138,14 @@ const SolutionsSection = () => {
                   {/* Content */}
                   <div className="flex-1 pt-1 relative z-10">
                     {/* Badge */}
-                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 hover:bg-primary/20 hover:scale-105 transition-all duration-300 mb-4 cursor-pointer glow-primary">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 hover:bg-primary/20 hover:scale-105 transition-all duration-300 mb-4 cursor-pointer">
                       <Plus className="w-4 h-4 text-primary plus-rotate" />
                       <span className="text-sm font-medium text-primary">{solution.badge}</span>
                     </div>
                     
                     {/* Title with Icon */}
                     <h3 className="flex items-center gap-3 text-3xl font-bold mb-3 text-white group-hover:text-primary transition-all duration-500 group-hover:translate-x-2">
-                      <div className={`flex-shrink-0 w-10 h-10 rounded-xl bg-white flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:shadow-xl group-hover:shadow-primary/20 glow-primary ${isHovered ? 'shadow-lg shadow-primary/20' : ''}`}>
+                      <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-white flex items-center justify-center transition-all duration-500 group-hover:scale-110">
                         <Icon className="w-5 h-5 transition-transform duration-300" style={{ color: '#242424' }} />
                       </div>
                       {solution.title}
