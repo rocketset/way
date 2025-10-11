@@ -1,3 +1,6 @@
+import { useRef } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import daniel from "@/assets/clients/daniel.png";
 import atacadao from "@/assets/clients/atacadao.png";
 import barauna from "@/assets/clients/barauna.png";
@@ -21,6 +24,18 @@ import rutra from "@/assets/clients/rutra.png";
 import verona from "@/assets/clients/verona.png";
 import verazo from "@/assets/clients/verazo.png";
 const ClientsCarousel = () => {
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  const scroll = (direction: 'left' | 'right') => {
+    if (scrollContainerRef.current) {
+      const scrollAmount = 300;
+      const newScrollLeft = scrollContainerRef.current.scrollLeft + (direction === 'right' ? scrollAmount : -scrollAmount);
+      scrollContainerRef.current.scrollTo({
+        left: newScrollLeft,
+        behavior: 'smooth'
+      });
+    }
+  };
   const clients = [{
     name: "Daniel Carvalho",
     logo: daniel
@@ -92,12 +107,34 @@ const ClientsCarousel = () => {
   // Duplicate clients array for seamless infinite scroll
   const allClients = [...clients, ...clients, ...clients];
   return <section className="relative bg-transparent overflow-hidden py-[7px] w-screen -mx-[50vw] left-[50%] right-[50%]">
+      {/* Navigation buttons */}
+      <Button
+        onClick={() => scroll('left')}
+        variant="outline"
+        size="icon"
+        className="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-background/80 backdrop-blur-sm hover:bg-background shadow-lg"
+      >
+        <ChevronLeft className="h-5 w-5" />
+      </Button>
+      <Button
+        onClick={() => scroll('right')}
+        variant="outline"
+        size="icon"
+        className="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-background/80 backdrop-blur-sm hover:bg-background shadow-lg"
+      >
+        <ChevronRight className="h-5 w-5" />
+      </Button>
+
       {/* Subtle gradient overlays for fade effect */}
       <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
       <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
 
-      {/* Infinite scrolling carousel */}
-      <div className="relative">
+      {/* Scrollable carousel */}
+      <div 
+        ref={scrollContainerRef}
+        className="relative overflow-x-auto scrollbar-hide"
+        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+      >
         <div className="flex gap-8 animate-scroll-left">
           {allClients.map((client, index) => <div key={`${client.name}-${index}`} className="flex-shrink-0 h-40 flex items-center justify-center group cursor-pointer">
               {/* Logo container */}
@@ -109,6 +146,10 @@ const ClientsCarousel = () => {
       </div>
 
       <style>{`
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+
         @keyframes scroll-left {
           0% {
             transform: translateX(0);
@@ -122,6 +163,10 @@ const ClientsCarousel = () => {
           animation: scroll-left 45s linear infinite;
           display: flex;
           width: max-content;
+        }
+
+        .animate-scroll-left:hover {
+          animation-play-state: paused;
         }
 
         @media (prefers-reduced-motion: reduce) {
