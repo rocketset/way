@@ -52,14 +52,7 @@ export default function Auth() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/5 via-background to-secondary/5 p-4">
       <Card className="w-full max-w-md">
-        <CardHeader className="space-y-4">
-          <div className="flex justify-center">
-            <img 
-              src={logoWay} 
-              alt="Way+ E-commerce" 
-              className="h-12"
-            />
-          </div>
+        <CardHeader className="space-y-1">
           <CardTitle className="text-2xl font-bold text-center">
             {isLogin ? 'Login' : 'Criar Conta'}
           </CardTitle>
@@ -142,6 +135,15 @@ export default function Auth() {
                   : 'Já tem uma conta? Fazer login'
                 }
               </button>
+            </div>
+
+            {/* Logotipo */}
+            <div className="flex justify-center mt-6">
+              <img 
+                src={logoWay} 
+                alt="Way+ E-commerce" 
+                className="h-10 opacity-50"
+              />
             </div>
           </form>
         </CardContent>
