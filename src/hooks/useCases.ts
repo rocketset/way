@@ -12,6 +12,7 @@ interface Case {
   categoria_nome?: string;
   tags: string[];
   is_featured: boolean;
+  mockup_screenshot_url?: string | null;
 }
 
 export const useCases = (searchQuery = "", selectedCategory = "Todos") => {
@@ -59,6 +60,7 @@ export const useCases = (searchQuery = "", selectedCategory = "Todos") => {
           categoria_nome: c.categories?.nome || "",
           tags: c.case_tags?.map((ct: any) => ct.tags.nome) || [],
           is_featured: c.is_featured || false,
+          mockup_screenshot_url: c.mockup_screenshot_url || null,
         };
       }) || [];
 
