@@ -675,17 +675,39 @@ export default function PostEditor() {
             {/* Tags */}
             <div className="border rounded-lg p-4 bg-card space-y-4">
               <h3 className="font-semibold">Tags</h3>
-              <p className="text-sm text-muted-foreground">
-                Digite para buscar ou criar novas tags
-              </p>
-              
-              <TagsAutocomplete
-                selectedTagIds={formData.tagsIds}
-                onChange={(tagsIds) => setFormData(prev => ({ ...prev, tagsIds }))}
-                allTags={tags}
-                tipo="blog"
-                queryKey={['blog-tags']}
-              />
+              <div className="space-y-2 max-h-64 overflow-y-auto">
+                {tags.map((tag) => {
+                  const isChecked = formData.tagsIds.includes(tag.id);
+                  return (
+                    <div 
+                      key={tag.id} 
+                      className="flex items-center space-x-3 p-2 rounded-md hover:bg-accent/50 transition-colors"
+                    >
+                      <Checkbox
+                        id={`tag-${tag.id}`}
+                        checked={isChecked}
+                        onCheckedChange={(checked) => {
+                          setFormData(prev => {
+                            const newIds = checked
+                              ? [...prev.tagsIds, tag.id]
+                              : prev.tagsIds.filter(id => id !== tag.id);
+                            return {
+                              ...prev,
+                              tagsIds: newIds
+                            };
+                          });
+                        }}
+                      />
+                      <Label
+                        htmlFor={`tag-${tag.id}`}
+                        className="text-sm font-normal cursor-pointer flex-1 leading-relaxed"
+                      >
+                        {tag.nome}
+                      </Label>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
 
             {/* Post em Destaque */}
