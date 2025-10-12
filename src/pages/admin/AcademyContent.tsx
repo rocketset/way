@@ -16,6 +16,8 @@ interface AcademyContent {
   tipo: string;
   formato: string;
   capa_url?: string;
+  arquivo_url?: string;
+  duracao?: string;
 }
 
 const getIconForType = (tipo: string) => {
@@ -100,7 +102,16 @@ export default function AcademyContent() {
     return null;
   };
 
-  const videoMaterial = materials.find(m => m.tipo_material === 'video');
+  // Se não houver materiais, usa o arquivo_url do próprio conteúdo como fallback
+  const videoMaterial = materials.find(m => m.tipo_material === 'video') || 
+    (content?.arquivo_url && content?.formato === 'video' ? {
+      id: 'content-video',
+      arquivo_url: content.arquivo_url,
+      tipo_material: 'video' as const,
+      nome: content.titulo,
+      formato: content.formato,
+      duracao: content.duracao,
+    } : null);
 
   if (loading) {
     return (
