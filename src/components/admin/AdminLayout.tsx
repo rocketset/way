@@ -110,7 +110,7 @@ const menuItems = [
       { label: 'Tags', path: '/admin/cases/tags' },
     ]
   },
-  { icon: ImageIcon, label: 'Mídia', path: '/admin/media', roles: ['administrador', 'gestor_conteudo', 'colunista'] },
+  { icon: ImageIcon, label: 'Mídia', path: '/admin/media', roles: ['administrador', 'gestor_conteudo'] },
   { icon: CheckSquare, label: 'Curadoria', path: '/admin/curation', roles: ['administrador', 'gestor_conteudo'] },
   { icon: Mail, label: 'Solicitações', path: '/admin/contacts', roles: ['administrador'] },
   { icon: Users, label: 'Usuários', path: '/admin/users', roles: ['administrador'] },
