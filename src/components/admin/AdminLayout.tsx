@@ -361,24 +361,13 @@ function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
         </nav>
       </ScrollArea>
 
-      {/* Informações do usuário e Logout */}
-      <div className="p-3 border-t space-y-2">
+      {/* Informações do usuário */}
+      <div className="p-3 border-t">
         {isExpanded && (
           <div className="px-3 py-2 text-xs text-muted-foreground truncate">
             {user?.email}
           </div>
         )}
-        <Button
-          variant="outline"
-          className={cn(
-            "w-full transition-all",
-            isExpanded ? "justify-start" : "justify-center px-0"
-          )}
-          onClick={signOut}
-        >
-          <LogOut className="h-5 w-5 flex-shrink-0" />
-          {isExpanded && <span className="ml-2">Sair</span>}
-        </Button>
       </div>
     </div>
   );
