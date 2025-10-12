@@ -74,12 +74,22 @@ const CasesSection = () => {
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Header */}
-        <div className="mb-16 animate-fade-in">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-foreground">
-            Portfólio
+        <div className="text-center mb-20">
+          <div className="inline-flex items-center gap-2 mb-6 animate-fade-in">
+            <Sparkles className="w-6 h-6 text-primary animate-pulse" />
+            <span className="text-sm font-bold text-primary tracking-wider">HISTÓRIAS DE SUCESSO</span>
+            <Sparkles className="w-6 h-6 text-primary animate-pulse" />
+          </div>
+          
+          <h2 className="text-5xl md:text-6xl font-bold mb-6 animate-fade-in" style={{ animationDelay: '0.1s' }}>
+            <span className="text-gray-900">Cases que </span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-yellow-400 to-primary">
+              inspiram
+            </span>
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl">
-            Especializada em impulsionar marcas para o sucesso online com soluções personalizadas para aumentar sua visibilidade.
+          
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto animate-fade-in" style={{ animationDelay: '0.2s' }}>
+            Conheça empresas que transformaram seus negócios com nossas soluções
           </p>
         </div>
 
