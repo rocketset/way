@@ -26,6 +26,7 @@ import {
   Bell,
   Search,
   CheckSquare,
+  Heart,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -78,6 +79,12 @@ const menuItems = [
       { label: 'Categorias', path: '/admin/academy/categories', roles: ['administrador'] },
       { label: 'Configurações', path: '/admin/academy/settings', roles: ['administrador'] },
     ]
+  },
+  { 
+    icon: Heart, 
+    label: 'Guia de Boas Práticas e Conduta', 
+    path: '/admin/conduct-guide',
+    roles: ['administrador', 'gestor_conteudo', 'colunista', 'membro', 'cliente'],
   },
   { 
     icon: FileText, 
