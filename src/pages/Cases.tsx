@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ClientsCarousel from "@/components/ClientsCarousel";
+import CtaResultsSection from "@/components/CtaResultsSection";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -193,6 +194,9 @@ const Cases = () => {
 
       {/* Clients Carousel */}
       <ClientsCarousel />
+
+      {/* CTA Section */}
+      <CtaResultsSection />
 
       <Footer />
     </div>
