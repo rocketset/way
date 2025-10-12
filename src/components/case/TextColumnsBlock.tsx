@@ -1,4 +1,5 @@
 import { TextColumnsBlockContent } from "@/hooks/useCaseBlocks";
+import DOMPurify from "dompurify";
 import { Target, Trophy } from "lucide-react";
 
 interface TextColumnsBlockProps {
@@ -21,15 +22,10 @@ export const TextColumnsBlock = ({ data }: TextColumnsBlockProps) => {
               <h3 className="text-3xl font-bold text-foreground">Desafio:</h3>
             </div>
             <div className="h-1 w-16 bg-gradient-to-r from-primary to-transparent rounded-full mb-8" />
-            {data.coluna_esquerda.split('\n').map((paragraph, index) => (
-              <p 
-                key={index} 
-                className="text-lg hover:text-foreground transition-colors duration-300"
-                style={{ animationDelay: `${index * 100}ms` }}
-              >
-                {paragraph}
-              </p>
-            ))}
+<div
+              className="text-lg space-y-4"
+              dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data.coluna_esquerda) }}
+            />
           </div>
           
           <div className="text-muted-foreground leading-relaxed space-y-6 animate-fade-in delay-300">
@@ -40,15 +36,10 @@ export const TextColumnsBlock = ({ data }: TextColumnsBlockProps) => {
               <h3 className="text-3xl font-bold text-foreground">Resultado:</h3>
             </div>
             <div className="h-1 w-16 bg-gradient-to-r from-accent to-transparent rounded-full mb-8" />
-            {data.coluna_direita.split('\n').map((paragraph, index) => (
-              <p 
-                key={index} 
-                className="text-lg hover:text-foreground transition-colors duration-300"
-                style={{ animationDelay: `${(index + 3) * 100}ms` }}
-              >
-                {paragraph}
-              </p>
-            ))}
+<div 
+              className="text-lg space-y-4"
+              dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data.coluna_direita) }}
+            />
           </div>
         </div>
       </div>
