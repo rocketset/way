@@ -11,7 +11,7 @@ const NewsSection = () => {
 
   if (isLoading) {
     return (
-      <section id="noticias" className="py-20 bg-gradient-to-b from-background to-gray-900">
+      <section id="noticias" className="py-20 bg-gradient-to-b from-[#1a1a1a] to-[#0a0a0a]">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center mb-12">
             <h2 className="text-4xl font-bold text-foreground">Conteúdos Way</h2>
@@ -23,7 +23,7 @@ const NewsSection = () => {
   }
 
   return (
-    <section id="noticias" className="relative py-20 bg-gradient-to-b from-background to-gray-900 overflow-hidden">
+    <section id="noticias" className="relative py-20 bg-gradient-to-b from-[#1a1a1a] to-[#0a0a0a] overflow-hidden">
       {/* Plus icons animados de fundo */}
       <div className="absolute top-10 left-10 text-primary/5 text-6xl animate-float" style={{ animationDelay: '0s' }}>+</div>
       <div className="absolute top-20 right-20 text-primary/5 text-8xl animate-float" style={{ animationDelay: '1s' }}>+</div>
