@@ -216,14 +216,13 @@ export default function CaseEditor() {
               />
               <div>
                 <Label>Sobre o Cliente</Label>
-                <Textarea
+                <CaseRichTextEditor
                   value={clientInfoData.sobre_cliente_texto}
-                  onChange={(e) => setClientInfoData({ ...clientInfoData, sobre_cliente_texto: e.target.value })}
+                  onChange={(value) => setClientInfoData({ ...clientInfoData, sobre_cliente_texto: value })}
                   placeholder="Texto descritivo sobre o cliente"
-                  rows={8}
                 />
                 <p className="text-sm text-muted-foreground mt-1">
-                  Use quebras de linha para separar parágrafos
+                  Use a barra de ferramentas para formatar o texto
                 </p>
               </div>
               <Button onClick={handleSaveClientInfo} disabled={saveMutation.isPending}>
@@ -268,11 +267,11 @@ export default function CaseEditor() {
               </div>
               <div>
                 <Label>Descrição</Label>
-                <Textarea
+                <CaseRichTextEditor
                   value={heroData.descricao}
-                  onChange={(e) => setHeroData({ ...heroData, descricao: e.target.value })}
+                  onChange={(value) => setHeroData({ ...heroData, descricao: value })}
                   placeholder="Descrição detalhada"
-                  rows={4}
+                  minHeight="120px"
                 />
               </div>
               <FileUpload
