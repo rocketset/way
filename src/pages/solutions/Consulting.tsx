@@ -156,7 +156,7 @@ const Consulting = () => {
         </section>
 
         {/* Services Details */}
-        <section className="relative py-20 bg-gradient-to-b from-gray-900 to-background overflow-hidden">
+        <section className="relative py-20 bg-gradient-to-b from-[#1a1a1a] to-[#0a0a0a] overflow-hidden">
           {/* Plus icons animados de fundo */}
           <div className="absolute top-10 left-10 text-primary/5 text-6xl animate-float" style={{ animationDelay: '0s' }}>+</div>
           <div className="absolute top-20 right-20 text-primary/5 text-8xl animate-float" style={{ animationDelay: '1s' }}>+</div>
