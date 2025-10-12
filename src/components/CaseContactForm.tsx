@@ -1,69 +1,8 @@
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
-import { z } from "zod";
-
-const contactSchema = z.object({
-  nome: z.string().trim().min(2, "Nome muito curto").max(100),
-  email: z.string().trim().email("E-mail inválido").max(255),
-  telefone: z.string().trim().min(10, "Telefone inválido").max(20),
-  empresa: z.string().trim().max(100).optional(),
-});
+import { Link } from "react-router-dom";
+import { ArrowRight } from "lucide-react";
 
 const CaseContactForm = () => {
-  const [formData, setFormData] = useState({
-    nome: "",
-    email: "",
-    telefone: "",
-    empresa: "",
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const { toast } = useToast();
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    try {
-      // Validação dos dados
-      const validatedData = contactSchema.parse(formData);
-
-      // Salva no banco de dados
-      const { error } = await supabase.from("contacts").insert([{
-        nome: validatedData.nome,
-        email: validatedData.email,
-        telefone: validatedData.telefone,
-        empresa: validatedData.empresa || null,
-        mensagem: "Solicitação de contato via formulário de case",
-      }]);
-
-      if (error) throw error;
-
-      toast({
-        title: "Mensagem enviada!",
-        description: "Em breve entraremos em contato.",
-      });
-      setFormData({ nome: "", email: "", telefone: "", empresa: "" });
-    } catch (error: any) {
-      console.error("Erro ao enviar:", error);
-      toast({
-        title: "Erro ao enviar",
-        description: error.message || "Tente novamente mais tarde.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
 
   return (
     <section className="bg-background py-24 px-4">
@@ -80,66 +19,15 @@ const CaseContactForm = () => {
               </p>
             </div>
 
-            {/* Right Form */}
+            {/* Right CTA */}
             <div className="animate-fade-in" style={{ animationDelay: '0.2s' }}>
-              <div className="bg-card border border-border rounded-2xl p-8 shadow-xl">
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div>
-                    <Input
-                      type="text"
-                      name="nome"
-                      placeholder="Nome"
-                      value={formData.nome}
-                      onChange={handleChange}
-                      required
-                      className="bg-background border-border h-12"
-                    />
-                  </div>
-
-                  <div>
-                    <Input
-                      type="email"
-                      name="email"
-                      placeholder="Email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      required
-                      className="bg-background border-border h-12"
-                    />
-                  </div>
-
-                  <div>
-                    <Input
-                      type="tel"
-                      name="telefone"
-                      placeholder="Telefone"
-                      value={formData.telefone}
-                      onChange={handleChange}
-                      required
-                      className="bg-background border-border h-12"
-                    />
-                  </div>
-
-                  <div>
-                    <Input
-                      type="text"
-                      name="empresa"
-                      placeholder="Nome da empresa"
-                      value={formData.empresa}
-                      onChange={handleChange}
-                      required
-                      className="bg-background border-border h-12"
-                    />
-                  </div>
-
-                  <Button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="w-full h-12 text-base font-semibold"
-                  >
-                    {isSubmitting ? "Enviando..." : "Enviar"}
+              <div className="bg-card border border-border rounded-2xl p-8 shadow-xl flex items-center justify-center min-h-[200px]">
+                <Link to="/contato">
+                  <Button size="lg" className="h-14 px-8 text-lg font-semibold group">
+                    Entre em contato
+                    <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
                   </Button>
-                </form>
+                </Link>
               </div>
             </div>
           </div>
