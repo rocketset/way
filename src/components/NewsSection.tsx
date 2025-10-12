@@ -11,7 +11,7 @@ const NewsSection = () => {
 
   if (isLoading) {
     return (
-      <section id="noticias" className="py-20 bg-gradient-to-b from-background to-muted/20">
+      <section id="noticias" className="py-20 bg-gradient-to-b from-background to-gray-900">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center mb-12">
             <h2 className="text-4xl font-bold text-foreground">Conteúdos Way</h2>

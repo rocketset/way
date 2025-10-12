@@ -146,7 +146,7 @@ const Columnist = () => {
                     href={link.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group relative w-14 h-14 rounded-full bg-gradient-to-br from-muted to-muted/50 hover:from-primary hover:to-accent transition-all duration-500 flex items-center justify-center hover:scale-125 hover:rotate-12 shadow-lg hover:shadow-2xl hover:shadow-primary/50"
+                    className="group relative w-14 h-14 rounded-full bg-gradient-to-br from-gray-800 to-gray-900/50 hover:from-primary hover:to-accent transition-all duration-500 flex items-center justify-center hover:scale-125 hover:rotate-12 shadow-lg hover:shadow-2xl hover:shadow-primary/50"
                     aria-label={link.label}
                   >
                     <link.icon className="w-6 h-6 text-foreground group-hover:text-primary-foreground transition-colors duration-300" />
@@ -194,7 +194,7 @@ const Columnist = () => {
             
             {posts.length === 0 ? (
               <div className="text-center py-24">
-                <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-br from-muted to-muted/50 flex items-center justify-center animate-bounce">
+                <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-br from-gray-800 to-gray-900/50 flex items-center justify-center animate-bounce">
                   <User className="w-12 h-12 text-muted-foreground" />
                 </div>
                 <p className="text-muted-foreground text-xl">

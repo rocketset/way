@@ -256,8 +256,8 @@ const Journey = () => {
             {/* Carousel Container */}
             <div className="relative">
               {/* Gradient overlays */}
-              <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-muted/30 to-transparent z-10 pointer-events-none" />
-              <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-muted/30 to-transparent z-10 pointer-events-none" />
+              <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-gray-900/30 to-transparent z-10 pointer-events-none" />
+              <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-gray-900/30 to-transparent z-10 pointer-events-none" />
               
               {/* Scrolling Images */}
               <div className="flex gap-6 animate-scroll-team">

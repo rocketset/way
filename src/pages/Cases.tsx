@@ -152,7 +152,7 @@ const Cases = () => {
                       to={`/cases/${caseItem.id}`}
                       className="group"
                     >
-                      <div className="bg-gradient-to-br from-muted/30 to-muted/50 rounded-xl overflow-hidden border border-border hover:border-primary transition-all duration-500 hover:shadow-xl hover:shadow-primary/10 h-full flex flex-col">
+                      <div className="bg-gradient-to-br from-gray-900/30 to-gray-800/50 rounded-xl overflow-hidden border border-border hover:border-primary transition-all duration-500 hover:shadow-xl hover:shadow-primary/10 h-full flex flex-col">
                         {/* Header com título e tags */}
                         <div className="p-4 pb-3">
                           <h3 className="text-base md:text-lg font-medium italic text-foreground group-hover:text-primary transition-colors duration-300 mb-2">
