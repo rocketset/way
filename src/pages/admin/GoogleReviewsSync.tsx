@@ -1,14 +1,59 @@
+import { useState } from "react";
 import AdminLayout from "@/components/admin/AdminLayout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { RefreshCw, Star } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { RefreshCw, Star, Save } from "lucide-react";
 import { useGooglePlaceConfig, useSyncGoogleReviews } from "@/hooks/useGoogleReviews";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "@/hooks/use-toast";
 
 const GoogleReviewsSync = () => {
-  const { data: placeConfig, isLoading } = useGooglePlaceConfig();
+  const { data: placeConfig, isLoading, refetch } = useGooglePlaceConfig();
   const { mutate: syncReviews, isPending } = useSyncGoogleReviews();
+  const [placeId, setPlaceId] = useState("");
+  const [isSaving, setIsSaving] = useState(false);
+
+  const handleSavePlaceId = async () => {
+    if (!placeId.trim()) {
+      toast({
+        title: "Erro",
+        description: "Por favor, insira um Place ID válido",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsSaving(true);
+    try {
+      const { error } = await supabase
+        .from("google_place_config")
+        .update({ place_id: placeId.trim() })
+        .eq("id", placeConfig?.id);
+
+      if (error) throw error;
+
+      toast({
+        title: "Place ID atualizado",
+        description: "O Place ID foi atualizado com sucesso. Agora você pode sincronizar as avaliações.",
+      });
+
+      setPlaceId("");
+      refetch();
+    } catch (error) {
+      console.error("Error updating place ID:", error);
+      toast({
+        title: "Erro ao atualizar",
+        description: "Não foi possível atualizar o Place ID",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSaving(false);
+    }
+  };
 
   return (
     <div className="flex-1 space-y-6 p-8 pt-6">
@@ -29,6 +74,53 @@ const GoogleReviewsSync = () => {
               <div className="text-muted-foreground">Carregando...</div>
             ) : placeConfig ? (
               <>
+                {/* Seção para atualizar Place ID */}
+                <div className="space-y-4 border-b pb-6 mb-6">
+                  <div>
+                    <h3 className="text-lg font-semibold mb-2">Atualizar Place ID</h3>
+                    <p className="text-sm text-muted-foreground mb-4">
+                      Para encontrar seu Place ID correto:
+                      <br />
+                      1. Acesse{" "}
+                      <a
+                        href="https://placeidfinder.com/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-primary hover:underline font-medium"
+                      >
+                        placeidfinder.com
+                      </a>
+                      <br />
+                      2. Cole a URL do Google Maps do seu negócio
+                      <br />
+                      3. Copie o Place ID gerado (começa com "ChIJ")
+                    </p>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="placeId">Place ID do Google</Label>
+                    <div className="flex gap-2">
+                      <Input
+                        id="placeId"
+                        placeholder="ChIJ..."
+                        value={placeId}
+                        onChange={(e) => setPlaceId(e.target.value)}
+                        className="flex-1"
+                      />
+                      <Button
+                        onClick={handleSavePlaceId}
+                        disabled={isSaving || !placeId.trim()}
+                      >
+                        {isSaving ? (
+                          <RefreshCw className="h-4 w-4 animate-spin mr-2" />
+                        ) : (
+                          <Save className="h-4 w-4 mr-2" />
+                        )}
+                        Salvar
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+
                 <div className="space-y-4">
                   <div>
                     <div className="text-sm font-medium mb-1">Nome do Negócio</div>
