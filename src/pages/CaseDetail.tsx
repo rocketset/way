@@ -9,6 +9,7 @@ import { TextColumnsBlock } from "@/components/case/TextColumnsBlock";
 import { BenefitsBlock } from "@/components/case/BenefitsBlock";
 import { ClientInfoBlock } from "@/components/case/ClientInfoBlock";
 import CaseContactForm from "@/components/CaseContactForm";
+import MockupSection from "@/components/MockupSection";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
@@ -105,6 +106,12 @@ const CaseDetail = () => {
             return null;
         }
       })}
+
+        {/* MacBook Mockup Section */}
+        <MockupSection 
+          title="Veja o projeto em ação"
+          description="Conheça como transformamos ideias em soluções digitais de sucesso"
+        />
 
         {/* Contact Form */}
         <section className="py-24 px-6 bg-gradient-to-b from-background via-card/20 to-background">
