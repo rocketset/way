@@ -65,11 +65,11 @@ const CasesSection = () => {
     setCases(mapped);
   };
   return (
-    <section id="cases" className="py-32 bg-background relative overflow-hidden">
+    <section id="cases" className="py-32 bg-white relative overflow-hidden">
       {/* Background decorative elements */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-muted/20 to-background">
+      <div className="absolute inset-0 bg-[#ebebeb]">
         <div className="absolute top-20 left-10 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '4s' }} />
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent/5 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '5s', animationDelay: '1s' }} />
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-pink-500/5 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '5s', animationDelay: '1s' }} />
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
