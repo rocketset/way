@@ -106,8 +106,8 @@ const CaseDetail = () => {
         {caseData?.mockup_screenshot_url && <MockupSection screenshotUrl={caseData.mockup_screenshot_url} title="Veja o projeto em ação" description="Conheça como transformamos ideias em soluções digitais de sucesso" />}
 
         {/* Contact Form */}
-        <section className="px-6 bg-gradient-to-b from-background via-card/20 to-background py-[45px]">
-          <div className="container max-w-4xl mx-0">
+        <section className="px-6 bg-gradient-to-b from-background via-card/20 to-background py-16">
+          <div className="container max-w-4xl mx-auto">
             <div className="text-center mb-12 animate-fade-in">
               
               
