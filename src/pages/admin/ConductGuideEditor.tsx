@@ -162,9 +162,9 @@ export default function ConductGuideEditor() {
                   </div>
                 ) : (
                   <div className="space-y-2">
-                    <pre className="bg-muted p-4 rounded-md overflow-x-auto text-sm">
-                      {JSON.stringify(section.content, null, 2)}
-                    </pre>
+                    <p className="text-sm text-muted-foreground">
+                      Clique em "Editar" para modificar o conteúdo desta seção.
+                    </p>
                   </div>
                 )}
               </CardContent>
