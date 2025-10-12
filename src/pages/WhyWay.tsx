@@ -145,13 +145,13 @@ const WhyWay = () => {
       <section className="py-12 px-4 bg-background">
         <div className="container mx-auto">
           <div className="max-w-7xl mx-auto">
-            <div className="grid grid-cols-6 md:grid-cols-12 gap-3 h-[350px]">
+            <div className="grid grid-cols-6 md:grid-cols-12 gap-3 h-[450px]">
               {/* First row */}
               <div className="col-span-2 md:col-span-3 row-span-1 group relative overflow-hidden rounded-lg border border-border hover:border-primary/50 transition-all duration-500">
                 <img 
                   src={galleryPhotos[0]} 
                   alt="Galeria 1" 
-                  className="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-700"
+                  className="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-700" 
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </div>
@@ -160,7 +160,7 @@ const WhyWay = () => {
                 <img 
                   src={galleryPhotos[1]} 
                   alt="Galeria 2" 
-                  className="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-700"
+                  className="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-700" 
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </div>
@@ -169,7 +169,7 @@ const WhyWay = () => {
                 <img 
                   src={galleryPhotos[2]} 
                   alt="Galeria 3" 
-                  className="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-700"
+                  className="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-700" 
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </div>
@@ -178,7 +178,7 @@ const WhyWay = () => {
                 <img 
                   src={galleryPhotos[3]} 
                   alt="Galeria 4" 
-                  className="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-700"
+                  className="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-700" 
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </div>
@@ -188,7 +188,7 @@ const WhyWay = () => {
                 <img 
                   src={galleryPhotos[4]} 
                   alt="Galeria 5" 
-                  className="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-700"
+                  className="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-700" 
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </div>
@@ -197,7 +197,7 @@ const WhyWay = () => {
                 <img 
                   src={galleryPhotos[5]} 
                   alt="Galeria 6" 
-                  className="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-700"
+                  className="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-700" 
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </div>
@@ -206,7 +206,7 @@ const WhyWay = () => {
                 <img 
                   src={galleryPhotos[6]} 
                   alt="Galeria 7" 
-                  className="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-700"
+                  className="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-700" 
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </div>
@@ -215,7 +215,7 @@ const WhyWay = () => {
                 <img 
                   src={galleryPhotos[7]} 
                   alt="Galeria 8" 
-                  className="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-700"
+                  className="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-700" 
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </div>
