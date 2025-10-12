@@ -12,6 +12,14 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { useCases } from "@/hooks/useCases";
 import { useCaseCategories } from "@/hooks/useCaseCategories";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 
 const Cases = () => {
   const [selectedCategory, setSelectedCategory] = useState("Todos");
@@ -56,6 +64,20 @@ const Cases = () => {
       <section className="pt-24 pb-8 px-4">
         <div className="container mx-auto">
           <div className="max-w-3xl mx-auto text-center space-y-4 animate-fade-in">
+            <Breadcrumb className="mb-4 flex justify-center">
+              <BreadcrumbList>
+                <BreadcrumbItem>
+                  <BreadcrumbLink asChild>
+                    <Link to="/">Home</Link>
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbPage>Cases</BreadcrumbPage>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
+            
             <h1 className="text-3xl md:text-4xl font-bold">
               Cases de <span className="text-primary">Sucesso</span>
             </h1>
