@@ -5,6 +5,7 @@ import { Sparkles } from "lucide-react";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
+import { GoogleReviews } from "@/components/GoogleReviews";
 interface CaseItem {
   id: string;
   titulo: string;
@@ -52,7 +53,7 @@ const CasesSection = () => {
     });
     setCases(mapped);
   };
-  return <section id="cases" className="py-32 bg-white relative overflow-hidden my-[3px]">
+  return <section id="cases" className="py-32 bg-white relative overflow-hidden">
       {/* Background decorative elements */}
       <div className="absolute inset-0 bg-[#ebebeb] my-0">
         <div className="absolute top-20 left-10 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-pulse" style={{
@@ -123,8 +124,16 @@ const CasesSection = () => {
             </CarouselContent>
             
             {/* Navigation Arrows */}
-            
+            <div className="flex justify-center gap-4 mt-12">
+              <CarouselPrevious className="relative left-0 top-0 translate-y-0" />
+              <CarouselNext className="relative right-0 top-0 translate-y-0" />
+            </div>
           </Carousel>}
+
+        {/* Google Reviews */}
+        <div className="mt-20 mb-16">
+          <GoogleReviews />
+        </div>
 
         {/* Bottom CTA */}
         <div className="text-center mt-16 animate-fade-in" style={{
