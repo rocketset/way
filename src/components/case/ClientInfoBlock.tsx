@@ -65,7 +65,7 @@ export const ClientInfoBlock = ({
           </div>}
 
         {/* Sobre o Cliente */}
-        <div className="grid md:grid-cols-[300px_1fr] gap-12 items-start">
+        <div className="grid md:grid-cols-[300px_1fr] gap-12 items-center">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground">
             Sobre o Cliente
           </h2>
