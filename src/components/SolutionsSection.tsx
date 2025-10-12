@@ -106,7 +106,7 @@ const SolutionsSection = () => {
         <div className="absolute top-20 left-10 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse" style={{
         animationDuration: '4s'
       }} />
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse" style={{
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse" style={{
         animationDuration: '5s',
         animationDelay: '1s'
       }} />
