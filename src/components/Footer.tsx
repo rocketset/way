@@ -22,7 +22,7 @@ const Footer = () => {
             <div className="space-y-6 border-r border-white/10 pr-8">
               <img src={logoWay} alt="Way E-commerce" className="h-10" />
               
-              <p className="text-white text-base leading-relaxed">Somos especialistas em e-commerce e performance digital, conectando estratégia, tecnologia e pessoas para escalar negócios no ambiente online.</p>
+              <p className="text-white text-base leading-relaxed">Hoje, a Way E-commerce representa uma nova geração de consultorias digitais: uma empresa que une estratégia, dados e performance, guiada por uma filosofia simples — "Crescer com estrutura, consistência e propósito."</p>
 
               <div className="space-y-3">
                 <a href="tel:+558399644-3602" className="flex items-center gap-3 text-white/70 hover:text-primary transition-colors text-sm">
