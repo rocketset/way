@@ -22,8 +22,10 @@ export const useCase = (caseId: string) => {
         ...data,
         categoria_nome: data.categories?.nome || "",
         tags: data.case_tags?.map((ct: any) => ct.tags.nome) || [],
+        mockup_screenshot_url: data.mockup_screenshot_url,
       };
     },
     enabled: !!caseId,
+    staleTime: 0, // Force fresh data
   });
 };
