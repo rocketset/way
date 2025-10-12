@@ -5,6 +5,7 @@ import { Sparkles } from "lucide-react";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
+import { GoogleReviews } from "@/components/GoogleReviews";
 interface CaseItem {
   id: string;
   titulo: string;
@@ -128,6 +129,11 @@ const CasesSection = () => {
               <CarouselNext className="relative right-0 top-0 translate-y-0" />
             </div>
           </Carousel>}
+
+        {/* Google Reviews */}
+        <div className="mt-20 mb-16">
+          <GoogleReviews />
+        </div>
 
         {/* Bottom CTA */}
         <div className="text-center mt-16 animate-fade-in" style={{
