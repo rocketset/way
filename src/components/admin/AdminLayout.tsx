@@ -76,7 +76,7 @@ const menuItems = [
     roles: ['administrador', 'gestor_conteudo', 'membro', 'cliente'],
     hasCategories: true, // Flag para indicar que este item tem categorias dinâmicas
     subItems: [
-      { label: 'Visualizar', path: '/admin/academy' },
+      { label: 'Conteúdos', path: '/admin/academy' },
       { label: 'Lista de Fornecedores', path: '/admin/academy/suppliers' },
       { label: 'Gerenciar Conteúdos', path: '/admin/academy/manage', roles: ['administrador', 'gestor_conteudo'] },
       { label: 'Categorias', path: '/admin/academy/categories', roles: ['administrador'] },
