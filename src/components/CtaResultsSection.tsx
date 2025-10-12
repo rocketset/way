@@ -214,10 +214,10 @@ const CtaResultsSection = () => {
                       name="company"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className="text-sm font-semibold text-white">Empresa</FormLabel>
+                          <FormLabel className="text-sm font-semibold text-white">Site/Empresa</FormLabel>
                           <FormControl>
                             <Input 
-                              placeholder="Nome da sua empresa" 
+                              placeholder="Seu site ou nome da empresa" 
                               {...field} 
                               className="h-12 bg-background/50 border-border/50 transition-all duration-300 focus:scale-[1.01] hover:border-primary/50" 
                             />
