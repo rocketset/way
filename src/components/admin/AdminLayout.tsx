@@ -128,6 +128,7 @@ function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
   const [openSubmenus, setOpenSubmenus] = useState<string[]>([]);
   const [isRoleSelectOpen, setIsRoleSelectOpen] = useState(false);
   const [academyCategories, setAcademyCategories] = useState<Array<{ id: string; nome: string }>>([]);
+  const [isCategorySelectOpen, setIsCategorySelectOpen] = useState(false);
 
   // Busca categorias da Academy
   useEffect(() => {
@@ -387,8 +388,11 @@ function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
                         {item.hasCategories && academyCategories.length > 0 && (
                           <div className="pt-2">
                             <Select
+                              open={isCategorySelectOpen}
+                              onOpenChange={setIsCategorySelectOpen}
                               onValueChange={(categoryId) => {
                                 navigate(`/admin/academy?category=${categoryId}`);
+                                setIsCategorySelectOpen(false);
                                 onNavigate?.();
                               }}
                             >
@@ -439,6 +443,7 @@ function MobileSidebar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isRoleSelectOpen, setIsRoleSelectOpen] = useState(false);
   const [academyCategories, setAcademyCategories] = useState<Array<{ id: string; nome: string }>>([]);
+  const [isCategorySelectOpen, setIsCategorySelectOpen] = useState(false);
 
   // Busca categorias da Academy
   useEffect(() => {
@@ -655,8 +660,11 @@ function MobileSidebar() {
                             {item.hasCategories && academyCategories.length > 0 && (
                               <div className="pt-2">
                                 <Select
+                                  open={isCategorySelectOpen}
+                                  onOpenChange={setIsCategorySelectOpen}
                                   onValueChange={(categoryId) => {
                                     navigate(`/admin/academy?category=${categoryId}`);
+                                    setIsCategorySelectOpen(false);
                                     handleNavigation();
                                   }}
                                 >
