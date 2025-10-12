@@ -1,17 +1,15 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { toast } from "sonner";
+import { toast } from "@/hooks/use-toast";
 
 export interface ConductGuideSection {
   id: string;
   section_key: string;
   section_title: string;
   section_description: string | null;
-  content: any[];
+  content: any;
   ordem: number;
   ativo: boolean;
-  criado_em: string;
-  atualizado_em: string;
 }
 
 export const useConductGuideContent = () => {
@@ -22,7 +20,7 @@ export const useConductGuideContent = () => {
         .from("conduct_guide_content")
         .select("*")
         .eq("ativo", true)
-        .order("ordem", { ascending: true });
+        .order("ordem");
 
       if (error) throw error;
       return data as ConductGuideSection[];
@@ -34,37 +32,31 @@ export const useUpdateConductGuideSection = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({
-      id,
-      section_title,
-      section_description,
-      content,
-    }: {
-      id: string;
-      section_title: string;
-      section_description: string | null;
-      content: any[];
-    }) => {
-      const { data, error } = await supabase
+    mutationFn: async (section: Partial<ConductGuideSection> & { id: string }) => {
+      const { error } = await supabase
         .from("conduct_guide_content")
         .update({
-          section_title,
-          section_description,
-          content,
+          section_title: section.section_title,
+          section_description: section.section_description,
+          content: section.content,
         })
-        .eq("id", id)
-        .select()
-        .single();
+        .eq("id", section.id);
 
       if (error) throw error;
-      return data;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["conduct-guide-content"] });
-      toast.success("Seção atualizada com sucesso!");
+      toast({
+        title: "Sucesso",
+        description: "Seção atualizada com sucesso!",
+      });
     },
-    onError: (error: any) => {
-      toast.error("Erro ao atualizar seção: " + error.message);
+    onError: (error) => {
+      toast({
+        title: "Erro",
+        description: "Erro ao atualizar seção: " + error.message,
+        variant: "destructive",
+      });
     },
   });
 };

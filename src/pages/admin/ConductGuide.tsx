@@ -1,38 +1,41 @@
 import { Heart, Edit } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { useConductGuideContent } from "@/hooks/useConductGuideContent";
 import { useAuth } from "@/hooks/useAuth";
-import { useNavigate } from "react-router-dom";
-import { Skeleton } from "@/components/ui/skeleton";
 
 export default function ConductGuide() {
+  const navigate = useNavigate();
   const { data: sections, isLoading } = useConductGuideContent();
   const { isAdmin } = useAuth();
-  const navigate = useNavigate();
 
-  const renderContent = (content: any[]) => {
-    return content.map((item, index) => (
-      <div key={index} className="space-y-2">
-        {item.title && <h3 className="font-semibold text-lg">{item.title}</h3>}
-        {item.content && <p className="text-muted-foreground">{item.content}</p>}
-        {item.items && (
-          <ul className="list-disc list-inside space-y-1 text-muted-foreground">
-            {item.items.map((listItem: string, idx: number) => (
-              <li key={idx}>{listItem}</li>
-            ))}
-          </ul>
-        )}
-      </div>
-    ));
+  const renderContent = (content: any) => {
+    if (Array.isArray(content)) {
+      return content.map((item: any, index: number) => (
+        <div key={index} className="space-y-2">
+          {item.title && <h3 className="font-semibold text-lg">{item.title}</h3>}
+          {item.content && (
+            <p className="text-muted-foreground">{item.content}</p>
+          )}
+          {item.items && (
+            <ul className="list-disc list-inside space-y-1 text-muted-foreground">
+              {item.items.map((listItem: string, i: number) => (
+                <li key={i}>{listItem}</li>
+              ))}
+            </ul>
+          )}
+        </div>
+      ));
+    }
+    return null;
   };
 
   if (isLoading) {
     return (
-      <div className="container mx-auto p-6 space-y-6">
-        <Skeleton className="h-20 w-full" />
-        <Skeleton className="h-96 w-full" />
+      <div className="container mx-auto p-6">
+        <p>Carregando...</p>
       </div>
     );
   }
@@ -52,11 +55,8 @@ export default function ConductGuide() {
           </div>
         </div>
         {isAdmin && (
-          <Button
-            onClick={() => navigate("/admin/conduct-guide/edit")}
-            className="gap-2"
-          >
-            <Edit className="h-4 w-4" />
+          <Button onClick={() => navigate("/admin/conduct-guide/edit")}>
+            <Edit className="h-4 w-4 mr-2" />
             Editar Conteúdo
           </Button>
         )}
