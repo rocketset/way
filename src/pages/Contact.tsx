@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { GoogleReviews } from "@/components/GoogleReviews";
@@ -12,6 +13,14 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useToast } from "@/hooks/use-toast";
 import { Mail, Phone, Send, CheckCircle2, Sparkles, MessageSquare, Instagram, Linkedin, Plus, ArrowRight, Briefcase } from "lucide-react";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 const contactSchema = z.object({
   name: z.string().trim().min(2, {
     message: "Nome deve ter pelo menos 2 caracteres"
@@ -143,6 +152,20 @@ const Contact = () => {
 
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center animate-fade-in">
+            <Breadcrumb className="mb-6 flex justify-center">
+              <BreadcrumbList>
+                <BreadcrumbItem>
+                  <BreadcrumbLink asChild>
+                    <Link to="/">Home</Link>
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbPage>Contato</BreadcrumbPage>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
+            
             <div className="inline-flex items-center gap-3 px-5 py-2 bg-primary/10 rounded-full mb-6 animate-scale-in border border-primary/20 backdrop-blur-sm">
               <Plus className="w-5 h-5 text-primary animate-spin" style={{
               animationDuration: "3s"

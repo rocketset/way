@@ -12,6 +12,14 @@ import { Search, Calendar, ArrowRight } from "lucide-react";
 import { useBlogPosts } from "@/hooks/useBlogPosts";
 import { useBlogCategories } from "@/hooks/useBlogCategories";
 import { formatDate, formatReadingTime } from "@/utils/dateUtils";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 
 const Blog = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -38,6 +46,20 @@ const Blog = () => {
       <section className="pt-24 pb-8 px-4">
         <div className="container mx-auto">
           <div className="max-w-3xl mx-auto text-center space-y-4">
+            <Breadcrumb className="mb-4 flex justify-center">
+              <BreadcrumbList>
+                <BreadcrumbItem>
+                  <BreadcrumbLink asChild>
+                    <Link to="/">Home</Link>
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbPage>Blog</BreadcrumbPage>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
+            
             <h1 className="text-3xl md:text-4xl font-bold">
               Blog da <span className="text-primary">Way</span>
             </h1>
