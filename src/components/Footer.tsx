@@ -1,4 +1,4 @@
-import logoWay from "@/assets/logo-way-yellow.png";
+import logoWay from "@/assets/logo-way.png";
 import { Phone, Mail, MapPin, Instagram, Linkedin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -20,7 +20,7 @@ const Footer = () => {
           <div className="grid md:grid-cols-2 gap-8 md:gap-12">
             {/* Left Side - Company Info */}
             <div className="space-y-6 border-r border-white/10 pr-8">
-              <img src={logoWay} alt="Way E-commerce" className="h-10 brightness-0 invert" />
+              <img src={logoWay} alt="Way E-commerce" className="h-10" />
               
               <p className="text-white text-base leading-relaxed">Somos especialistas em e-commerce e performance digital, conectando estratégia, tecnologia e pessoas para escalar negócios no ambiente online.</p>
 
