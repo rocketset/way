@@ -173,12 +173,12 @@ const Performance = () => {
         </section>
 
         {/* Services Details */}
-        <section className="relative py-20 bg-gradient-to-b from-gray-900 to-background overflow-hidden">
+        <section className="relative py-20 bg-gradient-to-b from-[#1a1a1a] to-[#0a0a0a] overflow-hidden">
           {/* Plus icons animados de fundo */}
-          <div className="absolute top-10 left-10 text-primary/5 text-6xl animate-float" style={{ animationDelay: '0s' }}>+</div>
-          <div className="absolute top-20 right-20 text-primary/5 text-8xl animate-float" style={{ animationDelay: '1s' }}>+</div>
-          <div className="absolute bottom-20 left-1/4 text-primary/5 text-7xl animate-float" style={{ animationDelay: '2s' }}>+</div>
-          <div className="absolute bottom-10 right-1/3 text-primary/5 text-6xl animate-float" style={{ animationDelay: '1.5s' }}>+</div>
+          <div className="absolute top-10 left-10 text-foreground/5 text-6xl animate-float" style={{ animationDelay: '0s' }}>+</div>
+          <div className="absolute top-20 right-20 text-foreground/5 text-8xl animate-float" style={{ animationDelay: '1s' }}>+</div>
+          <div className="absolute bottom-20 left-1/4 text-foreground/5 text-7xl animate-float" style={{ animationDelay: '2s' }}>+</div>
+          <div className="absolute bottom-10 right-1/3 text-foreground/5 text-6xl animate-float" style={{ animationDelay: '1.5s' }}>+</div>
           
           <div className="container mx-auto px-4 md:px-12 relative z-10">
             <div className="max-w-5xl mx-auto space-y-6 md:space-y-8">
@@ -186,7 +186,7 @@ const Performance = () => {
               animationDelay: `${index * 0.1}s`
             }} onMouseEnter={() => setHoveredService(index)} onMouseLeave={() => setHoveredService(null)}>
                   {/* Hover background effect */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/5 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl -mx-4"></div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-foreground/0 via-foreground/5 to-foreground/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl -mx-4"></div>
                   
                   {/* Content */}
                   <div className="flex-1 pt-1 relative z-10">
