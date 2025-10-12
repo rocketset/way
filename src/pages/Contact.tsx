@@ -262,11 +262,13 @@ const Contact = () => {
                               </SelectTrigger>
                             </FormControl>
                             <SelectContent>
-                              <SelectItem value="loja-virtual">Quero fazer uma loja virtual</SelectItem>
+                              <SelectItem value="implantacao">Implantação de E-commerce</SelectItem>
+                              <SelectItem value="migracao">Migração de Plataforma de E-commerce</SelectItem>
                               <SelectItem value="vender-mais">Quero vender mais pelo meu E-commerce</SelectItem>
-                              <SelectItem value="marketplace">Quero vender em marketplace</SelectItem>
-                              <SelectItem value="parceiro">Quero me tornar um parceiro</SelectItem>
-                              <SelectItem value="sac">Quero falar com o SAC</SelectItem>
+                              <SelectItem value="marketplace">Quero vender em Marketplace</SelectItem>
+                              <SelectItem value="evolucao">Evolução/On-going</SelectItem>
+                              <SelectItem value="parcerias">Parcerias Comerciais</SelectItem>
+                              <SelectItem value="sac">Falar com o SAC</SelectItem>
                             </SelectContent>
                           </Select>
                           <FormMessage />
