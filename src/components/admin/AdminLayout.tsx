@@ -27,6 +27,7 @@ import {
   Search,
   CheckSquare,
   Heart,
+  FolderOpen,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -73,6 +74,7 @@ const menuItems = [
     label: 'Way Academy', 
     path: '/admin/academy',
     roles: ['administrador', 'gestor_conteudo', 'membro', 'cliente'],
+    hasCategories: true, // Flag para indicar que este item tem categorias dinâmicas
     subItems: [
       { label: 'Visualizar', path: '/admin/academy' },
       { label: 'Lista de Fornecedores', path: '/admin/academy/suppliers' },
@@ -124,6 +126,24 @@ function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [openSubmenus, setOpenSubmenus] = useState<string[]>([]);
   const [isRoleSelectOpen, setIsRoleSelectOpen] = useState(false);
+  const [academyCategories, setAcademyCategories] = useState<Array<{ id: string; nome: string }>>([]);
+
+  // Busca categorias da Academy
+  useEffect(() => {
+    fetchAcademyCategories();
+  }, []);
+
+  const fetchAcademyCategories = async () => {
+    const { data } = await supabase
+      .from('academy_categories')
+      .select('id, nome')
+      .eq('ativo', true)
+      .order('ordem', { ascending: true });
+    
+    if (data) {
+      setAcademyCategories(data);
+    }
+  };
 
   // Função para renderizar ícone do perfil
   const getRoleIcon = (role: string | null) => {
@@ -361,6 +381,37 @@ function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
                               </Link>
                             );
                           })}
+                        
+                        {/* Categorias da Academy - só mostra para Way Academy */}
+                        {item.hasCategories && academyCategories.length > 0 && (
+                          <>
+                            <div className="pt-2 pb-1">
+                              <div className="flex items-center gap-2 px-3 py-1 text-xs font-semibold text-muted-foreground">
+                                <FolderOpen className="h-3.5 w-3.5" />
+                                <span>Categorias</span>
+                              </div>
+                            </div>
+                            {academyCategories.map((category) => {
+                              const categoryPath = `/admin/academy?category=${category.id}`;
+                              const isCategoryActive = location.pathname === '/admin/academy' && 
+                                                      location.search.includes(`category=${category.id}`);
+                              return (
+                                <Link
+                                  key={category.id}
+                                  to={categoryPath}
+                                  onClick={onNavigate}
+                                  className={cn(
+                                    'flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-all hover:bg-accent',
+                                    isCategoryActive && 'bg-accent text-accent-foreground font-medium'
+                                  )}
+                                >
+                                  <div className="w-1.5 h-1.5 rounded-full bg-current" />
+                                  {category.nome}
+                                </Link>
+                              );
+                            })}
+                          </>
+                        )}
                       </div>
                     )}
                   </>
@@ -390,6 +441,24 @@ function MobileSidebar() {
   const [openSubmenus, setOpenSubmenus] = useState<string[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [isRoleSelectOpen, setIsRoleSelectOpen] = useState(false);
+  const [academyCategories, setAcademyCategories] = useState<Array<{ id: string; nome: string }>>([]);
+
+  // Busca categorias da Academy
+  useEffect(() => {
+    fetchAcademyCategories();
+  }, []);
+
+  const fetchAcademyCategories = async () => {
+    const { data } = await supabase
+      .from('academy_categories')
+      .select('id, nome')
+      .eq('ativo', true)
+      .order('ordem', { ascending: true });
+    
+    if (data) {
+      setAcademyCategories(data);
+    }
+  };
 
   // Função para renderizar ícone do perfil
   const getRoleIcon = (role: string | null) => {
@@ -584,6 +653,37 @@ function MobileSidebar() {
                                   </Link>
                                 );
                               })}
+                            
+                            {/* Categorias da Academy - só mostra para Way Academy */}
+                            {item.hasCategories && academyCategories.length > 0 && (
+                              <>
+                                <div className="pt-2 pb-1">
+                                  <div className="flex items-center gap-2 px-3 py-1 text-xs font-semibold text-muted-foreground">
+                                    <FolderOpen className="h-3.5 w-3.5" />
+                                    <span>Categorias</span>
+                                  </div>
+                                </div>
+                                {academyCategories.map((category) => {
+                                  const categoryPath = `/admin/academy?category=${category.id}`;
+                                  const isCategoryActive = location.pathname === '/admin/academy' && 
+                                                          location.search.includes(`category=${category.id}`);
+                                  return (
+                                    <Link
+                                      key={category.id}
+                                      to={categoryPath}
+                                      onClick={handleNavigation}
+                                      className={cn(
+                                        'flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-all hover:bg-accent',
+                                        isCategoryActive && 'bg-accent text-accent-foreground font-medium'
+                                      )}
+                                    >
+                                      <div className="w-1.5 h-1.5 rounded-full bg-current" />
+                                      {category.nome}
+                                    </Link>
+                                  );
+                                })}
+                              </>
+                            )}
                           </div>
                         )}
                       </>

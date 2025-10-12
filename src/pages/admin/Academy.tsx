@@ -3,11 +3,12 @@
 // Visível para: membros, gestor_conteudo e administrador
 
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { supabase } from '@/integrations/supabase/client';
-import { Video, FileText, Download } from 'lucide-react';
+import { Video, FileText, Download, ArrowLeft } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
 
 type AcademyContent = {
   id: string;
@@ -36,6 +37,9 @@ type BannerSettings = {
 
 export default function Academy() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const selectedCategoryId = searchParams.get('category');
+  
   const [contents, setContents] = useState<AcademyContent[]>([]);
   const [categories, setCategories] = useState<AcademyCategory[]>([]);
   const [banner, setBanner] = useState<BannerSettings | null>(null);
@@ -43,7 +47,7 @@ export default function Academy() {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [selectedCategoryId]);
 
   const fetchData = async () => {
     await Promise.all([fetchContents(), fetchCategories(), fetchBanner()]);
@@ -102,6 +106,11 @@ export default function Academy() {
     return contents.filter((content) => !content.categoria_id);
   };
 
+  const selectedCategory = categories.find(cat => cat.id === selectedCategoryId);
+  const displayCategories = selectedCategoryId 
+    ? categories.filter(cat => cat.id === selectedCategoryId)
+    : categories;
+
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
@@ -115,6 +124,24 @@ export default function Academy() {
 
   return (
     <div className="space-y-6">
+      {/* Botão voltar quando filtrado por categoria */}
+      {selectedCategoryId && selectedCategory && (
+        <div className="flex items-center gap-3">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => navigate('/admin/academy')}
+            className="gap-2"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Voltar para todas as categorias
+          </Button>
+          <Badge variant="secondary" className="text-sm">
+            Filtrando por: {selectedCategory.nome}
+          </Badge>
+        </div>
+      )}
+
       {/* Banner */}
       {banner && banner.banner_url && (
         <div
@@ -137,15 +164,19 @@ export default function Academy() {
 
       {!banner?.banner_url && (
         <div>
-          <h1 className="text-3xl font-bold">Way Academy</h1>
+          <h1 className="text-3xl font-bold">
+            {selectedCategory ? selectedCategory.nome : 'Way Academy'}
+          </h1>
           <p className="text-muted-foreground mt-2">
-            Acesse nossos cursos e materiais exclusivos para desenvolvimento profissional
+            {selectedCategory 
+              ? selectedCategory.descricao || 'Materiais desta categoria'
+              : 'Acesse nossos cursos e materiais exclusivos para desenvolvimento profissional'}
           </p>
         </div>
       )}
 
       {/* Conteúdos por categoria */}
-      {categories.map((category) => {
+      {displayCategories.map((category) => {
         const categoryContents = getContentsByCategory(category.id);
         if (categoryContents.length === 0) return null;
 
@@ -209,8 +240,8 @@ export default function Academy() {
         );
       })}
 
-      {/* Conteúdos sem categoria */}
-      {getContentsWithoutCategory().length > 0 && (
+      {/* Conteúdos sem categoria - só mostra se não houver filtro */}
+      {!selectedCategoryId && getContentsWithoutCategory().length > 0 && (
         <div className="space-y-4">
           <div className="flex items-center gap-3">
             <h2 className="text-2xl font-bold">Outros Conteúdos</h2>
