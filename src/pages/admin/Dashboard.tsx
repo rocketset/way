@@ -14,6 +14,7 @@ export default function Dashboard() {
     contacts: 0,
     users: 0,
     academyContents: 0,
+    academyCategories: 0,
     adminUsers: 0,
     gestorUsers: 0,
     colunistaUsers: 0,
@@ -55,6 +56,12 @@ export default function Dashboard() {
         .from('academy_content')
         .select('*', { count: 'exact', head: true });
 
+      // Busca contagem de categorias da Academy
+      const { count: categoriesCount } = await supabase
+        .from('academy_categories')
+        .select('*', { count: 'exact', head: true })
+        .eq('ativo', true);
+
       // Busca contagem de usuários por role
       const { count: adminCount } = await supabase
         .from('user_roles')
@@ -88,6 +95,7 @@ export default function Dashboard() {
         contacts: contactsCount || 0,
         users: usersCount || 0,
         academyContents: academyCount || 0,
+        academyCategories: categoriesCount || 0,
         adminUsers: adminCount || 0,
         gestorUsers: gestorCount || 0,
         colunistaUsers: colunistaCount || 0,
@@ -132,6 +140,12 @@ export default function Dashboard() {
       value: stats.academyContents,
       icon: BookOpen,
       description: 'Materiais na Way Academy',
+    },
+    {
+      title: 'Listas/Categorias',
+      value: stats.academyCategories,
+      icon: BookOpen,
+      description: 'Categorias ativas',
     },
     {
       title: 'Total de Atividades',
