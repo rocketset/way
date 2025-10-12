@@ -19,6 +19,7 @@ export default function Dashboard() {
     gestorUsers: 0,
     colunistaUsers: 0,
     membroUsers: 0,
+    clienteUsers: 0,
     totalActivities: 0,
   });
   const [loading, setLoading] = useState(true);
@@ -83,6 +84,11 @@ export default function Dashboard() {
         .select('*', { count: 'exact', head: true })
         .eq('role', 'membro');
 
+      const { count: clienteCount } = await supabase
+        .from('user_roles')
+        .select('*', { count: 'exact', head: true })
+        .eq('role', 'cliente');
+
       // Busca total de atividades
       const { count: activitiesCount } = await supabase
         .from('user_activity_logs')
@@ -100,6 +106,7 @@ export default function Dashboard() {
         gestorUsers: gestorCount || 0,
         colunistaUsers: colunistaCount || 0,
         membroUsers: membroCount || 0,
+        clienteUsers: clienteCount || 0,
         totalActivities: activitiesCount || 0,
       });
     } catch (error) {
@@ -180,6 +187,12 @@ export default function Dashboard() {
       icon: UserCheck,
       description: 'Acessam conteúdos',
     },
+    {
+      title: 'Clientes',
+      value: stats.clienteUsers,
+      icon: UserCheck,
+      description: 'Acesso aos treinamentos',
+    },
   ];
 
   if (loading) {
@@ -229,7 +242,7 @@ export default function Dashboard() {
       {/* Grid de Cards de Usuários por Role */}
       <div>
         <h2 className="text-2xl font-bold mb-4">Usuários por Tipo</h2>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
           {userRoleCards.map((stat) => {
             const Icon = stat.icon;
             return (

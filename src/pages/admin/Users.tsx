@@ -33,7 +33,7 @@ import { Plus, Pencil, Trash2, User, Image as ImageIcon } from 'lucide-react';
 import { toast } from 'sonner';
 import { MediaSelector } from '@/components/editor/MediaSelector';
 
-type UserRole = 'administrador' | 'colunista' | 'membro' | 'gestor_conteudo';
+type UserRole = 'administrador' | 'colunista' | 'membro' | 'gestor_conteudo' | 'cliente';
 
 interface Profile {
   id: string;
@@ -262,6 +262,8 @@ export default function Users() {
         return <span className="inline-flex px-2 py-1 rounded-full text-xs bg-green-100 text-green-800">Membro</span>;
       case 'gestor_conteudo':
         return <span className="inline-flex px-2 py-1 rounded-full text-xs bg-orange-100 text-orange-800">Gestor de Conteúdo</span>;
+      case 'cliente':
+        return <span className="inline-flex px-2 py-1 rounded-full text-xs bg-teal-100 text-teal-800">Cliente</span>;
       default:
         return <span className="inline-flex px-2 py-1 rounded-full text-xs bg-gray-100 text-gray-800">{user.role}</span>;
     }
@@ -465,6 +467,7 @@ export default function Users() {
                   <SelectItem value="administrador">Administrador</SelectItem>
                   <SelectItem value="colunista">Colunista</SelectItem>
                   <SelectItem value="membro">Membro</SelectItem>
+                  <SelectItem value="cliente">Cliente</SelectItem>
                   <SelectItem value="gestor_conteudo">Gestor de Conteúdo</SelectItem>
                 </SelectContent>
               </Select>

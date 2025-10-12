@@ -59,7 +59,7 @@ const menuItems = [
     icon: LayoutDashboard, 
     label: 'Dashboard', 
     path: '/admin/member-dashboard',
-    roles: ['membro'],
+    roles: ['membro', 'cliente'],
   },
   { 
     icon: LayoutDashboard, 
@@ -71,7 +71,7 @@ const menuItems = [
     icon: GraduationCap, 
     label: 'Way Academy', 
     path: '/admin/academy',
-    roles: ['administrador', 'gestor_conteudo', 'membro'],
+    roles: ['administrador', 'gestor_conteudo', 'membro', 'cliente'],
     subItems: [
       { label: 'Visualizar', path: '/admin/academy' },
       { label: 'Gerenciar Conteúdos', path: '/admin/academy/manage', roles: ['administrador', 'gestor_conteudo'] },
@@ -630,9 +630,9 @@ export default function AdminLayout() {
     }
   }, [user, loading, navigate]);
 
-  // Redireciona membros para sua dashboard específica
+  // Redireciona membros e clientes para sua dashboard específica
   useEffect(() => {
-    if (!loading && user && effectiveRole === 'membro' && location.pathname === '/admin') {
+    if (!loading && user && (effectiveRole === 'membro' || effectiveRole === 'cliente') && location.pathname === '/admin') {
       navigate('/admin/member-dashboard', { replace: true });
     }
   }, [effectiveRole, loading, user, location.pathname, navigate]);

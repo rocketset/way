@@ -7,7 +7,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 
-type UserRole = 'administrador' | 'colunista' | 'membro' | 'gestor_conteudo';
+type UserRole = 'administrador' | 'colunista' | 'membro' | 'gestor_conteudo' | 'cliente';
 
 interface AuthContextType {
   user: User | null;
@@ -18,6 +18,7 @@ interface AuthContextType {
   isColunista: boolean;
   isMembro: boolean;
   isGestorConteudo: boolean;
+  isCliente: boolean;
   viewMode: UserRole | null;
   setViewMode: (role: UserRole | null) => void;
   effectiveRole: UserRole | null;
@@ -37,6 +38,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isColunista, setIsColunista] = useState(false);
   const [isMembro, setIsMembro] = useState(false);
   const [isGestorConteudo, setIsGestorConteudo] = useState(false);
+  const [isCliente, setIsCliente] = useState(false);
   const [viewMode, setViewMode] = useState<UserRole | null>(null);
   const navigate = useNavigate();
 
@@ -71,6 +73,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setIsColunista(false);
         setIsMembro(false);
         setIsGestorConteudo(false);
+        setIsCliente(false);
         return;
       }
 
@@ -80,6 +83,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setIsColunista(role === 'colunista');
       setIsMembro(role === 'membro');
       setIsGestorConteudo(role === 'gestor_conteudo');
+      setIsCliente(role === 'cliente');
     } catch (error) {
       console.error('Erro ao verificar role:', error);
       setUserRole(null);
@@ -87,6 +91,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setIsColunista(false);
       setIsMembro(false);
       setIsGestorConteudo(false);
+      setIsCliente(false);
     } finally {
       setIsCheckingAdmin(false);
     }
@@ -111,6 +116,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           setIsColunista(false);
           setIsMembro(false);
           setIsGestorConteudo(false);
+          setIsCliente(false);
           setLastCheckedUserId(null);
         }
       }
@@ -206,6 +212,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         isColunista,
         isMembro,
         isGestorConteudo,
+        isCliente,
         viewMode,
         setViewMode,
         effectiveRole,
