@@ -84,6 +84,12 @@ const menuItems = [
     ]
   },
   { 
+    icon: FileText, 
+    label: 'Blog Way', 
+    path: '/admin/blog-way',
+    roles: ['administrador', 'gestor_conteudo', 'colunista', 'membro', 'cliente'],
+  },
+  { 
     icon: Heart, 
     label: 'Guia de Boas Práticas', 
     path: '/admin/conduct-guide',

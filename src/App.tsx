@@ -51,6 +51,7 @@ import AcademyCategories from "./pages/admin/academy/Categories";
 import AcademySettings from "./pages/admin/academy/Settings";
 import AcademySuppliers from "./pages/admin/academy/Suppliers";
 import AcademyContent from "./pages/admin/AcademyContent";
+import BlogWay from "./pages/admin/BlogWay";
 import Account from "./pages/admin/Account";
 import Support from "./pages/admin/Support";
 import Notifications from "./pages/admin/Notifications";
@@ -128,6 +129,7 @@ const App = () => (
             <Route path="academy/manage" element={<AcademyManage />} />
             <Route path="academy/categories" element={<AcademyCategories />} />
             <Route path="academy/settings" element={<AcademySettings />} />
+            <Route path="blog-way" element={<BlogWay />} />
             <Route path="conduct-guide" element={<ConductGuide />} />
             <Route path="conduct-guide/edit" element={<ConductGuideEditor />} />
             <Route path="curation" element={<Curation />} />
