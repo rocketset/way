@@ -110,8 +110,8 @@ const Blog = () => {
                     <div className="flex flex-col md:flex-row">
                       {/* Image */}
                       <div className="md:w-5/12 relative overflow-hidden">
-                        <div className="absolute top-3 left-3 z-10">
-                          <Badge className="bg-card text-foreground border-border text-xs">
+                        <div className="absolute top-3 right-3 z-10">
+                          <Badge className="bg-yellow-100 text-yellow-900 border-yellow-200 text-xs">
                             {post.categorias[0] || 'Blog'}
                           </Badge>
                         </div>
@@ -213,8 +213,8 @@ const Blog = () => {
                       <div className="bg-card rounded-xl overflow-hidden border border-border hover:border-primary transition-all duration-500 hover:shadow-lg hover:shadow-primary/10 h-full flex flex-col">
                         {/* Image */}
                         <div className="relative overflow-hidden aspect-video">
-                          <div className="absolute top-3 left-3 z-10">
-                            <Badge className="bg-card text-foreground border-border text-xs">
+                          <div className="absolute top-3 right-3 z-10">
+                            <Badge className="bg-yellow-100 text-yellow-900 border-yellow-200 text-xs">
                               {post.categorias[0] || 'Blog'}
                             </Badge>
                           </div>
