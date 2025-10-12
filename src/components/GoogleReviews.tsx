@@ -31,7 +31,7 @@ export const GoogleReviews = () => {
         {[...Array(5)].map((_, i) => <Star key={i} className={`w-4 h-4 ${i < rating ? "fill-yellow-400 text-yellow-400" : "text-gray-300"}`} />)}
       </div>;
   };
-  return <section className="py-20 px-4 bg-gradient-to-b from-background to-muted/20 bg-slate-50">
+  return <section className="py-12 px-4 bg-gradient-to-b from-background to-muted/20 bg-slate-50 rounded-3xl mx-4">
       <div className="container mx-auto max-w-6xl">
         <div className="text-center mb-12 animate-fade-in">
           <h2 className="text-4xl font-bold text-foreground mb-4">
