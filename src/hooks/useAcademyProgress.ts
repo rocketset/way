@@ -65,6 +65,16 @@ export const useUpdateProgress = () => {
         .single();
 
       if (error) throw error;
+      
+      // Registra atividade de conclusão
+      if (concluido) {
+        await supabase.from('user_activity_logs').insert({
+          user_id: user.id,
+          activity_type: 'material_complete',
+          activity_data: { content_id: contentId, material_id: materialId }
+        });
+      }
+      
       return data;
     },
     onSuccess: (_, variables) => {

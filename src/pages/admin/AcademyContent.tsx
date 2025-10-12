@@ -50,6 +50,20 @@ export default function AcademyContent() {
   useEffect(() => {
     fetchContent();
     fetchUser();
+    
+    // Registra visualização do conteúdo
+    const registerView = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user && id) {
+        await supabase.from('user_activity_logs').insert({
+          user_id: user.id,
+          activity_type: 'content_view',
+          activity_data: { content_id: id }
+        });
+      }
+    };
+    
+    registerView();
   }, [id]);
 
   const fetchUser = async () => {

@@ -31,6 +31,7 @@ import Auth from "./pages/admin/Auth";
 import ResetPassword from "./pages/admin/ResetPassword";
 import AdminLayout from "./components/admin/AdminLayout";
 import Dashboard from "./pages/admin/Dashboard";
+import MemberDashboard from "./pages/admin/MemberDashboard";
 import BlogPosts from "./pages/admin/blog/Posts";
 import BlogPostEditor from "./pages/admin/blog/PostEditor";
 import BlogCategories from "./pages/admin/blog/Categories";
@@ -94,6 +95,7 @@ const App = () => (
           {/* Rotas administrativas protegidas */}
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<Dashboard />} />
+            <Route path="member-dashboard" element={<MemberDashboard />} />
             
             {/* Rotas do Blog */}
             <Route path="blog/posts" element={<BlogPosts />} />

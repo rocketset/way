@@ -2,17 +2,27 @@
 // Exibe estatísticas e resumo do sistema
 
 import { useEffect, useState } from 'react';
+import { Navigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { supabase } from '@/integrations/supabase/client';
-import { FileText, Briefcase, Mail, Users } from 'lucide-react';
+import { useAuth } from '@/hooks/useAuth';
+import { FileText, Briefcase, Mail, Users, BookOpen, UserCheck, Activity } from 'lucide-react';
 
 export default function Dashboard() {
+  const { isAdmin, isGestorConteudo, loading: authLoading } = useAuth();
+  
   // Estados para armazenar as contagens
   const [stats, setStats] = useState({
     posts: 0,
     cases: 0,
     contacts: 0,
     users: 0,
+    academyContents: 0,
+    adminUsers: 0,
+    gestorUsers: 0,
+    colunistaUsers: 0,
+    membroUsers: 0,
+    totalActivities: 0,
   });
   const [loading, setLoading] = useState(true);
 
@@ -44,12 +54,49 @@ export default function Dashboard() {
         .from('profiles')
         .select('*', { count: 'exact', head: true });
 
+      // Busca contagem de conteúdos da Academy
+      const { count: academyCount } = await supabase
+        .from('academy_content')
+        .select('*', { count: 'exact', head: true });
+
+      // Busca contagem de usuários por role
+      const { count: adminCount } = await supabase
+        .from('user_roles')
+        .select('*', { count: 'exact', head: true })
+        .eq('role', 'administrador');
+
+      const { count: gestorCount } = await supabase
+        .from('user_roles')
+        .select('*', { count: 'exact', head: true })
+        .eq('role', 'gestor_conteudo');
+
+      const { count: colunistaCount } = await supabase
+        .from('user_roles')
+        .select('*', { count: 'exact', head: true })
+        .eq('role', 'colunista');
+
+      const { count: membroCount } = await supabase
+        .from('user_roles')
+        .select('*', { count: 'exact', head: true })
+        .eq('role', 'membro');
+
+      // Busca total de atividades
+      const { count: activitiesCount } = await supabase
+        .from('user_activity_logs')
+        .select('*', { count: 'exact', head: true });
+
       // Atualiza o estado com as contagens
       setStats({
         posts: postsCount || 0,
         cases: casesCount || 0,
         contacts: contactsCount || 0,
         users: usersCount || 0,
+        academyContents: academyCount || 0,
+        adminUsers: adminCount || 0,
+        gestorUsers: gestorCount || 0,
+        colunistaUsers: colunistaCount || 0,
+        membroUsers: membroCount || 0,
+        totalActivities: activitiesCount || 0,
       });
     } catch (error) {
       console.error('Erro ao buscar estatísticas:', error);
@@ -57,6 +104,11 @@ export default function Dashboard() {
       setLoading(false);
     }
   };
+
+  // Redireciona se não for admin ou gestor
+  if (!authLoading && !isAdmin && !isGestorConteudo) {
+    return <Navigate to="/admin/member-dashboard" replace />;
+  }
 
   // Cards com as estatísticas
   const statCards = [
@@ -84,6 +136,45 @@ export default function Dashboard() {
       icon: Users,
       description: 'Usuários cadastrados',
     },
+    {
+      title: 'Conteúdos Academy',
+      value: stats.academyContents,
+      icon: BookOpen,
+      description: 'Materiais na Way Academy',
+    },
+    {
+      title: 'Total de Atividades',
+      value: stats.totalActivities,
+      icon: Activity,
+      description: 'Acessos na plataforma',
+    },
+  ];
+
+  const userRoleCards = [
+    {
+      title: 'Administradores',
+      value: stats.adminUsers,
+      icon: UserCheck,
+      description: 'Acesso total',
+    },
+    {
+      title: 'Gestores de Conteúdo',
+      value: stats.gestorUsers,
+      icon: UserCheck,
+      description: 'Gerenciam conteúdo',
+    },
+    {
+      title: 'Colunistas',
+      value: stats.colunistaUsers,
+      icon: UserCheck,
+      description: 'Criam posts',
+    },
+    {
+      title: 'Membros',
+      value: stats.membroUsers,
+      icon: UserCheck,
+      description: 'Acessam conteúdos',
+    },
   ];
 
   if (loading) {
@@ -107,8 +198,8 @@ export default function Dashboard() {
         </p>
       </div>
 
-      {/* Grid de Cards com Estatísticas */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      {/* Grid de Cards com Estatísticas Gerais */}
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {statCards.map((stat) => {
           const Icon = stat.icon;
           return (
@@ -128,6 +219,32 @@ export default function Dashboard() {
             </Card>
           );
         })}
+      </div>
+
+      {/* Grid de Cards de Usuários por Role */}
+      <div>
+        <h2 className="text-2xl font-bold mb-4">Usuários por Tipo</h2>
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          {userRoleCards.map((stat) => {
+            const Icon = stat.icon;
+            return (
+              <Card key={stat.title}>
+                <CardHeader className="flex flex-row items-center justify-between pb-2">
+                  <CardTitle className="text-sm font-medium">
+                    {stat.title}
+                  </CardTitle>
+                  <Icon className="h-4 w-4 text-muted-foreground" />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold">{stat.value}</div>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    {stat.description}
+                  </p>
+                </CardContent>
+              </Card>
+            );
+          })}
+        </div>
       </div>
 
       {/* Informações Adicionais */}

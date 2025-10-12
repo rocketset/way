@@ -134,12 +134,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   // Função para realizar login
   const signIn = async (email: string, password: string) => {
     try {
-      const { error } = await supabase.auth.signInWithPassword({
+      const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
 
       if (error) throw error;
+
+      // Registra atividade de login
+      if (data.user) {
+        await supabase.from('user_activity_logs').insert({
+          user_id: data.user.id,
+          activity_type: 'login',
+          activity_data: { timestamp: new Date().toISOString() }
+        });
+      }
 
       toast.success('Login realizado com sucesso!');
       return { error: null };
