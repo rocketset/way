@@ -120,9 +120,6 @@ const SolutionsSection = () => {
           <Plus className="absolute top-1/2 left-10 w-24 h-24 text-primary/50 animate-[spin_18s_linear_infinite]" />
           <Plus className="absolute bottom-32 right-32 w-28 h-28 text-primary/50 animate-[spin_22s_linear_infinite_reverse]" />
         </div>
-        
-        {/* Grid pattern overlay */}
-        <div className="absolute inset-0 plus-pattern opacity-20" />
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
