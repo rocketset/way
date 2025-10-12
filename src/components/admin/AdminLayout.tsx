@@ -992,13 +992,13 @@ export default function AdminLayout() {
         )}
 
         {/* Área de Conteúdo - renderiza as páginas filhas */}
-        <main className="flex-1 overflow-y-auto">
-          <div className="container mx-auto p-6">
+        <main className="flex-1 overflow-y-auto flex flex-col">
+          <div className="flex-1 container mx-auto p-6">
             <Outlet />
           </div>
           
           {/* Rodapé */}
-          <footer className="border-t py-6 px-6 bg-card">
+          <footer className="border-t py-4 px-6 bg-card mt-auto">
             <div className="container mx-auto">
               <p className="text-sm text-muted-foreground text-center">
                 © 2025 Way E-commerce | CNPJ 27.195.145/0001-41 — Todos os direitos reservados.
