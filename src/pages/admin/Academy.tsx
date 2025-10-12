@@ -166,7 +166,7 @@ export default function Academy() {
                 <Card 
                   key={content.id} 
                   className="hover:shadow-lg transition-all cursor-pointer overflow-hidden"
-                  onClick={() => navigate(`/admin/academy/content/${content.id}`)}
+                  onClick={() => navigate(`/academy/content/${content.id}`)}
                 >
                   {content.capa_url && (
                     <div className="relative h-48 overflow-hidden">
@@ -224,7 +224,7 @@ export default function Academy() {
               <Card 
                 key={content.id} 
                 className="hover:shadow-lg transition-all cursor-pointer overflow-hidden"
-                onClick={() => navigate(`/admin/academy/content/${content.id}`)}
+                onClick={() => navigate(`/academy/content/${content.id}`)}
               >
                 {content.capa_url && (
                   <div className="relative h-48 overflow-hidden">

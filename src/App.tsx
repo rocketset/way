@@ -88,6 +88,9 @@ const App = () => (
           <Route path="/auth/login" element={<Auth />} />
           <Route path="/auth/reset-password" element={<ResetPassword />} />
           
+          {/* Rota de visualização de conteúdo da Academy (fora do layout admin) */}
+          <Route path="/academy/content/:id" element={<AcademyContent />} />
+          
           {/* Rotas administrativas protegidas */}
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<Dashboard />} />
@@ -116,7 +119,6 @@ const App = () => (
             
             {/* Novas seções */}
             <Route path="academy" element={<Academy />} />
-            <Route path="academy/content/:id" element={<AcademyContent />} />
             <Route path="academy/manage" element={<AcademyManage />} />
             <Route path="academy/categories" element={<AcademyCategories />} />
             <Route path="academy/settings" element={<AcademySettings />} />
