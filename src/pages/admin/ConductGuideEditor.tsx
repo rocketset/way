@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Heart, ArrowLeft, Plus, Trash2, Save } from "lucide-react";
+import { Heart, ArrowLeft, Save, Plus, Trash2 } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,7 +8,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useConductGuideContent, useUpdateConductGuideSection } from "@/hooks/useConductGuideContent";
-import { toast } from "@/hooks/use-toast";
 
 export default function ConductGuideEditor() {
   const navigate = useNavigate();
@@ -23,34 +22,65 @@ export default function ConductGuideEditor() {
       id: section.id,
       section_title: section.section_title,
       section_description: section.section_description || "",
-      content: JSON.stringify(section.content, null, 2),
+      content: section.content,
     });
   };
 
   const handleSave = () => {
     if (!formData.id) return;
-
-    try {
-      const parsedContent = JSON.parse(formData.content);
-      updateSection.mutate({
-        id: formData.id,
-        section_title: formData.section_title,
-        section_description: formData.section_description,
-        content: parsedContent,
-      });
-      setEditingSection(null);
-    } catch (error) {
-      toast({
-        title: "Erro",
-        description: "JSON inválido no conteúdo",
-        variant: "destructive",
-      });
-    }
+    
+    updateSection.mutate({
+      id: formData.id,
+      section_title: formData.section_title,
+      section_description: formData.section_description,
+      content: formData.content,
+    });
+    setEditingSection(null);
   };
 
   const handleCancel = () => {
     setEditingSection(null);
     setFormData({});
+  };
+
+  const updateContentItem = (index: number, field: string, value: string) => {
+    const newContent = [...formData.content];
+    newContent[index] = { ...newContent[index], [field]: value };
+    setFormData({ ...formData, content: newContent });
+  };
+
+  const updateContentItemList = (itemIndex: number, listIndex: number, value: string) => {
+    const newContent = [...formData.content];
+    const newItems = [...newContent[itemIndex].items];
+    newItems[listIndex] = value;
+    newContent[itemIndex] = { ...newContent[itemIndex], items: newItems };
+    setFormData({ ...formData, content: newContent });
+  };
+
+  const addListItem = (itemIndex: number) => {
+    const newContent = [...formData.content];
+    if (!newContent[itemIndex].items) {
+      newContent[itemIndex].items = [];
+    }
+    newContent[itemIndex].items.push("");
+    setFormData({ ...formData, content: newContent });
+  };
+
+  const removeListItem = (itemIndex: number, listIndex: number) => {
+    const newContent = [...formData.content];
+    newContent[itemIndex].items = newContent[itemIndex].items.filter((_: any, i: number) => i !== listIndex);
+    setFormData({ ...formData, content: newContent });
+  };
+
+  const addContentItem = () => {
+    const newContent = [...formData.content];
+    newContent.push({ title: "", content: "", items: [] });
+    setFormData({ ...formData, content: newContent });
+  };
+
+  const removeContentItem = (index: number) => {
+    const newContent = formData.content.filter((_: any, i: number) => i !== index);
+    setFormData({ ...formData, content: newContent });
   };
 
   if (isLoading) {
@@ -110,7 +140,7 @@ export default function ConductGuideEditor() {
               </CardHeader>
               <CardContent>
                 {editingSection === section.id ? (
-                  <div className="space-y-4">
+                  <div className="space-y-6">
                     <div className="space-y-2">
                       <Label htmlFor="section_title">Título da Seção</Label>
                       <Input
@@ -134,22 +164,98 @@ export default function ConductGuideEditor() {
                         }
                       />
                     </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="content">
-                        Conteúdo (JSON)
-                        <span className="text-xs text-muted-foreground ml-2">
-                          Edite cuidadosamente o JSON abaixo
-                        </span>
-                      </Label>
-                      <Textarea
-                        id="content"
-                        value={formData.content}
-                        onChange={(e) =>
-                          setFormData({ ...formData, content: e.target.value })
-                        }
-                        className="font-mono text-sm min-h-[300px]"
-                      />
+
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between">
+                        <Label>Itens de Conteúdo</Label>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          onClick={addContentItem}
+                        >
+                          <Plus className="h-4 w-4 mr-2" />
+                          Adicionar Item
+                        </Button>
+                      </div>
+
+                      {formData.content?.map((item: any, itemIndex: number) => (
+                        <Card key={itemIndex} className="p-4 bg-muted/50">
+                          <div className="space-y-4">
+                            <div className="flex items-start justify-between gap-2">
+                              <div className="flex-1 space-y-2">
+                                <Label>Título</Label>
+                                <Input
+                                  value={item.title || ""}
+                                  onChange={(e) =>
+                                    updateContentItem(itemIndex, "title", e.target.value)
+                                  }
+                                  placeholder="Título do item"
+                                />
+                              </div>
+                              <Button
+                                type="button"
+                                variant="ghost"
+                                size="icon"
+                                onClick={() => removeContentItem(itemIndex)}
+                              >
+                                <Trash2 className="h-4 w-4" />
+                              </Button>
+                            </div>
+
+                            {item.content !== undefined && (
+                              <div className="space-y-2">
+                                <Label>Texto</Label>
+                                <Textarea
+                                  value={item.content || ""}
+                                  onChange={(e) =>
+                                    updateContentItem(itemIndex, "content", e.target.value)
+                                  }
+                                  placeholder="Texto descritivo"
+                                />
+                              </div>
+                            )}
+
+                            {item.items && (
+                              <div className="space-y-2">
+                                <div className="flex items-center justify-between">
+                                  <Label>Lista de Itens</Label>
+                                  <Button
+                                    type="button"
+                                    variant="ghost"
+                                    size="sm"
+                                    onClick={() => addListItem(itemIndex)}
+                                  >
+                                    <Plus className="h-3 w-3 mr-1" />
+                                    Item
+                                  </Button>
+                                </div>
+                                {item.items.map((listItem: string, listIndex: number) => (
+                                  <div key={listIndex} className="flex gap-2">
+                                    <Input
+                                      value={listItem}
+                                      onChange={(e) =>
+                                        updateContentItemList(itemIndex, listIndex, e.target.value)
+                                      }
+                                      placeholder="Item da lista"
+                                    />
+                                    <Button
+                                      type="button"
+                                      variant="ghost"
+                                      size="icon"
+                                      onClick={() => removeListItem(itemIndex, listIndex)}
+                                    >
+                                      <Trash2 className="h-4 w-4" />
+                                    </Button>
+                                  </div>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                        </Card>
+                      ))}
                     </div>
+
                     <div className="flex gap-2">
                       <Button onClick={handleSave} disabled={updateSection.isPending}>
                         <Save className="h-4 w-4 mr-2" />
