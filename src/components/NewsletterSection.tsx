@@ -13,7 +13,7 @@ const NewsletterSection = () => {
   };
 
   return (
-    <section className="py-16 px-4 bg-background">
+    <section className="py-16 px-4 bg-muted">
       <div className="container mx-auto">
         <div className="max-w-xl mx-auto text-center">
           <h2 className="text-2xl md:text-3xl font-normal text-foreground mb-8 leading-relaxed">
@@ -36,7 +36,7 @@ const NewsletterSection = () => {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   required
-                  className="w-full"
+                  className="w-full bg-background"
                 />
               </div>
 
@@ -51,7 +51,7 @@ const NewsletterSection = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="w-full"
+                  className="w-full bg-background"
                 />
               </div>
             </div>
@@ -66,7 +66,7 @@ const NewsletterSection = () => {
             <Button
               type="submit"
               size="lg"
-              className="w-full md:w-auto md:min-w-[200px] bg-primary hover:bg-primary/90 text-primary-foreground font-semibold px-12 py-6 text-lg rounded-full"
+              className="w-full md:w-auto md:min-w-[200px] bg-primary hover:bg-primary/90 text-primary-foreground font-semibold px-12 py-6 text-lg rounded-sm"
             >
               Cadastrar
             </Button>
