@@ -205,14 +205,14 @@ export default function CaseEditor() {
             </CardHeader>
             <CardContent className="space-y-4">
               <FileUpload
-                label="Imagem da Capa (Aparece nas Listagens)"
+                label="Imagem da Capa (Banner)"
                 accept="image/*"
                 currentUrl={clientInfoData.banner_url}
                 onUploadComplete={(url) => setClientInfoData({ ...clientInfoData, banner_url: url })}
                 folder="cases/banners"
                 maxSizeMB={5}
                 showPreview={true}
-                helperText="Esta é a imagem que aparece na página inicial e na lista de cases | Dimensões recomendadas: 1920x512px (formato 21:6) | Máx: 5MB"
+                helperText="Esta imagem aparece SOMENTE na primeira seção da página do case | Dimensões recomendadas: 1920x512px (formato 21:6) | Máx: 5MB"
               />
               <div>
                 <Label>Sobre o Cliente</Label>
@@ -275,14 +275,14 @@ export default function CaseEditor() {
                 />
               </div>
               <FileUpload
-                label="Imagem Principal"
+                label="Imagem Principal (Aparece nas Listagens)"
                 accept="image/*"
                 currentUrl={heroData.imagem_principal}
                 onUploadComplete={(url) => setHeroData({ ...heroData, imagem_principal: url })}
                 folder="cases/hero"
                 maxSizeMB={3}
                 showPreview={true}
-                helperText="Dimensões recomendadas: 800x800px (quadrada) | Máx: 3MB"
+                helperText="Esta imagem aparece na página inicial e na lista de cases | Dimensões recomendadas: 800x800px (quadrada) | Máx: 3MB"
               />
               <div>
                 <Label>Tags</Label>

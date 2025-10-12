@@ -26,6 +26,7 @@ const CasesSection = () => {
   useEffect(() => {
     fetchCases();
   }, []);
+
   const scrollPrev = useCallback(() => {
     if (emblaApi) emblaApi.scrollPrev();
   }, [emblaApi]);
@@ -57,10 +58,10 @@ const CasesSection = () => {
     }
 
     const mapped = (data || []).map((c: any) => {
-      const clientInfo = (c.case_content_blocks || []).find((b: any) => b.block_type === 'client_info');
-      const banner = clientInfo?.content?.banner_url || '/placeholder.svg';
+      const heroBlock = c.case_content_blocks?.find((b: any) => b.block_type === 'hero');
+      const imagemPrincipal = heroBlock?.content?.imagem_principal || '/placeholder.svg';
       const tags = c.case_tags?.map((ct: any) => ct.tags.nome) || [];
-      return { ...c, imagem_url: banner, tags } as CaseItem;
+      return { ...c, imagem_url: imagemPrincipal, tags } as CaseItem;
     });
 
     setCases(mapped);
