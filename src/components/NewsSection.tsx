@@ -28,7 +28,7 @@ const NewsSection = () => {
         <div className="mb-12 animate-fade-in text-center">
           <h2 className="text-4xl font-bold text-foreground mb-4">Conteúdos Way</h2>
           <p className="text-muted-foreground">
-            Fique por dentro das tendências e insights mais relevantes. Atualizações e conteúdos exclusivos.
+            As novidades que estão virando o jogo no digital
           </p>
         </div>
 
