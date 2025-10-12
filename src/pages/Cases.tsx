@@ -18,9 +18,9 @@ const Cases = () => {
   const { data: casesData, isLoading: casesLoading } = useCases("", selectedCategory);
 
   const categories = ["Todos", ...(categoriesData?.map((c) => c.nome) || [])];
-  const featuredCases = casesData?.featured || [];
-  const regularCases = casesData?.regular.slice(0, visibleCases) || [];
-  const hasMoreCases = (casesData?.regular.length || 0) > visibleCases;
+  const allCases = [...(casesData?.featured || []), ...(casesData?.regular || [])];
+  const visibleCasesList = allCases.slice(0, visibleCases);
+  const hasMoreCases = allCases.length > visibleCases;
 
   const handleLoadMore = () => {
     setVisibleCases((prev) => prev + 4);
@@ -86,82 +86,7 @@ const Cases = () => {
         </div>
       </section>
 
-      {/* Featured Cases */}
-      {featuredCases.length > 0 && (
-        <section className="pb-16 px-4">
-          <div className="container mx-auto">
-            <div className="max-w-7xl mx-auto space-y-8">
-              {featuredCases.map((caseItem) => (
-                <Link
-                  key={caseItem.id}
-                  to={`/cases/${caseItem.id}`}
-                  className="block group"
-                >
-                  <div className="relative bg-card rounded-3xl overflow-hidden border border-border hover:border-primary transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10">
-                    <div className="flex flex-col md:flex-row">
-                      {/* Image */}
-                      <div className="md:w-2/5 relative overflow-hidden">
-                        <div className="absolute top-4 left-4 z-10">
-                          <Badge className="bg-card text-foreground border-border">
-                            {caseItem.categoria_nome || 'Case'}
-                          </Badge>
-                        </div>
-                        <img
-                          src={caseItem.imagem_url || '/placeholder.svg'}
-                          alt={caseItem.titulo}
-                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-r from-background/80 to-transparent md:hidden" />
-                      </div>
-
-                      {/* Content */}
-                      <div className="md:w-3/5 p-8 md:p-12 flex flex-col justify-center">
-                        <div className="space-y-4">
-                          <h2 className="text-3xl md:text-4xl font-bold text-foreground group-hover:text-primary transition-colors duration-300">
-                            {caseItem.titulo}
-                          </h2>
-                          
-                          <p className="text-lg text-muted-foreground">
-                            {caseItem.descricao}
-                          </p>
-
-                          {/* Tags */}
-                          {caseItem.tags.length > 0 && (
-                            <div className="flex flex-wrap gap-2 pt-2">
-                              {caseItem.tags.map((tag) => (
-                                <Badge
-                                  key={tag}
-                                  variant="secondary"
-                                  className="bg-primary/10 text-primary border-primary/20 hover:bg-primary/20 hover:text-foreground transition-colors duration-300"
-                                >
-                                  {tag}
-                                </Badge>
-                              ))}
-                            </div>
-                          )}
-
-                          {/* CTA */}
-                          <div className="pt-4">
-                            <Button
-                              variant="ghost"
-                              className="text-primary hover:text-primary hover:bg-primary/10 group/btn p-0"
-                            >
-                              <span className="mr-2">Ver case completo</span>
-                              <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover/btn:translate-x-1" />
-                            </Button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Regular Cases Grid */}
+      {/* Cases Grid 2x2 */}
       <section className="pb-24 px-4">
         <div className="container mx-auto">
           <div className="max-w-7xl mx-auto">
@@ -175,7 +100,7 @@ const Cases = () => {
                   </div>
                 ))}
               </div>
-            ) : regularCases.length === 0 ? (
+            ) : visibleCasesList.length === 0 ? (
               <div className="text-center py-16">
                 <p className="text-muted-foreground text-lg">
                   Nenhum case encontrado. Ajuste os filtros ou volte em breve para novos cases!
@@ -184,7 +109,7 @@ const Cases = () => {
             ) : (
               <>
                 <div className="grid md:grid-cols-2 gap-6">
-                  {regularCases.map((caseItem) => (
+                  {visibleCasesList.map((caseItem) => (
                     <Link
                       key={caseItem.id}
                       to={`/cases/${caseItem.id}`}
