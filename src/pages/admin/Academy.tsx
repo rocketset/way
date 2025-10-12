@@ -3,6 +3,7 @@
 // Visível para: membros, gestor_conteudo e administrador
 
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { supabase } from '@/integrations/supabase/client';
@@ -34,6 +35,7 @@ type BannerSettings = {
 };
 
 export default function Academy() {
+  const navigate = useNavigate();
   const [contents, setContents] = useState<AcademyContent[]>([]);
   const [categories, setCategories] = useState<AcademyCategory[]>([]);
   const [banner, setBanner] = useState<BannerSettings | null>(null);
@@ -158,7 +160,11 @@ export default function Academy() {
 
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {categoryContents.map((content) => (
-                <Card key={content.id} className="hover:shadow-lg transition-shadow overflow-hidden">
+                <Card 
+                  key={content.id} 
+                  className="hover:shadow-lg transition-all cursor-pointer overflow-hidden"
+                  onClick={() => navigate(`/admin/academy/content/${content.id}`)}
+                >
                   {content.capa_url && (
                     <div className="relative h-48 overflow-hidden">
                       <img
@@ -187,23 +193,11 @@ export default function Academy() {
                     <p className="text-sm text-muted-foreground mb-4">
                       {content.descricao}
                     </p>
-                    <div className="flex items-center justify-between">
-                      {content.duracao && (
-                        <span className="text-xs text-muted-foreground">
-                          {content.duracao}
-                        </span>
-                      )}
-                      {content.arquivo_url && (
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          onClick={() => window.open(content.arquivo_url!, '_blank')}
-                        >
-                          <Download className="h-4 w-4 mr-2" />
-                          Acessar
-                        </Button>
-                      )}
-                    </div>
+                    {content.duracao && (
+                      <span className="text-xs text-muted-foreground">
+                        {content.duracao}
+                      </span>
+                    )}
                   </CardContent>
                 </Card>
               ))}
@@ -219,7 +213,11 @@ export default function Academy() {
 
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {getContentsWithoutCategory().map((content) => (
-              <Card key={content.id} className="hover:shadow-lg transition-shadow overflow-hidden">
+              <Card 
+                key={content.id} 
+                className="hover:shadow-lg transition-all cursor-pointer overflow-hidden"
+                onClick={() => navigate(`/admin/academy/content/${content.id}`)}
+              >
                 {content.capa_url && (
                   <div className="relative h-48 overflow-hidden">
                     <img
@@ -248,23 +246,11 @@ export default function Academy() {
                   <p className="text-sm text-muted-foreground mb-4">
                     {content.descricao}
                   </p>
-                  <div className="flex items-center justify-between">
-                    {content.duracao && (
-                      <span className="text-xs text-muted-foreground">
-                        {content.duracao}
-                      </span>
-                    )}
-                    {content.arquivo_url && (
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        onClick={() => window.open(content.arquivo_url!, '_blank')}
-                      >
-                        <Download className="h-4 w-4 mr-2" />
-                        Acessar
-                      </Button>
-                    )}
-                  </div>
+                  {content.duracao && (
+                    <span className="text-xs text-muted-foreground">
+                      {content.duracao}
+                    </span>
+                  )}
                 </CardContent>
               </Card>
             ))}

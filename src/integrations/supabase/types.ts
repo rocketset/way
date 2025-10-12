@@ -103,6 +103,101 @@ export type Database = {
           },
         ]
       }
+      academy_materials: {
+        Row: {
+          arquivo_url: string | null
+          atualizado_em: string
+          content_id: string
+          criado_em: string
+          duracao: string | null
+          formato: string
+          id: string
+          nome: string
+          ordem: number | null
+          tipo_material: string
+        }
+        Insert: {
+          arquivo_url?: string | null
+          atualizado_em?: string
+          content_id: string
+          criado_em?: string
+          duracao?: string | null
+          formato: string
+          id?: string
+          nome: string
+          ordem?: number | null
+          tipo_material: string
+        }
+        Update: {
+          arquivo_url?: string | null
+          atualizado_em?: string
+          content_id?: string
+          criado_em?: string
+          duracao?: string | null
+          formato?: string
+          id?: string
+          nome?: string
+          ordem?: number | null
+          tipo_material?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "academy_materials_content_id_fkey"
+            columns: ["content_id"]
+            isOneToOne: false
+            referencedRelation: "academy_content"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      academy_progress: {
+        Row: {
+          atualizado_em: string
+          concluido: boolean | null
+          content_id: string
+          criado_em: string
+          id: string
+          material_id: string | null
+          progresso: number | null
+          user_id: string
+        }
+        Insert: {
+          atualizado_em?: string
+          concluido?: boolean | null
+          content_id: string
+          criado_em?: string
+          id?: string
+          material_id?: string | null
+          progresso?: number | null
+          user_id: string
+        }
+        Update: {
+          atualizado_em?: string
+          concluido?: boolean | null
+          content_id?: string
+          criado_em?: string
+          id?: string
+          material_id?: string | null
+          progresso?: number | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "academy_progress_content_id_fkey"
+            columns: ["content_id"]
+            isOneToOne: false
+            referencedRelation: "academy_content"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "academy_progress_material_id_fkey"
+            columns: ["material_id"]
+            isOneToOne: false
+            referencedRelation: "academy_materials"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       academy_settings: {
         Row: {
           atualizado_em: string

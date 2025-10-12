@@ -48,6 +48,7 @@ import Academy from "./pages/admin/Academy";
 import AcademyManage from "./pages/admin/academy/Manage";
 import AcademyCategories from "./pages/admin/academy/Categories";
 import AcademySettings from "./pages/admin/academy/Settings";
+import AcademyContent from "./pages/admin/AcademyContent";
 import Account from "./pages/admin/Account";
 import Support from "./pages/admin/Support";
 import Notifications from "./pages/admin/Notifications";
@@ -115,6 +116,7 @@ const App = () => (
             
             {/* Novas seções */}
             <Route path="academy" element={<Academy />} />
+            <Route path="academy/content/:id" element={<AcademyContent />} />
             <Route path="academy/manage" element={<AcademyManage />} />
             <Route path="academy/categories" element={<AcademyCategories />} />
             <Route path="academy/settings" element={<AcademySettings />} />
