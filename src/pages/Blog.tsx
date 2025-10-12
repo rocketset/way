@@ -35,7 +35,7 @@ const Blog = () => {
       <Header />
       
       {/* Hero Section */}
-      <section className="pt-32 pb-16 px-4">
+      <section className="pt-28 pb-12 px-4">
         <div className="container mx-auto">
           <div className="max-w-4xl mx-auto text-center space-y-6">
             <div className="inline-block">
@@ -57,7 +57,7 @@ const Blog = () => {
       </section>
 
       {/* Filters Section */}
-      <section className="pb-12 px-4">
+      <section className="pb-10 px-4">
         <div className="container mx-auto">
           <div className="max-w-7xl mx-auto">
             {/* Search Bar */}
@@ -103,7 +103,7 @@ const Blog = () => {
 
       {/* Featured Posts */}
       {featuredPosts.length > 0 && (
-        <section className="pb-16 px-4">
+        <section className="pb-12 px-4">
           <div className="container mx-auto">
             <div className="max-w-7xl mx-auto space-y-8">
               {featuredPosts.map((post, index) => (
@@ -195,7 +195,7 @@ const Blog = () => {
       )}
 
       {/* Regular Posts Grid */}
-      <section className="pb-24 px-4">
+      <section className="pb-20 px-4">
         <div className="container mx-auto">
           <div className="max-w-7xl mx-auto">
             {postsLoading ? (
