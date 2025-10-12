@@ -71,6 +71,14 @@ export function ParagraphBlockEditor({
     return `https://${trimmed}`;
   };
 
+  const handleInsertList = (type: 'ul' | 'ol') => {
+    const command = type === 'ul' ? 'insertUnorderedList' : 'insertOrderedList';
+    document.execCommand(command, false);
+    if (contentRef.current) {
+      onChange({ ...block, content: contentRef.current.innerHTML });
+    }
+  };
+
   const handleApplyLink = () => {
     const sel = window.getSelection();
     const range = savedRangeRef.current;
@@ -130,6 +138,7 @@ export function ParagraphBlockEditor({
             onAlignmentChange={handleAlignmentChange}
             onCaptureSelection={captureSelection}
             onRequestLink={() => setLinkOpen(true)}
+            onInsertList={handleInsertList}
           />
         )}
 

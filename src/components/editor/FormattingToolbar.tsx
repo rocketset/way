@@ -13,6 +13,8 @@ import {
   AlignCenter,
   AlignRight,
   AlignJustify,
+  List,
+  ListOrdered,
 } from 'lucide-react';
 import {
   Tooltip,
@@ -26,6 +28,7 @@ interface FormattingToolbarProps {
   onAlignmentChange?: (alignment: 'left' | 'center' | 'right' | 'justify') => void;
   onRequestLink?: () => void;
   onCaptureSelection?: () => void;
+  onInsertList?: (type: 'ul' | 'ol') => void;
 }
 
 /**
@@ -38,6 +41,7 @@ export function FormattingToolbar({
   onAlignmentChange,
   onRequestLink,
   onCaptureSelection,
+  onInsertList,
 }: FormattingToolbarProps) {
   const formatButtons = [
     { icon: Bold, format: 'bold', label: 'Negrito', shortcut: 'Ctrl+B' },
@@ -88,6 +92,48 @@ export function FormattingToolbar({
           </TooltipContent>
         </Tooltip>
       ))}
+
+      {onInsertList && (
+        <>
+          <div className="h-6 w-px bg-border mx-1" />
+
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-8 w-8"
+                onMouseDown={(e) => {
+                  e.preventDefault();
+                  onCaptureSelection?.();
+                  onInsertList('ul');
+                }}
+              >
+                <List className="h-4 w-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent side="top">Lista com marcadores</TooltipContent>
+          </Tooltip>
+
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-8 w-8"
+                onMouseDown={(e) => {
+                  e.preventDefault();
+                  onCaptureSelection?.();
+                  onInsertList('ol');
+                }}
+              >
+                <ListOrdered className="h-4 w-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent side="top">Lista numerada</TooltipContent>
+          </Tooltip>
+        </>
+      )}
 
       {onAlignmentChange && (
         <>

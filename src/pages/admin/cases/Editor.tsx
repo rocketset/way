@@ -16,6 +16,7 @@ import { TagsAutocomplete } from "@/components/editor/TagsAutocomplete";
 import FileUpload from "@/components/admin/FileUpload";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { CaseRichTextEditor } from "@/components/admin/CaseRichTextEditor";
 import type {
   HeroBlockContent,
   TextColumnsBlockContent,
@@ -315,11 +316,10 @@ export default function CaseEditor() {
                 <p className="text-sm text-muted-foreground mb-2">
                   Descreva o desafio enfrentado pelo cliente
                 </p>
-                <Textarea
+                <CaseRichTextEditor
                   value={textColumnsData.coluna_esquerda}
-                  onChange={(e) => setTextColumnsData({ ...textColumnsData, coluna_esquerda: e.target.value })}
+                  onChange={(value) => setTextColumnsData({ ...textColumnsData, coluna_esquerda: value })}
                   placeholder="Texto do desafio..."
-                  rows={8}
                 />
               </div>
               <div>
@@ -329,11 +329,10 @@ export default function CaseEditor() {
                 <p className="text-sm text-muted-foreground mb-2">
                   Descreva os resultados alcançados
                 </p>
-                <Textarea
+                <CaseRichTextEditor
                   value={textColumnsData.coluna_direita}
-                  onChange={(e) => setTextColumnsData({ ...textColumnsData, coluna_direita: e.target.value })}
+                  onChange={(value) => setTextColumnsData({ ...textColumnsData, coluna_direita: value })}
                   placeholder="Texto dos resultados..."
-                  rows={8}
                 />
               </div>
               <Button onClick={handleSaveTextColumns} disabled={saveMutation.isPending}>
