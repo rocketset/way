@@ -56,10 +56,10 @@ const Index = () => {
           <GoogleReviews />
         </div>
         <div className="animate-fade-in" style={{ animationDelay: '0.7s' }}>
-          <NewsSection />
+          <CtaResultsSection />
         </div>
         <div className="animate-fade-in" style={{ animationDelay: '0.8s' }}>
-          <CtaResultsSection />
+          <NewsSection />
         </div>
         <Footer />
       </div>
