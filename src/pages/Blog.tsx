@@ -124,7 +124,7 @@ const Blog = () => {
                             <h2 className="text-xl md:text-2xl font-bold text-foreground group-hover:text-primary transition-colors duration-300 line-clamp-2 flex-1">
                               {post.titulo}
                             </h2>
-                            <Badge className="bg-yellow-100 text-yellow-900 border-yellow-200 text-xs whitespace-nowrap">
+                            <Badge className="bg-yellow-100 text-yellow-900 border-yellow-200 text-xs whitespace-nowrap -mt-1 self-start">
                               {post.categorias[0] || 'Blog'}
                             </Badge>
                           </div>
@@ -227,7 +227,7 @@ const Blog = () => {
                               <h3 className="text-lg font-bold text-foreground group-hover:text-primary transition-colors duration-300 line-clamp-2 flex-1">
                                 {post.titulo}
                               </h3>
-                              <Badge className="bg-yellow-100 text-yellow-900 border-yellow-200 text-xs whitespace-nowrap">
+                              <Badge className="bg-yellow-100 text-yellow-900 border-yellow-200 text-xs whitespace-nowrap -mt-1 self-start">
                                 {post.categorias[0] || 'Blog'}
                               </Badge>
                             </div>
