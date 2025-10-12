@@ -309,20 +309,30 @@ export default function CaseEditor() {
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
-                <Label>Coluna Esquerda</Label>
+                <Label className="text-lg font-semibold flex items-center gap-2">
+                  <span className="text-primary">🎯</span> Desafio:
+                </Label>
+                <p className="text-sm text-muted-foreground mb-2">
+                  Descreva o desafio enfrentado pelo cliente
+                </p>
                 <Textarea
                   value={textColumnsData.coluna_esquerda}
                   onChange={(e) => setTextColumnsData({ ...textColumnsData, coluna_esquerda: e.target.value })}
-                  placeholder="Texto da coluna esquerda"
+                  placeholder="Texto do desafio..."
                   rows={8}
                 />
               </div>
               <div>
-                <Label>Coluna Direita</Label>
+                <Label className="text-lg font-semibold flex items-center gap-2">
+                  <span className="text-accent">🏆</span> Resultado:
+                </Label>
+                <p className="text-sm text-muted-foreground mb-2">
+                  Descreva os resultados alcançados
+                </p>
                 <Textarea
                   value={textColumnsData.coluna_direita}
                   onChange={(e) => setTextColumnsData({ ...textColumnsData, coluna_direita: e.target.value })}
-                  placeholder="Texto da coluna direita"
+                  placeholder="Texto dos resultados..."
                   rows={8}
                 />
               </div>
