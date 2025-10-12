@@ -82,7 +82,7 @@ const menuItems = [
   },
   { 
     icon: Heart, 
-    label: 'Guia de Boas Práticas e Conduta', 
+    label: 'Guia de Boas Práticas', 
     path: '/admin/conduct-guide',
     roles: ['administrador', 'gestor_conteudo', 'colunista', 'membro', 'cliente'],
   },
