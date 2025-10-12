@@ -11,13 +11,9 @@ import { useAuth } from '@/hooks/useAuth';
 import { Loader2 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
-import { useTheme } from '@/contexts/ThemeContext';
-import logoWayLight from '@/assets/logo-way-light.png';
-import logoWayDark from '@/assets/logo-way-dark.png';
+import logoWay from '@/assets/logo-way.png';
 
 export default function Auth() {
-  const { actualTheme } = useTheme();
-  const logoWay = actualTheme === 'dark' ? logoWayDark : logoWayLight;
   const [isLogin, setIsLogin] = useState(true); // Controla se está em modo login ou registro
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
