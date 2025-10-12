@@ -16,7 +16,7 @@ const Footer = () => {
   };
   return <footer className="py-12 bg-[#1a1a1a]">
       <div className="container mx-auto px-4">
-        <div className="rounded-2xl p-8 md:p-10 bg-zinc-800">
+        <div className="rounded-2xl p-8 md:p-10 bg-[#2a2a2a]">
           <div className="grid md:grid-cols-2 gap-8 md:gap-12">
             {/* Left Side - Company Info */}
             <div className="space-y-6 border-r border-white/10 pr-8">
