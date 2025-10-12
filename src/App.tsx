@@ -58,6 +58,7 @@ import Notifications from "./pages/admin/Notifications";
 import Curation from "./pages/admin/Curation";
 import ConductGuide from "./pages/admin/ConductGuide";
 import ConductGuideEditor from "./pages/admin/ConductGuideEditor";
+import GoogleReviewsSync from "./pages/admin/GoogleReviewsSync";
 
 // Configuração do React Query
 const queryClient = new QueryClient();
@@ -136,6 +137,7 @@ const App = () => (
             <Route path="notifications" element={<Notifications />} />
             <Route path="account" element={<Account />} />
             <Route path="support" element={<Support />} />
+            <Route path="google-reviews" element={<GoogleReviewsSync />} />
           </Route>
           
           {/* Rota 404 - deve ser sempre a última */}

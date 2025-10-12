@@ -493,6 +493,78 @@ export type Database = {
         }
         Relationships: []
       }
+      google_place_config: {
+        Row: {
+          created_at: string
+          id: string
+          last_synced_at: string | null
+          place_id: string
+          place_name: string | null
+          rating: number | null
+          updated_at: string
+          user_ratings_total: number | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          last_synced_at?: string | null
+          place_id: string
+          place_name?: string | null
+          rating?: number | null
+          updated_at?: string
+          user_ratings_total?: number | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          last_synced_at?: string | null
+          place_id?: string
+          place_name?: string | null
+          rating?: number | null
+          updated_at?: string
+          user_ratings_total?: number | null
+        }
+        Relationships: []
+      }
+      google_reviews: {
+        Row: {
+          author_name: string
+          author_url: string | null
+          created_at: string
+          id: string
+          profile_photo_url: string | null
+          rating: number
+          relative_time_description: string | null
+          text: string | null
+          time: string
+          updated_at: string
+        }
+        Insert: {
+          author_name: string
+          author_url?: string | null
+          created_at?: string
+          id?: string
+          profile_photo_url?: string | null
+          rating: number
+          relative_time_description?: string | null
+          text?: string | null
+          time: string
+          updated_at?: string
+        }
+        Update: {
+          author_name?: string
+          author_url?: string | null
+          created_at?: string
+          id?: string
+          profile_photo_url?: string | null
+          rating?: number
+          relative_time_description?: string | null
+          text?: string | null
+          time?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       media_library: {
         Row: {
           alt_text: string | null
