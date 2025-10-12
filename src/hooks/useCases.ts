@@ -23,7 +23,8 @@ export const useCases = (searchQuery = "", selectedCategory = "Todos") => {
         .select(`
           *,
           categories!categoria_id(nome),
-          case_tags(tag_id, tags!inner(nome))
+          case_tags(tag_id, tags!inner(nome)),
+          case_content_blocks(block_type, content)
         `)
         .eq("publicado", true)
         .order("criado_em", { ascending: false });
@@ -40,18 +41,26 @@ export const useCases = (searchQuery = "", selectedCategory = "Todos") => {
 
       if (error) throw error;
 
-      const formattedCases = data?.map((c: any) => ({
-        id: c.id,
-        titulo: c.titulo,
-        descricao: c.descricao,
-        imagem_url: c.imagem_url,
-        publicado: c.publicado,
-        criado_em: c.criado_em,
-        categoria_id: c.categoria_id,
-        categoria_nome: c.categories?.nome || "",
-        tags: c.case_tags?.map((ct: any) => ct.tags.nome) || [],
-        is_featured: c.is_featured || false,
-      })) || [];
+      const formattedCases = data?.map((c: any) => {
+        // Buscar a imagem do bloco client_info (segunda imagem)
+        const clientInfoBlock = c.case_content_blocks?.find(
+          (block: any) => block.block_type === 'client_info'
+        );
+        const bannerUrl = clientInfoBlock?.content?.banner_url || c.imagem_url;
+
+        return {
+          id: c.id,
+          titulo: c.titulo,
+          descricao: c.descricao,
+          imagem_url: bannerUrl,
+          publicado: c.publicado,
+          criado_em: c.criado_em,
+          categoria_id: c.categoria_id,
+          categoria_nome: c.categories?.nome || "",
+          tags: c.case_tags?.map((ct: any) => ct.tags.nome) || [],
+          is_featured: c.is_featured || false,
+        };
+      }) || [];
 
       // Separar cases em destaque (baseado no campo is_featured) e regulares
       const featured = formattedCases.filter((c: any) => c.is_featured);

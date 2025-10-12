@@ -139,7 +139,7 @@ const Cases = () => {
                         </div>
 
                         {/* Image com logo sobreposto */}
-                        <div className="relative overflow-hidden flex-1 min-h-[240px]">
+                        <div className="relative overflow-hidden flex-1 min-h-[190px]">
                           <img
                             src={caseItem.imagem_url || '/placeholder.svg'}
                             alt={caseItem.titulo}
