@@ -1,6 +1,7 @@
 import { ShoppingCart, Target, BarChart3, Compass, Plus, ArrowRight, Globe, MessageCircle, Bot, Plug, Store, TrendingUp, Brain, Network, Zap, Users, Palette, Activity, Share2, MousePointerClick, Map, Route } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 const SolutionsSection = () => {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const solutions = [{
@@ -144,6 +145,19 @@ const SolutionsSection = () => {
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto animate-fade-in" style={{
           animationDelay: '0.2s'
         }}>Temos 4 hubs integrados para transformar seu e-commerce em uma operação de alta performance.</p>
+          
+          <div className="mt-8 animate-fade-in" style={{ animationDelay: '0.3s' }}>
+            <Button 
+              asChild 
+              size="lg" 
+              className="bg-primary text-background hover:bg-primary/90 font-medium px-8 py-6 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 group"
+            >
+              <Link to="/contato" className="flex items-center gap-2">
+                Fale com um especialista
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </Button>
+          </div>
         </div>
 
         {/* Solutions List */}
