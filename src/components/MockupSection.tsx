@@ -43,7 +43,7 @@ const MockupSection = ({
             
             {/* Screenshot overlay - positioned perfectly on screen */}
             {screenshotUrl && (
-              <div className="absolute top-[5.5%] left-[13.5%] w-[73%] h-[77%] overflow-hidden z-20">
+              <div className="absolute top-[6%] left-[15%] w-[70%] h-[75%] overflow-hidden z-20">
                 <img 
                   src={screenshotUrl} 
                   alt="Website Screenshot dentro do MacBook mockup" 
