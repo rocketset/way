@@ -141,90 +141,113 @@ const WhyWay = () => {
         </div>
       </section>
 
-      {/* Carousel de Fotos */}
-      <section className="py-16 px-4 bg-background overflow-hidden">
+      {/* Gallery Grid - Masonry Style */}
+      <section className="py-16 px-4 bg-background">
         <div className="container mx-auto">
           <div className="max-w-7xl mx-auto">
-            <div className="flex gap-6 animate-gallery-scroll">
-              {allPhotos.map((photo, index) => <div key={`${photo}-${index}`} className="flex-shrink-0 w-80 aspect-square">
-                  <div className="relative group overflow-hidden rounded-xl border border-border hover:border-primary/50 transition-all duration-500 h-full hover:shadow-2xl hover:scale-105">
-                    <img src={photo} alt={`Galeria ${index + 1}`} className="w-full h-full object-cover group-hover:scale-125 group-hover:rotate-2 transition-all duration-700" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    <Plus className="absolute top-4 right-4 w-8 h-8 text-white opacity-0 group-hover:opacity-100 group-hover:rotate-180 transition-all duration-500" />
-                  </div>
-                </div>)}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 auto-rows-[200px]">
+              {/* Large photo - spans 2 columns and 2 rows */}
+              <div className="col-span-2 row-span-2 group relative overflow-hidden rounded-xl border border-border hover:border-primary/50 transition-all duration-500 hover:shadow-2xl">
+                <img 
+                  src={galleryPhotos[0]} 
+                  alt="Galeria 1" 
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              </div>
+
+              {/* Medium photo - spans 1 column and 2 rows */}
+              <div className="col-span-1 row-span-2 group relative overflow-hidden rounded-xl border border-border hover:border-primary/50 transition-all duration-500 hover:shadow-2xl">
+                <img 
+                  src={galleryPhotos[1]} 
+                  alt="Galeria 2" 
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              </div>
+
+              {/* Small photo - spans 1 column and 1 row */}
+              <div className="col-span-1 row-span-1 group relative overflow-hidden rounded-xl border border-border hover:border-primary/50 transition-all duration-500 hover:shadow-2xl">
+                <img 
+                  src={galleryPhotos[2]} 
+                  alt="Galeria 3" 
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              </div>
+
+              {/* Small photo - spans 1 column and 1 row */}
+              <div className="col-span-1 row-span-1 group relative overflow-hidden rounded-xl border border-border hover:border-primary/50 transition-all duration-500 hover:shadow-2xl">
+                <img 
+                  src={galleryPhotos[3]} 
+                  alt="Galeria 4" 
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              </div>
+
+              {/* Small photo - spans 1 column and 1 row */}
+              <div className="col-span-1 row-span-1 group relative overflow-hidden rounded-xl border border-border hover:border-primary/50 transition-all duration-500 hover:shadow-2xl">
+                <img 
+                  src={galleryPhotos[4]} 
+                  alt="Galeria 5" 
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              </div>
+
+              {/* Medium photo - spans 2 columns and 1 row */}
+              <div className="col-span-2 row-span-1 group relative overflow-hidden rounded-xl border border-border hover:border-primary/50 transition-all duration-500 hover:shadow-2xl">
+                <img 
+                  src={galleryPhotos[5]} 
+                  alt="Galeria 6" 
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              </div>
+
+              {/* Small photo - spans 1 column and 1 row */}
+              <div className="col-span-1 row-span-1 group relative overflow-hidden rounded-xl border border-border hover:border-primary/50 transition-all duration-500 hover:shadow-2xl">
+                <img 
+                  src={galleryPhotos[6]} 
+                  alt="Galeria 7" 
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              </div>
+
+              {/* Large photo - spans 2 columns and 2 rows */}
+              <div className="col-span-2 row-span-2 group relative overflow-hidden rounded-xl border border-border hover:border-primary/50 transition-all duration-500 hover:shadow-2xl">
+                <img 
+                  src={galleryPhotos[7]} 
+                  alt="Galeria 8" 
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              </div>
+
+              {/* Medium photo - spans 1 column and 2 rows */}
+              <div className="col-span-1 row-span-2 group relative overflow-hidden rounded-xl border border-border hover:border-primary/50 transition-all duration-500 hover:shadow-2xl">
+                <img 
+                  src={galleryPhotos[8]} 
+                  alt="Galeria 9" 
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              </div>
+
+              {/* Small photo - spans 1 column and 1 row */}
+              <div className="col-span-1 row-span-1 group relative overflow-hidden rounded-xl border border-border hover:border-primary/50 transition-all duration-500 hover:shadow-2xl">
+                <img 
+                  src={galleryPhotos[9]} 
+                  alt="Galeria 10" 
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              </div>
             </div>
           </div>
         </div>
-
-        <style>{`
-          @keyframes gallery-scroll {
-            0% {
-              transform: translateX(0);
-            }
-            100% {
-              transform: translateX(-50%);
-            }
-          }
-
-          .animate-gallery-scroll {
-            animation: gallery-scroll 40s linear infinite;
-            display: flex;
-            width: max-content;
-          }
-
-          @keyframes float-delayed {
-            0%, 100% {
-              transform: translateY(0px) rotate(0deg);
-            }
-            50% {
-              transform: translateY(-20px) rotate(180deg);
-            }
-          }
-
-          .animate-float-delayed {
-            animation: float-delayed 8s ease-in-out infinite;
-          }
-
-          @keyframes spin-slow {
-            from {
-              transform: rotate(0deg);
-            }
-            to {
-              transform: rotate(360deg);
-            }
-          }
-
-          .animate-spin-slow {
-            animation: spin-slow 8s linear infinite;
-          }
-
-          @keyframes pulse-slow {
-            0%, 100% {
-              opacity: 0.3;
-              transform: scale(1);
-            }
-            50% {
-              opacity: 0.6;
-              transform: scale(1.05);
-            }
-          }
-
-          .animate-pulse-slow {
-            animation: pulse-slow 4s ease-in-out infinite;
-          }
-
-          @media (prefers-reduced-motion: reduce) {
-            .animate-gallery-scroll {
-              animation-duration: 60s;
-            }
-            .animate-float-delayed,
-            .animate-spin-slow,
-            .animate-pulse-slow {
-              animation: none;
-            }
-          }
-        `}</style>
       </section>
 
       {/* Nascemos para revolucionar */}
