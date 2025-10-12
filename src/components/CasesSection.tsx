@@ -150,9 +150,9 @@ const CasesSection = () => {
         <div className="text-center mt-16 animate-fade-in" style={{ animationDelay: '0.4s' }}>
           <Button
             onClick={() => navigate('/cases')}
-            className="px-10 py-6 text-lg font-bold shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
+            className="bg-primary text-primary-foreground hover:bg-primary/90 px-8"
           >
-            VER TODOS OS CASES
+            Ver todos os Cases
           </Button>
         </div>
       </div>
