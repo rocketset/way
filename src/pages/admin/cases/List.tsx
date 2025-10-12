@@ -31,7 +31,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
-import { Plus, Pencil, Trash2, FileEdit } from 'lucide-react';
+import { Plus, Pencil, Trash2, FileEdit, Eye } from 'lucide-react';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
 
@@ -249,6 +249,14 @@ export default function CasesList() {
                     {new Date(caseItem.criado_em).toLocaleDateString('pt-BR')}
                   </TableCell>
                   <TableCell className="text-right space-x-1">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => window.open(`/cases/${caseItem.id}`, '_blank')}
+                      title="Visualizar case"
+                    >
+                      <Eye className="h-4 w-4" />
+                    </Button>
                     <Button
                       variant="ghost"
                       size="icon"
