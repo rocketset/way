@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import CtaResultsSection from "@/components/CtaResultsSection";
 import { Button } from "@/components/ui/button";
 import { ShoppingCart, Store, Cpu, CreditCard, Truck, Smile, ArrowRight, Check, Globe, MessageCircle, Bot, Plus, Plug } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -212,20 +213,8 @@ const Implementation = () => {
           </div>
         </section>
 
-        {/* CTA Section */}
-        <section className="relative py-20 mb-20 overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary/90 to-primary/80"></div>
-          
-          {/* Animated Plus Icons */}
-          
-          
-          <div className="container mx-auto px-12 relative z-10">
-            
-          </div>
-        </section>
-
-        {/* Newsletter Section */}
-        
+        {/* Contact Form Section */}
+        <CtaResultsSection />
       </main>
 
       <Footer />

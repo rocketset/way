@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import CtaResultsSection from "@/components/CtaResultsSection";
 import ClientsCarousel from "@/components/ClientsCarousel";
 import { ArrowRight, CheckCircle2, Target, TrendingUp, Users, Zap, BarChart3, Rocket, DollarSign, Plus, Activity } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -552,6 +553,9 @@ const Journey = () => {
             </div>
           </div>
         </section>
+
+        {/* Contact Form Section */}
+        <CtaResultsSection />
       </main>
 
       <Footer />
