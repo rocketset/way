@@ -133,6 +133,26 @@ function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
   // Busca categorias da Academy
   useEffect(() => {
     fetchAcademyCategories();
+    
+    // Configura realtime para atualizar automaticamente
+    const channel = supabase
+      .channel('academy-categories-changes')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'academy_categories'
+        },
+        () => {
+          fetchAcademyCategories();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, []);
 
   const fetchAcademyCategories = async () => {
@@ -452,6 +472,26 @@ function MobileSidebar() {
   // Busca categorias da Academy
   useEffect(() => {
     fetchAcademyCategories();
+    
+    // Configura realtime para atualizar automaticamente
+    const channel = supabase
+      .channel('academy-categories-changes-mobile')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'academy_categories'
+        },
+        () => {
+          fetchAcademyCategories();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, []);
 
   const fetchAcademyCategories = async () => {
