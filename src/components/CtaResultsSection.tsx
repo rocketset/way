@@ -128,7 +128,7 @@ const CtaResultsSection = () => {
             </h2>
             
             <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-              Preencha o formulário abaixo e nossos especialistas entrarão em contato.
+              Fale com a Way e acelere seu crescimento digital.
             </p>
           </div>
 
