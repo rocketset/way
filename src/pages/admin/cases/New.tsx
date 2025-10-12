@@ -101,10 +101,10 @@ export default function NewCase() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!basicInfo.titulo.trim() || !basicInfo.descricao.trim()) {
+    if (!basicInfo.titulo.trim()) {
       toast({
         title: "Erro",
-        description: "Preencha todos os campos obrigatórios",
+        description: "O título é obrigatório",
         variant: "destructive",
       });
       return;
@@ -174,7 +174,7 @@ export default function NewCase() {
 
       toast({
         title: "Sucesso",
-        description: "Case criado com sucesso!",
+        description: basicInfo.publicado ? "Case criado e publicado!" : "Case salvo como rascunho!",
       });
       navigate("/admin/cases/list");
     } catch (error: any) {
@@ -197,7 +197,7 @@ export default function NewCase() {
         </Button>
         <div>
           <h1 className="text-3xl font-bold">Criar Novo Case</h1>
-          <p className="text-muted-foreground">Preencha as informações do case</p>
+          <p className="text-muted-foreground">Preencha o título (obrigatório) e outras informações que desejar. Você pode salvar como rascunho e completar depois.</p>
         </div>
       </div>
 
@@ -269,13 +269,12 @@ export default function NewCase() {
             </div>
 
             <div>
-              <Label>Descrição *</Label>
+              <Label>Descrição</Label>
               <Textarea
                 value={basicInfo.descricao}
                 onChange={(e) => setBasicInfo({ ...basicInfo, descricao: e.target.value })}
                 placeholder="Digite a descrição do case"
                 rows={4}
-                required
               />
             </div>
 
@@ -338,31 +337,29 @@ export default function NewCase() {
             </div>
 
             <div>
-              <Label>Título Principal *</Label>
+              <Label>Título Principal</Label>
               <Input
                 value={heroData.titulo}
                 onChange={(e) =>
                   setHeroData({ ...heroData, titulo: e.target.value })
                 }
                 placeholder="Ex: JADEJADE"
-                required
               />
             </div>
 
             <div>
-              <Label>Subtítulo *</Label>
+              <Label>Subtítulo</Label>
               <Input
                 value={heroData.subtitulo}
                 onChange={(e) =>
                   setHeroData({ ...heroData, subtitulo: e.target.value })
                 }
                 placeholder="Ex: Loja de moda jovem e moderna"
-                required
               />
             </div>
 
             <div>
-              <Label>Descrição *</Label>
+              <Label>Descrição</Label>
               <Textarea
                 value={heroData.descricao}
                 onChange={(e) =>
@@ -370,7 +367,6 @@ export default function NewCase() {
                 }
                 placeholder="Descreva o case de forma detalhada"
                 rows={4}
-                required
               />
             </div>
 
@@ -429,7 +425,7 @@ export default function NewCase() {
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
-              <Label>Coluna Esquerda *</Label>
+              <Label>Coluna Esquerda</Label>
               <Textarea
                 value={textColumnsData.coluna_esquerda}
                 onChange={(e) =>
@@ -440,12 +436,11 @@ export default function NewCase() {
                 }
                 placeholder="Texto da primeira coluna (use quebras de linha para parágrafos)"
                 rows={8}
-                required
               />
             </div>
 
             <div>
-              <Label>Coluna Direita *</Label>
+              <Label>Coluna Direita</Label>
               <Textarea
                 value={textColumnsData.coluna_direita}
                 onChange={(e) =>
@@ -456,7 +451,6 @@ export default function NewCase() {
                 }
                 placeholder="Texto da segunda coluna (use quebras de linha para parágrafos)"
                 rows={8}
-                required
               />
             </div>
 
@@ -493,7 +487,7 @@ export default function NewCase() {
                     </div>
 
                     <div>
-                      <Label>Título *</Label>
+                      <Label>Título</Label>
                       <Input
                         value={benefit.titulo}
                         onChange={(e) => {
@@ -505,12 +499,11 @@ export default function NewCase() {
                           });
                         }}
                         placeholder="Ex: Layout como extensão da identidade"
-                        required
                       />
                     </div>
 
                     <div>
-                      <Label>Descrição *</Label>
+                      <Label>Descrição</Label>
                       <Textarea
                         value={benefit.descricao}
                         onChange={(e) => {
@@ -523,7 +516,6 @@ export default function NewCase() {
                         }}
                         placeholder="Descreva o benefício em detalhes"
                         rows={3}
-                        required
                       />
                     </div>
                   </CardContent>
