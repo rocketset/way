@@ -86,6 +86,20 @@ export default function AcademyContent() {
     return progress.some(p => p.material_id === materialId && p.concluido);
   };
 
+  const getYouTubeEmbedUrl = (url: string) => {
+    if (!url) return null;
+    
+    // Detecta diferentes formatos de URL do YouTube
+    const youtubeRegex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
+    const match = url.match(youtubeRegex);
+    
+    if (match && match[1]) {
+      return `https://www.youtube.com/embed/${match[1]}`;
+    }
+    
+    return null;
+  };
+
   const videoMaterial = materials.find(m => m.tipo_material === 'video');
 
   if (loading) {
@@ -124,18 +138,36 @@ export default function AcademyContent() {
           </div>
 
           {/* Video Player */}
-          {videoMaterial?.arquivo_url && (
-            <Card className="overflow-hidden">
-              <video
-                controls
-                className="w-full aspect-video"
-                src={videoMaterial.arquivo_url}
-                onEnded={() => handleToggleComplete(videoMaterial.id, false)}
-              >
-                Seu navegador não suporta reprodução de vídeo.
-              </video>
-            </Card>
-          )}
+          {videoMaterial?.arquivo_url && (() => {
+            const youtubeUrl = getYouTubeEmbedUrl(videoMaterial.arquivo_url);
+            
+            if (youtubeUrl) {
+              return (
+                <Card className="overflow-hidden">
+                  <iframe
+                    className="w-full aspect-video"
+                    src={youtubeUrl}
+                    title={content.titulo}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                </Card>
+              );
+            }
+            
+            return (
+              <Card className="overflow-hidden">
+                <video
+                  controls
+                  className="w-full aspect-video"
+                  src={videoMaterial.arquivo_url}
+                  onEnded={() => handleToggleComplete(videoMaterial.id, false)}
+                >
+                  Seu navegador não suporta reprodução de vídeo.
+                </video>
+              </Card>
+            );
+          })()}
 
           {/* Materials Section */}
           <div>
