@@ -27,7 +27,11 @@ export const TextColumnsBlock = ({ data }: TextColumnsBlockProps) => {
             </div>
             <div className="h-1 w-16 bg-gradient-to-r from-primary to-transparent rounded-full" />
             <div 
-              className="text-base lg:text-lg text-muted-foreground leading-relaxed prose prose-lg max-w-none hover:text-foreground transition-colors duration-300"
+              className="text-base lg:text-lg text-muted-foreground leading-relaxed prose prose-lg max-w-none hover:text-foreground transition-colors duration-300
+              [&_ul]:list-disc [&_ul]:ml-6 [&_ul]:space-y-2 [&_ul]:my-4
+              [&_ol]:list-decimal [&_ol]:ml-6 [&_ol]:space-y-2 [&_ol]:my-4
+              [&_li]:text-muted-foreground [&_li]:leading-relaxed
+              [&_li::marker]:text-primary [&_li::marker]:text-lg"
               dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data.coluna_esquerda) }}
             />
           </div>
@@ -42,7 +46,11 @@ export const TextColumnsBlock = ({ data }: TextColumnsBlockProps) => {
             </div>
             <div className="h-1 w-16 bg-gradient-to-r from-accent to-transparent rounded-full" />
             <div 
-              className="text-base lg:text-lg text-muted-foreground leading-relaxed prose prose-lg max-w-none hover:text-foreground transition-colors duration-300"
+              className="text-base lg:text-lg text-muted-foreground leading-relaxed prose prose-lg max-w-none hover:text-foreground transition-colors duration-300
+              [&_ul]:list-disc [&_ul]:ml-6 [&_ul]:space-y-2 [&_ul]:my-4
+              [&_ol]:list-decimal [&_ol]:ml-6 [&_ol]:space-y-2 [&_ol]:my-4
+              [&_li]:text-muted-foreground [&_li]:leading-relaxed
+              [&_li::marker]:text-primary [&_li::marker]:text-lg"
               dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data.coluna_direita) }}
             />
           </div>
