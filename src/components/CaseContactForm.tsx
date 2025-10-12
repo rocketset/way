@@ -23,7 +23,7 @@ const CaseContactForm = () => {
             <div className="animate-fade-in" style={{ animationDelay: '0.2s' }}>
               <div className="bg-card border border-border rounded-2xl p-8 shadow-xl flex items-center justify-center min-h-[200px]">
                 <Link to="/contato">
-                  <Button size="lg" className="h-14 px-8 text-lg font-semibold group">
+                  <Button size="lg" className="h-14 px-8 text-lg font-medium group">
                     Entre em contato
                     <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
                   </Button>

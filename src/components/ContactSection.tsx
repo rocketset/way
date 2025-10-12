@@ -105,14 +105,14 @@ const ContactSection = () => {
 
           {/* Form Card */}
           <div className="relative group animate-scale-in">
-            {/* Animated glow effect */}
-            <div className="absolute -inset-1 bg-gradient-to-r from-primary via-yellow-400 to-primary rounded-2xl blur-xl opacity-30 group-hover:opacity-50 transition-opacity duration-500 animate-pulse" />
+            {/* Subtle glow effect */}
+            <div className="absolute -inset-1 bg-primary/20 rounded-2xl blur-xl opacity-20 group-hover:opacity-30 transition-opacity duration-500" />
             
             <div className="relative bg-card/95 backdrop-blur-sm p-10 rounded-2xl shadow-2xl border border-border">
               {/* Form title with icon */}
               <div className="flex items-center justify-center gap-3 mb-8">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-yellow-400 flex items-center justify-center">
-                  <MessageSquare className="w-5 h-5 text-gray-900" />
+                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                  <MessageSquare className="w-5 h-5 text-primary" />
                 </div>
                 <h3 className="text-3xl font-bold text-white">
                   Converse com nosso parceiro
@@ -122,7 +122,7 @@ const ContactSection = () => {
               <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Nome Field */}
                 <div className="relative group/field">
-                  <div className={`absolute -inset-0.5 bg-gradient-to-r from-primary/50 to-yellow-400/50 rounded-lg blur opacity-0 ${focusedField === 'nome' ? 'opacity-30' : ''} group-hover/field:opacity-20 transition-opacity duration-300`} />
+                  <div className={`absolute -inset-0.5 bg-primary/20 rounded-lg blur opacity-0 ${focusedField === 'nome' ? 'opacity-20' : ''} group-hover/field:opacity-10 transition-opacity duration-300`} />
                   <div className="relative">
                     <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 group-hover/field:text-primary transition-colors duration-300">
                       <User className={`w-5 h-5 ${focusedField === 'nome' ? 'text-primary' : ''}`} />
@@ -135,14 +135,14 @@ const ContactSection = () => {
                       onFocus={() => setFocusedField('nome')}
                       onBlur={() => setFocusedField(null)}
                       required
-                      className="pl-12 pr-4 py-6 bg-background border-2 border-border focus:border-primary focus:bg-card text-foreground rounded-lg transition-all duration-300 hover:border-primary/50"
+                      className="pl-12 pr-4 py-6 bg-background border border-border focus:border-primary focus:bg-card text-foreground rounded-lg transition-all duration-300 hover:border-primary/50"
                     />
                   </div>
                 </div>
 
                 {/* Email Field */}
                 <div className="relative group/field">
-                  <div className={`absolute -inset-0.5 bg-gradient-to-r from-primary/50 to-yellow-400/50 rounded-lg blur opacity-0 ${focusedField === 'email' ? 'opacity-30' : ''} group-hover/field:opacity-20 transition-opacity duration-300`} />
+                  <div className={`absolute -inset-0.5 bg-primary/20 rounded-lg blur opacity-0 ${focusedField === 'email' ? 'opacity-20' : ''} group-hover/field:opacity-10 transition-opacity duration-300`} />
                   <div className="relative">
                     <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 group-hover/field:text-primary transition-colors duration-300">
                       <Mail className={`w-5 h-5 ${focusedField === 'email' ? 'text-primary' : ''}`} />
@@ -156,14 +156,14 @@ const ContactSection = () => {
                       onFocus={() => setFocusedField('email')}
                       onBlur={() => setFocusedField(null)}
                       required
-                      className="pl-12 pr-4 py-6 bg-background border-2 border-border focus:border-primary focus:bg-card text-foreground rounded-lg transition-all duration-300 hover:border-primary/50"
+                      className="pl-12 pr-4 py-6 bg-background border border-border focus:border-primary focus:bg-card text-foreground rounded-lg transition-all duration-300 hover:border-primary/50"
                     />
                   </div>
                 </div>
 
                 {/* Phone Field */}
                 <div className="relative group/field">
-                  <div className={`absolute -inset-0.5 bg-gradient-to-r from-primary/50 to-yellow-400/50 rounded-lg blur opacity-0 ${focusedField === 'telefone' ? 'opacity-30' : ''} group-hover/field:opacity-20 transition-opacity duration-300`} />
+                  <div className={`absolute -inset-0.5 bg-primary/20 rounded-lg blur opacity-0 ${focusedField === 'telefone' ? 'opacity-20' : ''} group-hover/field:opacity-10 transition-opacity duration-300`} />
                   <div className="relative">
                     <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 group-hover/field:text-primary transition-colors duration-300">
                       <Phone className={`w-5 h-5 ${focusedField === 'telefone' ? 'text-primary' : ''}`} />
@@ -177,14 +177,14 @@ const ContactSection = () => {
                       onFocus={() => setFocusedField('telefone')}
                       onBlur={() => setFocusedField(null)}
                       required
-                      className="pl-12 pr-4 py-6 bg-background border-2 border-border focus:border-primary focus:bg-card text-foreground rounded-lg transition-all duration-300 hover:border-primary/50"
+                      className="pl-12 pr-4 py-6 bg-background border border-border focus:border-primary focus:bg-card text-foreground rounded-lg transition-all duration-300 hover:border-primary/50"
                     />
                   </div>
                 </div>
 
                 {/* Assunto Field */}
                 <div className="relative group/field">
-                  <div className={`absolute -inset-0.5 bg-gradient-to-r from-primary/50 to-yellow-400/50 rounded-lg blur opacity-0 ${focusedField === 'assunto' ? 'opacity-30' : ''} group-hover/field:opacity-20 transition-opacity duration-300`} />
+                  <div className={`absolute -inset-0.5 bg-primary/20 rounded-lg blur opacity-0 ${focusedField === 'assunto' ? 'opacity-20' : ''} group-hover/field:opacity-10 transition-opacity duration-300`} />
                   <div className="relative">
                     <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 group-hover/field:text-primary transition-colors duration-300 z-10 pointer-events-none">
                       <Briefcase className={`w-5 h-5 ${focusedField === 'assunto' ? 'text-primary' : ''}`} />
@@ -195,7 +195,7 @@ const ContactSection = () => {
                       onOpenChange={(open) => setFocusedField(open ? 'assunto' : null)}
                       required
                     >
-                      <SelectTrigger className="pl-12 pr-4 py-6 bg-background border-2 border-border focus:border-primary focus:bg-card text-foreground rounded-lg transition-all duration-300 hover:border-primary/50 h-auto">
+                      <SelectTrigger className="pl-12 pr-4 py-6 bg-background border border-border focus:border-primary focus:bg-card text-foreground rounded-lg transition-all duration-300 hover:border-primary/50 h-auto">
                         <SelectValue placeholder="Assunto" />
                       </SelectTrigger>
                       <SelectContent className="bg-card border-border">
@@ -211,7 +211,7 @@ const ContactSection = () => {
 
                 {/* Message Field */}
                 <div className="relative group/field">
-                  <div className={`absolute -inset-0.5 bg-gradient-to-r from-primary/50 to-yellow-400/50 rounded-lg blur opacity-0 ${focusedField === 'mensagem' ? 'opacity-30' : ''} group-hover/field:opacity-20 transition-opacity duration-300`} />
+                  <div className={`absolute -inset-0.5 bg-primary/20 rounded-lg blur opacity-0 ${focusedField === 'mensagem' ? 'opacity-20' : ''} group-hover/field:opacity-10 transition-opacity duration-300`} />
                   <div className="relative">
                     <div className="absolute left-4 top-4 text-gray-400 group-hover/field:text-primary transition-colors duration-300">
                       <MessageSquare className={`w-5 h-5 ${focusedField === 'mensagem' ? 'text-primary' : ''}`} />
@@ -225,18 +225,17 @@ const ContactSection = () => {
                       onFocus={() => setFocusedField('mensagem')}
                       onBlur={() => setFocusedField(null)}
                       required
-                      className="pl-12 pr-4 pt-4 pb-4 bg-background border-2 border-border focus:border-primary focus:bg-card text-foreground rounded-lg transition-all duration-300 hover:border-primary/50 resize-none"
+                      className="pl-12 pr-4 pt-4 pb-4 bg-background border border-border focus:border-primary focus:bg-card text-foreground rounded-lg transition-all duration-300 hover:border-primary/50 resize-none"
                     />
                   </div>
                 </div>
 
                 {/* Submit Button */}
-                <div className="relative group/button pt-2">
-                  <div className="absolute -inset-1 bg-gradient-to-r from-primary via-yellow-400 to-primary rounded-lg blur opacity-40 group-hover/button:opacity-70 transition-opacity duration-500 animate-pulse" />
+                <div className="pt-2">
                   <Button 
                     type="submit"
                     disabled={isSubmitting}
-                    className="relative w-full bg-gradient-to-r from-primary to-yellow-400 text-gray-900 hover:from-yellow-400 hover:to-primary font-bold py-7 text-lg rounded-lg shadow-xl hover:shadow-2xl transform hover:scale-[1.02] transition-all duration-300 group-hover/button:shadow-primary/50"
+                    className="w-full bg-primary text-background font-medium py-6 text-lg rounded-lg hover:bg-primary/90 transition-all duration-300 group/button"
                   >
                     <span className="flex items-center justify-center gap-2">
                       {isSubmitting ? "ENVIANDO..." : "ENVIAR MENSAGEM"}

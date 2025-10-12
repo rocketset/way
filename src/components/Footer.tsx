@@ -90,7 +90,7 @@ const Footer = () => {
                   </a>
                 </div>
 
-                <Button type="submit" size="lg" className="w-full bg-primary hover:bg-primary/90 text-black font-semibold px-8 py-5 text-base rounded-full">
+                <Button type="submit" size="lg" className="w-full bg-primary hover:bg-primary/90 text-background font-medium px-8 py-4 text-base rounded-lg">
                   Cadastrar
                 </Button>
               </form>

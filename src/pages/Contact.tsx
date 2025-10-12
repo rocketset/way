@@ -284,7 +284,7 @@ const Contact = () => {
                           <FormMessage />
                         </FormItem>} />
 
-                    <Button type="submit" disabled={isSubmitting} className="w-full h-14 bg-gradient-to-r from-primary via-yellow-500 to-primary hover:shadow-2xl transition-all duration-300 group hover:scale-[1.02] text-lg font-semibold" size="lg">
+                    <Button type="submit" disabled={isSubmitting} className="w-full h-14 bg-primary text-background hover:bg-primary/90 transition-all duration-300 group text-lg font-medium rounded-lg" size="lg">
                       {isSubmitting ? <>
                           <Plus className="w-5 h-5 animate-spin mr-2" />
                           Enviando...

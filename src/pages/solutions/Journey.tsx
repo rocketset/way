@@ -325,7 +325,7 @@ const Journey = () => {
             <div className="flex justify-center animate-fade-in">
               <Button 
                 size="lg"
-                className="bg-primary text-primary-foreground hover:bg-primary/90 px-12 py-8 text-lg rounded-full shadow-2xl font-bold hover-scale group relative overflow-hidden"
+                className="bg-primary text-primary-foreground hover:bg-primary/90 px-12 py-6 text-lg rounded-lg shadow-xl font-medium hover-scale group relative overflow-hidden"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary-foreground/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
                 <Plus className="mr-3 w-6 h-6 group-hover:rotate-[360deg] transition-transform duration-500" />
