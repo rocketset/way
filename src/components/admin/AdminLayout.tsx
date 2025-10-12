@@ -207,7 +207,11 @@ function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
         isExpanded ? "w-64" : "w-20"
       )}
       onMouseEnter={() => setIsExpanded(true)}
-      onMouseLeave={() => { if (!isRoleSelectOpen) setIsExpanded(false); }}
+      onMouseLeave={() => { 
+        if (!isRoleSelectOpen && !isCategorySelectOpen) {
+          setIsExpanded(false);
+        }
+      }}
     >
       {/* Header da Sidebar */}
       <div className="p-4 border-b h-16 flex items-center justify-center">
