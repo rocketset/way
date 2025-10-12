@@ -25,13 +25,8 @@ const NewsSection = () => {
   return (
     <section id="noticias" className="py-20 bg-gradient-to-b from-background to-muted/20">
       <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center mb-12 animate-fade-in">
-          <h2 className="text-4xl font-bold text-foreground">Conteúdos Way</h2>
-          <Link to="/blog">
-            <Button className="bg-primary text-primary-foreground hover:bg-primary/90">
-              Ir para o Blog
-            </Button>
-          </Link>
+        <div className="mb-12 animate-fade-in">
+          <h2 className="text-4xl font-bold text-foreground text-center">Conteúdos Way</h2>
         </div>
 
         <Carousel
@@ -89,6 +84,14 @@ const NewsSection = () => {
             <CarouselNext className="relative right-0 top-0 translate-y-0" />
           </div>
         </Carousel>
+
+        <div className="text-center mt-12 animate-fade-in">
+          <Link to="/blog">
+            <Button className="bg-primary text-primary-foreground hover:bg-primary/90 px-8">
+              Ir para o Blog
+            </Button>
+          </Link>
+        </div>
       </div>
     </section>
   );
