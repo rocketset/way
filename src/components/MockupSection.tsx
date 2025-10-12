@@ -1,5 +1,3 @@
-import macbookMockup from "@/assets/macbook-mockup.png";
-
 interface MockupSectionProps {
   screenshotUrl?: string;
   title?: string;
@@ -11,6 +9,8 @@ const MockupSection = ({
   title = "Veja o projeto em ação",
   description = "Navegue pela experiência completa",
 }: MockupSectionProps) => {
+  if (!screenshotUrl) return null;
+
   return (
     <section className="py-24 px-4 bg-gradient-to-b from-background via-muted/20 to-background">
       <div className="container mx-auto max-w-7xl">
@@ -22,26 +22,19 @@ const MockupSection = ({
           </div>
         )}
 
-        {/* MacBook Mockup */}
+        {/* Screenshot */}
         <div className="relative max-w-6xl mx-auto animate-fade-in" style={{ animationDelay: "200ms" }}>
           {/* Glow effect */}
           <div className="absolute -inset-8 bg-gradient-to-r from-primary/20 via-accent/20 to-primary/20 rounded-3xl blur-3xl opacity-50" />
 
-          {/* MacBook container */}
-          <div className="relative">
-            <img src={macbookMockup} alt="MacBook Pro Mockup" className="w-full h-auto relative z-10" />
-
-            {/* Screenshot overlay - positioned perfectly on screen */}
-            {screenshotUrl && (
-              <div className="absolute top-[9%] left-[17%] w-[70%] h-[75%] overflow-hidden z-20">
-                <img
-                  src={screenshotUrl}
-                  alt="Website Screenshot dentro do MacBook mockup"
-                  className="w-full h-full object-cover object-top"
-                  loading="lazy"
-                />
-              </div>
-            )}
+          {/* Screenshot container */}
+          <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+            <img
+              src={screenshotUrl}
+              alt="Website Screenshot"
+              className="w-full h-auto relative z-10"
+              loading="lazy"
+            />
           </div>
 
           {/* Decorative elements */}
