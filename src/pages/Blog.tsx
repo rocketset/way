@@ -35,50 +35,43 @@ const Blog = () => {
       <Header />
       
       {/* Hero Section */}
-      <section className="pt-28 pb-12 px-4">
+      <section className="pt-24 pb-8 px-4">
         <div className="container mx-auto">
-          <div className="max-w-4xl mx-auto text-center space-y-6">
-            <div className="inline-block">
-              <Badge className="bg-card text-muted-foreground border-border px-4 py-2 text-sm font-medium">
-                Insights, estratégias e novidades do mundo digital
-              </Badge>
-            </div>
-            
-            <h1 className="text-5xl md:text-6xl font-bold">
+          <div className="max-w-3xl mx-auto text-center space-y-4">
+            <h1 className="text-3xl md:text-4xl font-bold">
               Blog da <span className="text-primary">Way</span>
             </h1>
             
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Acompanhe artigos sobre e-commerce, marketing digital, tecnologia e 
-              as melhores práticas para crescer seu negócio online.
+            <p className="text-base text-muted-foreground max-w-xl mx-auto">
+              Conteúdo para mentes inquietas, estratégicas e focadas em performance.
             </p>
           </div>
         </div>
       </section>
 
       {/* Filters Section */}
-      <section className="pb-10 px-4">
+      <section className="pb-8 px-4">
         <div className="container mx-auto">
-          <div className="max-w-7xl mx-auto">
+          <div className="max-w-6xl mx-auto">
             {/* Search Bar */}
-            <div className="relative mb-8">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+            <div className="relative mb-6">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
               <Input
                 type="text"
-                placeholder="Buscar artigos..."
+                placeholder="Encontre no blog"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-12 h-14 bg-card border-border text-foreground placeholder:text-muted-foreground focus:border-primary transition-all duration-300"
+                className="pl-10 h-11 bg-card border-border text-foreground placeholder:text-muted-foreground focus:border-primary transition-all duration-300 rounded-full"
               />
             </div>
 
             {/* Category Filters */}
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-2">
               {categoriesLoading ? (
                 <>
-                  <Skeleton className="h-10 w-24 rounded-full" />
-                  <Skeleton className="h-10 w-28 rounded-full" />
-                  <Skeleton className="h-10 w-24 rounded-full" />
+                  <Skeleton className="h-8 w-20 rounded-full" />
+                  <Skeleton className="h-8 w-24 rounded-full" />
+                  <Skeleton className="h-8 w-20 rounded-full" />
                 </>
               ) : (
                 categories.map((category) => (
@@ -86,10 +79,11 @@ const Blog = () => {
                     key={category}
                     onClick={() => setSelectedCategory(category)}
                     variant={selectedCategory === category ? "default" : "outline"}
-                    className={`rounded-full transition-all duration-300 ${
+                    size="sm"
+                    className={`rounded-full text-sm transition-all duration-300 ${
                       selectedCategory === category
-                        ? "bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg shadow-primary/20"
-                        : "bg-card border-border text-foreground hover:bg-primary/10 hover:border-primary hover:text-foreground"
+                        ? "bg-primary text-primary-foreground hover:bg-primary/90"
+                        : "bg-card border-border text-foreground hover:bg-primary/10 hover:border-primary"
                     }`}
                   >
                     {category}
@@ -103,70 +97,61 @@ const Blog = () => {
 
       {/* Featured Posts */}
       {featuredPosts.length > 0 && (
-        <section className="pb-12 px-4">
+        <section className="pb-8 px-4">
           <div className="container mx-auto">
-            <div className="max-w-7xl mx-auto space-y-8">
+            <div className="max-w-6xl mx-auto space-y-6">
               {featuredPosts.map((post, index) => (
                 <Link
                   key={post.id}
                   to={`/blog/${post.slug}`}
                   className="block group"
                 >
-                  <div className="relative bg-card rounded-3xl overflow-hidden border border-border hover:border-primary transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10">
+                  <div className="relative bg-card rounded-2xl overflow-hidden border border-border hover:border-primary transition-all duration-500 hover:shadow-xl hover:shadow-primary/10">
                     <div className="flex flex-col md:flex-row">
                       {/* Image */}
-                      <div className="md:w-2/5 relative overflow-hidden">
-                        <div className="absolute top-4 left-4 z-10">
-                          <Badge className="bg-card text-foreground border-border">
+                      <div className="md:w-5/12 relative overflow-hidden">
+                        <div className="absolute top-3 left-3 z-10">
+                          <Badge className="bg-card text-foreground border-border text-xs">
                             {post.categorias[0] || 'Blog'}
                           </Badge>
                         </div>
                         <img
                           src={post.featured_image || '/placeholder.svg'}
                           alt={post.titulo}
-                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                          className="w-full h-64 md:h-full object-cover transition-transform duration-700 group-hover:scale-110"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-r from-background/80 to-transparent md:hidden" />
                       </div>
 
                       {/* Content */}
-                      <div className="md:w-3/5 p-8 md:p-12 flex flex-col justify-center">
-                        <div className="space-y-4">
-                          <h2 className="text-3xl md:text-4xl font-bold text-foreground group-hover:text-primary transition-colors duration-300">
+                      <div className="md:w-7/12 p-6 flex flex-col justify-center">
+                        <div className="space-y-3">
+                          <h2 className="text-xl md:text-2xl font-bold text-foreground group-hover:text-primary transition-colors duration-300 line-clamp-2">
                             {post.titulo}
                           </h2>
                           
-                          <p className="text-lg text-muted-foreground">
-                            {post.excerpt}
-                          </p>
-                          
-                          <p className="text-foreground/80 line-clamp-2">
+                          <p className="text-sm text-muted-foreground line-clamp-2">
                             {post.excerpt}
                           </p>
 
                           {/* Tags */}
-                          <div className="flex flex-wrap gap-2 pt-2">
-                            {post.tags.map((tag) => (
-                              <Badge
-                                key={tag}
-                                variant="secondary"
-                                className="bg-primary/10 text-primary border-primary/20 hover:bg-primary/20 hover:text-foreground transition-colors duration-300"
-                              >
-                                {tag}
-                              </Badge>
-                            ))}
-                          </div>
+                          {post.tags.length > 0 && (
+                            <div className="flex flex-wrap gap-2 pt-1">
+                              {post.tags.slice(0, 3).map((tag) => (
+                                <Badge
+                                  key={tag}
+                                  variant="secondary"
+                                  className="bg-primary/10 text-primary border-primary/20 text-xs hover:bg-primary/20 transition-colors duration-300"
+                                >
+                                  {tag}
+                                </Badge>
+                              ))}
+                            </div>
+                          )}
 
                           {/* Meta Info */}
-                          <div className="flex items-center gap-6 pt-4 text-sm text-muted-foreground">
-                            <AuthorCard
-                              authorId={post.autor_id}
-                              authorName={post.autor_nome}
-                              authorAvatar={post.autor_avatar}
-                            />
-                            <span>•</span>
+                          <div className="flex items-center gap-4 pt-2 text-xs text-muted-foreground">
                             <div className="flex items-center gap-2">
-                              <Calendar className="w-4 h-4" />
+                              <Calendar className="w-3 h-3" />
                               <span>{formatDate(post.criado_em)}</span>
                             </div>
                             <span>•</span>
@@ -174,13 +159,14 @@ const Blog = () => {
                           </div>
 
                           {/* CTA */}
-                          <div className="pt-4">
+                          <div className="pt-2">
                             <Button
                               variant="ghost"
-                              className="text-primary hover:text-primary hover:bg-primary/10 group/btn p-0"
+                              size="sm"
+                              className="text-primary hover:text-primary hover:bg-primary/10 group/btn p-0 h-auto"
                             >
-                              <span className="mr-2">Ver post completo</span>
-                              <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover/btn:translate-x-1" />
+                              <span className="mr-1 text-sm">Ler artigo</span>
+                              <ArrowRight className="w-3 h-3 transition-transform duration-300 group-hover/btn:translate-x-1" />
                             </Button>
                           </div>
                         </div>
@@ -195,9 +181,9 @@ const Blog = () => {
       )}
 
       {/* Regular Posts Grid */}
-      <section className="pb-20 px-4">
+      <section className="pb-16 px-4">
         <div className="container mx-auto">
-          <div className="max-w-7xl mx-auto">
+          <div className="max-w-6xl mx-auto">
             {postsLoading ? (
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {[...Array(6)].map((_, i) => (
@@ -217,18 +203,18 @@ const Blog = () => {
               </div>
             ) : (
               <>
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {regularPosts.map((post) => (
                     <Link
                       key={post.id}
                       to={`/blog/${post.slug}`}
                       className="group"
                     >
-                      <div className="bg-card rounded-2xl overflow-hidden border border-border hover:border-primary transition-all duration-500 hover:shadow-xl hover:shadow-primary/10 h-full flex flex-col">
+                      <div className="bg-card rounded-xl overflow-hidden border border-border hover:border-primary transition-all duration-500 hover:shadow-lg hover:shadow-primary/10 h-full flex flex-col">
                         {/* Image */}
                         <div className="relative overflow-hidden aspect-video">
-                          <div className="absolute top-4 left-4 z-10">
-                            <Badge className="bg-card text-foreground border-border">
+                          <div className="absolute top-3 left-3 z-10">
+                            <Badge className="bg-card text-foreground border-border text-xs">
                               {post.categorias[0] || 'Blog'}
                             </Badge>
                           </div>
@@ -240,45 +226,40 @@ const Blog = () => {
                         </div>
 
                         {/* Content */}
-                        <div className="p-6 flex-1 flex flex-col">
-                          <div className="space-y-3 flex-1">
-                            <h3 className="text-2xl font-bold text-foreground group-hover:text-primary transition-colors duration-300">
+                        <div className="p-5 flex-1 flex flex-col">
+                          <div className="space-y-2 flex-1">
+                            <h3 className="text-lg font-bold text-foreground group-hover:text-primary transition-colors duration-300 line-clamp-2">
                               {post.titulo}
                             </h3>
                             
-                            <p className="text-muted-foreground line-clamp-2">
+                            <p className="text-sm text-muted-foreground line-clamp-2">
                               {post.excerpt}
                             </p>
 
                             {/* Tags */}
-                            <div className="flex flex-wrap gap-2 pt-2">
-                            {post.tags.slice(0, 3).map((tag) => (
-                                <Badge
-                                  key={tag}
-                                  variant="secondary"
-                                  className="bg-primary/10 text-primary border-primary/20 text-xs hover:bg-primary/20 hover:text-foreground transition-colors duration-300"
-                                >
-                                  {tag}
-                                </Badge>
-                              ))}
-                            </div>
+                            {post.tags.length > 0 && (
+                              <div className="flex flex-wrap gap-1.5 pt-1">
+                                {post.tags.slice(0, 2).map((tag) => (
+                                  <Badge
+                                    key={tag}
+                                    variant="secondary"
+                                    className="bg-primary/10 text-primary border-primary/20 text-xs hover:bg-primary/20 transition-colors duration-300"
+                                  >
+                                    {tag}
+                                  </Badge>
+                                ))}
+                              </div>
+                            )}
                           </div>
 
                           {/* Meta Info */}
-                          <div className="flex flex-col gap-3 pt-4 border-t border-border mt-4">
-                            <AuthorCard
-                              authorId={post.autor_id}
-                              authorName={post.autor_nome}
-                              authorAvatar={post.autor_avatar}
-                            />
-                            <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                              <div className="flex items-center gap-2">
-                                <Calendar className="w-4 h-4" />
-                                <span>{formatDate(post.criado_em)}</span>
-                              </div>
-                              <span>•</span>
-                              <span>{formatReadingTime(post.reading_time)}</span>
+                          <div className="flex items-center gap-3 pt-3 border-t border-border mt-3 text-xs text-muted-foreground">
+                            <div className="flex items-center gap-1.5">
+                              <Calendar className="w-3 h-3" />
+                              <span>{formatDate(post.criado_em)}</span>
                             </div>
+                            <span>•</span>
+                            <span>{formatReadingTime(post.reading_time)}</span>
                           </div>
                         </div>
                       </div>
