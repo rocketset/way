@@ -117,19 +117,19 @@ const Cases = () => {
                     >
                       <div className="bg-gradient-to-br from-muted/30 to-muted/50 rounded-2xl overflow-hidden border border-border hover:border-primary transition-all duration-500 hover:shadow-2xl hover:shadow-primary/20 h-full flex flex-col">
                         {/* Header com título e tags */}
-                        <div className="p-6 pb-4">
-                          <h3 className="text-xl md:text-2xl font-medium italic text-foreground group-hover:text-primary transition-colors duration-300 mb-4">
+                        <div className="p-4 pb-3">
+                          <h3 className="text-lg md:text-xl font-medium italic text-foreground group-hover:text-primary transition-colors duration-300 mb-3">
                             {caseItem.titulo}
                           </h3>
                           
                           {/* Tags */}
                           {caseItem.tags.length > 0 && (
-                            <div className="flex flex-wrap gap-2">
+                            <div className="flex flex-wrap gap-1.5">
                               {caseItem.tags.slice(0, 4).map((tag) => (
                                 <Badge
                                   key={tag}
                                   variant="secondary"
-                                  className="bg-background text-foreground border border-border text-xs px-3 py-1 rounded-md hover:bg-background/80 transition-colors duration-300"
+                                  className="bg-background text-foreground border border-border text-xs px-2 py-0.5 rounded-md hover:bg-background/80 transition-colors duration-300"
                                 >
                                   {tag}
                                 </Badge>
@@ -139,7 +139,7 @@ const Cases = () => {
                         </div>
 
                         {/* Image com logo sobreposto */}
-                        <div className="relative overflow-hidden flex-1 min-h-[300px]">
+                        <div className="relative overflow-hidden flex-1 min-h-[240px]">
                           <img
                             src={caseItem.imagem_url || '/placeholder.svg'}
                             alt={caseItem.titulo}
