@@ -129,21 +129,6 @@ export const ClientInfoBlock = ({
                   <p className="text-lg lg:text-xl text-muted-foreground leading-relaxed animate-fade-in delay-300">
                     {heroData.descricao}
                   </p>
-
-                  {heroData.tags && heroData.tags.length > 0 && (
-                    <div className="flex flex-wrap gap-3 pt-4 animate-fade-in delay-500">
-                      {heroData.tags.map((tag, index) => (
-                        <Badge 
-                          key={tag.id} 
-                          variant="outline"
-                          className={`${getTagColor(tag.nome)} px-5 py-2.5 text-sm font-medium hover:scale-110 transition-all duration-300 cursor-default animate-scale-in backdrop-blur-sm`}
-                          style={{ animationDelay: `${600 + index * 100}ms` }}
-                        >
-                          {tag.nome}
-                        </Badge>
-                      ))}
-                    </div>
-                  )}
                 </div>
 
                 {/* Right Column - Image */}
