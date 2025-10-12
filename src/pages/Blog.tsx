@@ -110,11 +110,6 @@ const Blog = () => {
                     <div className="flex flex-col md:flex-row">
                       {/* Image */}
                       <div className="md:w-5/12 relative overflow-hidden">
-                        <div className="absolute top-3 right-1 z-10">
-                          <Badge className="bg-yellow-100 text-yellow-900 border-yellow-200 text-xs">
-                            {post.categorias[0] || 'Blog'}
-                          </Badge>
-                        </div>
                         <img
                           src={post.featured_image || '/placeholder.svg'}
                           alt={post.titulo}
@@ -125,9 +120,14 @@ const Blog = () => {
                       {/* Content */}
                       <div className="md:w-7/12 p-6 flex flex-col justify-center">
                         <div className="space-y-3">
-                          <h2 className="text-xl md:text-2xl font-bold text-foreground group-hover:text-primary transition-colors duration-300 line-clamp-2">
-                            {post.titulo}
-                          </h2>
+                          <div className="flex items-start justify-between gap-3">
+                            <h2 className="text-xl md:text-2xl font-bold text-foreground group-hover:text-primary transition-colors duration-300 line-clamp-2 flex-1">
+                              {post.titulo}
+                            </h2>
+                            <Badge className="bg-yellow-100 text-yellow-900 border-yellow-200 text-xs whitespace-nowrap">
+                              {post.categorias[0] || 'Blog'}
+                            </Badge>
+                          </div>
                           
                           <p className="text-sm text-muted-foreground line-clamp-2">
                             {post.excerpt}
@@ -213,11 +213,6 @@ const Blog = () => {
                       <div className="bg-card rounded-xl overflow-hidden border border-border hover:border-primary transition-all duration-500 hover:shadow-lg hover:shadow-primary/10 h-full flex flex-col">
                         {/* Image */}
                         <div className="relative overflow-hidden aspect-video">
-                          <div className="absolute top-3 right-1 z-10">
-                            <Badge className="bg-yellow-100 text-yellow-900 border-yellow-200 text-xs">
-                              {post.categorias[0] || 'Blog'}
-                            </Badge>
-                          </div>
                           <img
                             src={post.featured_image || '/placeholder.svg'}
                             alt={post.titulo}
@@ -228,9 +223,14 @@ const Blog = () => {
                         {/* Content */}
                         <div className="p-5 flex-1 flex flex-col">
                           <div className="space-y-2 flex-1">
-                            <h3 className="text-lg font-bold text-foreground group-hover:text-primary transition-colors duration-300 line-clamp-2">
-                              {post.titulo}
-                            </h3>
+                            <div className="flex items-start justify-between gap-2">
+                              <h3 className="text-lg font-bold text-foreground group-hover:text-primary transition-colors duration-300 line-clamp-2 flex-1">
+                                {post.titulo}
+                              </h3>
+                              <Badge className="bg-yellow-100 text-yellow-900 border-yellow-200 text-xs whitespace-nowrap">
+                                {post.categorias[0] || 'Blog'}
+                              </Badge>
+                            </div>
                             
                             <p className="text-sm text-muted-foreground line-clamp-2">
                               {post.excerpt}
