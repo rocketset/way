@@ -87,14 +87,6 @@ const NewsSection = () => {
             <CarouselNext className="relative right-0 top-0 translate-y-0" />
           </div>
         </Carousel>
-
-        <div className="text-center mt-12 animate-fade-in">
-          <Link to="/blog">
-            <Button className="bg-primary text-primary-foreground hover:bg-primary/90 px-8">
-              Ir para o Blog
-            </Button>
-          </Link>
-        </div>
       </div>
     </section>
   );
