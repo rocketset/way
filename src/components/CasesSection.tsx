@@ -42,7 +42,7 @@ const CasesSection = () => {
 
     const mapped = (data || []).map((c: any) => {
       const clientInfo = (c.case_content_blocks || []).find((b: any) => b.block_type === 'client_info');
-      const banner = clientInfo?.content?.banner_url || c.imagem_url;
+      const banner = clientInfo?.content?.banner_url || '/placeholder.svg';
       return { ...c, imagem_url: banner } as CaseItem;
     });
 
