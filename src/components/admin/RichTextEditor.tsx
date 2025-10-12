@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Bold, Link as LinkIcon, List } from "lucide-react";
+import { Bold, Link as LinkIcon, Type } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
@@ -9,6 +9,13 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface RichTextEditorProps {
   value: string;
@@ -21,28 +28,48 @@ export function RichTextEditor({ value, onChange, label, placeholder }: RichText
   const [linkUrl, setLinkUrl] = useState("");
   const [linkText, setLinkText] = useState("");
   const [showLinkPopover, setShowLinkPopover] = useState(false);
+  const [showSizePopover, setShowSizePopover] = useState(false);
 
-  const insertFormatting = (before: string, after: string = "") => {
+  const insertFormatting = (before: string, after: string = "", replace: boolean = false) => {
     const textarea = document.activeElement as HTMLTextAreaElement;
     if (textarea && textarea.tagName === "TEXTAREA") {
       const start = textarea.selectionStart;
       const end = textarea.selectionEnd;
       const selectedText = value.substring(start, end);
-      const newValue =
-        value.substring(0, start) +
-        before +
-        selectedText +
-        after +
-        value.substring(end);
-      onChange(newValue);
       
-      setTimeout(() => {
-        textarea.focus();
-        textarea.setSelectionRange(
-          start + before.length,
-          start + before.length + selectedText.length
-        );
-      }, 0);
+      if (replace && selectedText) {
+        const newValue =
+          value.substring(0, start) +
+          before +
+          selectedText +
+          after +
+          value.substring(end);
+        onChange(newValue);
+        
+        setTimeout(() => {
+          textarea.focus();
+          textarea.setSelectionRange(
+            start + before.length,
+            start + before.length + selectedText.length
+          );
+        }, 0);
+      } else {
+        const newValue =
+          value.substring(0, start) +
+          before +
+          selectedText +
+          after +
+          value.substring(end);
+        onChange(newValue);
+        
+        setTimeout(() => {
+          textarea.focus();
+          textarea.setSelectionRange(
+            start + before.length,
+            start + before.length + selectedText.length
+          );
+        }, 0);
+      }
     }
   };
 
@@ -64,6 +91,34 @@ export function RichTextEditor({ value, onChange, label, placeholder }: RichText
         setShowLinkPopover(false);
       }
     }
+  };
+
+  const insertSize = (size: string) => {
+    const sizeMap: Record<string, string> = {
+      small: '# ',
+      normal: '',
+      large: '## ',
+      xlarge: '### ',
+    };
+    
+    if (size === 'normal') {
+      setShowSizePopover(false);
+      return;
+    }
+    
+    const textarea = document.activeElement as HTMLTextAreaElement;
+    if (textarea && textarea.tagName === "TEXTAREA") {
+      const start = textarea.selectionStart;
+      const end = textarea.selectionEnd;
+      const selectedText = value.substring(start, end);
+      const newValue =
+        value.substring(0, start) +
+        sizeMap[size] +
+        selectedText +
+        value.substring(end);
+      onChange(newValue);
+    }
+    setShowSizePopover(false);
   };
 
   return (
@@ -117,8 +172,37 @@ export function RichTextEditor({ value, onChange, label, placeholder }: RichText
             </PopoverContent>
           </Popover>
 
+          <Popover open={showSizePopover} onOpenChange={setShowSizePopover}>
+            <PopoverTrigger asChild>
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                title="Tamanho da Fonte"
+              >
+                <Type className="h-4 w-4" />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-48">
+              <div className="space-y-2">
+                <Label>Tamanho da Fonte</Label>
+                <Select onValueChange={insertSize}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Selecione" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="small">Pequeno</SelectItem>
+                    <SelectItem value="normal">Normal</SelectItem>
+                    <SelectItem value="large">Grande</SelectItem>
+                    <SelectItem value="xlarge">Extra Grande</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </PopoverContent>
+          </Popover>
+
           <div className="ml-2 text-xs text-muted-foreground">
-            Use ** para negrito | Pressione Enter 2x para novo parágrafo
+            **negrito** | Pressione Enter 2x para parágrafo
           </div>
         </div>
         <Textarea

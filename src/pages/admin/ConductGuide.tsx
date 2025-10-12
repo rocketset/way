@@ -22,7 +22,7 @@ export default function ConductGuide() {
               <ReactMarkdown
                 components={{
                   p: ({ children }) => <p className="mb-2">{children}</p>,
-                  strong: ({ children }) => <strong className="font-semibold text-foreground">{children}</strong>,
+                  strong: ({ children }) => <strong className="font-bold text-foreground">{children}</strong>,
                   a: ({ href, children }) => (
                     <a
                       href={href}
@@ -33,6 +33,9 @@ export default function ConductGuide() {
                       {children}
                     </a>
                   ),
+                  h1: ({ children }) => <span className="text-sm block">{children}</span>,
+                  h2: ({ children }) => <span className="text-lg block font-medium">{children}</span>,
+                  h3: ({ children }) => <span className="text-xl block font-semibold">{children}</span>,
                 }}
               >
                 {item.content}
@@ -46,7 +49,7 @@ export default function ConductGuide() {
                   <ReactMarkdown
                     components={{
                       p: ({ children }) => <span>{children}</span>,
-                      strong: ({ children }) => <strong className="font-semibold text-foreground">{children}</strong>,
+                      strong: ({ children }) => <strong className="font-bold text-foreground">{children}</strong>,
                       a: ({ href, children }) => (
                         <a
                           href={href}
@@ -57,6 +60,9 @@ export default function ConductGuide() {
                           {children}
                         </a>
                       ),
+                      h1: ({ children }) => <span className="text-sm">{children}</span>,
+                      h2: ({ children }) => <span className="text-lg font-medium">{children}</span>,
+                      h3: ({ children }) => <span className="text-xl font-semibold">{children}</span>,
                     }}
                   >
                     {listItem}
@@ -112,7 +118,7 @@ export default function ConductGuide() {
                     <ReactMarkdown
                       components={{
                         p: ({ children }) => <p className="mb-2">{children}</p>,
-                        strong: ({ children }) => <strong className="font-semibold">{children}</strong>,
+                        strong: ({ children }) => <strong className="font-bold">{children}</strong>,
                         a: ({ href, children }) => (
                           <a
                             href={href}
@@ -123,6 +129,9 @@ export default function ConductGuide() {
                             {children}
                           </a>
                         ),
+                        h1: ({ children }) => <span className="text-sm block">{children}</span>,
+                        h2: ({ children }) => <span className="text-lg block font-medium">{children}</span>,
+                        h3: ({ children }) => <span className="text-xl block font-semibold">{children}</span>,
                       }}
                     >
                       {section.section_description}
