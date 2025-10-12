@@ -53,9 +53,9 @@ const CasesSection = () => {
     });
     setCases(mapped);
   };
-  return <section id="cases" className="relative py-32 bg-gradient-to-b from-gray-900 to-background overflow-hidden">
+  return <section id="cases" className="relative py-32 bg-gradient-to-b from-[#1a1a1a] to-[#0a0a0a] overflow-hidden">
       {/* Animated background elements with plus icons */}
-      <div className="absolute inset-0">
+      <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-20 left-10 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse" style={{
         animationDuration: '4s'
       }} />
