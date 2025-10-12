@@ -123,8 +123,8 @@ const CtaResultsSection = () => {
             </div>
             
             <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
-              Transforme seu e-commerce em uma{" "}
-              <span className="gradient-text">máquina de vendas</span>
+              Estruture, evolua e escale seu e-commerce com quem entende de{" "}
+              <span className="gradient-text">performance</span>.
             </h2>
             
             <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
