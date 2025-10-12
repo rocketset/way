@@ -53,7 +53,7 @@ export const ClientInfoBlock = ({ data, caseId }: ClientInfoBlockProps) => {
 
   return (
     <section className="py-12 px-6 bg-background">
-      <div className="container mx-auto space-y-8 mt-[200%]">
+      <div className="container mx-auto space-y-8">
         {/* Breadcrumb */}
         <nav className="flex items-center gap-2 text-sm text-muted-foreground">
           <Link to="/" className="hover:text-foreground transition-colors">
