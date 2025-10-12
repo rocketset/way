@@ -123,15 +123,15 @@ const CasesSection = () => {
                       </div>
 
                       {/* Title */}
-                      <h3 className="text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors duration-300">
+                      <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-primary transition-colors duration-300">
                         {caseItem.titulo}
                       </h3>
 
-                      {/* Tags/Services */}
+                      {/* Tags */}
                       {caseItem.tags.length > 0 && (
                         <ul className="space-y-1.5">
                           {caseItem.tags.slice(0, 3).map((tag, tagIndex) => (
-                            <li key={tagIndex} className="flex items-center gap-2 text-sm text-muted-foreground">
+                            <li key={tagIndex} className="flex items-center gap-2 text-sm text-gray-900">
                               <span className="w-2 h-2 rounded-full bg-primary flex-shrink-0" />
                               <span>{tag}</span>
                             </li>
