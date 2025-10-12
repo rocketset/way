@@ -200,18 +200,18 @@ const Columnists = () => {
                                 )}
                               </div>
                               <div className="flex-1">
-                                <Button
-                                  type="button"
-                                  variant="outline"
-                                  onClick={() => setMediaSelectorOpen(true)}
-                                  className="w-full"
-                                >
-                                  <ImageIcon className="w-4 h-4 mr-2" />
-                                  Selecionar Imagem
-                                </Button>
-                                <p className="text-xs text-muted-foreground mt-2">
-                                  Escolha uma imagem da biblioteca ou faça upload de uma nova
-                                </p>
+                                 <Button
+                                   type="button"
+                                   variant="outline"
+                                   onClick={() => setMediaSelectorOpen(true)}
+                                   className="w-full"
+                                 >
+                                   <ImageIcon className="w-4 h-4 mr-2" />
+                                   Selecionar Imagem
+                                 </Button>
+                                 <p className="text-xs text-muted-foreground mt-2">
+                                   Tamanho recomendado: 400x400px (formato quadrado)
+                                 </p>
                               </div>
                             </div>
                           </div>

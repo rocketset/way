@@ -101,6 +101,9 @@ export function ImageBlockEditor({
           ) : (
             <div className="text-center py-8 space-y-4">
               <Image className="h-12 w-12 mx-auto text-muted-foreground" />
+              <p className="text-sm text-muted-foreground">
+                Tamanho recomendado: 1200x800px (proporção 3:2)
+              </p>
               <div className="space-y-2">
                 <Button
                   variant="outline"

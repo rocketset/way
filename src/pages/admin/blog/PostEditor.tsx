@@ -711,7 +711,10 @@ export default function PostEditor() {
 
             {/* Imagem Destacada */}
             <div className="border rounded-lg p-4 bg-card space-y-4">
-              <h3 className="font-semibold">Imagem Destacada</h3>
+              <div className="space-y-1">
+                <h3 className="font-semibold">Imagem Destacada</h3>
+                <p className="text-xs text-muted-foreground">Tamanho recomendado: 1200x630px (proporção 16:9)</p>
+              </div>
               
               {formData.featured_image ? (
                 <div className="space-y-2">

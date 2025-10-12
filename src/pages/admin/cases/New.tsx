@@ -236,6 +236,7 @@ export default function NewCase() {
 
             <div>
               <Label>Imagem de Capa</Label>
+              <p className="text-xs text-muted-foreground mb-2">Tamanho recomendado: 800x600px</p>
               <div className="space-y-2">
                 {basicInfo.imagem_url && (
                   <div className="relative inline-block">
@@ -304,6 +305,7 @@ export default function NewCase() {
           <CardContent className="space-y-4">
             <div>
               <Label>Logo/Marca</Label>
+              <p className="text-xs text-muted-foreground mb-2">Tamanho recomendado: 400x400px (formato quadrado)</p>
               <div className="space-y-2">
                 {heroData.logo_url && (
                   <div className="relative inline-block">
@@ -385,6 +387,7 @@ export default function NewCase() {
 
             <div>
               <Label>Imagem Principal</Label>
+              <p className="text-xs text-muted-foreground mb-2">Tamanho recomendado: 1920x1080px (proporção 16:9)</p>
               <div className="space-y-2">
                 {heroData.imagem_principal && (
                   <div className="relative inline-block">
