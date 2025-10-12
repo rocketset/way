@@ -5,7 +5,6 @@ import { supabase } from "@/integrations/supabase/client";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
-
 interface ClientInfoBlockProps {
   data: ClientInfoBlockContent;
   caseId: string;
@@ -15,9 +14,8 @@ const tagColors: Record<string, string> = {
   instagram: "bg-pink-500/10 text-pink-400 border-pink-500/20",
   shopee: "bg-orange-500/10 text-orange-400 border-orange-500/20",
   nuvemshop: "bg-blue-500/10 text-blue-400 border-blue-500/20",
-  default: "bg-zinc-700/50 text-zinc-300 border-zinc-600/50",
+  default: "bg-zinc-700/50 text-zinc-300 border-zinc-600/50"
 };
-
 export const ClientInfoBlock = ({
   data,
   caseId,
@@ -50,7 +48,7 @@ export const ClientInfoBlock = ({
     enabled: !!caseId
   });
   return <section className="py-16 px-6 bg-background">
-      <div className="container mx-auto max-w-7xl space-y-16">
+      <div className="container mx-auto max-w-7xl space-y-16 my-[37px]">
         {/* Breadcrumb */}
         <nav className="flex items-center gap-2 text-sm text-muted-foreground animate-fade-in">
           <Link to="/" className="hover:text-primary transition-colors">
@@ -67,49 +65,49 @@ export const ClientInfoBlock = ({
         </nav>
 
         {/* Tags */}
-        {caseTags && caseTags.length > 0 && <div className="flex flex-wrap gap-3 animate-fade-in" style={{ animationDelay: '100ms' }}>
+        {caseTags && caseTags.length > 0 && <div className="flex flex-wrap gap-3 animate-fade-in" style={{
+        animationDelay: '100ms'
+      }}>
             {caseTags.map(tag => <Badge key={tag.id} variant="outline" className="px-4 py-2 text-sm font-medium bg-card border border-border hover:border-primary/50 transition-all duration-300">
                 {tag.nome}
               </Badge>)}
           </div>}
 
         {/* Banner do Cliente */}
-        {data.banner_url && <div className="relative w-full aspect-[21/9] md:aspect-[21/7] lg:aspect-[21/6] rounded-2xl overflow-hidden shadow-2xl animate-fade-in group" style={{ animationDelay: '200ms' }}>
+        {data.banner_url && <div className="relative w-full aspect-[21/9] md:aspect-[21/7] lg:aspect-[21/6] rounded-2xl overflow-hidden shadow-2xl animate-fade-in group" style={{
+        animationDelay: '200ms'
+      }}>
             <img src={data.banner_url} alt="Banner do cliente" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
           </div>}
 
         {/* Sobre o Cliente */}
-        <div className="grid md:grid-cols-[300px_1px_1fr] gap-8 items-start animate-fade-in" style={{ animationDelay: '300ms' }}>
+        <div className="grid md:grid-cols-[300px_1px_1fr] gap-8 items-start animate-fade-in" style={{
+        animationDelay: '300ms'
+      }}>
           <h2 className="text-3xl md:text-4xl font-bold text-foreground sticky top-24">
             Sobre o Cliente
           </h2>
           <div className="hidden md:block w-px h-full bg-gradient-to-b from-transparent via-border to-transparent"></div>
           <div className="text-lg text-muted-foreground leading-relaxed space-y-4">
-            {data.sobre_cliente_texto.split('\n').map((paragraph, index) => 
-              paragraph.trim() && (
-                <p key={index} className="hover:text-foreground transition-colors duration-300">
+            {data.sobre_cliente_texto.split('\n').map((paragraph, index) => paragraph.trim() && <p key={index} className="hover:text-foreground transition-colors duration-300">
                   {paragraph}
-                </p>
-              )
-            )}
+                </p>)}
           </div>
         </div>
 
         {/* Hero Content Below */}
-        {heroData && (
-          <div className="relative py-20 overflow-hidden rounded-3xl bg-gradient-to-br from-card via-card/50 to-background border border-border animate-fade-in" style={{ animationDelay: '400ms' }}>
+        {heroData && <div className="relative py-20 overflow-hidden rounded-3xl bg-gradient-to-br from-card via-card/50 to-background border border-border animate-fade-in" style={{
+        animationDelay: '400ms'
+      }}>
             {/* Animated background elements */}
             <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5" />
             
             {/* Animated dots pattern */}
-            <div 
-              className="absolute inset-0 opacity-20"
-              style={{
-                backgroundImage: 'var(--gradient-dots)',
-                backgroundSize: 'var(--dot-size) var(--dot-size)',
-              }}
-            />
+            <div className="absolute inset-0 opacity-20" style={{
+          backgroundImage: 'var(--gradient-dots)',
+          backgroundSize: 'var(--dot-size) var(--dot-size)'
+        }} />
 
             {/* Gradient orbs */}
             <div className="absolute top-10 left-10 w-48 h-48 bg-primary/10 rounded-full blur-[80px] animate-pulse" />
@@ -137,18 +135,13 @@ export const ClientInfoBlock = ({
                 </div>
 
                 {/* Right Column - Image */}
-                {heroData.imagem_principal && (
-                  <div className="relative group">
+                {heroData.imagem_principal && <div className="relative group">
                     {/* Glow effect */}
                     <div className="absolute -inset-3 bg-gradient-to-r from-primary/20 via-accent/20 to-primary/20 rounded-2xl blur-xl opacity-50 group-hover:opacity-100 transition-opacity duration-500" />
                     
                     {/* Image container */}
                     <div className="relative overflow-hidden rounded-2xl border border-border/50 shadow-xl transform group-hover:scale-[1.02] transition-all duration-500">
-                      <img
-                        src={heroData.imagem_principal}
-                        alt={heroData.titulo}
-                        className="w-full h-auto object-cover"
-                      />
+                      <img src={heroData.imagem_principal} alt={heroData.titulo} className="w-full h-auto object-cover" />
                       
                       {/* Overlay gradient on hover */}
                       <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -157,12 +150,10 @@ export const ClientInfoBlock = ({
                     {/* Floating elements */}
                     <div className="absolute -top-4 -right-4 w-24 h-24 bg-primary/20 rounded-full blur-2xl animate-pulse" />
                     <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-accent/20 rounded-full blur-2xl animate-pulse delay-500" />
-                  </div>
-                )}
+                  </div>}
               </div>
             </div>
-          </div>
-        )}
+          </div>}
       </div>
     </section>;
 };
