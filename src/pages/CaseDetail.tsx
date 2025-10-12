@@ -13,25 +13,34 @@ import MockupSection from "@/components/MockupSection";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
-
 const CaseDetail = () => {
-  const { id } = useParams<{ id: string }>();
-  const { data: caseData, isLoading, error } = useCase(id || "");
-  const { data: blocks, isLoading: blocksLoading } = useCaseBlocks(id || "");
-  
+  const {
+    id
+  } = useParams<{
+    id: string;
+  }>();
+  const {
+    data: caseData,
+    isLoading,
+    error
+  } = useCase(id || "");
+  const {
+    data: blocks,
+    isLoading: blocksLoading
+  } = useCaseBlocks(id || "");
+
   // Fetch case tags
-  const { data: caseTags = [] } = useQuery({
+  const {
+    data: caseTags = []
+  } = useQuery({
     queryKey: ['case-tags-detail', id],
     queryFn: async () => {
       if (!id) return [];
-      
-      const { data, error } = await supabase
-        .from('case_tags')
-        .select('tag_id, tags(id, nome)')
-        .eq('case_id', id);
-      
+      const {
+        data,
+        error
+      } = await supabase.from('case_tags').select('tag_id, tags(id, nome)').eq('case_id', id);
       if (error) throw error;
-      
       return data.map(ct => ({
         id: ct.tags?.id || '',
         nome: ct.tags?.nome || ''
@@ -39,10 +48,8 @@ const CaseDetail = () => {
     },
     enabled: !!id
   });
-
   if (isLoading || blocksLoading) {
-    return (
-      <>
+    return <>
         <Header />
         <div className="min-h-screen bg-background py-32 px-6">
           <div className="container mx-auto space-y-8">
@@ -51,13 +58,10 @@ const CaseDetail = () => {
             <Skeleton className="h-64 w-full" />
           </div>
         </div>
-      </>
-    );
+      </>;
   }
-
   if (error || !caseData) {
-    return (
-      <>
+    return <>
         <Header />
         <div className="min-h-screen bg-background flex items-center justify-center">
           <div className="text-center space-y-4">
@@ -69,32 +73,23 @@ const CaseDetail = () => {
           </div>
         </div>
         <Footer />
-      </>
-    );
+      </>;
   }
-
-  return (
-    <>
+  return <>
       <ScrollToTop />
       <Header />
       <div className="min-h-screen bg-background">
         {/* Render Dynamic Blocks */}
-        {blocks?.map((block) => {
+        {blocks?.map(block => {
         // Find hero block to pass to ClientInfoBlock
         const heroBlock = blocks.find(b => b.block_type === "hero");
         const heroData = heroBlock ? {
           ...(heroBlock.content as import("@/hooks/useCaseBlocks").HeroBlockContent),
           tags: caseTags
         } : undefined;
-
         switch (block.block_type) {
           case "client_info":
-            return <ClientInfoBlock 
-              key={block.id} 
-              data={block.content as import("@/hooks/useCaseBlocks").ClientInfoBlockContent} 
-              caseId={id || ""} 
-              heroData={heroData}
-            />;
+            return <ClientInfoBlock key={block.id} data={block.content as import("@/hooks/useCaseBlocks").ClientInfoBlockContent} caseId={id || ""} heroData={heroData} />;
           case "hero":
             // Skip rendering hero separately as it's now inside ClientInfoBlock
             return null;
@@ -108,24 +103,14 @@ const CaseDetail = () => {
       })}
 
         {/* MacBook Mockup Section */}
-        {caseData?.mockup_screenshot_url && (
-          <MockupSection 
-            screenshotUrl={caseData.mockup_screenshot_url}
-            title="Veja o projeto em ação"
-            description="Conheça como transformamos ideias em soluções digitais de sucesso"
-          />
-        )}
+        {caseData?.mockup_screenshot_url && <MockupSection screenshotUrl={caseData.mockup_screenshot_url} title="Veja o projeto em ação" description="Conheça como transformamos ideias em soluções digitais de sucesso" />}
 
         {/* Contact Form */}
-        <section className="py-24 px-6 bg-gradient-to-b from-background via-card/20 to-background">
-          <div className="container mx-auto max-w-4xl">
+        <section className="px-6 bg-gradient-to-b from-background via-card/20 to-background py-[45px]">
+          <div className="container max-w-4xl mx-0">
             <div className="text-center mb-12 animate-fade-in">
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-                Quer resultados como este?
-              </h2>
-              <p className="text-lg text-muted-foreground">
-                Entre em contato e descubra como podemos transformar seu negócio
-              </p>
+              
+              
               <div className="h-1 w-24 bg-gradient-to-r from-primary via-accent to-transparent rounded-full mx-auto mt-6" />
             </div>
             <CaseContactForm />
@@ -133,8 +118,6 @@ const CaseDetail = () => {
         </section>
       </div>
       <Footer />
-    </>
-  );
+    </>;
 };
-
 export default CaseDetail;
