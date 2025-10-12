@@ -94,9 +94,9 @@ const menuItems = [
     roles: ['administrador', 'gestor_conteudo', 'colunista'],
     subItems: [
       { label: 'Posts', path: '/admin/blog/posts' },
-      { label: 'Categorias', path: '/admin/blog/categories' },
-      { label: 'Tags', path: '/admin/blog/tags' },
-      { label: 'Colunistas', path: '/admin/blog/columnists' },
+      { label: 'Categorias', path: '/admin/blog/categories', roles: ['administrador', 'gestor_conteudo'] },
+      { label: 'Tags', path: '/admin/blog/tags', roles: ['administrador', 'gestor_conteudo'] },
+      { label: 'Colunistas', path: '/admin/blog/columnists', roles: ['administrador', 'gestor_conteudo'] },
     ]
   },
   { 
