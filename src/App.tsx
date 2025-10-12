@@ -18,6 +18,7 @@ import Columnist from "./pages/Columnist";
 import Cases from "./pages/Cases";
 import CaseDetail from "./pages/CaseDetail";
 import Contact from "./pages/Contact";
+import Privacy from "./pages/Privacy";
 import NotFound from "./pages/NotFound";
 
 // Páginas de Soluções
@@ -83,6 +84,7 @@ const App = () => (
           <Route path="/cases" element={<Cases />} />
           <Route path="/cases/:id" element={<CaseDetail />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/privacy" element={<Privacy />} />
           
           {/* Rotas de Soluções */}
           <Route path="/solucoes/implantacao-desenvolvimento" element={<Implementation />} />
