@@ -151,12 +151,15 @@ export default function Academy() {
 
         return (
           <div key={category.id} className="space-y-4">
-            <div>
+            <div className="flex items-center gap-3">
               <h2 className="text-2xl font-bold">{category.nome}</h2>
-              {category.descricao && (
-                <p className="text-muted-foreground mt-1">{category.descricao}</p>
-              )}
+              <span className="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-medium">
+                {categoryContents.length} {categoryContents.length === 1 ? 'material' : 'materiais'}
+              </span>
             </div>
+            {category.descricao && (
+              <p className="text-muted-foreground mt-1">{category.descricao}</p>
+            )}
 
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {categoryContents.map((content) => (
@@ -209,7 +212,12 @@ export default function Academy() {
       {/* Conteúdos sem categoria */}
       {getContentsWithoutCategory().length > 0 && (
         <div className="space-y-4">
-          <h2 className="text-2xl font-bold">Outros Conteúdos</h2>
+          <div className="flex items-center gap-3">
+            <h2 className="text-2xl font-bold">Outros Conteúdos</h2>
+            <span className="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-medium">
+              {getContentsWithoutCategory().length} {getContentsWithoutCategory().length === 1 ? 'material' : 'materiais'}
+            </span>
+          </div>
 
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {getContentsWithoutCategory().map((content) => (
