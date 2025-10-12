@@ -42,11 +42,11 @@ export const useCases = (searchQuery = "", selectedCategory = "Todos") => {
       if (error) throw error;
 
       const formattedCases = data?.map((c: any) => {
-        // Buscar a imagem do bloco client_info (segunda imagem)
+        // Buscar a imagem do bloco client_info (segunda seção/segunda imagem)
         const clientInfoBlock = c.case_content_blocks?.find(
           (block: any) => block.block_type === 'client_info'
         );
-        const bannerUrl = clientInfoBlock?.content?.banner_url || c.imagem_url;
+        const bannerUrl = clientInfoBlock?.content?.banner_url || '/placeholder.svg';
 
         return {
           id: c.id,
