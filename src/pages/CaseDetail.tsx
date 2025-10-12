@@ -8,7 +8,7 @@ import { HeroBlock } from "@/components/case/HeroBlock";
 import { TextColumnsBlock } from "@/components/case/TextColumnsBlock";
 import { BenefitsBlock } from "@/components/case/BenefitsBlock";
 import { ClientInfoBlock } from "@/components/case/ClientInfoBlock";
-import CaseContactForm from "@/components/CaseContactForm";
+import CtaResultsSection from "@/components/CtaResultsSection";
 import MockupSection from "@/components/MockupSection";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -105,11 +105,7 @@ const CaseDetail = () => {
         {/* MacBook Mockup Section */}
         {caseData?.mockup_screenshot_url && <MockupSection screenshotUrl={caseData.mockup_screenshot_url} title="Veja o projeto em ação" description="Conheça como transformamos ideias em soluções digitais de sucesso" />}
 
-        <section className="px-6 bg-gradient-to-b from-background via-card/20 to-background py-16">
-          <div className="container max-w-4xl mx-auto">
-            <CaseContactForm />
-          </div>
-        </section>
+        <CtaResultsSection />
       </div>
       <Footer />
     </>;
