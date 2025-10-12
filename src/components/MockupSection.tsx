@@ -1,4 +1,4 @@
-import macbookMockup from "@/assets/macbook-mockup.png";
+import macbookMockup from "@/assets/macbook-front-mockup.png";
 
 interface MockupSectionProps {
   screenshotUrl?: string;
@@ -41,13 +41,13 @@ const MockupSection = ({
               className="w-full h-auto relative z-10"
             />
             
-            {/* Screenshot overlay - positioned on the screen */}
+            {/* Screenshot overlay - positioned perfectly on screen */}
             {screenshotUrl && (
-              <div className="absolute top-[3%] left-[12.5%] w-[75%] h-[76%] overflow-hidden rounded-t-lg z-20 pointer-events-none">
+              <div className="absolute top-[6.5%] left-[16%] w-[68%] h-[68%] overflow-hidden z-20">
                 <img 
                   src={screenshotUrl} 
                   alt="Website Screenshot dentro do MacBook mockup" 
-                  className="w-full h-full object-cover object-top pointer-events-none"
+                  className="w-full h-full object-cover object-top"
                   loading="lazy"
                 />
               </div>
