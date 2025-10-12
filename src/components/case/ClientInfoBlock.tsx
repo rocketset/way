@@ -132,7 +132,7 @@ export const ClientInfoBlock = ({
                 </div>
 
                 {/* Right Column - Image */}
-                {heroData.imagem_principal && (
+                {(data.banner_url || heroData.imagem_principal) && (
                   <div className="relative animate-fade-in delay-700 group">
                     {/* Glow effect */}
                     <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 via-accent/20 to-primary/20 rounded-2xl blur-2xl opacity-50 group-hover:opacity-100 transition-opacity duration-700" />
@@ -140,7 +140,7 @@ export const ClientInfoBlock = ({
                     {/* Image container */}
                     <div className="relative overflow-hidden rounded-2xl border border-border/50 shadow-2xl transform group-hover:scale-[1.02] transition-all duration-700">
                       <img
-                        src={heroData.imagem_principal}
+                        src={data.banner_url || heroData.imagem_principal}
                         alt={heroData.titulo}
                         className="w-full h-auto object-cover"
                       />
