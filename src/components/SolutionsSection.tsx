@@ -102,23 +102,6 @@ const SolutionsSection = () => {
   }];
   return <section id="solucoes" className="relative py-20 bg-gradient-to-b from-background via-background to-gray-900 overflow-hidden">
       {/* Animated background elements */}
-      <div className="absolute inset-0">
-        <div className="absolute top-20 left-10 w-96 h-96 bg-foreground/10 rounded-full blur-3xl animate-pulse" style={{
-        animationDuration: '4s'
-      }} />
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-foreground/10 rounded-full blur-3xl animate-pulse" style={{
-        animationDuration: '5s',
-        animationDelay: '1s'
-      }} />
-        
-        <div className="opacity-10">
-          <Plus className="absolute top-10 left-10 w-20 h-20 text-foreground animate-[spin_20s_linear_infinite]" />
-          <Plus className="absolute top-32 right-20 w-32 h-32 text-foreground animate-[spin_25s_linear_infinite_reverse]" />
-          <Plus className="absolute bottom-20 left-1/4 w-16 h-16 text-foreground animate-[spin_15s_linear_infinite]" />
-          <Plus className="absolute top-1/2 left-10 w-24 h-24 text-foreground animate-[spin_18s_linear_infinite]" />
-          <Plus className="absolute bottom-32 right-32 w-28 h-28 text-foreground animate-[spin_22s_linear_infinite_reverse]" />
-        </div>
-      </div>
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Header */}
