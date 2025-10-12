@@ -341,23 +341,25 @@ function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
                     {/* Subitens - só mostra quando expandido e aberto */}
                     {isExpanded && isSubmenuOpen && item.subItems && (
                       <div className="ml-8 mt-1 space-y-1 border-l-2 border-border pl-3">
-                        {item.subItems.map((subItem) => {
-                          const isSubActive = location.pathname === subItem.path;
-                          return (
-                            <Link
-                              key={subItem.path}
-                              to={subItem.path}
-                              onClick={onNavigate}
-                              className={cn(
-                                'flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-all hover:bg-accent',
-                                isSubActive && 'bg-accent text-accent-foreground font-medium'
-                              )}
-                            >
-                              <div className="w-1.5 h-1.5 rounded-full bg-current" />
-                              {subItem.label}
-                            </Link>
-                          );
-                        })}
+                        {item.subItems
+                          .filter(subItem => !subItem.roles || subItem.roles.includes(effectiveRole || 'membro'))
+                          .map((subItem) => {
+                            const isSubActive = location.pathname === subItem.path;
+                            return (
+                              <Link
+                                key={subItem.path}
+                                to={subItem.path}
+                                onClick={onNavigate}
+                                className={cn(
+                                  'flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-all hover:bg-accent',
+                                  isSubActive && 'bg-accent text-accent-foreground font-medium'
+                                )}
+                              >
+                                <div className="w-1.5 h-1.5 rounded-full bg-current" />
+                                {subItem.label}
+                              </Link>
+                            );
+                          })}
                       </div>
                     )}
                   </>
@@ -562,23 +564,25 @@ function MobileSidebar() {
 
                         {isSubmenuOpen && item.subItems && (
                           <div className="ml-8 mt-1 space-y-1 border-l-2 border-border pl-3">
-                            {item.subItems.map((subItem) => {
-                              const isSubActive = location.pathname === subItem.path;
-                              return (
-                                <Link
-                                  key={subItem.path}
-                                  to={subItem.path}
-                                  onClick={handleNavigation}
-                                  className={cn(
-                                    'flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-all hover:bg-accent',
-                                    isSubActive && 'bg-accent text-accent-foreground font-medium'
-                                  )}
-                                >
-                                  <div className="w-1.5 h-1.5 rounded-full bg-current" />
-                                  {subItem.label}
-                                </Link>
-                              );
-                            })}
+                            {item.subItems
+                              .filter(subItem => !subItem.roles || subItem.roles.includes(effectiveRole || 'membro'))
+                              .map((subItem) => {
+                                const isSubActive = location.pathname === subItem.path;
+                                return (
+                                  <Link
+                                    key={subItem.path}
+                                    to={subItem.path}
+                                    onClick={handleNavigation}
+                                    className={cn(
+                                      'flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-all hover:bg-accent',
+                                      isSubActive && 'bg-accent text-accent-foreground font-medium'
+                                    )}
+                                  >
+                                    <div className="w-1.5 h-1.5 rounded-full bg-current" />
+                                    {subItem.label}
+                                  </Link>
+                                );
+                              })}
                           </div>
                         )}
                       </>
