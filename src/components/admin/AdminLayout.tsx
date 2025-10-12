@@ -126,6 +126,8 @@ function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
         return <PenTool className="h-4 w-4" />;
       case 'membro':
         return <UserIcon className="h-4 w-4" />;
+      case 'cliente':
+        return <UserIcon className="h-4 w-4" />;
       case 'gestor_conteudo':
         return <UserCog className="h-4 w-4" />;
       default:
@@ -142,6 +144,8 @@ function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
         return 'Colunista';
       case 'membro':
         return 'Membro';
+      case 'cliente':
+        return 'Cliente';
       case 'gestor_conteudo':
         return 'Gestor de Conteúdo';
       default:
@@ -222,6 +226,12 @@ function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
                     <div className="flex items-center gap-2">
                       {getRoleIcon('membro')}
                       <span>Membro</span>
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="cliente">
+                    <div className="flex items-center gap-2">
+                      {getRoleIcon('cliente')}
+                      <span>Cliente</span>
                     </div>
                   </SelectItem>
                   <SelectItem value="gestor_conteudo">
@@ -391,6 +401,8 @@ function MobileSidebar() {
         return <PenTool className="h-4 w-4" />;
       case 'membro':
         return <UserIcon className="h-4 w-4" />;
+      case 'cliente':
+        return <UserIcon className="h-4 w-4" />;
       case 'gestor_conteudo':
         return <UserCog className="h-4 w-4" />;
       default:
@@ -407,6 +419,8 @@ function MobileSidebar() {
         return 'Colunista';
       case 'membro':
         return 'Membro';
+      case 'cliente':
+        return 'Cliente';
       case 'gestor_conteudo':
         return 'Gestor de Conteúdo';
       default:
@@ -484,6 +498,12 @@ function MobileSidebar() {
                       <div className="flex items-center gap-2">
                         {getRoleIcon('membro')}
                         <span>Membro</span>
+                      </div>
+                    </SelectItem>
+                    <SelectItem value="cliente">
+                      <div className="flex items-center gap-2">
+                        {getRoleIcon('cliente')}
+                        <span>Cliente</span>
                       </div>
                     </SelectItem>
                     <SelectItem value="gestor_conteudo">
@@ -758,6 +778,7 @@ export default function AdminLayout() {
                   {viewMode === 'administrador' && 'Administrador'}
                   {viewMode === 'colunista' && 'Colunista'}
                   {viewMode === 'membro' && 'Membro'}
+                  {viewMode === 'cliente' && 'Cliente'}
                   {viewMode === 'gestor_conteudo' && 'Gestor de Conteúdo'}
                 </strong>
               </span>
