@@ -2,11 +2,31 @@
 // Exibe estatísticas e resumo do sistema
 
 import { useEffect, useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { supabase } from '@/integrations/supabase/client';
-import { FileText, Briefcase, Mail, Users, BookOpen, UserCheck, Activity } from 'lucide-react';
+import { FileText, Briefcase, Mail, Users, BookOpen, UserCheck, Activity, FolderOpen, TrendingUp } from 'lucide-react';
+import { useAuth } from '@/hooks/useAuth';
+import { Badge } from '@/components/ui/badge';
+
+interface CategoryStats {
+  id: string;
+  nome: string;
+  postCount: number;
+}
+
+interface ColumnistPost {
+  id: string;
+  titulo: string;
+  excerpt: string | null;
+  status: string;
+  publicado: boolean;
+  criado_em: string;
+  categories: { nome: string }[];
+}
 
 export default function Dashboard() {
+  const { user, userRole } = useAuth();
+  
   // Estados para armazenar as contagens
   const [stats, setStats] = useState({
     posts: 0,
@@ -22,12 +42,129 @@ export default function Dashboard() {
     clienteUsers: 0,
     totalActivities: 0,
   });
+  
+  // Estados específicos para colunista
+  const [columnistStats, setColumnistStats] = useState({
+    totalCategories: 0,
+    totalPosts: 0,
+    publishedPosts: 0,
+    draftPosts: 0,
+  });
+  const [categoryStats, setCategoryStats] = useState<CategoryStats[]>([]);
+  const [recentPosts, setRecentPosts] = useState<ColumnistPost[]>([]);
+  
   const [loading, setLoading] = useState(true);
 
   // Busca as estatísticas ao carregar a página
   useEffect(() => {
-    fetchStats();
-  }, []);
+    if (userRole === 'colunista' && user) {
+      fetchColumnistStats();
+    } else {
+      fetchStats();
+    }
+  }, [userRole, user]);
+
+  // Função para buscar estatísticas do colunista
+  const fetchColumnistStats = async () => {
+    if (!user) return;
+    
+    try {
+      // Busca total de categorias disponíveis
+      const { count: categoriesCount } = await supabase
+        .from('categories')
+        .select('*', { count: 'exact', head: true })
+        .eq('tipo', 'blog');
+
+      // Busca posts do colunista
+      const { data: posts, count: postsCount } = await supabase
+        .from('posts')
+        .select('id, status, publicado', { count: 'exact' })
+        .eq('autor_id', user.id);
+
+      const publishedCount = posts?.filter(p => p.publicado || p.status === 'published').length || 0;
+      const draftCount = posts?.filter(p => !p.publicado && p.status === 'draft').length || 0;
+
+      // Busca posts com categorias
+      const { data: postsWithCategories } = await supabase
+        .from('posts')
+        .select(`
+          id,
+          titulo,
+          excerpt,
+          status,
+          publicado,
+          criado_em,
+          post_categories!inner(
+            category:categories!inner(
+              id,
+              nome
+            )
+          )
+        `)
+        .eq('autor_id', user.id)
+        .order('criado_em', { ascending: false })
+        .limit(5);
+
+      // Agrupa posts por categoria
+      const categoriesMap = new Map<string, CategoryStats>();
+      
+      postsWithCategories?.forEach((post: any) => {
+        post.post_categories.forEach((pc: any) => {
+          const catId = pc.category.id;
+          const catName = pc.category.nome;
+          
+          if (!categoriesMap.has(catId)) {
+            categoriesMap.set(catId, { id: catId, nome: catName, postCount: 0 });
+          }
+          categoriesMap.get(catId)!.postCount++;
+        });
+      });
+
+      // Busca posts recentes formatados
+      const { data: recentPostsData } = await supabase
+        .from('posts')
+        .select(`
+          id,
+          titulo,
+          excerpt,
+          status,
+          publicado,
+          criado_em
+        `)
+        .eq('autor_id', user.id)
+        .order('criado_em', { ascending: false })
+        .limit(5);
+
+      // Busca categorias para cada post
+      const postsWithCats = await Promise.all(
+        (recentPostsData || []).map(async (post) => {
+          const { data: cats } = await supabase
+            .from('post_categories')
+            .select('category:categories(nome)')
+            .eq('post_id', post.id);
+          
+          return {
+            ...post,
+            categories: cats?.map((c: any) => ({ nome: c.category.nome })) || []
+          };
+        })
+      );
+
+      setColumnistStats({
+        totalCategories: categoriesCount || 0,
+        totalPosts: postsCount || 0,
+        publishedPosts: publishedCount,
+        draftPosts: draftCount,
+      });
+
+      setCategoryStats(Array.from(categoriesMap.values()));
+      setRecentPosts(postsWithCats);
+    } catch (error) {
+      console.error('Erro ao buscar estatísticas do colunista:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   // Função para buscar estatísticas do banco de dados
   const fetchStats = async () => {
@@ -206,6 +343,160 @@ export default function Dashboard() {
     );
   }
 
+  // Dashboard específico para colunista
+  if (userRole === 'colunista') {
+    return (
+      <div className="space-y-6">
+        {/* Título da Página */}
+        <div>
+          <h1 className="text-3xl font-bold">Meu Dashboard</h1>
+          <p className="text-muted-foreground mt-2">
+            Resumo da sua atividade como colunista
+          </p>
+        </div>
+
+        {/* Cards de Resumo */}
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <CardTitle className="text-sm font-medium">
+                Categorias Disponíveis
+              </CardTitle>
+              <FolderOpen className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{columnistStats.totalCategories}</div>
+              <p className="text-xs text-muted-foreground mt-1">
+                Para você publicar
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <CardTitle className="text-sm font-medium">
+                Total de Posts
+              </CardTitle>
+              <FileText className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{columnistStats.totalPosts}</div>
+              <p className="text-xs text-muted-foreground mt-1">
+                Todos os seus posts
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <CardTitle className="text-sm font-medium">
+                Posts Publicados
+              </CardTitle>
+              <TrendingUp className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold text-green-600">{columnistStats.publishedPosts}</div>
+              <p className="text-xs text-muted-foreground mt-1">
+                Visíveis no site
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <CardTitle className="text-sm font-medium">
+                Rascunhos
+              </CardTitle>
+              <FileText className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold text-orange-600">{columnistStats.draftPosts}</div>
+              <p className="text-xs text-muted-foreground mt-1">
+                Ainda não publicados
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Posts por Categoria */}
+        {categoryStats.length > 0 && (
+          <Card>
+            <CardHeader>
+              <CardTitle>Seus Posts por Categoria</CardTitle>
+              <CardDescription>
+                Distribuição dos seus posts pelas diferentes categorias
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
+                {categoryStats.map((cat) => (
+                  <div 
+                    key={cat.id}
+                    className="flex items-center justify-between p-3 rounded-lg border bg-muted/30"
+                  >
+                    <span className="font-medium">{cat.nome}</span>
+                    <Badge variant="secondary">{cat.postCount} {cat.postCount === 1 ? 'post' : 'posts'}</Badge>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Posts Recentes */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Seus Posts Recentes</CardTitle>
+            <CardDescription>
+              Últimos posts que você criou
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              {recentPosts.length > 0 ? (
+                recentPosts.map((post) => (
+                  <div 
+                    key={post.id}
+                    className="flex flex-col gap-2 p-4 rounded-lg border hover:bg-muted/50 transition-colors"
+                  >
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="flex-1">
+                        <h3 className="font-semibold text-lg">{post.titulo}</h3>
+                        {post.excerpt && (
+                          <p className="text-sm text-muted-foreground mt-1 line-clamp-2">
+                            {post.excerpt}
+                          </p>
+                        )}
+                      </div>
+                      <Badge variant={post.publicado || post.status === 'published' ? 'default' : 'secondary'}>
+                        {post.publicado || post.status === 'published' ? 'Publicado' : 'Rascunho'}
+                      </Badge>
+                    </div>
+                    <div className="flex items-center gap-2 flex-wrap">
+                      {post.categories.map((cat, idx) => (
+                        <Badge key={idx} variant="outline" className="text-xs">
+                          {cat.nome}
+                        </Badge>
+                      ))}
+                      <span className="text-xs text-muted-foreground ml-auto">
+                        {new Date(post.criado_em).toLocaleDateString('pt-BR')}
+                      </span>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <p className="text-center text-muted-foreground py-8">
+                  Você ainda não criou nenhum post
+                </p>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  // Dashboard padrão para admin/gestor
   return (
     <div className="space-y-6">
       {/* Título da Página */}
