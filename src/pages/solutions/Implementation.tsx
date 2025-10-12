@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CtaResultsSection from "@/components/CtaResultsSection";
+import PartnersCarousel from "@/components/PartnersCarousel";
 import { Button } from "@/components/ui/button";
 import { ShoppingCart, Store, Cpu, CreditCard, Truck, Smile, ArrowRight, Check, Globe, MessageCircle, Bot, Plus, Plug } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -216,6 +217,9 @@ const Implementation = () => {
             </div>
           </div>
         </section>
+
+        {/* Partners Carousel */}
+        <PartnersCarousel />
 
         {/* Contact Form Section */}
         <CtaResultsSection />
