@@ -9,22 +9,6 @@ interface ClientInfoBlockProps {
   data: ClientInfoBlockContent;
   caseId: string;
 }
-const tagColors: Record<string, string> = {
-  "vtex io": "bg-purple-500/10 text-purple-500 border-purple-500/20",
-  "shopify": "bg-green-500/10 text-green-500 border-green-500/20",
-  "nuvemshop": "bg-blue-500/10 text-blue-500 border-blue-500/20",
-  "magento": "bg-orange-500/10 text-orange-500 border-orange-500/20",
-  "migração": "bg-yellow-500/10 text-yellow-500 border-yellow-500/20",
-  "evolução": "bg-cyan-500/10 text-cyan-500 border-cyan-500/20",
-  "on-going": "bg-indigo-500/10 text-indigo-500 border-indigo-500/20",
-  "b2c": "bg-pink-500/10 text-pink-500 border-pink-500/20",
-  "b2b": "bg-teal-500/10 text-teal-500 border-teal-500/20",
-  default: "bg-muted text-muted-foreground border-border"
-};
-const getTagColor = (tag: string): string => {
-  const normalizedTag = tag.toLowerCase();
-  return tagColors[normalizedTag] || tagColors.default;
-};
 export const ClientInfoBlock = ({
   data,
   caseId
@@ -70,7 +54,7 @@ export const ClientInfoBlock = ({
 
         {/* Tags */}
         {caseTags && caseTags.length > 0 && <div className="flex flex-wrap gap-3">
-            {caseTags.map(tag => <Badge key={tag.id} variant="outline" className={`px-4 py-2 text-sm font-medium border ${getTagColor(tag.nome)}`}>
+            {caseTags.map(tag => <Badge key={tag.id} variant="outline" className="px-4 py-2 text-sm font-medium bg-card border border-border hover:border-primary/50 transition-all duration-300">
                 {tag.nome}
               </Badge>)}
           </div>}
