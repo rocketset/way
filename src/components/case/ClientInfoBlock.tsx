@@ -5,6 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
+import DOMPurify from "dompurify";
 interface ClientInfoBlockProps {
   data: ClientInfoBlockContent;
   caseId: string;
@@ -89,11 +90,12 @@ export const ClientInfoBlock = ({
             Sobre o Cliente
           </h2>
           <div className="hidden md:block w-px h-full bg-gradient-to-b from-transparent via-border to-transparent"></div>
-          <div className="text-lg text-muted-foreground leading-relaxed space-y-4">
-            {data.sobre_cliente_texto.split('\n').map((paragraph, index) => paragraph.trim() && <p key={index} className="hover:text-foreground transition-colors duration-300">
-                  {paragraph}
-                </p>)}
-          </div>
+          <div 
+            className="text-lg text-muted-foreground leading-relaxed space-y-4 hover:text-foreground transition-colors duration-300 prose prose-invert max-w-none"
+            dangerouslySetInnerHTML={{
+              __html: DOMPurify.sanitize(data.sobre_cliente_texto)
+            }}
+          />
         </div>
 
         {/* Hero Content Below */}
