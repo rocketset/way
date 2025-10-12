@@ -84,11 +84,15 @@ export const ClientInfoBlock = ({
           <h2 className="text-3xl md:text-4xl font-bold text-foreground sticky top-24">
             Sobre o Cliente
           </h2>
-          <div className="hidden md:block h-auto bg-gradient-to-b from-transparent via-border to-transparent"></div>
+          <div className="hidden md:block w-px h-full bg-gradient-to-b from-transparent via-border to-transparent"></div>
           <div className="text-lg text-muted-foreground leading-relaxed space-y-4">
-            {data.sobre_cliente_texto.split('\n').map((paragraph, index) => <p key={index} className="hover:text-foreground transition-colors duration-300">
-                {paragraph}
-              </p>)}
+            {data.sobre_cliente_texto.split('\n').map((paragraph, index) => 
+              paragraph.trim() && (
+                <p key={index} className="hover:text-foreground transition-colors duration-300">
+                  {paragraph}
+                </p>
+              )
+            )}
           </div>
         </div>
 
