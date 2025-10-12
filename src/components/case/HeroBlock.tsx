@@ -40,16 +40,6 @@ export const HeroBlock = ({ data }: HeroBlockProps) => {
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Left Column - Content */}
           <div className="space-y-8 animate-fade-in">
-            {data.logo_url && (
-              <div className="mb-8 animate-scale-in">
-                <img 
-                  src={data.logo_url} 
-                  alt="Logo" 
-                  className="h-20 w-auto object-contain drop-shadow-[0_0_30px_rgba(255,215,0,0.3)] hover:scale-110 transition-transform duration-500"
-                />
-              </div>
-            )}
-
             <h1 className="text-5xl lg:text-8xl font-bold text-foreground leading-tight animate-fade-in delay-100">
               <span className="bg-gradient-to-r from-foreground via-primary to-foreground bg-clip-text text-transparent animate-pulse">
                 {data.titulo}
