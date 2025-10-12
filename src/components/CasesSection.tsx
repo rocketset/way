@@ -1,10 +1,10 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
+import { Sparkles } from "lucide-react";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
-import useEmblaCarousel from "embla-carousel-react";
 interface CaseItem {
   id: string;
   titulo: string;
@@ -17,23 +17,11 @@ interface CaseItem {
 }
 const CasesSection = () => {
   const [cases, setCases] = useState<CaseItem[]>([]);
-  const [emblaRef, emblaApi] = useEmblaCarousel({
-    align: "start",
-    loop: false,
-    skipSnaps: false,
-  });
   const navigate = useNavigate();
+  
   useEffect(() => {
     fetchCases();
   }, []);
-
-  const scrollPrev = useCallback(() => {
-    if (emblaApi) emblaApi.scrollPrev();
-  }, [emblaApi]);
-
-  const scrollNext = useCallback(() => {
-    if (emblaApi) emblaApi.scrollNext();
-  }, [emblaApi]);
 
   const fetchCases = async () => {
     const { data, error } = await supabase
@@ -101,72 +89,61 @@ const CasesSection = () => {
             Nenhum case em destaque no momento.
           </p>
         ) : (
-          <div className="relative">
-            <div className="overflow-hidden" ref={emblaRef}>
-              <div className="flex gap-6">
-                {cases.map((caseItem, index) => (
-                  <div
-                    key={caseItem.id}
-                    className="flex-[0_0_100%] sm:flex-[0_0_calc(50%-12px)] lg:flex-[0_0_calc(33.333%-16px)] xl:flex-[0_0_calc(25%-18px)] min-w-0"
+          <Carousel
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+            className="w-full"
+          >
+            <CarouselContent className="-ml-6">
+              {cases.map((caseItem, index) => (
+                <CarouselItem key={caseItem.id} className="pl-6 md:basis-1/2 lg:basis-1/3 xl:basis-1/4">
+                  <div 
+                    className="group cursor-pointer animate-fade-in h-full flex flex-col"
+                    style={{ animationDelay: `${index * 0.1}s` }}
+                    onClick={() => navigate(`/cases/${caseItem.id}`)}
                   >
-                    <div 
-                      className="group cursor-pointer animate-fade-in h-full flex flex-col"
-                      style={{ animationDelay: `${index * 0.1}s` }}
-                      onClick={() => navigate(`/cases/${caseItem.id}`)}
-                    >
-                      {/* Image */}
-                      <div className="relative aspect-[3/4] overflow-hidden rounded-lg mb-4 bg-muted">
-                        <img
-                          src={caseItem.imagem_url || "/placeholder.svg"}
-                          alt={caseItem.titulo}
-                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                      </div>
-
-                      {/* Title */}
-                      <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-primary transition-colors duration-300">
-                        {caseItem.titulo}
-                      </h3>
-
-                      {/* Tags */}
-                      {caseItem.tags.length > 0 && (
-                        <div className="flex flex-wrap gap-2">
-                          {caseItem.tags.slice(0, 3).map((tag, tagIndex) => (
-                            <Badge 
-                              key={tagIndex} 
-                              variant="outline" 
-                              className="px-3 py-1 text-xs font-medium bg-card border border-border hover:border-primary/50 transition-all duration-300"
-                            >
-                              {tag}
-                            </Badge>
-                          ))}
-                        </div>
-                      )}
+                    {/* Image */}
+                    <div className="relative aspect-[3/4] overflow-hidden rounded-lg mb-4 bg-muted">
+                      <img
+                        src={caseItem.imagem_url || "/placeholder.svg"}
+                        alt={caseItem.titulo}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     </div>
-                  </div>
-                ))}
-              </div>
-            </div>
 
+                    {/* Title */}
+                    <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-primary transition-colors duration-300">
+                      {caseItem.titulo}
+                    </h3>
+
+                    {/* Tags */}
+                    {caseItem.tags.length > 0 && (
+                      <div className="flex flex-wrap gap-2">
+                        {caseItem.tags.slice(0, 3).map((tag, tagIndex) => (
+                          <Badge 
+                            key={tagIndex} 
+                            variant="outline" 
+                            className="px-3 py-1 text-xs font-medium bg-card border border-border hover:border-primary/50 transition-all duration-300"
+                          >
+                            {tag}
+                          </Badge>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            
             {/* Navigation Arrows */}
-            <div className="flex items-center justify-center gap-4 mt-12">
-              <button
-                onClick={scrollPrev}
-                className="w-12 h-12 rounded-full border-2 border-border bg-background hover:bg-muted hover:border-primary transition-all duration-300 flex items-center justify-center group"
-                aria-label="Anterior"
-              >
-                <ChevronLeft className="w-5 h-5 text-foreground group-hover:text-primary transition-colors" />
-              </button>
-              <button
-                onClick={scrollNext}
-                className="w-12 h-12 rounded-full border-2 border-border bg-background hover:bg-muted hover:border-primary transition-all duration-300 flex items-center justify-center group"
-                aria-label="Próximo"
-              >
-                <ChevronRight className="w-5 h-5 text-foreground group-hover:text-primary transition-colors" />
-              </button>
+            <div className="flex justify-center gap-4 mt-12">
+              <CarouselPrevious className="relative left-0 top-0 translate-y-0" />
+              <CarouselNext className="relative right-0 top-0 translate-y-0" />
             </div>
-          </div>
+          </Carousel>
         )}
 
         {/* Bottom CTA */}
