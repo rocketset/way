@@ -32,16 +32,22 @@ export const GoogleReviews = () => {
         {[...Array(5)].map((_, i) => <Star key={i} className={`w-4 h-4 ${i < rating ? "fill-yellow-400 text-yellow-400" : "text-gray-300"}`} />)}
       </div>;
   };
-  return <section className="py-12 px-4 bg-gradient-to-b from-background to-muted/20 bg-slate-50 rounded-3xl mx-4">
-      <div className="container mx-auto max-w-6xl">
+  return <section className="relative py-12 px-4 bg-gradient-to-b from-background to-gray-900 rounded-3xl mx-4 overflow-hidden">
+      {/* Plus icons animados de fundo */}
+      <div className="absolute top-10 left-10 text-primary/5 text-6xl animate-float" style={{ animationDelay: '0s' }}>+</div>
+      <div className="absolute top-20 right-20 text-primary/5 text-8xl animate-float" style={{ animationDelay: '1s' }}>+</div>
+      <div className="absolute bottom-20 left-1/4 text-primary/5 text-7xl animate-float" style={{ animationDelay: '2s' }}>+</div>
+      <div className="absolute bottom-10 right-1/3 text-primary/5 text-6xl animate-float" style={{ animationDelay: '1.5s' }}>+</div>
+      
+      <div className="container mx-auto max-w-6xl relative z-10">
         <div className="text-center mb-12 animate-fade-in">
-          <h2 className="text-4xl font-bold text-foreground mb-4">
+          <h2 className="text-4xl font-bold text-white mb-4">
             Avaliações no Google
           </h2>
-          {placeConfig && <div className="flex items-center justify-center gap-4 text-muted-foreground">
+          {placeConfig && <div className="flex items-center justify-center gap-4 text-gray-300">
               <div className="flex items-center gap-2">
                 {renderStars(Math.round(placeConfig.rating || 0))}
-                <span className="text-2xl font-bold text-foreground">
+                <span className="text-2xl font-bold text-white">
                   {placeConfig.rating?.toFixed(1)}
                 </span>
               </div>
@@ -62,7 +68,7 @@ export const GoogleReviews = () => {
           <CarouselContent className="-ml-6">
             {reviews.map(review => (
               <CarouselItem key={review.id} className="pl-6 md:basis-1/2 lg:basis-1/3">
-                <Card className="hover:shadow-lg transition-all duration-300 hover:-translate-y-1 h-full">
+                <Card className="hover:shadow-lg hover:shadow-[0_0_30px_rgba(252,211,77,0.3)] transition-all duration-300 hover:-translate-y-1 h-full">
                   <CardContent className="p-6">
                     <div className="flex items-start gap-4 mb-4">
                       <Avatar className="w-12 h-12">
