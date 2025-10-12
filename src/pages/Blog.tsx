@@ -54,14 +54,14 @@ const Blog = () => {
         <div className="container mx-auto">
           <div className="max-w-6xl mx-auto">
             {/* Search Bar */}
-            <div className="relative mb-6">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+            <div className="relative mb-6 max-w-md mx-auto">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground" />
               <Input
                 type="text"
                 placeholder="Encontre no blog"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 h-11 bg-card border-border text-foreground placeholder:text-muted-foreground focus:border-primary transition-all duration-300 rounded-full"
+                className="pl-9 h-9 text-sm bg-card border-border text-foreground placeholder:text-muted-foreground focus:border-primary transition-all duration-300 rounded-full"
               />
             </div>
 
