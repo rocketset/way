@@ -79,19 +79,24 @@ const CaseDetail = () => {
       <div className="min-h-screen bg-background">
         {/* Render Dynamic Blocks */}
         {blocks?.map((block) => {
+        // Find hero block to pass to ClientInfoBlock
+        const heroBlock = blocks.find(b => b.block_type === "hero");
+        const heroData = heroBlock ? {
+          ...(heroBlock.content as import("@/hooks/useCaseBlocks").HeroBlockContent),
+          tags: caseTags
+        } : undefined;
+
         switch (block.block_type) {
           case "client_info":
-            return <ClientInfoBlock key={block.id} data={block.content as import("@/hooks/useCaseBlocks").ClientInfoBlockContent} caseId={id || ""} />;
+            return <ClientInfoBlock 
+              key={block.id} 
+              data={block.content as import("@/hooks/useCaseBlocks").ClientInfoBlockContent} 
+              caseId={id || ""} 
+              heroData={heroData}
+            />;
           case "hero":
-            return (
-              <HeroBlock 
-                key={block.id} 
-                data={{
-                  ...(block.content as import("@/hooks/useCaseBlocks").HeroBlockContent),
-                  tags: caseTags
-                }}
-              />
-            );
+            // Skip rendering hero separately as it's now inside ClientInfoBlock
+            return null;
           case "text_columns":
             return <TextColumnsBlock key={block.id} data={block.content as import("@/hooks/useCaseBlocks").TextColumnsBlockContent} />;
           case "benefits":
