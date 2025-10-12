@@ -25,7 +25,7 @@ interface ColumnistPost {
 }
 
 export default function Dashboard() {
-  const { user, userRole } = useAuth();
+  const { user, effectiveRole } = useAuth();
   
   // Estados para armazenar as contagens
   const [stats, setStats] = useState({
@@ -57,12 +57,12 @@ export default function Dashboard() {
 
   // Busca as estatísticas ao carregar a página
   useEffect(() => {
-    if (userRole === 'colunista' && user) {
+    if (effectiveRole === 'colunista' && user) {
       fetchColumnistStats();
     } else {
       fetchStats();
     }
-  }, [userRole, user]);
+  }, [effectiveRole, user]);
 
   // Função para buscar estatísticas do colunista
   const fetchColumnistStats = async () => {
@@ -344,7 +344,7 @@ export default function Dashboard() {
   }
 
   // Dashboard específico para colunista
-  if (userRole === 'colunista') {
+  if (effectiveRole === 'colunista') {
     return (
       <div className="space-y-6">
         {/* Título da Página */}
