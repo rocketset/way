@@ -127,7 +127,7 @@ function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [openSubmenus, setOpenSubmenus] = useState<string[]>([]);
   const [isRoleSelectOpen, setIsRoleSelectOpen] = useState(false);
-  const [academyCategories, setAcademyCategories] = useState<Array<{ id: string; nome: string }>>([]);
+  const [academyCategories, setAcademyCategories] = useState<Array<{ id: string; nome: string; contentCount?: number }>>([]);
   const [isCategorySelectOpen, setIsCategorySelectOpen] = useState(false);
 
   // Busca categorias da Academy
@@ -156,14 +156,30 @@ function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
   }, []);
 
   const fetchAcademyCategories = async () => {
-    const { data } = await supabase
+    const { data: categories } = await supabase
       .from('academy_categories')
       .select('id, nome')
       .eq('ativo', true)
       .order('ordem', { ascending: true });
     
-    if (data) {
-      setAcademyCategories(data);
+    if (categories) {
+      // Busca a contagem de conteúdos para cada categoria
+      const categoriesWithCount = await Promise.all(
+        categories.map(async (category) => {
+          const { count } = await supabase
+            .from('academy_content')
+            .select('*', { count: 'exact', head: true })
+            .eq('categoria_id', category.id)
+            .eq('publicado', true);
+          
+          return {
+            ...category,
+            contentCount: count || 0
+          };
+        })
+      );
+      
+      setAcademyCategories(categoriesWithCount);
     }
   };
 
@@ -429,7 +445,14 @@ function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
                               <SelectContent className="bg-popover border shadow-md z-[100]">
                                 {academyCategories.map((category) => (
                                   <SelectItem key={category.id} value={category.id}>
-                                    {category.nome}
+                                    <div className="flex items-center justify-between w-full gap-4">
+                                      <span>{category.nome}</span>
+                                      {category.contentCount !== undefined && (
+                                        <span className="text-xs text-muted-foreground">
+                                          {category.contentCount} {category.contentCount === 1 ? 'material' : 'materiais'}
+                                        </span>
+                                      )}
+                                    </div>
                                   </SelectItem>
                                 ))}
                               </SelectContent>
@@ -466,7 +489,7 @@ function MobileSidebar() {
   const [openSubmenus, setOpenSubmenus] = useState<string[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [isRoleSelectOpen, setIsRoleSelectOpen] = useState(false);
-  const [academyCategories, setAcademyCategories] = useState<Array<{ id: string; nome: string }>>([]);
+  const [academyCategories, setAcademyCategories] = useState<Array<{ id: string; nome: string; contentCount?: number }>>([]);
   const [isCategorySelectOpen, setIsCategorySelectOpen] = useState(false);
 
   // Busca categorias da Academy
@@ -495,14 +518,30 @@ function MobileSidebar() {
   }, []);
 
   const fetchAcademyCategories = async () => {
-    const { data } = await supabase
+    const { data: categories } = await supabase
       .from('academy_categories')
       .select('id, nome')
       .eq('ativo', true)
       .order('ordem', { ascending: true });
     
-    if (data) {
-      setAcademyCategories(data);
+    if (categories) {
+      // Busca a contagem de conteúdos para cada categoria
+      const categoriesWithCount = await Promise.all(
+        categories.map(async (category) => {
+          const { count } = await supabase
+            .from('academy_content')
+            .select('*', { count: 'exact', head: true })
+            .eq('categoria_id', category.id)
+            .eq('publicado', true);
+          
+          return {
+            ...category,
+            contentCount: count || 0
+          };
+        })
+      );
+      
+      setAcademyCategories(categoriesWithCount);
     }
   };
 
@@ -721,7 +760,14 @@ function MobileSidebar() {
                                   <SelectContent className="bg-popover border shadow-md z-[100]">
                                     {academyCategories.map((category) => (
                                       <SelectItem key={category.id} value={category.id}>
-                                        {category.nome}
+                                        <div className="flex items-center justify-between w-full gap-4">
+                                          <span>{category.nome}</span>
+                                          {category.contentCount !== undefined && (
+                                            <span className="text-xs text-muted-foreground">
+                                              {category.contentCount} {category.contentCount === 1 ? 'material' : 'materiais'}
+                                            </span>
+                                          )}
+                                        </div>
                                       </SelectItem>
                                     ))}
                                   </SelectContent>
