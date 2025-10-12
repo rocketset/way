@@ -121,9 +121,9 @@ export default function ConductGuideEditor() {
           {sections?.map((section) => (
             <Card key={section.id}>
               <CardHeader>
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between mb-4">
                   <div>
-                    <CardTitle>{section.section_title}</CardTitle>
+                    <CardTitle className="mb-3">{section.section_title}</CardTitle>
                     <CardDescription>{section.section_description}</CardDescription>
                   </div>
                   <Button
@@ -140,7 +140,7 @@ export default function ConductGuideEditor() {
               </CardHeader>
               <CardContent>
                 {editingSection === section.id ? (
-                  <div className="space-y-6">
+                  <div className="space-y-6 mt-6">
                     <div className="space-y-2">
                       <Label htmlFor="section_title">Título da Seção</Label>
                       <Input
@@ -164,9 +164,9 @@ export default function ConductGuideEditor() {
                       />
                     </div>
 
-                    <div className="space-y-4">
+                    <div className="space-y-4 mt-6">
                       <div className="flex items-center justify-between">
-                        <Label>Itens de Conteúdo</Label>
+                        <Label className="text-base">Itens de Conteúdo</Label>
                         <Button
                           type="button"
                           variant="outline"
