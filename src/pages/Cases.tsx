@@ -4,6 +4,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ClientsCarousel from "@/components/ClientsCarousel";
 import CtaResultsSection from "@/components/CtaResultsSection";
+import MockupSection from "@/components/MockupSection";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -194,6 +195,12 @@ const Cases = () => {
 
       {/* Clients Carousel */}
       <ClientsCarousel />
+
+      {/* MacBook Mockup Section */}
+      <MockupSection 
+        title="Veja o projeto em ação"
+        description="Conheça como transformamos ideias em soluções digitais de sucesso"
+      />
 
       {/* CTA Section */}
       <CtaResultsSection />
