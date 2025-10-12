@@ -114,7 +114,7 @@ const menuItems = [
   { icon: CheckSquare, label: 'Curadoria', path: '/admin/curation', roles: ['administrador', 'gestor_conteudo'] },
   { icon: Mail, label: 'Solicitações', path: '/admin/contacts', roles: ['administrador'] },
   { icon: Users, label: 'Usuários', path: '/admin/users', roles: ['administrador'] },
-  { icon: HeadphonesIcon, label: 'Atendimento', path: '/admin/support', roles: ['administrador', 'gestor_conteudo', 'colunista', 'membro'] },
+  { icon: HeadphonesIcon, label: 'Atendimento', path: '/admin/support', roles: ['administrador', 'gestor_conteudo', 'colunista', 'membro', 'cliente'] },
 ];
 
 // Componente da Sidebar com hover expand
