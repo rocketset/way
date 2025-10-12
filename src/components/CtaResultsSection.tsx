@@ -92,13 +92,13 @@ const CtaResultsSection = () => {
   };
 
   return (
-    <section className="relative py-32 bg-gradient-to-b from-background to-gray-900 overflow-hidden">
+    <section className="relative py-32 bg-gradient-to-b from-[#1a1a1a] to-[#0a0a0a] overflow-hidden">
       {/* Animated Plus Icons Background */}
-      <div className="absolute inset-0 overflow-hidden opacity-5">
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {[...Array(15)].map((_, i) => (
           <Plus 
             key={i}
-            className="absolute text-primary animate-pulse"
+            className="absolute text-primary/10 animate-pulse"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
