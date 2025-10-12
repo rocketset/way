@@ -72,29 +72,19 @@ const ContactSection = () => {
   };
 
   return (
-    <section id="contato" className="relative py-24 bg-white overflow-hidden">
+    <section id="contato" className="relative py-24 bg-gradient-to-b from-background to-gray-900 overflow-hidden">
       {/* Animated background elements */}
-      <div className="absolute inset-0 opacity-40">
+      <div className="absolute inset-0">
         <div className="absolute top-10 left-20 w-72 h-72 bg-primary/10 rounded-full blur-3xl animate-pulse" />
         <div className="absolute bottom-20 right-20 w-96 h-96 bg-primary/15 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-gradient-to-r from-primary/5 to-transparent rounded-full blur-3xl animate-pulse" style={{ animationDelay: '0.5s' }} />
       </div>
 
-      {/* Floating particles */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(20)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-1 h-1 bg-primary/30 rounded-full animate-float"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 5}s`,
-              animationDuration: `${5 + Math.random() * 10}s`
-            }}
-          />
-        ))}
-      </div>
+      {/* Plus icons animados de fundo */}
+      <div className="absolute top-10 left-10 text-primary/5 text-6xl animate-float" style={{ animationDelay: '0s' }}>+</div>
+      <div className="absolute top-20 right-20 text-primary/5 text-8xl animate-float" style={{ animationDelay: '1s' }}>+</div>
+      <div className="absolute bottom-20 left-1/4 text-primary/5 text-7xl animate-float" style={{ animationDelay: '2s' }}>+</div>
+      <div className="absolute bottom-10 right-1/3 text-primary/5 text-6xl animate-float" style={{ animationDelay: '1.5s' }}>+</div>
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-3xl mx-auto">
@@ -105,10 +95,10 @@ const ContactSection = () => {
               <span className="text-sm font-semibold text-primary tracking-wider">ENTRE EM CONTATO</span>
               <Sparkles className="w-6 h-6 text-primary animate-pulse" />
             </div>
-            <h2 className="text-5xl font-bold mb-4 text-gray-900 bg-gradient-to-r from-gray-900 via-primary to-gray-900 bg-clip-text text-transparent">
+            <h2 className="text-5xl font-bold mb-4 text-white bg-gradient-to-r from-white via-primary to-white bg-clip-text text-transparent">
               Quer mudar o ritmo do seu negócio?
             </h2>
-            <p className="text-xl text-gray-600">
+            <p className="text-xl text-gray-300">
               Vem falar com a gente!
             </p>
           </div>
@@ -118,13 +108,13 @@ const ContactSection = () => {
             {/* Animated glow effect */}
             <div className="absolute -inset-1 bg-gradient-to-r from-primary via-yellow-400 to-primary rounded-2xl blur-xl opacity-30 group-hover:opacity-50 transition-opacity duration-500 animate-pulse" />
             
-            <div className="relative bg-white p-10 rounded-2xl shadow-2xl border border-gray-100">
+            <div className="relative bg-card/95 backdrop-blur-sm p-10 rounded-2xl shadow-2xl border border-border">
               {/* Form title with icon */}
               <div className="flex items-center justify-center gap-3 mb-8">
                 <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-yellow-400 flex items-center justify-center">
                   <MessageSquare className="w-5 h-5 text-gray-900" />
                 </div>
-                <h3 className="text-3xl font-bold text-gray-900">
+                <h3 className="text-3xl font-bold text-white">
                   Converse com nosso parceiro
                 </h3>
               </div>
@@ -145,7 +135,7 @@ const ContactSection = () => {
                       onFocus={() => setFocusedField('nome')}
                       onBlur={() => setFocusedField(null)}
                       required
-                      className="pl-12 pr-4 py-6 bg-gray-50 border-2 border-gray-200 focus:border-primary focus:bg-white text-gray-900 rounded-lg transition-all duration-300 hover:border-primary/50"
+                      className="pl-12 pr-4 py-6 bg-background border-2 border-border focus:border-primary focus:bg-card text-foreground rounded-lg transition-all duration-300 hover:border-primary/50"
                     />
                   </div>
                 </div>
@@ -166,7 +156,7 @@ const ContactSection = () => {
                       onFocus={() => setFocusedField('email')}
                       onBlur={() => setFocusedField(null)}
                       required
-                      className="pl-12 pr-4 py-6 bg-gray-50 border-2 border-gray-200 focus:border-primary focus:bg-white text-gray-900 rounded-lg transition-all duration-300 hover:border-primary/50"
+                      className="pl-12 pr-4 py-6 bg-background border-2 border-border focus:border-primary focus:bg-card text-foreground rounded-lg transition-all duration-300 hover:border-primary/50"
                     />
                   </div>
                 </div>
@@ -187,7 +177,7 @@ const ContactSection = () => {
                       onFocus={() => setFocusedField('telefone')}
                       onBlur={() => setFocusedField(null)}
                       required
-                      className="pl-12 pr-4 py-6 bg-gray-50 border-2 border-gray-200 focus:border-primary focus:bg-white text-gray-900 rounded-lg transition-all duration-300 hover:border-primary/50"
+                      className="pl-12 pr-4 py-6 bg-background border-2 border-border focus:border-primary focus:bg-card text-foreground rounded-lg transition-all duration-300 hover:border-primary/50"
                     />
                   </div>
                 </div>
@@ -205,10 +195,10 @@ const ContactSection = () => {
                       onOpenChange={(open) => setFocusedField(open ? 'assunto' : null)}
                       required
                     >
-                      <SelectTrigger className="pl-12 pr-4 py-6 bg-gray-50 border-2 border-gray-200 focus:border-primary focus:bg-white text-gray-900 rounded-lg transition-all duration-300 hover:border-primary/50 h-auto">
+                      <SelectTrigger className="pl-12 pr-4 py-6 bg-background border-2 border-border focus:border-primary focus:bg-card text-foreground rounded-lg transition-all duration-300 hover:border-primary/50 h-auto">
                         <SelectValue placeholder="Assunto" />
                       </SelectTrigger>
-                      <SelectContent className="bg-white">
+                      <SelectContent className="bg-card border-border">
                         <SelectItem value="loja-virtual">Quero fazer uma loja virtual</SelectItem>
                         <SelectItem value="vender-mais">Quero vender mais pelo meu E-commerce</SelectItem>
                         <SelectItem value="marketplace">Quero vender em marketplace</SelectItem>
@@ -235,7 +225,7 @@ const ContactSection = () => {
                       onFocus={() => setFocusedField('mensagem')}
                       onBlur={() => setFocusedField(null)}
                       required
-                      className="pl-12 pr-4 pt-4 pb-4 bg-gray-50 border-2 border-gray-200 focus:border-primary focus:bg-white text-gray-900 rounded-lg transition-all duration-300 hover:border-primary/50 resize-none"
+                      className="pl-12 pr-4 pt-4 pb-4 bg-background border-2 border-border focus:border-primary focus:bg-card text-foreground rounded-lg transition-all duration-300 hover:border-primary/50 resize-none"
                     />
                   </div>
                 </div>

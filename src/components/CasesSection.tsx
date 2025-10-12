@@ -53,17 +53,23 @@ const CasesSection = () => {
     });
     setCases(mapped);
   };
-  return <section id="cases" className="py-32 bg-white relative overflow-hidden">
-      {/* Background decorative elements */}
-      <div className="absolute inset-0 bg-[#ebebeb] my-0">
-        <div className="absolute top-20 left-10 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-pulse" style={{
+  return <section id="cases" className="relative py-32 bg-gradient-to-b from-gray-900 to-background overflow-hidden">
+      {/* Animated background elements with plus icons */}
+      <div className="absolute inset-0">
+        <div className="absolute top-20 left-10 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse" style={{
         animationDuration: '4s'
       }} />
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-pink-500/5 rounded-full blur-3xl animate-pulse" style={{
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse" style={{
         animationDuration: '5s',
         animationDelay: '1s'
       }} />
       </div>
+      
+      {/* Plus icons animados de fundo */}
+      <div className="absolute top-10 left-10 text-primary/5 text-6xl animate-float" style={{ animationDelay: '0s' }}>+</div>
+      <div className="absolute top-20 right-20 text-primary/5 text-8xl animate-float" style={{ animationDelay: '1s' }}>+</div>
+      <div className="absolute bottom-20 left-1/4 text-primary/5 text-7xl animate-float" style={{ animationDelay: '2s' }}>+</div>
+      <div className="absolute bottom-10 right-1/3 text-primary/5 text-6xl animate-float" style={{ animationDelay: '1.5s' }}>+</div>
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Header */}
@@ -77,13 +83,13 @@ const CasesSection = () => {
           <h2 className="text-5xl md:text-6xl font-bold mb-6 animate-fade-in" style={{
           animationDelay: '0.1s'
         }}>
-            <span className="text-gray-900">Cases que </span>
+            <span className="text-white">Cases que </span>
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-yellow-400 to-primary">
               inspiram
             </span>
           </h2>
           
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto animate-fade-in" style={{
+          <p className="text-xl text-gray-300 max-w-3xl mx-auto animate-fade-in" style={{
           animationDelay: '0.2s'
         }}>
             Conheça empresas que transformaram seus negócios com nossas soluções
@@ -109,7 +115,7 @@ const CasesSection = () => {
                     </div>
 
                     {/* Title */}
-                    <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-primary transition-colors duration-300">
+                    <h3 className="text-xl font-bold text-white mb-3 group-hover:text-primary transition-colors duration-300">
                       {caseItem.titulo}
                     </h3>
 

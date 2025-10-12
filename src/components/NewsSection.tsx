@@ -23,11 +23,17 @@ const NewsSection = () => {
   }
 
   return (
-    <section id="noticias" className="py-20 bg-gradient-to-b from-background to-muted/20">
-      <div className="container mx-auto px-4">
+    <section id="noticias" className="relative py-20 bg-gradient-to-b from-background to-gray-900 overflow-hidden">
+      {/* Plus icons animados de fundo */}
+      <div className="absolute top-10 left-10 text-primary/5 text-6xl animate-float" style={{ animationDelay: '0s' }}>+</div>
+      <div className="absolute top-20 right-20 text-primary/5 text-8xl animate-float" style={{ animationDelay: '1s' }}>+</div>
+      <div className="absolute bottom-20 left-1/4 text-primary/5 text-7xl animate-float" style={{ animationDelay: '2s' }}>+</div>
+      <div className="absolute bottom-10 right-1/3 text-primary/5 text-6xl animate-float" style={{ animationDelay: '1.5s' }}>+</div>
+      
+      <div className="container mx-auto px-4 relative z-10">
         <div className="mb-12 animate-fade-in text-center">
-          <h2 className="text-4xl font-bold text-foreground mb-4">Conteúdos Way</h2>
-          <p className="text-muted-foreground">
+          <h2 className="text-4xl font-bold text-white mb-4">Conteúdos Way</h2>
+          <p className="text-gray-300">
             As novidades que estão virando o jogo no digital
           </p>
         </div>
@@ -43,7 +49,7 @@ const NewsSection = () => {
             {blogPosts.map((post) => (
               <CarouselItem key={post.id} className="pl-4 md:basis-1/2 lg:basis-1/3">
                 <Link to={`/blog/${post.slug}`} className="block group">
-                  <div className="bg-card rounded-lg overflow-hidden border border-border hover:border-primary transition-all duration-300 h-full">
+                  <div className="bg-card rounded-lg overflow-hidden border border-border hover:border-primary hover:shadow-lg hover:shadow-[0_0_30px_rgba(252,211,77,0.3)] transition-all duration-300 h-full">
                     <div className="relative h-64 overflow-hidden bg-gradient-to-br from-primary/20 to-primary/5">
                       {post.featured_image ? (
                         <img

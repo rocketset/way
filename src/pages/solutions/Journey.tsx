@@ -337,7 +337,13 @@ const Journey = () => {
         </section>
 
         {/* Journey Phases - Stairway Visual */}
-        <section className="py-20 overflow-hidden relative" style={{ backgroundColor: '#ECECEC' }}>
+        <section className="relative py-20 overflow-hidden bg-gradient-to-b from-gray-900 to-background">
+          {/* Plus icons animados de fundo */}
+          <div className="absolute top-10 left-10 text-primary/5 text-6xl animate-float" style={{ animationDelay: '0s' }}>+</div>
+          <div className="absolute top-20 right-20 text-primary/5 text-8xl animate-float" style={{ animationDelay: '1s' }}>+</div>
+          <div className="absolute bottom-20 left-1/4 text-primary/5 text-7xl animate-float" style={{ animationDelay: '2s' }}>+</div>
+          <div className="absolute bottom-10 right-1/3 text-primary/5 text-6xl animate-float" style={{ animationDelay: '1.5s' }}>+</div>
+          
           <div className="absolute inset-0 opacity-5">
             {[...Array(8)].map((_, i) => (
               <TrendingUp key={i} className="absolute w-24 h-24" style={{
@@ -349,10 +355,10 @@ const Journey = () => {
             ))}
           </div>
           <div className="container mx-auto px-4 relative z-10">
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 animate-fade-in text-black">
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 animate-fade-in text-white">
               As 3 Fases da Jornada Way
             </h2>
-            <p className="text-center text-black/70 mb-16 max-w-2xl mx-auto animate-fade-in" style={{ animationDelay: '0.1s' }}>
+            <p className="text-center text-gray-300 mb-16 max-w-2xl mx-auto animate-fade-in" style={{ animationDelay: '0.1s' }}>
               Um caminho progressivo e estruturado para o crescimento sustentável
             </p>
             
@@ -388,7 +394,7 @@ const Journey = () => {
                         marginTop: `${(journeyPhases.length - 1 - index) * 80}px`,
                       }}
                     >
-                      <div className={`bg-gradient-to-br ${phase.color} rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 border-2 border-border h-full min-h-[320px] flex flex-col justify-between animate-fade-in hover-scale`} style={{ animationDelay: `${index * 0.2}s`, backgroundColor: '#1A1A1A' }}>
+                      <div className={`bg-gradient-to-br ${phase.color} rounded-2xl p-6 shadow-lg hover:shadow-2xl hover:shadow-primary/20 transition-all duration-300 border-2 border-border h-full min-h-[320px] flex flex-col justify-between animate-fade-in hover-scale bg-card/95 backdrop-blur-sm`} style={{ animationDelay: `${index * 0.2}s` }}>
                         <div className="flex flex-col items-center">
                           <Icon className="w-12 h-12 text-primary mb-3" strokeWidth={1.5} />
                           
@@ -396,17 +402,17 @@ const Journey = () => {
                             {phase.title}
                           </h3>
                           
-                          <p className="text-center text-white/70 text-xs leading-relaxed">
+                          <p className="text-center text-muted-foreground text-xs leading-relaxed">
                             {phase.description}
                           </p>
                         </div>
 
                         {phase.levels && (
-                          <div className="mt-4 space-y-1.5 pt-3 border-t-2 border-white/20">
+                          <div className="mt-4 space-y-1.5 pt-3 border-t-2 border-border">
                             {phase.levels.map((level, i) => (
                               <div key={i} className="flex items-center justify-between text-xs">
-                                <span className="font-bold text-white">{level.value}</span>
-                                <span className="text-[10px] text-white/70 uppercase tracking-wider px-2 py-0.5 bg-white/10 rounded">
+                                <span className="font-bold text-foreground">{level.value}</span>
+                                <span className="text-[10px] text-muted-foreground uppercase tracking-wider px-2 py-0.5 bg-primary/10 rounded">
                                   {level.stage}
                                 </span>
                               </div>
