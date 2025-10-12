@@ -43,7 +43,7 @@ const Blog = () => {
             </h1>
             
             <p className="text-base text-muted-foreground max-w-xl mx-auto">
-              Conteúdo para mentes inquietas, estratégicas e focadas em performance.
+              Conteúdo inteligente para quem pensa, cria e executa performance.
             </p>
           </div>
         </div>
