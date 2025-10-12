@@ -20,23 +20,33 @@ const CasesSection = () => {
     fetchCases();
   }, []);
   const fetchCases = async () => {
-    const {
-      data,
-      error
-    } = await supabase.from('cases').select(`
+    const { data, error } = await supabase
+      .from('cases')
+      .select(`
         id,
         titulo,
         descricao,
         imagem_url,
-        categories (nome)
-      `).eq('publicado', true).eq('is_featured', true).order('criado_em', {
-      ascending: false
-    }).limit(3);
+        categories (nome),
+        case_content_blocks (block_type, content)
+      `)
+      .eq('publicado', true)
+      .eq('is_featured', true)
+      .order('criado_em', { ascending: false })
+      .limit(3);
+
     if (error) {
       console.error('Error fetching cases:', error);
       return;
     }
-    setCases(data || []);
+
+    const mapped = (data || []).map((c: any) => {
+      const clientInfo = (c.case_content_blocks || []).find((b: any) => b.block_type === 'client_info');
+      const banner = clientInfo?.content?.banner_url || c.imagem_url;
+      return { ...c, imagem_url: banner } as CaseItem;
+    });
+
+    setCases(mapped);
   };
   const gradients = ["from-rose-500 to-pink-600", "from-purple-500 to-indigo-600", "from-amber-500 to-orange-600"];
   return <section id="cases" className="py-32 bg-white relative overflow-hidden">
