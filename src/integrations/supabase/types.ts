@@ -421,6 +421,42 @@ export type Database = {
           },
         ]
       }
+      conduct_guide_content: {
+        Row: {
+          ativo: boolean
+          atualizado_em: string
+          content: Json
+          criado_em: string
+          id: string
+          ordem: number
+          section_description: string | null
+          section_key: string
+          section_title: string
+        }
+        Insert: {
+          ativo?: boolean
+          atualizado_em?: string
+          content?: Json
+          criado_em?: string
+          id?: string
+          ordem?: number
+          section_description?: string | null
+          section_key: string
+          section_title: string
+        }
+        Update: {
+          ativo?: boolean
+          atualizado_em?: string
+          content?: Json
+          criado_em?: string
+          id?: string
+          ordem?: number
+          section_description?: string | null
+          section_key?: string
+          section_title?: string
+        }
+        Relationships: []
+      }
       contacts: {
         Row: {
           criado_em: string

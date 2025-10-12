@@ -55,6 +55,7 @@ import Support from "./pages/admin/Support";
 import Notifications from "./pages/admin/Notifications";
 import Curation from "./pages/admin/Curation";
 import ConductGuide from "./pages/admin/ConductGuide";
+import EditConductGuide from "./pages/admin/conduct/EditConductGuide";
 
 // Configuração do React Query
 const queryClient = new QueryClient();
@@ -126,6 +127,7 @@ const App = () => (
             <Route path="academy/categories" element={<AcademyCategories />} />
             <Route path="academy/settings" element={<AcademySettings />} />
             <Route path="conduct-guide" element={<ConductGuide />} />
+            <Route path="conduct-guide/edit" element={<EditConductGuide />} />
             <Route path="curation" element={<Curation />} />
             <Route path="notifications" element={<Notifications />} />
             <Route path="account" element={<Account />} />
