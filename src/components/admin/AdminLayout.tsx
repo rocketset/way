@@ -122,6 +122,7 @@ const menuItems = [
 // Componente da Sidebar com hover expand
 function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
   const { signOut, user, isAdmin, viewMode, setViewMode, effectiveRole, userRole } = useAuth();
+  const navigate = useNavigate();
   const location = useLocation();
   const [isExpanded, setIsExpanded] = useState(false);
   const [openSubmenus, setOpenSubmenus] = useState<string[]>([]);
@@ -382,35 +383,30 @@ function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
                             );
                           })}
                         
-                        {/* Categorias da Academy - só mostra para Way Academy */}
+                        {/* Categorias da Academy - caixa de seleção */}
                         {item.hasCategories && academyCategories.length > 0 && (
-                          <>
-                            <div className="pt-2 pb-1">
-                              <div className="flex items-center gap-2 px-3 py-1 text-xs font-semibold text-muted-foreground">
-                                <FolderOpen className="h-3.5 w-3.5" />
-                                <span>Categorias</span>
-                              </div>
-                            </div>
-                            {academyCategories.map((category) => {
-                              const categoryPath = `/admin/academy?category=${category.id}`;
-                              const isCategoryActive = location.pathname === '/admin/academy' && 
-                                                      location.search.includes(`category=${category.id}`);
-                              return (
-                                <Link
-                                  key={category.id}
-                                  to={categoryPath}
-                                  onClick={onNavigate}
-                                  className={cn(
-                                    'flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-all hover:bg-accent',
-                                    isCategoryActive && 'bg-accent text-accent-foreground font-medium'
-                                  )}
-                                >
-                                  <div className="w-1.5 h-1.5 rounded-full bg-current" />
-                                  {category.nome}
-                                </Link>
-                              );
-                            })}
-                          </>
+                          <div className="pt-2">
+                            <Select
+                              onValueChange={(categoryId) => {
+                                navigate(`/admin/academy?category=${categoryId}`);
+                                onNavigate?.();
+                              }}
+                            >
+                              <SelectTrigger className="w-full bg-background">
+                                <div className="flex items-center gap-2">
+                                  <FolderOpen className="h-4 w-4" />
+                                  <SelectValue placeholder="Selecionar categoria" />
+                                </div>
+                              </SelectTrigger>
+                              <SelectContent className="bg-popover border shadow-md z-[100]">
+                                {academyCategories.map((category) => (
+                                  <SelectItem key={category.id} value={category.id}>
+                                    {category.nome}
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                          </div>
                         )}
                       </div>
                     )}
@@ -437,6 +433,7 @@ function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
 // Sidebar Mobile (usa o componente completo dentro de um Sheet)
 function MobileSidebar() {
   const { signOut, user, isAdmin, viewMode, setViewMode, effectiveRole } = useAuth();
+  const navigate = useNavigate();
   const location = useLocation();
   const [openSubmenus, setOpenSubmenus] = useState<string[]>([]);
   const [isOpen, setIsOpen] = useState(false);
@@ -654,35 +651,30 @@ function MobileSidebar() {
                                 );
                               })}
                             
-                            {/* Categorias da Academy - só mostra para Way Academy */}
+                            {/* Categorias da Academy - caixa de seleção mobile */}
                             {item.hasCategories && academyCategories.length > 0 && (
-                              <>
-                                <div className="pt-2 pb-1">
-                                  <div className="flex items-center gap-2 px-3 py-1 text-xs font-semibold text-muted-foreground">
-                                    <FolderOpen className="h-3.5 w-3.5" />
-                                    <span>Categorias</span>
-                                  </div>
-                                </div>
-                                {academyCategories.map((category) => {
-                                  const categoryPath = `/admin/academy?category=${category.id}`;
-                                  const isCategoryActive = location.pathname === '/admin/academy' && 
-                                                          location.search.includes(`category=${category.id}`);
-                                  return (
-                                    <Link
-                                      key={category.id}
-                                      to={categoryPath}
-                                      onClick={handleNavigation}
-                                      className={cn(
-                                        'flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-all hover:bg-accent',
-                                        isCategoryActive && 'bg-accent text-accent-foreground font-medium'
-                                      )}
-                                    >
-                                      <div className="w-1.5 h-1.5 rounded-full bg-current" />
-                                      {category.nome}
-                                    </Link>
-                                  );
-                                })}
-                              </>
+                              <div className="pt-2">
+                                <Select
+                                  onValueChange={(categoryId) => {
+                                    navigate(`/admin/academy?category=${categoryId}`);
+                                    handleNavigation();
+                                  }}
+                                >
+                                  <SelectTrigger className="w-full bg-background">
+                                    <div className="flex items-center gap-2">
+                                      <FolderOpen className="h-4 w-4" />
+                                      <SelectValue placeholder="Selecionar categoria" />
+                                    </div>
+                                  </SelectTrigger>
+                                  <SelectContent className="bg-popover border shadow-md z-[100]">
+                                    {academyCategories.map((category) => (
+                                      <SelectItem key={category.id} value={category.id}>
+                                        {category.nome}
+                                      </SelectItem>
+                                    ))}
+                                  </SelectContent>
+                                </Select>
+                              </div>
                             )}
                           </div>
                         )}
