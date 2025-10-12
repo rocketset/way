@@ -135,14 +135,6 @@ const CasesSection = () => {
           <GoogleReviews />
         </div>
 
-        {/* Bottom CTA */}
-        <div className="text-center mt-16 animate-fade-in" style={{
-        animationDelay: '0.4s'
-      }}>
-          <Button onClick={() => navigate('/cases')} className="bg-primary text-primary-foreground hover:bg-primary/90 px-8">
-            Ver todos os Cases
-          </Button>
-        </div>
       </div>
     </section>;
 };
