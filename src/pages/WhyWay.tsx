@@ -71,7 +71,7 @@ const WhyWay = () => {
       <Header />
       
       {/* Hero Section - Somos para quem pensa grande */}
-      <section ref={heroRef} className="relative pt-32 pb-20 px-4 overflow-hidden bg-background">
+      <section ref={heroRef} className="relative pt-24 pb-16 px-4 overflow-hidden bg-background">
         {/* Floating Plus Symbols */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           {[...Array(15)].map((_, i) => (
@@ -115,11 +115,11 @@ const WhyWay = () => {
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               {/* Texto */}
               <div className="animate-fade-in">
-                <h1 className="text-4xl md:text-5xl font-bold mb-8 leading-tight lg:text-5xl">
+                <h1 className="text-3xl md:text-4xl font-bold mb-6 leading-tight">
                   Somos para <span className="text-primary">quem pensa grande</span> e quer ir além.
                 </h1>
                 
-                <div className="space-y-4 text-base md:text-lg text-muted-foreground leading-relaxed">
+                <div className="space-y-3 text-sm md:text-base text-muted-foreground leading-relaxed">
                   <p>
                     Ao longo da nossa trajetória, já aceleramos indústrias, redes de lojas e varejistas de diversos segmentos, sempre com foco em performance e crescimento sustentável.
                   </p>
@@ -228,7 +228,7 @@ const WhyWay = () => {
       </section>
 
       {/* Nascemos para revolucionar */}
-      <section className="relative py-20 px-4 overflow-hidden">
+      <section className="relative py-16 px-4 overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">
           {[...Array(8)].map((_, i) => (
             <div
@@ -252,25 +252,25 @@ const WhyWay = () => {
               <Sparkles className="w-5 h-5 text-primary animate-pulse" />
               <span className="text-primary font-semibold">Nossa Missão</span>
             </div>
-            <h2 className="text-4xl md:text-6xl font-bold mb-8 hover:scale-105 transition-transform duration-300">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 hover:scale-105 transition-transform duration-300">
               Nascemos para revolucionar
               <br />
               <span className="bg-gradient-to-r from-primary via-primary/80 to-primary bg-clip-text text-transparent inline-flex items-center gap-3">
                 o e-commerce
-                <Plus className="inline-block w-12 h-12 text-primary animate-spin-slow" />
+                <Plus className="inline-block w-10 h-10 text-primary animate-spin-slow" />
               </span>
             </h2>
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">Fundada por um Cientista da Computação apaixonado por tecnologia e resultados, a Way+ nasceu com o propósito de transformar a forma como os negócios crescem no Brasil. Unimos expertise técnica, criatividade e inteligência em dados para construir estratégias que geram crescimento real e mensurável.</p>
+            <p className="text-base text-muted-foreground max-w-2xl mx-auto leading-relaxed">Fundada por um Cientista da Computação apaixonado por tecnologia e resultados, a Way+ nasceu com o propósito de transformar a forma como os negócios crescem no Brasil. Unimos expertise técnica, criatividade e inteligência em dados para construir estratégias que geram crescimento real e mensurável.</p>
           </div>
         </div>
       </section>
 
       {/* Por que escolher a Way+ */}
-      <section className="py-20 px-4 bg-background">
+      <section className="py-16 px-4 bg-background">
         <div className="container mx-auto">
           <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold mb-12">
+            <div className="text-center mb-10">
+              <h2 className="text-2xl md:text-3xl font-bold mb-10">
                 Por que escolher <span className="text-primary">a Way+?</span>
               </h2>
               

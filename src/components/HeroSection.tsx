@@ -24,7 +24,7 @@ const HeroSection = () => {
   return (
     <section 
       id="inicio" 
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      className="relative min-h-[85vh] flex items-center justify-center overflow-hidden pt-20"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -185,7 +185,7 @@ const HeroSection = () => {
           <img 
             src={logoWay} 
             alt="Way+ E-commerce" 
-            className="h-24 mx-auto transition-all duration-700"
+            className="h-16 mx-auto transition-all duration-700"
             style={{
               transform: `scale(${isHovered ? 1.1 : 1})`,
             }}
@@ -194,36 +194,36 @@ const HeroSection = () => {
 
         {/* E-COMMERCE text */}
         <div 
-          className="animate-fade-in mb-16"
+          className="animate-fade-in mb-12"
           style={{ 
             animationDelay: '0.3s',
             transform: `translate(${mousePosition.x * 0.15}px, ${mousePosition.y * 0.15}px)`,
           }}
         >
-          <h1 className="text-2xl tracking-[0.5em] font-light text-foreground/90">
+          <h1 className="text-xl tracking-[0.5em] font-light text-foreground/90">
             E-COMMERCE
           </h1>
         </div>
 
         {/* Subtitle with animation */}
         <div 
-          className="animate-fade-in max-w-3xl mx-auto"
+          className="animate-fade-in max-w-2xl mx-auto"
           style={{ 
             animationDelay: '0.6s',
             transform: `translate(${mousePosition.x * 0.1}px, ${mousePosition.y * 0.1}px)`,
           }}
         >
-          <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
+          <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
             Soluções completas e integradas para transformar seu negócio digital
           </p>
-          <div className="flex flex-wrap justify-center gap-4 text-sm">
-            <span className="px-6 py-2 bg-primary/10 text-primary border border-primary/30 rounded-full hover:bg-primary/20 transition-all cursor-default">
+          <div className="flex flex-wrap justify-center gap-3 text-sm">
+            <span className="px-5 py-2 bg-primary/10 text-primary border border-primary/30 rounded-full hover:bg-primary/20 transition-all cursor-default">
               Plataforma Completa
             </span>
-            <span className="px-6 py-2 bg-primary/10 text-primary border border-primary/30 rounded-full hover:bg-primary/20 transition-all cursor-default">
+            <span className="px-5 py-2 bg-primary/10 text-primary border border-primary/30 rounded-full hover:bg-primary/20 transition-all cursor-default">
               Suporte 24/7
             </span>
-            <span className="px-6 py-2 bg-primary/10 text-primary border border-primary/30 rounded-full hover:bg-primary/20 transition-all cursor-default">
+            <span className="px-5 py-2 bg-primary/10 text-primary border border-primary/30 rounded-full hover:bg-primary/20 transition-all cursor-default">
               Escalável
             </span>
           </div>

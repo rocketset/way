@@ -67,9 +67,9 @@ const Implementation = () => {
   return <div className="min-h-screen bg-background overflow-hidden">
       <Header />
       
-      <main className="pt-32 pb-0">
+      <main className="pt-24 pb-0">
         {/* Hero Section */}
-        <section className="mb-20 relative">
+        <section className="mb-16 relative">
           {/* Animated Decorative Plus Icons with floating effect */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-10">
             <Plus className="absolute top-10 left-10 w-20 h-20 text-primary animate-[spin_20s_linear_infinite]" />
@@ -89,7 +89,7 @@ const Implementation = () => {
                 
                 <div className="flex items-start gap-4">
                   <ShoppingCart className="w-10 h-10 md:w-12 md:h-12 text-primary flex-shrink-0 mt-1" />
-                  <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary leading-tight">
+                  <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-primary leading-tight">
                     Implantação <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">& Desenvolvimento</span>
                   </h1>
                 </div>
@@ -125,7 +125,7 @@ const Implementation = () => {
         </section>
 
         {/* Content Banner Section */}
-        <section className="py-20 mb-20 relative">
+        <section className="py-16 mb-16 relative">
           <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-transparent"></div>
           
           <div className="container mx-auto px-4 md:px-12 relative z-10">

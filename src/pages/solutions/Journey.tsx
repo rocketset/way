@@ -168,9 +168,9 @@ const Journey = () => {
 
       <Header />
       
-      <main className="pt-24 pb-0 relative z-10">
+      <main className="pt-20 pb-0 relative z-10">
         {/* Hero Section */}
-        <section className="relative bg-gradient-to-br from-background via-primary/5 to-background py-20 overflow-hidden">
+        <section className="relative bg-gradient-to-br from-background via-primary/5 to-background py-16 overflow-hidden">
           <div className="absolute inset-0 opacity-10">
             <div className="absolute top-20 left-10 w-72 h-72 bg-primary rounded-full blur-3xl animate-pulse"></div>
             <div className="absolute bottom-20 right-10 w-96 h-96 bg-primary rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
@@ -192,12 +192,12 @@ const Journey = () => {
               </div>
               
               <div className="flex items-center justify-center gap-4 mb-6">
-                <Rocket className="w-10 h-10 md:w-12 md:h-12 text-primary flex-shrink-0" />
-                <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold">
+                <Rocket className="w-8 h-8 md:w-10 md:h-10 text-primary flex-shrink-0" />
+                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold">
                   Jornada <span className="bg-gradient-to-r from-primary via-primary/80 to-primary bg-clip-text text-transparent">Way</span>
                 </h1>
               </div>
-              <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto">
+              <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
                 Método exclusivo e validado, criado com base em experiências reais em e-commerces
               </p>
             </div>

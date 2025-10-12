@@ -99,7 +99,7 @@ const SolutionsSection = () => {
     }],
     link: "/solucoes/jornada"
   }];
-  return <section id="solucoes" className="relative py-32 bg-gradient-to-b from-background via-background to-gray-900 overflow-hidden">
+  return <section id="solucoes" className="relative py-20 bg-gradient-to-b from-background via-background to-gray-900 overflow-hidden">
       {/* Animated background elements */}
       <div className="absolute inset-0">
         {/* Floating orbs */}
@@ -126,14 +126,14 @@ const SolutionsSection = () => {
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Header */}
-        <div className="text-center mb-20">
-          <div className="inline-flex items-center gap-2 mb-6 animate-fade-in">
-            <Plus className="w-6 h-6 text-primary plus-rotate" />
-            <span className="text-sm font-bold text-primary tracking-wider">SOLUÇÕES INTEGRADAS</span>
-            <Plus className="w-6 h-6 text-primary plus-rotate" />
+        <div className="text-center mb-16">
+          <div className="inline-flex items-center gap-2 mb-4 animate-fade-in">
+            <Plus className="w-5 h-5 text-primary plus-rotate" />
+            <span className="text-xs font-bold text-primary tracking-wider">SOLUÇÕES INTEGRADAS</span>
+            <Plus className="w-5 h-5 text-primary plus-rotate" />
           </div>
           
-          <h2 className="text-5xl md:text-6xl font-bold mb-6 animate-fade-in" style={{
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 animate-fade-in" style={{
           animationDelay: '0.1s'
         }}>
             <span className="text-foreground">Quer resultados de verdade?</span>
@@ -141,7 +141,7 @@ const SolutionsSection = () => {
             <span className="gradient-text">Da implantação à performance.</span>
           </h2>
           
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto animate-fade-in" style={{
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto animate-fade-in" style={{
           animationDelay: '0.2s'
         }}>Temos 4 hubs integrados para transformar seu e-commerce em uma operação de alta performance.</p>
         </div>
