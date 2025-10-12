@@ -14,9 +14,9 @@ const Footer = () => {
       email
     });
   };
-  return <footer className="bg-[#3D2A2B] py-12">
+  return <footer className="py-12 bg-[#1a1a1a]">
       <div className="container mx-auto px-4">
-        <div className="bg-[#2D1F20] rounded-2xl p-8 md:p-10">
+        <div className="rounded-2xl p-8 md:p-10 bg-zinc-800">
           <div className="grid md:grid-cols-2 gap-8 md:gap-12">
             {/* Left Side - Company Info */}
             <div className="space-y-6 border-r border-white/10 pr-8">
