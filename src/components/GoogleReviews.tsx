@@ -32,7 +32,7 @@ export const GoogleReviews = () => {
         {[...Array(5)].map((_, i) => <Star key={i} className={`w-4 h-4 ${i < rating ? "fill-yellow-400 text-yellow-400" : "text-gray-300"}`} />)}
       </div>;
   };
-  return <section className="relative py-12 px-4 bg-gradient-to-b from-background to-gray-900 rounded-3xl mx-4 overflow-hidden">
+  return <section className="relative py-12 px-4 bg-gradient-to-b from-[#1a1a1a] to-[#0a0a0a] rounded-3xl mx-4 overflow-hidden">
       {/* Plus icons animados de fundo */}
       <div className="absolute top-10 left-10 text-primary/5 text-6xl animate-float" style={{ animationDelay: '0s' }}>+</div>
       <div className="absolute top-20 right-20 text-primary/5 text-8xl animate-float" style={{ animationDelay: '1s' }}>+</div>
