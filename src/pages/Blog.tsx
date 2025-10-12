@@ -104,7 +104,7 @@ const Blog = () => {
                     size="sm"
                     className={`rounded-full text-sm transition-all duration-300 ${
                       selectedCategory === category
-                        ? "bg-primary text-primary-foreground hover:bg-primary/90"
+                        ? "bg-primary text-white hover:bg-primary/90 hover:text-white"
                         : "bg-card border-border text-foreground hover:bg-primary/10 hover:border-primary"
                     }`}
                   >
