@@ -15,12 +15,31 @@ const Cases = () => {
   const [visibleCases, setVisibleCases] = useState(4);
 
   const { data: categoriesData, isLoading: categoriesLoading } = useCaseCategories();
+  const { data: allCasesData } = useCases("", "Todos"); // Buscar todos para calcular categorias
   const { data: casesData, isLoading: casesLoading } = useCases("", selectedCategory);
 
-  const categories = ["Todos", ...(categoriesData?.map((c) => c.nome) || [])];
+  // Combinar todos os cases para calcular categorias
+  const allCasesForCategories = [...(allCasesData?.featured || []), ...(allCasesData?.regular || [])];
+  
+  // Calcular categorias que realmente têm cases
+  const categoriesWithCases = categoriesData?.filter(category => {
+    return allCasesForCategories.some(caseItem => caseItem.categoria_nome === category.nome);
+  }) || [];
+
+  // Adicionar "Todos" apenas se houver cases
+  const categories = allCasesForCategories.length > 0 
+    ? ["Todos", ...categoriesWithCases.map(c => c.nome)]
+    : [];
+
+  // Cases filtrados para exibição
   const allCases = [...(casesData?.featured || []), ...(casesData?.regular || [])];
   const visibleCasesList = allCases.slice(0, visibleCases);
   const hasMoreCases = allCases.length > visibleCases;
+
+  const handleCategoryChange = (category: string) => {
+    setSelectedCategory(category);
+    setVisibleCases(4); // Reset para mostrar os primeiros 4 cases
+  };
 
   const handleLoadMore = () => {
     setVisibleCases((prev) => prev + 4);
@@ -69,7 +88,7 @@ const Cases = () => {
                 categories.map((category) => (
                   <Button
                     key={category}
-                    onClick={() => setSelectedCategory(category)}
+                    onClick={() => handleCategoryChange(category)}
                     variant={selectedCategory === category ? "default" : "outline"}
                     className={`rounded-full transition-all duration-300 ${
                       selectedCategory === category
