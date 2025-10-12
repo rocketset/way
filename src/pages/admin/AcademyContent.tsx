@@ -151,32 +151,50 @@ export default function AcademyContent() {
           {/* Video Player */}
           {videoMaterial?.arquivo_url && (() => {
             const youtubeUrl = getYouTubeEmbedUrl(videoMaterial.arquivo_url);
-            
-            if (youtubeUrl) {
-              return (
-                <Card className="overflow-hidden">
-                  <iframe
-                    className="w-full aspect-video"
-                    src={youtubeUrl}
-                    title={content.titulo}
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  />
-                </Card>
-              );
-            }
+            const isVideoComplete = isMaterialComplete(videoMaterial.id);
             
             return (
-              <Card className="overflow-hidden">
-                <video
-                  controls
-                  className="w-full aspect-video"
-                  src={videoMaterial.arquivo_url}
-                  onEnded={() => handleToggleComplete(videoMaterial.id, false)}
-                >
-                  Seu navegador não suporta reprodução de vídeo.
-                </video>
-              </Card>
+              <div className="space-y-4">
+                <Card className="overflow-hidden">
+                  {youtubeUrl ? (
+                    <iframe
+                      className="w-full aspect-video"
+                      src={youtubeUrl}
+                      title={content.titulo}
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  ) : (
+                    <video
+                      controls
+                      className="w-full aspect-video"
+                      src={videoMaterial.arquivo_url}
+                      onEnded={() => handleToggleComplete(videoMaterial.id, false)}
+                    >
+                      Seu navegador não suporta reprodução de vídeo.
+                    </video>
+                  )}
+                </Card>
+                
+                {/* Checkbox de conclusão do vídeo */}
+                <Card className="p-4">
+                  <div className="flex items-center gap-3">
+                    <Checkbox
+                      id="video-complete"
+                      checked={isVideoComplete}
+                      onCheckedChange={() =>
+                        handleToggleComplete(videoMaterial.id, isVideoComplete)
+                      }
+                    />
+                    <label
+                      htmlFor="video-complete"
+                      className="text-sm font-medium leading-none cursor-pointer select-none"
+                    >
+                      {isVideoComplete ? '✓ Vídeo concluído' : 'Marcar vídeo como concluído'}
+                    </label>
+                  </div>
+                </Card>
+              </div>
             );
           })()}
 
@@ -184,11 +202,12 @@ export default function AcademyContent() {
           <div>
             <h2 className="text-2xl font-bold mb-4">Materiais</h2>
             <div className="grid gap-4">
-              {materials.map((material) => (
+              {materials.filter(m => m.id !== videoMaterial?.id).map((material) => (
                 <Card key={material.id} className="p-4">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-4 flex-1">
                       <Checkbox
+                        id={`material-${material.id}`}
                         checked={isMaterialComplete(material.id)}
                         onCheckedChange={() =>
                           handleToggleComplete(
@@ -197,7 +216,10 @@ export default function AcademyContent() {
                           )
                         }
                       />
-                      <div className="flex items-center gap-3 flex-1">
+                      <label
+                        htmlFor={`material-${material.id}`}
+                        className="flex items-center gap-3 flex-1 cursor-pointer"
+                      >
                         {getIconForType(material.tipo_material)}
                         <div>
                           <p className="font-medium">{material.nome}</p>
@@ -206,7 +228,7 @@ export default function AcademyContent() {
                             {material.duracao && ` • ${material.duracao}`}
                           </p>
                         </div>
-                      </div>
+                      </label>
                     </div>
                     {material.arquivo_url && (
                       <Button
