@@ -97,7 +97,7 @@ const menuItems = [
   },
   { 
     icon: FileText, 
-    label: 'Blog', 
+    label: 'Gerenciar Blog', 
     path: '/admin/blog/posts',
     roles: ['administrador', 'gestor_conteudo', 'colunista'],
     subItems: [
