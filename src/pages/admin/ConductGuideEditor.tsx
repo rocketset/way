@@ -4,10 +4,10 @@ import { Heart, ArrowLeft, Save, Plus, Trash2 } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useConductGuideContent, useUpdateConductGuideSection } from "@/hooks/useConductGuideContent";
+import { RichTextEditor } from "@/components/admin/RichTextEditor";
 
 export default function ConductGuideEditor() {
   const navigate = useNavigate();
@@ -152,14 +152,13 @@ export default function ConductGuideEditor() {
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="section_description">Descrição</Label>
-                      <Textarea
-                        id="section_description"
+                      <RichTextEditor
+                        label="Descrição"
                         value={formData.section_description}
-                        onChange={(e) =>
+                        onChange={(value) =>
                           setFormData({
                             ...formData,
-                            section_description: e.target.value,
+                            section_description: value,
                           })
                         }
                       />
@@ -205,11 +204,11 @@ export default function ConductGuideEditor() {
 
                             {item.content !== undefined && (
                               <div className="space-y-2">
-                                <Label>Texto</Label>
-                                <Textarea
+                                <RichTextEditor
+                                  label="Texto"
                                   value={item.content || ""}
-                                  onChange={(e) =>
-                                    updateContentItem(itemIndex, "content", e.target.value)
+                                  onChange={(value) =>
+                                    updateContentItem(itemIndex, "content", value)
                                   }
                                   placeholder="Texto descritivo"
                                 />
