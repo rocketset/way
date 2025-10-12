@@ -61,6 +61,8 @@ export default function CaseEditor() {
     sobre_cliente_texto: "",
   });
 
+  const [mockupScreenshotUrl, setMockupScreenshotUrl] = useState<string>("");
+
   useEffect(() => {
     if (blocks) {
       blocks.forEach((block) => {
@@ -102,6 +104,13 @@ export default function CaseEditor() {
     
     loadCaseTags();
   }, [id]);
+
+  // Load mockup screenshot URL
+  useEffect(() => {
+    if (caseData?.mockup_screenshot_url) {
+      setMockupScreenshotUrl(caseData.mockup_screenshot_url);
+    }
+  }, [caseData]);
 
   const getBlockId = (blockType: string) => {
     return blocks?.find((b) => b.block_type === blockType)?.id;
@@ -174,6 +183,22 @@ export default function CaseEditor() {
     });
   };
 
+  const handleSaveMockup = async () => {
+    try {
+      const { error } = await supabase
+        .from('cases')
+        .update({ mockup_screenshot_url: mockupScreenshotUrl })
+        .eq('id', id!);
+
+      if (error) throw error;
+      
+      toast.success('Screenshot do mockup salvo com sucesso!');
+    } catch (error) {
+      console.error('Error saving mockup:', error);
+      toast.error('Erro ao salvar screenshot');
+    }
+  };
+
   if (caseLoading || blocksLoading) {
     return <div className="p-8">Carregando...</div>;
   }
@@ -191,11 +216,12 @@ export default function CaseEditor() {
       </div>
 
       <Tabs defaultValue="client-info" className="w-full">
-        <TabsList className="grid w-full grid-cols-4">
+        <TabsList className="grid w-full grid-cols-5">
           <TabsTrigger value="client-info">Info Cliente</TabsTrigger>
           <TabsTrigger value="hero">Hero</TabsTrigger>
           <TabsTrigger value="text-columns">Colunas</TabsTrigger>
           <TabsTrigger value="benefits">Benefícios</TabsTrigger>
+          <TabsTrigger value="mockup">Mockup</TabsTrigger>
         </TabsList>
 
         <TabsContent value="client-info">
@@ -392,6 +418,30 @@ export default function CaseEditor() {
               <Button onClick={handleSaveBenefits} disabled={saveMutation.isPending}>
                 <Save className="h-4 w-4 mr-2" />
                 Salvar Benefícios
+              </Button>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="mockup">
+          <Card>
+            <CardHeader>
+              <CardTitle>Screenshot do Mockup</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <FileUpload
+                label="Screenshot do Site/App"
+                accept="image/*"
+                currentUrl={mockupScreenshotUrl}
+                onUploadComplete={(url) => setMockupScreenshotUrl(url)}
+                folder="cases/mockups"
+                maxSizeMB={5}
+                showPreview={true}
+                helperText="Esta imagem aparecerá dentro do mockup do MacBook na página do case | Dimensões recomendadas: 1920x1200px (16:10) | Máx: 5MB"
+              />
+              <Button onClick={handleSaveMockup}>
+                <Save className="h-4 w-4 mr-2" />
+                Salvar Screenshot
               </Button>
             </CardContent>
           </Card>

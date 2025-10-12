@@ -108,10 +108,13 @@ const CaseDetail = () => {
       })}
 
         {/* MacBook Mockup Section */}
-        <MockupSection 
-          title="Veja o projeto em ação"
-          description="Conheça como transformamos ideias em soluções digitais de sucesso"
-        />
+        {caseData?.mockup_screenshot_url && (
+          <MockupSection 
+            screenshotUrl={caseData.mockup_screenshot_url}
+            title="Veja o projeto em ação"
+            description="Conheça como transformamos ideias em soluções digitais de sucesso"
+          />
+        )}
 
         {/* Contact Form */}
         <section className="py-24 px-6 bg-gradient-to-b from-background via-card/20 to-background">

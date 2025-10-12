@@ -299,6 +299,7 @@ export type Database = {
           id: string
           imagem_url: string | null
           is_featured: boolean | null
+          mockup_screenshot_url: string | null
           moderated_at: string | null
           moderated_by: string | null
           moderation_status: string | null
@@ -313,6 +314,7 @@ export type Database = {
           id?: string
           imagem_url?: string | null
           is_featured?: boolean | null
+          mockup_screenshot_url?: string | null
           moderated_at?: string | null
           moderated_by?: string | null
           moderation_status?: string | null
@@ -327,6 +329,7 @@ export type Database = {
           id?: string
           imagem_url?: string | null
           is_featured?: boolean | null
+          mockup_screenshot_url?: string | null
           moderated_at?: string | null
           moderated_by?: string | null
           moderation_status?: string | null
