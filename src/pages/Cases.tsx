@@ -212,10 +212,16 @@ const Cases = () => {
       {/* Clients Carousel */}
       <ClientsCarousel />
 
-      {/* MacBook Mockup Section - Featured Case */}
-      {casesData?.featured?.[0]?.mockup_screenshot_url && (
+      {/* Carousel de Mockups - Todos os Cases com imagem */}
+      {allCases.filter(c => c.mockup_screenshot_url).length > 0 && (
         <MockupSection 
-          screenshotUrl={casesData.featured[0].mockup_screenshot_url}
+          screenshotUrls={allCases
+            .filter(c => c.mockup_screenshot_url)
+            .map(c => ({
+              url: c.mockup_screenshot_url!,
+              title: c.titulo
+            }))
+          }
           title="Veja nossos projetos em ação"
           description="Conheça como transformamos ideias em soluções digitais de sucesso"
         />
