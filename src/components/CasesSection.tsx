@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
@@ -129,14 +130,17 @@ const CasesSection = () => {
 
                       {/* Tags */}
                       {caseItem.tags.length > 0 && (
-                        <ul className="space-y-1.5">
+                        <div className="flex flex-wrap gap-2">
                           {caseItem.tags.slice(0, 3).map((tag, tagIndex) => (
-                            <li key={tagIndex} className="flex items-center gap-2 text-sm text-gray-900">
-                              <span className="w-2 h-2 rounded-full bg-primary flex-shrink-0" />
-                              <span>{tag}</span>
-                            </li>
+                            <Badge 
+                              key={tagIndex} 
+                              variant="outline" 
+                              className="px-3 py-1 text-xs font-medium bg-card border border-border hover:border-primary/50 transition-all duration-300"
+                            >
+                              {tag}
+                            </Badge>
                           ))}
-                        </ul>
+                        </div>
                       )}
                     </div>
                   </div>
