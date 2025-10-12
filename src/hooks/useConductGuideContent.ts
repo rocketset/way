@@ -60,3 +60,66 @@ export const useUpdateConductGuideSection = () => {
     },
   });
 };
+
+export const useCreateConductGuideSection = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (section: {
+      section_key: string;
+      section_title: string;
+      section_description: string;
+      content: any;
+      ordem: number;
+    }) => {
+      const { error } = await supabase
+        .from("conduct_guide_content")
+        .insert(section);
+
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["conduct-guide-content"] });
+      toast({
+        title: "Sucesso",
+        description: "Nova seção criada com sucesso!",
+      });
+    },
+    onError: (error) => {
+      toast({
+        title: "Erro",
+        description: "Erro ao criar seção: " + error.message,
+        variant: "destructive",
+      });
+    },
+  });
+};
+
+export const useDeleteConductGuideSection = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (id: string) => {
+      const { error } = await supabase
+        .from("conduct_guide_content")
+        .delete()
+        .eq("id", id);
+
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["conduct-guide-content"] });
+      toast({
+        title: "Sucesso",
+        description: "Seção excluída com sucesso!",
+      });
+    },
+    onError: (error) => {
+      toast({
+        title: "Erro",
+        description: "Erro ao excluir seção: " + error.message,
+        variant: "destructive",
+      });
+    },
+  });
+};
