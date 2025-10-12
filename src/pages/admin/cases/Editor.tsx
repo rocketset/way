@@ -13,6 +13,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowLeft, Save } from "lucide-react";
 import { IconPicker } from "@/components/editor/IconPicker";
 import { TagsAutocomplete } from "@/components/editor/TagsAutocomplete";
+import FileUpload from "@/components/admin/FileUpload";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import type {
@@ -202,17 +203,16 @@ export default function CaseEditor() {
               <CardTitle>Informações do Cliente</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div>
-                <Label>Banner URL</Label>
-                <Input
-                  value={clientInfoData.banner_url || ""}
-                  onChange={(e) => setClientInfoData({ ...clientInfoData, banner_url: e.target.value })}
-                  placeholder="URL do banner do cliente"
-                />
-                <p className="text-sm text-muted-foreground mt-1">
-                  Banner grande que aparecerá acima do título do case
-                </p>
-              </div>
+              <FileUpload
+                label="Banner do Cliente"
+                accept="image/*"
+                currentUrl={clientInfoData.banner_url}
+                onUploadComplete={(url) => setClientInfoData({ ...clientInfoData, banner_url: url })}
+                folder="cases/banners"
+                maxSizeMB={5}
+                showPreview={true}
+                helperText="Dimensões recomendadas: 1920x512px (formato 21:6) | Máx: 5MB"
+              />
               <div>
                 <Label>Sobre o Cliente</Label>
                 <Textarea
@@ -239,14 +239,16 @@ export default function CaseEditor() {
               <CardTitle>Seção Hero</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div>
-                <Label>Logo URL</Label>
-                <Input
-                  value={heroData.logo_url || ""}
-                  onChange={(e) => setHeroData({ ...heroData, logo_url: e.target.value })}
-                  placeholder="URL da logo"
-                />
-              </div>
+              <FileUpload
+                label="Logo"
+                accept="image/*"
+                currentUrl={heroData.logo_url}
+                onUploadComplete={(url) => setHeroData({ ...heroData, logo_url: url })}
+                folder="cases/logos"
+                maxSizeMB={2}
+                showPreview={true}
+                helperText="Dimensões recomendadas: 300x100px (formato 3:1) | Máx: 2MB"
+              />
               <div>
                 <Label>Título</Label>
                 <Input
@@ -272,14 +274,16 @@ export default function CaseEditor() {
                   rows={4}
                 />
               </div>
-              <div>
-                <Label>Imagem Principal URL</Label>
-                <Input
-                  value={heroData.imagem_principal || ""}
-                  onChange={(e) => setHeroData({ ...heroData, imagem_principal: e.target.value })}
-                  placeholder="URL da imagem principal"
-                />
-              </div>
+              <FileUpload
+                label="Imagem Principal"
+                accept="image/*"
+                currentUrl={heroData.imagem_principal}
+                onUploadComplete={(url) => setHeroData({ ...heroData, imagem_principal: url })}
+                folder="cases/hero"
+                maxSizeMB={3}
+                showPreview={true}
+                helperText="Dimensões recomendadas: 800x800px (quadrada) | Máx: 3MB"
+              />
               <div>
                 <Label>Tags</Label>
                 <TagsAutocomplete
