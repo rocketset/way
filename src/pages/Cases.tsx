@@ -12,7 +12,7 @@ import { useCaseCategories } from "@/hooks/useCaseCategories";
 
 const Cases = () => {
   const [selectedCategory, setSelectedCategory] = useState("Todos");
-  const [visibleCases, setVisibleCases] = useState(6);
+  const [visibleCases, setVisibleCases] = useState(4);
 
   const { data: categoriesData, isLoading: categoriesLoading } = useCaseCategories();
   const { data: casesData, isLoading: casesLoading } = useCases("", selectedCategory);
@@ -23,7 +23,7 @@ const Cases = () => {
   const hasMoreCases = (casesData?.regular.length || 0) > visibleCases;
 
   const handleLoadMore = () => {
-    setVisibleCases((prev) => prev + 6);
+    setVisibleCases((prev) => prev + 4);
   };
 
   return (
@@ -166,13 +166,12 @@ const Cases = () => {
         <div className="container mx-auto">
           <div className="max-w-7xl mx-auto">
             {casesLoading ? (
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {[...Array(6)].map((_, i) => (
+              <div className="grid md:grid-cols-2 gap-6">
+                {[...Array(4)].map((_, i) => (
                   <div key={i} className="space-y-4">
-                    <Skeleton className="h-48 w-full rounded-2xl" />
+                    <Skeleton className="h-64 w-full rounded-2xl" />
                     <Skeleton className="h-6 w-3/4" />
                     <Skeleton className="h-4 w-full" />
-                    <Skeleton className="h-4 w-2/3" />
                   </div>
                 ))}
               </div>
@@ -184,54 +183,45 @@ const Cases = () => {
               </div>
             ) : (
               <>
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div className="grid md:grid-cols-2 gap-6">
                   {regularCases.map((caseItem) => (
                     <Link
                       key={caseItem.id}
                       to={`/cases/${caseItem.id}`}
                       className="group"
                     >
-                      <div className="bg-card rounded-2xl overflow-hidden border border-border hover:border-primary transition-all duration-500 hover:shadow-xl hover:shadow-primary/10 h-full flex flex-col">
-                        {/* Image */}
-                        <div className="relative overflow-hidden aspect-video">
-                          <div className="absolute top-4 left-4 z-10">
-                            <Badge className="bg-card text-foreground border-border">
-                              {caseItem.categoria_nome || 'Case'}
-                            </Badge>
-                          </div>
+                      <div className="bg-gradient-to-br from-muted/30 to-muted/50 rounded-2xl overflow-hidden border border-border hover:border-primary transition-all duration-500 hover:shadow-2xl hover:shadow-primary/20 h-full flex flex-col">
+                        {/* Header com título e tags */}
+                        <div className="p-6 pb-4">
+                          <h3 className="text-xl md:text-2xl font-medium italic text-foreground group-hover:text-primary transition-colors duration-300 mb-4">
+                            {caseItem.titulo}
+                          </h3>
+                          
+                          {/* Tags */}
+                          {caseItem.tags.length > 0 && (
+                            <div className="flex flex-wrap gap-2">
+                              {caseItem.tags.slice(0, 4).map((tag) => (
+                                <Badge
+                                  key={tag}
+                                  variant="secondary"
+                                  className="bg-background text-foreground border border-border text-xs px-3 py-1 rounded-md hover:bg-background/80 transition-colors duration-300"
+                                >
+                                  {tag}
+                                </Badge>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Image com logo sobreposto */}
+                        <div className="relative overflow-hidden flex-1 min-h-[300px]">
                           <img
                             src={caseItem.imagem_url || '/placeholder.svg'}
                             alt={caseItem.titulo}
-                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                           />
-                        </div>
-
-                        {/* Content */}
-                        <div className="p-6 flex-1 flex flex-col">
-                          <div className="space-y-3 flex-1">
-                            <h3 className="text-2xl font-bold text-foreground group-hover:text-primary transition-colors duration-300">
-                              {caseItem.titulo}
-                            </h3>
-                            
-                            <p className="text-muted-foreground line-clamp-3">
-                              {caseItem.descricao}
-                            </p>
-
-                            {/* Tags */}
-                            {caseItem.tags.length > 0 && (
-                              <div className="flex flex-wrap gap-2 pt-2">
-                                {caseItem.tags.slice(0, 3).map((tag) => (
-                                  <Badge
-                                    key={tag}
-                                    variant="secondary"
-                                    className="bg-primary/10 text-primary border-primary/20 text-xs hover:bg-primary/20 hover:text-foreground transition-colors duration-300"
-                                  >
-                                    {tag}
-                                  </Badge>
-                                ))}
-                              </div>
-                            )}
-                          </div>
+                          {/* Overlay escuro sutil */}
+                          <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent" />
                         </div>
                       </div>
                     </Link>
