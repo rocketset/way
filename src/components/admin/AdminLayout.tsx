@@ -75,7 +75,7 @@ const menuItems = [
     roles: ['administrador', 'gestor_conteudo', 'membro', 'cliente'],
     subItems: [
       { label: 'Visualizar', path: '/admin/academy' },
-      { label: 'Lista de Fornecedores', path: '/admin/academy/suppliers', roles: ['membro', 'cliente'] },
+      { label: 'Lista de Fornecedores', path: '/admin/academy/suppliers' },
       { label: 'Gerenciar Conteúdos', path: '/admin/academy/manage', roles: ['administrador', 'gestor_conteudo'] },
       { label: 'Categorias', path: '/admin/academy/categories', roles: ['administrador'] },
       { label: 'Configurações', path: '/admin/academy/settings', roles: ['administrador'] },
