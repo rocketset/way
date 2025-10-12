@@ -2,15 +2,11 @@
 // Exibe estatísticas e resumo do sistema
 
 import { useEffect, useState } from 'react';
-import { Navigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { supabase } from '@/integrations/supabase/client';
-import { useAuth } from '@/hooks/useAuth';
 import { FileText, Briefcase, Mail, Users, BookOpen, UserCheck, Activity } from 'lucide-react';
 
 export default function Dashboard() {
-  const { isAdmin, isGestorConteudo, loading: authLoading } = useAuth();
-  
   // Estados para armazenar as contagens
   const [stats, setStats] = useState({
     posts: 0,
@@ -104,11 +100,6 @@ export default function Dashboard() {
       setLoading(false);
     }
   };
-
-  // Redireciona se não for admin ou gestor
-  if (!authLoading && !isAdmin && !isGestorConteudo) {
-    return <Navigate to="/admin/member-dashboard" replace />;
-  }
 
   // Cards com as estatísticas
   const statCards = [

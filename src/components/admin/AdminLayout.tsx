@@ -58,8 +58,14 @@ const menuItems = [
   { 
     icon: LayoutDashboard, 
     label: 'Dashboard', 
+    path: '/admin/member-dashboard',
+    roles: ['membro'],
+  },
+  { 
+    icon: LayoutDashboard, 
+    label: 'Dashboard', 
     path: '/admin',
-    roles: ['administrador', 'gestor_conteudo', 'colunista', 'membro']
+    roles: ['administrador', 'gestor_conteudo', 'colunista']
   },
   { 
     icon: GraduationCap, 
@@ -589,10 +595,11 @@ function MobileSidebar() {
 
 // Layout principal que envolve todas as páginas admin
 export default function AdminLayout() {
-  const { user, loading, viewMode, setViewMode, signOut } = useAuth();
+  const { user, loading, viewMode, setViewMode, signOut, isMembro, effectiveRole } = useAuth();
   const { actualTheme } = useTheme();
   const logoWay = actualTheme === 'dark' ? logoWayDark : logoWayLight;
   const navigate = useNavigate();
+  const location = useLocation();
   const [notificationCount, setNotificationCount] = useState(1);
   const [searchQuery, setSearchQuery] = useState('');
   const [profileData, setProfileData] = useState<{ nome: string; avatar_url: string } | null>(null);
@@ -622,6 +629,13 @@ export default function AdminLayout() {
       navigate('/auth/login');
     }
   }, [user, loading, navigate]);
+
+  // Redireciona membros para sua dashboard específica
+  useEffect(() => {
+    if (!loading && user && effectiveRole === 'membro' && location.pathname === '/admin') {
+      navigate('/admin/member-dashboard', { replace: true });
+    }
+  }, [effectiveRole, loading, user, location.pathname, navigate]);
 
   // Exibe loading enquanto verifica autenticação
   if (loading) {
