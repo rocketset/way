@@ -124,6 +124,40 @@ export default function Academy() {
 
   return (
     <div className="space-y-6">
+      {/* Banner */}
+      {banner?.banner_url ? (
+        <div
+          className="relative h-[300px] rounded-lg overflow-hidden bg-cover bg-center"
+          style={{ backgroundImage: `url(${banner.banner_url})` }}
+        >
+          <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/30 flex items-center">
+            <div className="container mx-auto px-6">
+              <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+                {selectedCategory ? selectedCategory.nome : (banner.banner_titulo || 'Way Academy')}
+              </h1>
+              <p className="text-xl text-white/90 max-w-2xl">
+                {selectedCategory 
+                  ? (selectedCategory.descricao || 'Materiais desta categoria')
+                  : (banner.banner_descricao || 'Desenvolva suas habilidades com nossos cursos e materiais exclusivos')}
+              </p>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="relative h-[300px] rounded-lg overflow-hidden bg-gradient-to-r from-primary to-primary/80 flex items-center">
+          <div className="container mx-auto px-6">
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+              {selectedCategory ? selectedCategory.nome : 'Way Academy'}
+            </h1>
+            <p className="text-xl text-white/90 max-w-2xl">
+              {selectedCategory 
+                ? (selectedCategory.descricao || 'Materiais desta categoria')
+                : 'Acesse nossos cursos e materiais exclusivos para desenvolvimento profissional'}
+            </p>
+          </div>
+        </div>
+      )}
+
       {/* Botão voltar quando filtrado por categoria */}
       {selectedCategoryId && selectedCategory && (
         <div className="flex items-center gap-3">
@@ -136,42 +170,6 @@ export default function Academy() {
             <ArrowLeft className="h-4 w-4" />
             Voltar para todas as categorias
           </Button>
-          <Badge variant="secondary" className="text-sm">
-            Filtrando por: {selectedCategory.nome}
-          </Badge>
-        </div>
-      )}
-
-      {/* Banner */}
-      {banner && banner.banner_url && (
-        <div
-          className="relative h-[300px] rounded-lg overflow-hidden bg-cover bg-center"
-          style={{ backgroundImage: `url(${banner.banner_url})` }}
-        >
-          <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/30 flex items-center">
-            <div className="container mx-auto px-6">
-              <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-                {banner.banner_titulo || 'Way Academy'}
-              </h1>
-              <p className="text-xl text-white/90 max-w-2xl">
-                {banner.banner_descricao ||
-                  'Desenvolva suas habilidades com nossos cursos e materiais exclusivos'}
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {!banner?.banner_url && (
-        <div>
-          <h1 className="text-3xl font-bold">
-            {selectedCategory ? selectedCategory.nome : 'Way Academy'}
-          </h1>
-          <p className="text-muted-foreground mt-2">
-            {selectedCategory 
-              ? selectedCategory.descricao || 'Materiais desta categoria'
-              : 'Acesse nossos cursos e materiais exclusivos para desenvolvimento profissional'}
-          </p>
         </div>
       )}
 
