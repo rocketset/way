@@ -257,7 +257,7 @@ const WhyWay = () => {
                 <Plus className="inline-block w-10 h-10 text-primary animate-spin-slow" />
               </span>
             </h2>
-            <p className="text-base text-muted-foreground max-w-2xl mx-auto leading-relaxed">Fundada por um Cientista da Computação apaixonado por tecnologia e resultados, a Way+ nasceu com o propósito de transformar a forma como os negócios crescem no Brasil. Unimos expertise técnica, criatividade e inteligência em dados para construir estratégias que geram crescimento real e mensurável.</p>
+            <p className="text-base text-muted-foreground max-w-2xl mx-auto leading-relaxed">Hoje, a Way E-commerce representa uma nova geração de consultorias digitais: uma empresa que une estratégia, dados e performance, guiada por uma filosofia simples — "Crescer com estrutura, consistência e propósito."</p>
           </div>
         </div>
       </section>
