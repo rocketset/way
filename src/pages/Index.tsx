@@ -9,6 +9,7 @@ import TestimonialsSection from "@/components/TestimonialsSection";
 import NewsSection from "@/components/NewsSection";
 import CtaResultsSection from "@/components/CtaResultsSection";
 import NewsletterSection from "@/components/NewsletterSection";
+import { GoogleReviews } from "@/components/GoogleReviews";
 import Footer from "@/components/Footer";
 
 const Index = () => {
@@ -61,6 +62,9 @@ const Index = () => {
         </div>
         <div className="animate-fade-in" style={{ animationDelay: '0.8s' }}>
           <CtaResultsSection />
+        </div>
+        <div className="animate-fade-in" style={{ animationDelay: '0.85s' }}>
+          <GoogleReviews />
         </div>
         <div className="animate-fade-in" style={{ animationDelay: '0.9s' }}>
           <NewsletterSection />
