@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
-import { ExternalLink, TrendingUp, Users, ShoppingBag, Sparkles } from "lucide-react";
+import { ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
+import useEmblaCarousel from "embla-carousel-react";
 interface CaseItem {
   id: string;
   titulo: string;
@@ -11,14 +12,27 @@ interface CaseItem {
   categories?: {
     nome: string;
   };
+  tags: string[];
 }
 const CasesSection = () => {
-  const [hoveredCase, setHoveredCase] = useState<number | null>(null);
   const [cases, setCases] = useState<CaseItem[]>([]);
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    align: "start",
+    loop: false,
+    skipSnaps: false,
+  });
   const navigate = useNavigate();
   useEffect(() => {
     fetchCases();
   }, []);
+  const scrollPrev = useCallback(() => {
+    if (emblaApi) emblaApi.scrollPrev();
+  }, [emblaApi]);
+
+  const scrollNext = useCallback(() => {
+    if (emblaApi) emblaApi.scrollNext();
+  }, [emblaApi]);
+
   const fetchCases = async () => {
     const { data, error } = await supabase
       .from('cases')
@@ -28,12 +42,13 @@ const CasesSection = () => {
         descricao,
         imagem_url,
         categories (nome),
-        case_content_blocks (block_type, content)
+        case_content_blocks (block_type, content),
+        case_tags (tag_id, tags!inner(nome))
       `)
       .eq('publicado', true)
       .eq('is_featured', true)
       .order('criado_em', { ascending: false })
-      .limit(3);
+      .limit(8);
 
     if (error) {
       console.error('Error fetching cases:', error);
@@ -43,99 +58,114 @@ const CasesSection = () => {
     const mapped = (data || []).map((c: any) => {
       const clientInfo = (c.case_content_blocks || []).find((b: any) => b.block_type === 'client_info');
       const banner = clientInfo?.content?.banner_url || '/placeholder.svg';
-      return { ...c, imagem_url: banner } as CaseItem;
+      const tags = c.case_tags?.map((ct: any) => ct.tags.nome) || [];
+      return { ...c, imagem_url: banner, tags } as CaseItem;
     });
 
     setCases(mapped);
   };
-  const gradients = ["from-rose-500 to-pink-600", "from-purple-500 to-indigo-600", "from-amber-500 to-orange-600"];
-  return <section id="cases" className="py-32 bg-white relative overflow-hidden">
+  return (
+    <section id="cases" className="py-32 bg-background relative overflow-hidden">
       {/* Background decorative elements */}
-      <div className="absolute inset-0 bg-[#ebebeb]">
-        <div className="absolute top-20 left-10 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-pulse" style={{
-        animationDuration: '4s'
-      }} />
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-pink-500/5 rounded-full blur-3xl animate-pulse" style={{
-        animationDuration: '5s',
-        animationDelay: '1s'
-      }} />
+      <div className="absolute inset-0 bg-gradient-to-b from-background via-muted/20 to-background">
+        <div className="absolute top-20 left-10 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '4s' }} />
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent/5 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '5s', animationDelay: '1s' }} />
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Header */}
-        <div className="text-center mb-20">
-          <div className="inline-flex items-center gap-2 mb-6 animate-fade-in">
-            <Sparkles className="w-6 h-6 text-primary animate-pulse" />
-            <span className="text-sm font-bold text-primary tracking-wider">HISTÓRIAS DE SUCESSO</span>
-            <Sparkles className="w-6 h-6 text-primary animate-pulse" />
-          </div>
-          
-          <h2 className="text-5xl md:text-6xl font-bold mb-6 animate-fade-in" style={{
-          animationDelay: '0.1s'
-        }}>
-            <span className="text-gray-900">Cases que </span>
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-yellow-400 to-primary">
-              inspiram
-            </span>
+        <div className="mb-16 animate-fade-in">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-foreground">
+            Portfólio
           </h2>
-          
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto animate-fade-in" style={{
-          animationDelay: '0.2s'
-        }}>
-            Conheça empresas que transformaram seus negócios com nossas soluções
+          <p className="text-lg text-muted-foreground max-w-2xl">
+            Especializada em impulsionar marcas para o sucesso online com soluções personalizadas para aumentar sua visibilidade.
           </p>
         </div>
 
-        {/* Cases Grid */}
-        <div className="grid grid-cols-1 gap-6 max-w-5xl mx-auto">
-          {cases.length === 0 ? <p className="text-center text-gray-500 py-12">
-              Nenhum case em destaque no momento.
-            </p> : cases.map((caseItem, index) => <div key={caseItem.id} className="group relative animate-fade-in cursor-pointer h-64 rounded-2xl overflow-hidden" style={{
-          animationDelay: `${index * 0.15}s`
-        }} onMouseEnter={() => setHoveredCase(index)} onMouseLeave={() => setHoveredCase(null)} onClick={() => navigate(`/cases/${caseItem.id}`)}>
-                {/* Background Image */}
-                <img src={caseItem.imagem_url || "/placeholder.svg"} alt={caseItem.titulo} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-                
-                {/* Dark overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20 group-hover:from-black/90 transition-all duration-500" />
-                
-                {/* Content */}
-                <div className="relative h-full flex flex-col justify-between p-8">
-                  {/* Tags */}
-                  {caseItem.categories?.nome && <div className="flex gap-2">
-                      <span className="inline-block px-4 py-2 bg-white/90 backdrop-blur-sm text-gray-900 text-sm font-bold rounded-sm shadow-lg uppercase">
-                        {caseItem.categories.nome}
-                      </span>
-                    </div>}
-                  
-                  {/* Title */}
-                  <div>
-                    <h3 className="text-4xl md:text-5xl font-bold text-white mb-2 group-hover:text-primary transition-colors duration-300">
-                      {caseItem.titulo}
-                    </h3>
-                    <p className="text-white/80 text-lg max-w-2xl">
-                      {caseItem.descricao}
-                    </p>
-                  </div>
-                </div>
+        {/* Carousel */}
+        {cases.length === 0 ? (
+          <p className="text-center text-muted-foreground py-12">
+            Nenhum case em destaque no momento.
+          </p>
+        ) : (
+          <div className="relative">
+            <div className="overflow-hidden" ref={emblaRef}>
+              <div className="flex gap-6">
+                {cases.map((caseItem, index) => (
+                  <div
+                    key={caseItem.id}
+                    className="flex-[0_0_100%] sm:flex-[0_0_calc(50%-12px)] lg:flex-[0_0_calc(33.333%-16px)] xl:flex-[0_0_calc(25%-18px)] min-w-0"
+                  >
+                    <div 
+                      className="group cursor-pointer animate-fade-in h-full flex flex-col"
+                      style={{ animationDelay: `${index * 0.1}s` }}
+                      onClick={() => navigate(`/cases/${caseItem.id}`)}
+                    >
+                      {/* Image */}
+                      <div className="relative aspect-[3/4] overflow-hidden rounded-lg mb-4 bg-muted">
+                        <img
+                          src={caseItem.imagem_url || "/placeholder.svg"}
+                          alt={caseItem.titulo}
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      </div>
 
-                {/* Hover indicator */}
-                <div className="absolute bottom-8 right-8 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <ExternalLink className="w-8 h-8 text-white" />
-                </div>
-              </div>)}
-        </div>
+                      {/* Title */}
+                      <h3 className="text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors duration-300">
+                        {caseItem.titulo}
+                      </h3>
+
+                      {/* Tags/Services */}
+                      {caseItem.tags.length > 0 && (
+                        <ul className="space-y-1.5">
+                          {caseItem.tags.slice(0, 3).map((tag, tagIndex) => (
+                            <li key={tagIndex} className="flex items-center gap-2 text-sm text-muted-foreground">
+                              <span className="w-2 h-2 rounded-full bg-primary flex-shrink-0" />
+                              <span>{tag}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Navigation Arrows */}
+            <div className="flex items-center justify-center gap-4 mt-12">
+              <button
+                onClick={scrollPrev}
+                className="w-12 h-12 rounded-full border-2 border-border bg-background hover:bg-muted hover:border-primary transition-all duration-300 flex items-center justify-center group"
+                aria-label="Anterior"
+              >
+                <ChevronLeft className="w-5 h-5 text-foreground group-hover:text-primary transition-colors" />
+              </button>
+              <button
+                onClick={scrollNext}
+                className="w-12 h-12 rounded-full border-2 border-border bg-background hover:bg-muted hover:border-primary transition-all duration-300 flex items-center justify-center group"
+                aria-label="Próximo"
+              >
+                <ChevronRight className="w-5 h-5 text-foreground group-hover:text-primary transition-colors" />
+              </button>
+            </div>
+          </div>
+        )}
 
         {/* Bottom CTA */}
-        <div className="text-center mt-20 animate-fade-in" style={{
-        animationDelay: '0.8s'
-      }}>
-          <Button onClick={() => navigate('/cases')} className="px-10 py-6 text-lg font-bold shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 group bg-[#1a1a1a] text-[#fbbd02]">
-            <span>VER TODOS OS CASES</span>
-            <ExternalLink className="w-5 h-5 ml-2 group-hover:rotate-45 transition-transform duration-300" />
+        <div className="text-center mt-16 animate-fade-in" style={{ animationDelay: '0.4s' }}>
+          <Button
+            onClick={() => navigate('/cases')}
+            className="px-10 py-6 text-lg font-bold shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
+          >
+            VER TODOS OS CASES
           </Button>
         </div>
       </div>
-    </section>;
+    </section>
+  );
 };
+
 export default CasesSection;
