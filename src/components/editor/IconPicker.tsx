@@ -16,6 +16,19 @@ const AVAILABLE_ICONS = {
   Heart,
 };
 
+const ICON_NAMES_PT: Record<string, string> = {
+  TrendingUp: "Crescimento",
+  Users: "Usuários",
+  ShoppingCart: "Carrinho",
+  Award: "Prêmio",
+  Zap: "Energia",
+  Target: "Alvo",
+  Trophy: "Troféu",
+  Rocket: "Foguete",
+  Star: "Estrela",
+  Heart: "Coração",
+};
+
 interface IconPickerProps {
   value: string;
   onChange: (iconName: string) => void;
@@ -30,7 +43,7 @@ export const IconPicker = ({ value, onChange }: IconPickerProps) => {
       <PopoverTrigger asChild>
         <Button variant="outline" className="w-full justify-start gap-2">
           <SelectedIcon className="h-4 w-4" />
-          {value || "Selecione um ícone"}
+          {value ? ICON_NAMES_PT[value] || value : "Selecione um ícone"}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-80">
@@ -44,7 +57,7 @@ export const IconPicker = ({ value, onChange }: IconPickerProps) => {
                 onChange(name);
                 setOpen(false);
               }}
-              title={name}
+              title={ICON_NAMES_PT[name] || name}
             >
               <Icon className="h-4 w-4" />
             </Button>
