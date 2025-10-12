@@ -85,9 +85,9 @@ const Footer = () => {
             {/* Right Side - Newsletter Form */}
             <div className="space-y-5">
               <h3 className="text-xl text-white leading-relaxed">
-                Cadastre-se e receba os melhores conteúdos sobre{" "}
+                Inscreva-se para receber insights e conteúdos estratégicos sobre{" "}
                 <span className="text-primary italic">
-                  e-commerce, performance e marketing digital
+                  e-commerce, performance e marketing digital.
                 </span>
               </h3>
 
