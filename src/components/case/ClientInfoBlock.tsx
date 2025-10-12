@@ -49,15 +49,15 @@ export const ClientInfoBlock = ({
     },
     enabled: !!caseId
   });
-  return <section className="py-12 px-6 bg-background">
-      <div className="container space-y-8 mx-0 my-[100px]">
+  return <section className="py-16 px-6 bg-background">
+      <div className="container mx-auto max-w-7xl space-y-16">
         {/* Breadcrumb */}
-        <nav className="flex items-center gap-2 text-sm text-muted-foreground">
-          <Link to="/" className="hover:text-foreground transition-colors">
+        <nav className="flex items-center gap-2 text-sm text-muted-foreground animate-fade-in">
+          <Link to="/" className="hover:text-primary transition-colors">
             Página inicial
           </Link>
           <ChevronRight className="w-4 h-4" />
-          <Link to="/cases" className="hover:text-foreground transition-colors">
+          <Link to="/cases" className="hover:text-primary transition-colors">
             Cases
           </Link>
           <ChevronRight className="w-4 h-4" />
@@ -67,25 +67,26 @@ export const ClientInfoBlock = ({
         </nav>
 
         {/* Tags */}
-        {caseTags && caseTags.length > 0 && <div className="flex flex-wrap gap-3">
+        {caseTags && caseTags.length > 0 && <div className="flex flex-wrap gap-3 animate-fade-in" style={{ animationDelay: '100ms' }}>
             {caseTags.map(tag => <Badge key={tag.id} variant="outline" className="px-4 py-2 text-sm font-medium bg-card border border-border hover:border-primary/50 transition-all duration-300">
                 {tag.nome}
               </Badge>)}
           </div>}
 
         {/* Banner do Cliente */}
-        {data.banner_url && <div className="relative w-full aspect-[21/9] md:aspect-[21/7] lg:aspect-[21/6] rounded-xl overflow-hidden shadow-2xl">
-            <img src={data.banner_url} alt="Banner do cliente" className="w-full h-full object-cover" />
+        {data.banner_url && <div className="relative w-full aspect-[21/9] md:aspect-[21/7] lg:aspect-[21/6] rounded-2xl overflow-hidden shadow-2xl animate-fade-in group" style={{ animationDelay: '200ms' }}>
+            <img src={data.banner_url} alt="Banner do cliente" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
           </div>}
 
         {/* Sobre o Cliente */}
-        <div className="grid md:grid-cols-[300px_auto_1fr] gap-8 items-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+        <div className="grid md:grid-cols-[300px_1px_1fr] gap-8 items-start animate-fade-in" style={{ animationDelay: '300ms' }}>
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground sticky top-24">
             Sobre o Cliente
           </h2>
-          <div className="hidden md:block w-px h-32 bg-border"></div>
-          <div className="text-lg text-muted-foreground leading-relaxed">
-            {data.sobre_cliente_texto.split('\n').map((paragraph, index) => <p key={index} className="mb-4 last:mb-0">
+          <div className="hidden md:block h-auto bg-gradient-to-b from-transparent via-border to-transparent"></div>
+          <div className="text-lg text-muted-foreground leading-relaxed space-y-4">
+            {data.sobre_cliente_texto.split('\n').map((paragraph, index) => <p key={index} className="hover:text-foreground transition-colors duration-300">
                 {paragraph}
               </p>)}
           </div>
@@ -93,13 +94,13 @@ export const ClientInfoBlock = ({
 
         {/* Hero Content Below */}
         {heroData && (
-          <div className="relative py-20 overflow-hidden">
+          <div className="relative py-20 overflow-hidden rounded-3xl bg-gradient-to-br from-card via-card/50 to-background border border-border animate-fade-in" style={{ animationDelay: '400ms' }}>
             {/* Animated background elements */}
-            <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-primary/5" />
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5" />
             
             {/* Animated dots pattern */}
             <div 
-              className="absolute inset-0 opacity-30"
+              className="absolute inset-0 opacity-20"
               style={{
                 backgroundImage: 'var(--gradient-dots)',
                 backgroundSize: 'var(--dot-size) var(--dot-size)',
@@ -107,38 +108,38 @@ export const ClientInfoBlock = ({
             />
 
             {/* Gradient orbs */}
-            <div className="absolute top-20 left-10 w-72 h-72 bg-primary/20 rounded-full blur-[120px] animate-pulse" />
-            <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent/10 rounded-full blur-[140px] animate-pulse delay-700" />
+            <div className="absolute top-10 left-10 w-48 h-48 bg-primary/10 rounded-full blur-[80px] animate-pulse" />
+            <div className="absolute bottom-10 right-10 w-64 h-64 bg-accent/10 rounded-full blur-[100px] animate-pulse delay-700" />
 
-            <div className="relative z-10">
-              <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div className="relative z-10 container px-8">
+              <div className="grid lg:grid-cols-2 gap-12 items-center">
                 {/* Left Column - Content */}
-                <div className="space-y-8 animate-fade-in">
-                  <h1 className="text-5xl lg:text-8xl font-bold text-foreground leading-tight animate-fade-in delay-100">
-                    <span className="bg-gradient-to-r from-foreground via-primary to-foreground bg-clip-text text-transparent animate-pulse">
+                <div className="space-y-6">
+                  <h1 className="text-4xl lg:text-6xl font-bold text-foreground leading-tight">
+                    <span className="bg-gradient-to-r from-foreground via-primary to-foreground bg-clip-text text-transparent">
                       {heroData.titulo}
                     </span>
                   </h1>
 
-                  <p className="text-2xl lg:text-3xl text-muted-foreground font-light animate-fade-in delay-200">
+                  <p className="text-xl lg:text-2xl text-muted-foreground font-light">
                     {heroData.subtitulo}
                   </p>
 
-                  <div className="h-1 w-24 bg-gradient-to-r from-primary via-accent to-transparent rounded-full animate-fade-in delay-300" />
+                  <div className="h-1 w-20 bg-gradient-to-r from-primary via-accent to-transparent rounded-full" />
 
-                  <p className="text-lg lg:text-xl text-muted-foreground leading-relaxed animate-fade-in delay-300">
+                  <p className="text-base lg:text-lg text-muted-foreground leading-relaxed">
                     {heroData.descricao}
                   </p>
                 </div>
 
                 {/* Right Column - Image */}
                 {heroData.imagem_principal && (
-                  <div className="relative animate-fade-in delay-700 group">
+                  <div className="relative group">
                     {/* Glow effect */}
-                    <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 via-accent/20 to-primary/20 rounded-2xl blur-2xl opacity-50 group-hover:opacity-100 transition-opacity duration-700" />
+                    <div className="absolute -inset-3 bg-gradient-to-r from-primary/20 via-accent/20 to-primary/20 rounded-2xl blur-xl opacity-50 group-hover:opacity-100 transition-opacity duration-500" />
                     
                     {/* Image container */}
-                    <div className="relative overflow-hidden rounded-2xl border border-border/50 shadow-2xl transform group-hover:scale-[1.02] transition-all duration-700">
+                    <div className="relative overflow-hidden rounded-2xl border border-border/50 shadow-xl transform group-hover:scale-[1.02] transition-all duration-500">
                       <img
                         src={heroData.imagem_principal}
                         alt={heroData.titulo}
@@ -146,12 +147,12 @@ export const ClientInfoBlock = ({
                       />
                       
                       {/* Overlay gradient on hover */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                     </div>
 
                     {/* Floating elements */}
-                    <div className="absolute -top-6 -right-6 w-32 h-32 bg-primary/20 rounded-full blur-3xl animate-pulse" />
-                    <div className="absolute -bottom-6 -left-6 w-40 h-40 bg-accent/20 rounded-full blur-3xl animate-pulse delay-500" />
+                    <div className="absolute -top-4 -right-4 w-24 h-24 bg-primary/20 rounded-full blur-2xl animate-pulse" />
+                    <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-accent/20 rounded-full blur-2xl animate-pulse delay-500" />
                   </div>
                 )}
               </div>

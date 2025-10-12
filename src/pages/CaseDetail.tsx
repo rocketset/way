@@ -107,8 +107,17 @@ const CaseDetail = () => {
       })}
 
         {/* Contact Form */}
-        <section className="py-20 px-6 bg-card/50">
-          <div className="container mx-auto">
+        <section className="py-24 px-6 bg-gradient-to-b from-background via-card/20 to-background">
+          <div className="container mx-auto max-w-4xl">
+            <div className="text-center mb-12 animate-fade-in">
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+                Quer resultados como este?
+              </h2>
+              <p className="text-lg text-muted-foreground">
+                Entre em contato e descubra como podemos transformar seu negócio
+              </p>
+              <div className="h-1 w-24 bg-gradient-to-r from-primary via-accent to-transparent rounded-full mx-auto mt-6" />
+            </div>
             <CaseContactForm />
           </div>
         </section>
