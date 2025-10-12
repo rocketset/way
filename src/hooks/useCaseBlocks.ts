@@ -25,12 +25,17 @@ export interface BenefitsBlockContent {
   benefits: BenefitItem[];
 }
 
+export interface ClientInfoBlockContent {
+  banner_url?: string;
+  sobre_cliente_texto: string;
+}
+
 export interface CaseBlock {
   id: string;
   case_id: string;
-  block_type: "hero" | "text_columns" | "benefits";
+  block_type: "hero" | "text_columns" | "benefits" | "client_info";
   position: number;
-  content: HeroBlockContent | TextColumnsBlockContent | BenefitsBlockContent;
+  content: HeroBlockContent | TextColumnsBlockContent | BenefitsBlockContent | ClientInfoBlockContent;
   criado_em: string;
   atualizado_em: string;
 }

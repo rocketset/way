@@ -19,6 +19,7 @@ import type {
   HeroBlockContent,
   TextColumnsBlockContent,
   BenefitsBlockContent,
+  ClientInfoBlockContent,
 } from "@/hooks/useCaseBlocks";
 
 export default function CaseEditor() {
@@ -53,10 +54,18 @@ export default function CaseEditor() {
     ],
   });
 
+  const [clientInfoData, setClientInfoData] = useState<ClientInfoBlockContent>({
+    banner_url: "",
+    sobre_cliente_texto: "",
+  });
+
   useEffect(() => {
     if (blocks) {
       blocks.forEach((block) => {
         switch (block.block_type) {
+          case "client_info":
+            setClientInfoData(block.content as ClientInfoBlockContent);
+            break;
           case "hero":
             setHeroData(block.content as HeroBlockContent);
             break;
@@ -153,6 +162,16 @@ export default function CaseEditor() {
     });
   };
 
+  const handleSaveClientInfo = () => {
+    saveMutation.mutate({
+      caseId: id!,
+      blockType: "client_info",
+      content: clientInfoData,
+      position: -1, // Position before hero
+      blockId: getBlockId("client_info"),
+    });
+  };
+
   if (caseLoading || blocksLoading) {
     return <div className="p-8">Carregando...</div>;
   }
@@ -169,12 +188,50 @@ export default function CaseEditor() {
         </div>
       </div>
 
-      <Tabs defaultValue="hero" className="w-full">
-        <TabsList className="grid w-full grid-cols-3">
+      <Tabs defaultValue="client-info" className="w-full">
+        <TabsList className="grid w-full grid-cols-4">
+          <TabsTrigger value="client-info">Info Cliente</TabsTrigger>
           <TabsTrigger value="hero">Hero</TabsTrigger>
-          <TabsTrigger value="text-columns">Colunas de Texto</TabsTrigger>
+          <TabsTrigger value="text-columns">Colunas</TabsTrigger>
           <TabsTrigger value="benefits">Benefícios</TabsTrigger>
         </TabsList>
+
+        <TabsContent value="client-info">
+          <Card>
+            <CardHeader>
+              <CardTitle>Informações do Cliente</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div>
+                <Label>Banner URL</Label>
+                <Input
+                  value={clientInfoData.banner_url || ""}
+                  onChange={(e) => setClientInfoData({ ...clientInfoData, banner_url: e.target.value })}
+                  placeholder="URL do banner do cliente"
+                />
+                <p className="text-sm text-muted-foreground mt-1">
+                  Banner grande que aparecerá acima do título do case
+                </p>
+              </div>
+              <div>
+                <Label>Sobre o Cliente</Label>
+                <Textarea
+                  value={clientInfoData.sobre_cliente_texto}
+                  onChange={(e) => setClientInfoData({ ...clientInfoData, sobre_cliente_texto: e.target.value })}
+                  placeholder="Texto descritivo sobre o cliente"
+                  rows={8}
+                />
+                <p className="text-sm text-muted-foreground mt-1">
+                  Use quebras de linha para separar parágrafos
+                </p>
+              </div>
+              <Button onClick={handleSaveClientInfo} disabled={saveMutation.isPending}>
+                <Save className="h-4 w-4 mr-2" />
+                Salvar Info Cliente
+              </Button>
+            </CardContent>
+          </Card>
+        </TabsContent>
 
         <TabsContent value="hero">
           <Card>

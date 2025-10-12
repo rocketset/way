@@ -7,6 +7,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { HeroBlock } from "@/components/case/HeroBlock";
 import { TextColumnsBlock } from "@/components/case/TextColumnsBlock";
 import { BenefitsBlock } from "@/components/case/BenefitsBlock";
+import { ClientInfoBlock } from "@/components/case/ClientInfoBlock";
 import CaseContactForm from "@/components/CaseContactForm";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -79,6 +80,8 @@ const CaseDetail = () => {
         {/* Render Dynamic Blocks */}
         {blocks?.map((block) => {
         switch (block.block_type) {
+          case "client_info":
+            return <ClientInfoBlock key={block.id} data={block.content as import("@/hooks/useCaseBlocks").ClientInfoBlockContent} caseId={id || ""} />;
           case "hero":
             return (
               <HeroBlock 
