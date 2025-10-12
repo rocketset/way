@@ -65,10 +65,11 @@ export const ClientInfoBlock = ({
           </div>}
 
         {/* Sobre o Cliente */}
-        <div className="grid md:grid-cols-[300px_1fr] gap-12 items-center">
+        <div className="grid md:grid-cols-[300px_auto_1fr] gap-8 items-center">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground">
             Sobre o Cliente
           </h2>
+          <div className="hidden md:block w-px h-32 bg-border"></div>
           <div className="text-lg text-muted-foreground leading-relaxed">
             {data.sobre_cliente_texto.split('\n').map((paragraph, index) => <p key={index} className="mb-4 last:mb-0">
                 {paragraph}
