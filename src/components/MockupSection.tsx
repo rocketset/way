@@ -6,10 +6,10 @@ interface MockupSectionProps {
   description?: string;
 }
 
-const MockupSection = ({ 
-  screenshotUrl, 
+const MockupSection = ({
+  screenshotUrl,
   title = "Veja o projeto em ação",
-  description = "Navegue pela experiência completa"
+  description = "Navegue pela experiência completa",
 }: MockupSectionProps) => {
   return (
     <section className="py-24 px-4 bg-gradient-to-b from-background via-muted/20 to-background">
@@ -17,36 +17,26 @@ const MockupSection = ({
         {/* Title */}
         {title && (
           <div className="text-center mb-16 animate-fade-in">
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-              {title}
-            </h2>
-            {description && (
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                {description}
-              </p>
-            )}
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">{title}</h2>
+            {description && <p className="text-lg text-muted-foreground max-w-2xl mx-auto">{description}</p>}
           </div>
         )}
 
         {/* MacBook Mockup */}
-        <div className="relative max-w-6xl mx-auto animate-fade-in" style={{ animationDelay: '200ms' }}>
+        <div className="relative max-w-6xl mx-auto animate-fade-in" style={{ animationDelay: "200ms" }}>
           {/* Glow effect */}
           <div className="absolute -inset-8 bg-gradient-to-r from-primary/20 via-accent/20 to-primary/20 rounded-3xl blur-3xl opacity-50" />
-          
+
           {/* MacBook container */}
           <div className="relative">
-            <img 
-              src={macbookMockup} 
-              alt="MacBook Pro Mockup" 
-              className="w-full h-auto relative z-10"
-            />
-            
+            <img src={macbookMockup} alt="MacBook Pro Mockup" className="w-full h-auto relative z-10" />
+
             {/* Screenshot overlay - positioned perfectly on screen */}
             {screenshotUrl && (
-              <div className="absolute top-[6%] left-[15%] w-[70%] h-[75%] overflow-hidden z-20">
-                <img 
-                  src={screenshotUrl} 
-                  alt="Website Screenshot dentro do MacBook mockup" 
+              <div className="absolute top-[6%] left-[30%] w-[70%] h-[75%] overflow-hidden z-20">
+                <img
+                  src={screenshotUrl}
+                  alt="Website Screenshot dentro do MacBook mockup"
                   className="w-full h-full object-cover object-top"
                   loading="lazy"
                 />
