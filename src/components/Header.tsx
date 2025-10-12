@@ -270,29 +270,23 @@ const Header = () => {
 
             {/* CTA Buttons */}
             <div className="hidden lg:flex items-center gap-3">
-              <Button
-                variant="outline"
-                className="font-semibold px-6 py-3 border-2 border-primary text-primary hover:bg-primary/10 hover:text-[#F3F3F3] transition-all duration-300"
-                asChild
-              >
-                <Link to="/admin">Entrar</Link>
-              </Button>
+            <Button
+              variant="outline"
+              className="font-medium px-5 py-2.5 border border-primary/30 text-primary hover:border-primary hover:bg-primary/5 backdrop-blur-sm transition-all duration-300 rounded-lg"
+              asChild
+            >
+              <Link to="/admin">Entrar</Link>
+            </Button>
               
-              <Button 
-                onClick={() => handleNavClick(navItems.find(item => item.id === "contato")!)}
-                className="relative bg-gradient-to-r from-primary via-yellow-500 to-primary text-gray-900 hover:shadow-2xl font-bold px-6 py-3 transition-all duration-300 overflow-hidden group hover:scale-105"
-              >
-                {/* Animated shine effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
-                
-                <span className="relative z-10 flex items-center gap-2">
-                  VAMOS CONVERSAR!
-                  <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
-                </span>
-
-                {/* Pulse ring */}
-                <div className="absolute inset-0 border-2 border-primary/50 animate-ping opacity-20" />
-              </Button>
+            <Button 
+              onClick={() => handleNavClick(navItems.find(item => item.id === "contato")!)}
+              className="relative bg-primary text-background font-medium px-5 py-2.5 hover:bg-primary/90 transition-all duration-300 rounded-lg group"
+            >
+              <span className="flex items-center gap-2">
+                VAMOS CONVERSAR!
+                <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+              </span>
+            </Button>
             </div>
 
             {/* Mobile menu button */}
@@ -458,20 +452,23 @@ const Header = () => {
               ))}
               
               <div className="mt-4 flex flex-col gap-3">
-                <Button
-                  variant="outline"
-                  className="w-full font-semibold py-6 rounded-xl border-2 border-primary text-primary hover:bg-primary/10 hover:text-[#F3F3F3]"
-                  asChild
-                >
-                  <Link to="/admin">Entrar</Link>
-                </Button>
+              <Button
+                variant="outline"
+                className="w-full font-medium py-4 rounded-lg border border-primary/30 text-primary hover:border-primary hover:bg-primary/5 backdrop-blur-sm transition-all duration-300"
+                asChild
+              >
+                <Link to="/admin">Entrar</Link>
+              </Button>
                 
-                <Button
-                  onClick={() => handleNavClick(navItems.find(item => item.id === "contato")!)}
-                  className="bg-gradient-to-r from-primary via-yellow-500 to-primary text-gray-900 hover:shadow-2xl font-bold py-6 rounded-xl"
-                >
+              <Button
+                onClick={() => handleNavClick(navItems.find(item => item.id === "contato")!)}
+                className="w-full bg-primary text-background font-medium py-4 hover:bg-primary/90 transition-all duration-300 rounded-lg group"
+              >
+                <span className="flex items-center gap-2 justify-center">
                   VAMOS CONVERSAR!
-                </Button>
+                  <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                </span>
+              </Button>
               </div>
             </div>
           </nav>
