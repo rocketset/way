@@ -996,6 +996,15 @@ export default function AdminLayout() {
           <div className="container mx-auto p-6">
             <Outlet />
           </div>
+          
+          {/* Rodapé */}
+          <footer className="border-t py-6 px-6 bg-card">
+            <div className="container mx-auto">
+              <p className="text-sm text-muted-foreground text-center">
+                © 2025 Way E-commerce | CNPJ 27.195.145/0001-41 — Todos os direitos reservados.
+              </p>
+            </div>
+          </footer>
         </main>
       </div>
     </div>
