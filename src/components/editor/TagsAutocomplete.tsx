@@ -119,7 +119,7 @@ export const TagsAutocomplete = ({ selectedTagIds, onChange, allTags, tipo, quer
         <Input
           ref={inputRef}
           type="text"
-          placeholder="Digite para buscar ou criar tags..."
+          placeholder="Clique para selecionar ou buscar tags..."
           value={inputValue}
           onChange={(e) => {
             setInputValue(e.target.value);
@@ -131,42 +131,74 @@ export const TagsAutocomplete = ({ selectedTagIds, onChange, allTags, tipo, quer
           className="w-full"
         />
         
-        {/* Dropdown de sugestões */}
-        {isOpen && inputValue.trim() && (
-          <div className="absolute z-10 w-full mt-1 bg-popover border rounded-lg shadow-lg max-h-64 overflow-y-auto">
-            {filteredTags.length > 0 ? (
-              <div className="py-1">
-                {filteredTags.map(tag => (
-                  <button
-                    key={tag.id}
-                    onClick={() => handleSelectTag(tag.id)}
-                    className="w-full px-4 py-2 text-left hover:bg-accent transition-colors flex items-center justify-between group"
-                  >
-                    <span className="text-sm">{tag.nome}</span>
-                    <Check className="h-4 w-4 opacity-0 group-hover:opacity-100 text-primary" />
-                  </button>
-                ))}
-              </div>
-            ) : !tagExists ? (
-              <div className="py-2 px-4">
-                <p className="text-sm text-muted-foreground mb-2">
-                  Nenhuma tag encontrada
-                </p>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="w-full"
-                  onClick={() => createTag(inputValue)}
-                  disabled={isCreating}
-                >
-                  {isCreating ? 'Criando...' : `Criar tag "${inputValue}"`}
-                </Button>
-              </div>
+        {/* Dropdown com todas as tags ou filtradas */}
+        {isOpen && (
+          <div className="absolute z-50 w-full mt-1 bg-popover border rounded-lg shadow-lg max-h-64 overflow-y-auto">
+            {inputValue.trim() ? (
+              // Mostra tags filtradas quando há busca
+              <>
+                {filteredTags.length > 0 ? (
+                  <div className="py-1">
+                    {filteredTags.map(tag => (
+                      <button
+                        key={tag.id}
+                        onClick={() => handleSelectTag(tag.id)}
+                        className="w-full px-4 py-2 text-left hover:bg-accent transition-colors flex items-center justify-between group"
+                      >
+                        <span className="text-sm">{tag.nome}</span>
+                        <Check className="h-4 w-4 opacity-0 group-hover:opacity-100 text-primary" />
+                      </button>
+                    ))}
+                  </div>
+                ) : !tagExists ? (
+                  <div className="py-2 px-4">
+                    <p className="text-sm text-muted-foreground mb-2">
+                      Nenhuma tag encontrada
+                    </p>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="w-full"
+                      onClick={() => createTag(inputValue)}
+                      disabled={isCreating}
+                    >
+                      {isCreating ? 'Criando...' : `Criar tag "${inputValue}"`}
+                    </Button>
+                  </div>
+                ) : (
+                  <div className="py-2 px-4">
+                    <p className="text-sm text-muted-foreground">
+                      Tag já selecionada
+                    </p>
+                  </div>
+                )}
+              </>
             ) : (
-              <div className="py-2 px-4">
-                <p className="text-sm text-muted-foreground">
-                  Tag já selecionada
-                </p>
+              // Mostra TODAS as tags disponíveis quando não há busca
+              <div className="py-1">
+                {filteredTags.length > 0 ? (
+                  <>
+                    <div className="px-4 py-2 text-xs font-medium text-muted-foreground bg-muted/50">
+                      Todas as tags disponíveis
+                    </div>
+                    {filteredTags.map(tag => (
+                      <button
+                        key={tag.id}
+                        onClick={() => handleSelectTag(tag.id)}
+                        className="w-full px-4 py-2 text-left hover:bg-accent transition-colors flex items-center justify-between group"
+                      >
+                        <span className="text-sm">{tag.nome}</span>
+                        <Check className="h-4 w-4 opacity-0 group-hover:opacity-100 text-primary" />
+                      </button>
+                    ))}
+                  </>
+                ) : (
+                  <div className="py-4 px-4 text-center">
+                    <p className="text-sm text-muted-foreground">
+                      Todas as tags já foram selecionadas
+                    </p>
+                  </div>
+                )}
               </div>
             )}
           </div>
@@ -175,7 +207,7 @@ export const TagsAutocomplete = ({ selectedTagIds, onChange, allTags, tipo, quer
 
       {/* Hint */}
       <p className="text-xs text-muted-foreground">
-        Pressione Enter para adicionar ou criar uma nova tag
+        Clique no campo para ver todas as tags ou digite para buscar/criar
       </p>
 
       {/* Tags selecionadas */}
