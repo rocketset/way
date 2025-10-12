@@ -19,7 +19,7 @@ const NewsSection = () => {
   }];
   return <section id="noticias" className="py-20 bg-background">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-bold text-center mb-4 text-foreground animate-fade-in">Blog da Way</h2>
+        <h2 className="text-4xl font-bold text-center mb-4 text-foreground animate-fade-in">Conteúdos Way</h2>
         <p className="text-center text-muted-foreground mb-12 animate-fade-in">Fique por dentro das tendências e insights mais relevantes.
  Atualizações e conteúdos exclusivos.</p>
 
