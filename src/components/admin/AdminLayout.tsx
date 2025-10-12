@@ -449,7 +449,7 @@ function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
                                       <span>{category.nome}</span>
                                       {category.contentCount !== undefined && (
                                         <span className="text-xs text-muted-foreground">
-                                          {category.contentCount} {category.contentCount === 1 ? 'material' : 'materiais'}
+                                          ({category.contentCount})
                                         </span>
                                       )}
                                     </div>
@@ -764,7 +764,7 @@ function MobileSidebar() {
                                           <span>{category.nome}</span>
                                           {category.contentCount !== undefined && (
                                             <span className="text-xs text-muted-foreground">
-                                              {category.contentCount} {category.contentCount === 1 ? 'material' : 'materiais'}
+                                              ({category.contentCount})
                                             </span>
                                           )}
                                         </div>
