@@ -205,14 +205,14 @@ export default function CaseEditor() {
             </CardHeader>
             <CardContent className="space-y-4">
               <FileUpload
-                label="Banner do Cliente"
+                label="Imagem da Capa (Aparece nas Listagens)"
                 accept="image/*"
                 currentUrl={clientInfoData.banner_url}
                 onUploadComplete={(url) => setClientInfoData({ ...clientInfoData, banner_url: url })}
                 folder="cases/banners"
                 maxSizeMB={5}
                 showPreview={true}
-                helperText="Dimensões recomendadas: 1920x512px (formato 21:6) | Máx: 5MB"
+                helperText="Esta é a imagem que aparece na página inicial e na lista de cases | Dimensões recomendadas: 1920x512px (formato 21:6) | Máx: 5MB"
               />
               <div>
                 <Label>Sobre o Cliente</Label>
