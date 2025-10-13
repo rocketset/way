@@ -1257,6 +1257,16 @@ export type Database = {
         }
         Returns: boolean
       }
+      notify_all_clients: {
+        Args: {
+          p_icon?: string
+          p_link?: string
+          p_message: string
+          p_title: string
+          p_type: string
+        }
+        Returns: undefined
+      }
     }
     Enums: {
       app_role:
