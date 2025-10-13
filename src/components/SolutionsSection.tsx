@@ -100,7 +100,7 @@ const SolutionsSection = () => {
     }],
     link: "/solucoes/jornada"
   }];
-  return <section id="solucoes" className="relative py-20 bg-gradient-to-b from-background via-background to-gray-900 overflow-hidden">
+  return <section id="solucoes" className="relative py-20 bg-gradient-to-b from-background via-background to-card overflow-hidden">
       {/* Animated background elements */}
 
       <div className="container mx-auto px-4 relative z-10">
