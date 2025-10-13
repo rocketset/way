@@ -1,5 +1,6 @@
 import { HeroBlockContent } from "@/hooks/useCaseBlocks";
 import { Badge } from "@/components/ui/badge";
+import DOMPurify from "dompurify";
 
 interface HeroBlockProps {
   data: HeroBlockContent;
@@ -52,9 +53,10 @@ export const HeroBlock = ({ data }: HeroBlockProps) => {
 
             <div className="h-1 w-24 bg-gradient-to-r from-primary via-accent to-transparent rounded-full animate-fade-in delay-300" />
 
-            <p className="text-lg lg:text-xl text-muted-foreground leading-relaxed animate-fade-in delay-300">
-              {data.descricao}
-            </p>
+            <div
+              className="text-lg lg:text-xl text-muted-foreground leading-relaxed animate-fade-in delay-300 prose prose-invert max-w-none"
+              dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data.descricao || "") }}
+            />
 
             {data.tags && data.tags.length > 0 && (
               <div className="flex flex-wrap gap-3 pt-4 animate-fade-in delay-500">

@@ -131,9 +131,10 @@ export const ClientInfoBlock = ({
 
                   <div className="h-1 w-20 bg-gradient-to-r from-primary via-accent to-transparent rounded-full" />
 
-                  <p className="text-base lg:text-lg text-muted-foreground leading-relaxed">
-                    {heroData.descricao}
-                  </p>
+                  <div
+                    className="text-base lg:text-lg text-muted-foreground leading-relaxed prose prose-invert max-w-none"
+                    dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(heroData.descricao || '') }}
+                  />
                 </div>
 
                 {/* Right Column - Image */}
