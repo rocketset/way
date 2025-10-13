@@ -294,6 +294,7 @@ export type Database = {
         Row: {
           atualizado_em: string
           categoria_id: string | null
+          content_status: Database["public"]["Enums"]["case_status"] | null
           criado_em: string
           descricao: string
           id: string
@@ -309,6 +310,7 @@ export type Database = {
         Insert: {
           atualizado_em?: string
           categoria_id?: string | null
+          content_status?: Database["public"]["Enums"]["case_status"] | null
           criado_em?: string
           descricao: string
           id?: string
@@ -324,6 +326,7 @@ export type Database = {
         Update: {
           atualizado_em?: string
           categoria_id?: string | null
+          content_status?: Database["public"]["Enums"]["case_status"] | null
           criado_em?: string
           descricao?: string
           id?: string
@@ -1287,7 +1290,15 @@ export type Database = {
         | "membro"
         | "gestor_conteudo"
         | "cliente"
-      post_status: "draft" | "scheduled" | "published" | "archived"
+      case_status: "rascunho" | "em_edicao" | "publicado" | "excluido"
+      post_status:
+        | "draft"
+        | "scheduled"
+        | "published"
+        | "archived"
+        | "rascunho"
+        | "em_edicao"
+        | "excluido"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -1422,7 +1433,16 @@ export const Constants = {
         "gestor_conteudo",
         "cliente",
       ],
-      post_status: ["draft", "scheduled", "published", "archived"],
+      case_status: ["rascunho", "em_edicao", "publicado", "excluido"],
+      post_status: [
+        "draft",
+        "scheduled",
+        "published",
+        "archived",
+        "rascunho",
+        "em_edicao",
+        "excluido",
+      ],
     },
   },
 } as const
