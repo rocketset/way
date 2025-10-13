@@ -28,7 +28,7 @@ export default function Notifications() {
   const [formData, setFormData] = useState({
     title: '',
     message: '',
-    type: 'system' as 'system' | 'post' | 'case' | 'user',
+    type: 'informativo' as 'informativo' | 'atualizacao',
     icon: 'bell' as 'bell' | 'message' | 'file' | 'briefcase' | 'user',
     link: '',
   });
@@ -88,7 +88,7 @@ export default function Notifications() {
       setFormData({
         title: '',
         message: '',
-        type: 'system',
+        type: 'informativo',
         icon: 'bell',
         link: '',
       });
@@ -196,10 +196,8 @@ export default function Notifications() {
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="system">Sistema</SelectItem>
-                          <SelectItem value="post">Post</SelectItem>
-                          <SelectItem value="case">Case</SelectItem>
-                          <SelectItem value="user">Usuário</SelectItem>
+                          <SelectItem value="atualizacao">Atualização</SelectItem>
+                          <SelectItem value="informativo">Informativo</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
