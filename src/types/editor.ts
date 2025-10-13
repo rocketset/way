@@ -5,7 +5,7 @@
 // Para adicionar novos tipos de blocos, adicione-os aqui primeiro
 
 // Status possíveis de um post
-export type PostStatus = 'draft' | 'scheduled' | 'published' | 'archived';
+export type PostStatus = 'draft' | 'scheduled' | 'published' | 'archived' | 'rascunho' | 'em_edicao' | 'excluido';
 
 // Tipo de enquete
 export type PollType = 'single' | 'multiple';

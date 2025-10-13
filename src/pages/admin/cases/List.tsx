@@ -12,6 +12,13 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import { Plus, Pencil, Trash2, Eye } from 'lucide-react';
 import { toast } from 'sonner';
@@ -24,6 +31,7 @@ interface Case {
   categoria_id: string | null;
   imagem_url: string | null;
   publicado: boolean;
+  content_status: 'rascunho' | 'em_edicao' | 'publicado' | 'excluido';
   is_featured: boolean;
   criado_em: string;
   categories?: { nome: string };
@@ -57,6 +65,31 @@ export default function CasesList() {
       console.error('Erro:', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  // Função para alterar status
+  const handleStatusChange = async (id: string, newStatus: 'rascunho' | 'em_edicao' | 'publicado' | 'excluido') => {
+    try {
+      const { error } = await supabase
+        .from('cases')
+        .update({ content_status: newStatus })
+        .eq('id', id);
+
+      if (error) throw error;
+      
+      const statusLabels: Record<string, string> = {
+        rascunho: 'Rascunho',
+        em_edicao: 'Em Edição',
+        publicado: 'Publicado',
+        excluido: 'Excluído'
+      };
+      
+      toast.success(`Status alterado para: ${statusLabels[newStatus]}`);
+      fetchCases();
+    } catch (error: any) {
+      toast.error('Erro ao atualizar status');
+      console.error('Erro:', error);
     }
   };
 
@@ -105,6 +138,28 @@ export default function CasesList() {
     navigate('/admin/cases/new');
   };
 
+  // Função para obter estilo do badge de status
+  const getStatusBadgeClass = (status: string) => {
+    const styles: Record<string, string> = {
+      rascunho: 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-100',
+      em_edicao: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-100',
+      publicado: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100',
+      excluido: 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-100'
+    };
+    return styles[status] || styles.rascunho;
+  };
+
+  // Função para obter label do status
+  const getStatusLabel = (status: string) => {
+    const labels: Record<string, string> = {
+      rascunho: 'Rascunho',
+      em_edicao: 'Em Edição',
+      publicado: 'Publicado',
+      excluido: 'Excluído'
+    };
+    return labels[status] || 'Rascunho';
+  };
+
   if (loading) {
     return <div className="flex justify-center p-8">Carregando...</div>;
   }
@@ -151,11 +206,40 @@ export default function CasesList() {
                   <TableCell className="font-medium">{caseItem.titulo}</TableCell>
                   <TableCell>{caseItem.categories?.nome || '-'}</TableCell>
                   <TableCell>
-                    <span className={`inline-flex px-2 py-1 rounded-full text-xs ${
-                      caseItem.publicado ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
-                    }`}>
-                      {caseItem.publicado ? 'Publicado' : 'Rascunho'}
-                    </span>
+                    <Select
+                      value={caseItem.content_status || 'rascunho'}
+                      onValueChange={(value) => handleStatusChange(caseItem.id, value as 'rascunho' | 'em_edicao' | 'publicado' | 'excluido')}
+                    >
+                      <SelectTrigger className="w-[140px]">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="rascunho">
+                          <span className="flex items-center gap-2">
+                            <span className="h-2 w-2 rounded-full bg-gray-500" />
+                            Rascunho
+                          </span>
+                        </SelectItem>
+                        <SelectItem value="em_edicao">
+                          <span className="flex items-center gap-2">
+                            <span className="h-2 w-2 rounded-full bg-yellow-500" />
+                            Em Edição
+                          </span>
+                        </SelectItem>
+                        <SelectItem value="publicado">
+                          <span className="flex items-center gap-2">
+                            <span className="h-2 w-2 rounded-full bg-green-500" />
+                            Publicado
+                          </span>
+                        </SelectItem>
+                        <SelectItem value="excluido">
+                          <span className="flex items-center gap-2">
+                            <span className="h-2 w-2 rounded-full bg-red-500" />
+                            Excluído
+                          </span>
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
                   </TableCell>
                   <TableCell>
                     <Switch
