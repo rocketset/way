@@ -12,6 +12,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { Switch } from '@/components/ui/switch';
 import { Plus, Pencil, Trash2, Eye } from 'lucide-react';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
@@ -23,6 +24,7 @@ interface Case {
   categoria_id: string | null;
   imagem_url: string | null;
   publicado: boolean;
+  is_featured: boolean;
   criado_em: string;
   categories?: { nome: string };
 }
@@ -55,6 +57,27 @@ export default function CasesList() {
       console.error('Erro:', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  // Função para alternar destaque
+  const handleToggleFeatured = async (id: string, currentValue: boolean) => {
+    try {
+      const { error } = await supabase
+        .from('cases')
+        .update({ is_featured: !currentValue })
+        .eq('id', id);
+
+      if (error) throw error;
+      toast.success(
+        !currentValue 
+          ? 'Case marcado como destaque!' 
+          : 'Case removido dos destaques'
+      );
+      fetchCases();
+    } catch (error: any) {
+      toast.error('Erro ao atualizar case');
+      console.error('Erro:', error);
     }
   };
 
@@ -110,6 +133,7 @@ export default function CasesList() {
               <TableHead>Título</TableHead>
               <TableHead>Categoria</TableHead>
               <TableHead>Status</TableHead>
+              <TableHead>Destaque</TableHead>
               <TableHead>Data</TableHead>
               <TableHead className="text-right">Ações</TableHead>
             </TableRow>
@@ -117,7 +141,7 @@ export default function CasesList() {
           <TableBody>
             {cases.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={5} className="text-center text-muted-foreground">
+                <TableCell colSpan={6} className="text-center text-muted-foreground">
                   Nenhum case cadastrado
                 </TableCell>
               </TableRow>
@@ -132,6 +156,12 @@ export default function CasesList() {
                     }`}>
                       {caseItem.publicado ? 'Publicado' : 'Rascunho'}
                     </span>
+                  </TableCell>
+                  <TableCell>
+                    <Switch
+                      checked={caseItem.is_featured || false}
+                      onCheckedChange={() => handleToggleFeatured(caseItem.id, caseItem.is_featured || false)}
+                    />
                   </TableCell>
                   <TableCell>
                     {new Date(caseItem.criado_em).toLocaleDateString('pt-BR')}
