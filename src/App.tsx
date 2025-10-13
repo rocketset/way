@@ -60,6 +60,10 @@ import Curation from "./pages/admin/Curation";
 import ConductGuide from "./pages/admin/ConductGuide";
 import ConductGuideEditor from "./pages/admin/ConductGuideEditor";
 import GoogleReviewsSync from "./pages/admin/GoogleReviewsSync";
+import LandingPagesList from "./pages/admin/landing/List";
+import NewLandingPage from "./pages/admin/landing/New";
+import EditLandingPage from "./pages/admin/landing/Edit";
+import LandingPageView from "./pages/LandingPageView";
 
 // Configuração do React Query
 const queryClient = new QueryClient();
@@ -99,6 +103,9 @@ const App = () => (
           {/* Rota de visualização de conteúdo da Academy (fora do layout admin) */}
           <Route path="/academy/content/:id" element={<AcademyContent />} />
           
+          {/* Rota pública de landing pages */}
+          <Route path="/lp/:slug" element={<LandingPageView />} />
+          
           {/* Rotas administrativas protegidas */}
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<Dashboard />} />
@@ -118,6 +125,11 @@ const App = () => (
             <Route path="cases/:id/editor" element={<CaseEditor />} />
             <Route path="cases/categories" element={<CasesCategories />} />
             <Route path="cases/tags" element={<CasesTags />} />
+            
+            {/* Rotas de Landing Pages */}
+            <Route path="landing" element={<LandingPagesList />} />
+            <Route path="landing/new" element={<NewLandingPage />} />
+            <Route path="landing/:id/edit" element={<EditLandingPage />} />
             
             {/* Biblioteca de Mídia */}
             <Route path="media" element={<MediaLibrary />} />

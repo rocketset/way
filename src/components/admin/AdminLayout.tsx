@@ -118,6 +118,12 @@ const menuItems = [
       { label: 'Tags', path: '/admin/cases/tags' },
     ]
   },
+  { 
+    icon: FileText, 
+    label: 'Landing Pages', 
+    path: '/admin/landing',
+    roles: ['administrador', 'gestor_conteudo'],
+  },
   { icon: ImageIcon, label: 'Mídia', path: '/admin/media', roles: ['administrador', 'gestor_conteudo'] },
   { icon: CheckSquare, label: 'Curadoria', path: '/admin/curation', roles: ['administrador', 'gestor_conteudo'] },
   { 
