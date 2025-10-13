@@ -1,18 +1,112 @@
-// Página de notificações do painel administrativo
-// Exibe todas as atualizações e atividades recentes
-
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Bell, Check, FileText, Briefcase, User, MessageSquare } from 'lucide-react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Bell, Check, FileText, Briefcase, User, MessageSquare, Plus } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { useNotifications } from '@/hooks/useNotifications';
+import { useAuth } from '@/hooks/useAuth';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from '@/hooks/use-toast';
+import { useQueryClient } from '@tanstack/react-query';
 
 export default function Notifications() {
   const { notifications, isLoading, unreadCount, markAsRead, markAllAsRead } = useNotifications();
+  const { isAdmin, isGestorConteudo, user } = useAuth();
+  const queryClient = useQueryClient();
+  
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isSending, setIsSending] = useState(false);
+  const [formData, setFormData] = useState({
+    title: '',
+    message: '',
+    type: 'system' as 'system' | 'post' | 'case' | 'user',
+    icon: 'bell' as 'bell' | 'message' | 'file' | 'briefcase' | 'user',
+    link: '',
+  });
+
+  const handleSendNotification = async () => {
+    if (!formData.title || !formData.message) {
+      toast({
+        title: "Erro",
+        description: "Título e mensagem são obrigatórios",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsSending(true);
+    try {
+      // Busca todos os usuários com role 'cliente'
+      const { data: clientRoles, error: rolesError } = await supabase
+        .from('user_roles')
+        .select('user_id')
+        .eq('role', 'cliente');
+
+      if (rolesError) throw rolesError;
+
+      if (!clientRoles || clientRoles.length === 0) {
+        toast({
+          title: "Aviso",
+          description: "Nenhum cliente encontrado para receber notificações",
+        });
+        setIsSending(false);
+        return;
+      }
+
+      // Cria notificações para todos os clientes
+      const notifications = clientRoles.map(role => ({
+        user_id: role.user_id,
+        type: formData.type,
+        title: formData.title,
+        message: formData.message,
+        icon: formData.icon,
+        link: formData.link || null,
+        read: false,
+      }));
+
+      const { error: insertError } = await supabase
+        .from('notifications')
+        .insert(notifications);
+
+      if (insertError) throw insertError;
+
+      toast({
+        title: "Sucesso",
+        description: `Notificação enviada para ${clientRoles.length} cliente(s)`,
+      });
+
+      // Reseta o formulário e fecha o dialog
+      setFormData({
+        title: '',
+        message: '',
+        type: 'system',
+        icon: 'bell',
+        link: '',
+      });
+      setIsDialogOpen(false);
+      
+      // Atualiza a lista de notificações
+      queryClient.invalidateQueries({ queryKey: ['notifications', user?.id] });
+    } catch (error) {
+      console.error('Erro ao enviar notificação:', error);
+      toast({
+        title: "Erro",
+        description: "Não foi possível enviar a notificação",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSending(false);
+    }
+  };
 
   // Ícone baseado no tipo
   const getIcon = (iconType?: string) => {
@@ -38,6 +132,8 @@ export default function Notifications() {
     });
   };
 
+  const canSendNotifications = isAdmin || isGestorConteudo;
+
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -52,12 +148,111 @@ export default function Notifications() {
           )}
         </div>
 
-        {unreadCount > 0 && (
-          <Button onClick={() => markAllAsRead()} variant="destructive">
-            <Check className="mr-2 h-4 w-4" />
-            Marcar todos como lidos
-          </Button>
-        )}
+        <div className="flex gap-2">
+          {canSendNotifications && (
+            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+              <DialogTrigger asChild>
+                <Button variant="outline">
+                  <Plus className="mr-2 h-4 w-4" />
+                  Nova Notificação
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[500px]">
+                <DialogHeader>
+                  <DialogTitle>Enviar Notificação Manual</DialogTitle>
+                </DialogHeader>
+                <div className="space-y-4 py-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="title">Título</Label>
+                    <Input
+                      id="title"
+                      placeholder="Ex: Nova atualização disponível"
+                      value={formData.title}
+                      onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                      maxLength={100}
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="message">Mensagem</Label>
+                    <Textarea
+                      id="message"
+                      placeholder="Digite a mensagem da notificação..."
+                      value={formData.message}
+                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                      rows={4}
+                      maxLength={500}
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="type">Tipo</Label>
+                      <Select
+                        value={formData.type}
+                        onValueChange={(value: typeof formData.type) => setFormData({ ...formData, type: value })}
+                      >
+                        <SelectTrigger id="type">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="system">Sistema</SelectItem>
+                          <SelectItem value="post">Post</SelectItem>
+                          <SelectItem value="case">Case</SelectItem>
+                          <SelectItem value="user">Usuário</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="icon">Ícone</Label>
+                      <Select
+                        value={formData.icon}
+                        onValueChange={(value: typeof formData.icon) => setFormData({ ...formData, icon: value })}
+                      >
+                        <SelectTrigger id="icon">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="bell">Sino</SelectItem>
+                          <SelectItem value="message">Mensagem</SelectItem>
+                          <SelectItem value="file">Arquivo</SelectItem>
+                          <SelectItem value="briefcase">Pasta</SelectItem>
+                          <SelectItem value="user">Usuário</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="link">Link (opcional)</Label>
+                    <Input
+                      id="link"
+                      placeholder="/admin/academy"
+                      value={formData.link}
+                      onChange={(e) => setFormData({ ...formData, link: e.target.value })}
+                    />
+                  </div>
+
+                  <Button
+                    onClick={handleSendNotification}
+                    disabled={isSending}
+                    className="w-full"
+                  >
+                    {isSending ? 'Enviando...' : 'Enviar para Todos os Clientes'}
+                  </Button>
+                </div>
+              </DialogContent>
+            </Dialog>
+          )}
+
+          {unreadCount > 0 && (
+            <Button onClick={() => markAllAsRead()} variant="destructive">
+              <Check className="mr-2 h-4 w-4" />
+              Marcar todos como lidos
+            </Button>
+          )}
+        </div>
       </div>
 
       {/* Lista de Notificações */}
