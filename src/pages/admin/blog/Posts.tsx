@@ -43,6 +43,7 @@ interface Post {
   categoria_id: string | null;
   publicado: boolean;
   status: string;
+  is_featured: boolean;
   criado_em: string;
   categories?: { nome: string };
 }
@@ -148,6 +149,27 @@ export default function BlogPosts() {
     }
   };
 
+  // Função para alternar destaque
+  const handleToggleFeatured = async (id: string, currentValue: boolean) => {
+    try {
+      const { error } = await supabase
+        .from('posts')
+        .update({ is_featured: !currentValue })
+        .eq('id', id);
+
+      if (error) throw error;
+      toast.success(
+        !currentValue 
+          ? 'Post marcado como destaque!' 
+          : 'Post removido dos destaques'
+      );
+      fetchPosts();
+    } catch (error: any) {
+      toast.error('Erro ao atualizar post');
+      console.error('Erro:', error);
+    }
+  };
+
   // Função para salvar (criar ou atualizar) post
   const handleSave = async () => {
     if (!formData.titulo.trim() || !formData.conteudo.trim()) {
@@ -237,6 +259,7 @@ export default function BlogPosts() {
             <TableRow>
               <TableHead>Título</TableHead>
               <TableHead>Status</TableHead>
+              <TableHead>Destaque</TableHead>
               <TableHead>Data</TableHead>
               <TableHead className="text-right">Ações</TableHead>
             </TableRow>
@@ -244,7 +267,7 @@ export default function BlogPosts() {
           <TableBody>
             {posts.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={4} className="text-center text-muted-foreground">
+                <TableCell colSpan={5} className="text-center text-muted-foreground">
                   Nenhum post cadastrado
                 </TableCell>
               </TableRow>
@@ -287,6 +310,12 @@ export default function BlogPosts() {
                         </SelectItem>
                       </SelectContent>
                     </Select>
+                  </TableCell>
+                  <TableCell>
+                    <Switch
+                      checked={post.is_featured || false}
+                      onCheckedChange={() => handleToggleFeatured(post.id, post.is_featured || false)}
+                    />
                   </TableCell>
                   <TableCell>
                     {new Date(post.criado_em).toLocaleDateString('pt-BR')}
