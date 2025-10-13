@@ -57,6 +57,7 @@ import { ThemeSelector } from './ThemeSelector';
 
 // Definição dos itens do menu lateral com permissões
 const menuItems = [
+  // Menu Principal
   { 
     icon: LayoutDashboard, 
     label: 'Dashboard', 
@@ -70,20 +71,6 @@ const menuItems = [
     roles: ['administrador', 'gestor_conteudo', 'colunista']
   },
   { 
-    icon: GraduationCap, 
-    label: 'Way Academy', 
-    path: '/admin/academy',
-    roles: ['administrador', 'gestor_conteudo', 'membro', 'cliente'],
-    hasCategories: true, // Flag para indicar que este item tem categorias dinâmicas
-    subItems: [
-      { label: 'Conteúdos', path: '/admin/academy' },
-      { label: 'Lista de Fornecedores', path: '/admin/academy/suppliers' },
-      { label: 'Gerenciar Conteúdos', path: '/admin/academy/manage', roles: ['administrador', 'gestor_conteudo'] },
-      { label: 'Gerenciar Categorias', path: '/admin/academy/categories', roles: ['administrador'] },
-      { label: 'Configurações', path: '/admin/academy/settings', roles: ['administrador'] },
-    ]
-  },
-  { 
     icon: FileText, 
     label: 'Blog Way', 
     path: '/admin/blog-way',
@@ -94,6 +81,24 @@ const menuItems = [
     label: 'Guia de Boas Práticas', 
     path: '/admin/conduct-guide',
     roles: ['administrador', 'gestor_conteudo', 'colunista', 'membro', 'cliente'],
+  },
+  
+  // Separador 1 — Site Way
+  { 
+    separator: true,
+    label: 'Site Way',
+    roles: ['administrador', 'gestor_conteudo', 'colunista']
+  },
+  { 
+    icon: Briefcase, 
+    label: 'Cases', 
+    path: '/admin/cases/list',
+    roles: ['administrador', 'gestor_conteudo'],
+    subItems: [
+      { label: 'Lista', path: '/admin/cases/list' },
+      { label: 'Categorias', path: '/admin/cases/categories' },
+      { label: 'Tags', path: '/admin/cases/tags' },
+    ]
   },
   { 
     icon: FileText, 
@@ -107,25 +112,13 @@ const menuItems = [
       { label: 'Colunistas', path: '/admin/blog/columnists', roles: ['administrador', 'gestor_conteudo'] },
     ]
   },
+
+  // Separador 2 — Plataforma
   { 
-    icon: Briefcase, 
-    label: 'Gerenciar Cases', 
-    path: '/admin/cases/list',
-    roles: ['administrador', 'gestor_conteudo'],
-    subItems: [
-      { label: 'Lista', path: '/admin/cases/list' },
-      { label: 'Categorias', path: '/admin/cases/categories' },
-      { label: 'Tags', path: '/admin/cases/tags' },
-    ]
+    separator: true,
+    label: 'Plataforma',
+    roles: ['administrador', 'gestor_conteudo', 'membro', 'cliente']
   },
-  { 
-    icon: FileText, 
-    label: 'Landing Pages', 
-    path: '/admin/landing',
-    roles: ['administrador', 'gestor_conteudo'],
-  },
-  { icon: ImageIcon, label: 'Mídia', path: '/admin/media', roles: ['administrador', 'gestor_conteudo'] },
-  { icon: CheckSquare, label: 'Curadoria', path: '/admin/curation', roles: ['administrador', 'gestor_conteudo'] },
   { 
     icon: (props: any) => (
       <svg {...props} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -134,12 +127,36 @@ const menuItems = [
         <path d="M18 12a2 2 0 0 0 0 4h4v-4Z" />
       </svg>
     ), 
-    label: 'Avaliações Google', 
+    label: 'Avaliação do Google', 
     path: '/admin/google-reviews', 
     roles: ['administrador'] 
   },
+  { icon: CheckSquare, label: 'Curadoria', path: '/admin/curation', roles: ['administrador', 'gestor_conteudo'] },
+  { 
+    icon: FileText, 
+    label: 'Landing Pages', 
+    path: '/admin/landing',
+    roles: ['administrador', 'gestor_conteudo'],
+  },
+  { icon: ImageIcon, label: 'Mídia', path: '/admin/media', roles: ['administrador', 'gestor_conteudo'] },
   { icon: Mail, label: 'Solicitações', path: '/admin/contacts', roles: ['administrador'] },
   { icon: Users, label: 'Usuários', path: '/admin/users', roles: ['administrador'] },
+  { 
+    icon: GraduationCap, 
+    label: 'Way Academy', 
+    path: '/admin/academy',
+    roles: ['administrador', 'gestor_conteudo', 'membro', 'cliente'],
+    hasCategories: true,
+    subItems: [
+      { label: 'Conteúdos', path: '/admin/academy' },
+      { label: 'Lista de Fornecedores', path: '/admin/academy/suppliers' },
+      { label: 'Gerenciar Conteúdos', path: '/admin/academy/manage', roles: ['administrador', 'gestor_conteudo'] },
+      { label: 'Gerenciar Categorias', path: '/admin/academy/categories', roles: ['administrador'] },
+      { label: 'Configurações', path: '/admin/academy/settings', roles: ['administrador'] },
+    ]
+  },
+
+  // Item final sem separador
   { icon: HeadphonesIcon, label: 'Atendimento', path: '/admin/support', roles: ['administrador', 'gestor_conteudo', 'colunista', 'membro', 'cliente'] },
 ];
 
@@ -254,6 +271,7 @@ function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
 
   // Verifica se item está ativo
   const isItemActive = (item: typeof menuItems[0]) => {
+    if (item.separator) return false;
     if (item.subItems) {
       return item.subItems.some(sub => location.pathname === sub.path);
     }
@@ -361,7 +379,25 @@ function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
       {/* Menu de Navegação */}
       <ScrollArea className="flex-1 px-3 py-4">
         <nav className="space-y-2">
-          {menuItems.filter(item => item.roles.includes(effectiveRole || 'membro')).map((item) => {
+          {menuItems.filter(item => item.roles.includes(effectiveRole || 'membro')).map((item, index) => {
+            // Renderiza separadores
+            if (item.separator) {
+              return (
+                <div key={`separator-${index}`} className="pt-4 pb-2">
+                  {isExpanded ? (
+                    <div className="px-3">
+                      <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
+                        {item.label}
+                      </div>
+                      <div className="h-px bg-border" />
+                    </div>
+                  ) : (
+                    <div className="h-px bg-border mx-3" />
+                  )}
+                </div>
+              );
+            }
+
             const Icon = item.icon;
             const isActive = isItemActive(item);
             const hasSubmenu = !!item.subItems;
