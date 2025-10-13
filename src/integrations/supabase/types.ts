@@ -1119,6 +1119,9 @@ export type Database = {
       }
       profiles: {
         Row: {
+          account_status: string | null
+          approved_at: string | null
+          approved_by: string | null
           atualizado_em: string
           avatar_url: string | null
           bio: string | null
@@ -1130,10 +1133,14 @@ export type Database = {
           is_colunista: boolean | null
           linkedin: string | null
           nome: string
+          rejection_reason: string | null
           site_pessoal: string | null
           twitter: string | null
         }
         Insert: {
+          account_status?: string | null
+          approved_at?: string | null
+          approved_by?: string | null
           atualizado_em?: string
           avatar_url?: string | null
           bio?: string | null
@@ -1145,10 +1152,14 @@ export type Database = {
           is_colunista?: boolean | null
           linkedin?: string | null
           nome: string
+          rejection_reason?: string | null
           site_pessoal?: string | null
           twitter?: string | null
         }
         Update: {
+          account_status?: string | null
+          approved_at?: string | null
+          approved_by?: string | null
           atualizado_em?: string
           avatar_url?: string | null
           bio?: string | null
@@ -1160,6 +1171,7 @@ export type Database = {
           is_colunista?: boolean | null
           linkedin?: string | null
           nome?: string
+          rejection_reason?: string | null
           site_pessoal?: string | null
           twitter?: string | null
         }

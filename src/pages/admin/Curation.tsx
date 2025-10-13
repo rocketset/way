@@ -18,7 +18,9 @@ import {
   Loader2,
   Calendar,
   User,
-  AlertCircle
+  AlertCircle,
+  UserCheck,
+  Mail
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { formatDistanceToNow } from 'date-fns';
@@ -65,6 +67,15 @@ interface PendingNotification {
   user_id: string;
 }
 
+interface PendingUser {
+  id: string;
+  nome: string;
+  email: string;
+  criado_em: string;
+  account_status: string;
+  avatar_url?: string;
+}
+
 export default function Curation() {
   const { user, isAdmin, isGestorConteudo } = useAuth();
   const [loading, setLoading] = useState(true);
@@ -73,8 +84,10 @@ export default function Curation() {
   const [pendingPosts, setPendingPosts] = useState<PendingPost[]>([]);
   const [pendingCases, setPendingCases] = useState<PendingCase[]>([]);
   const [pendingNotifications, setPendingNotifications] = useState<PendingNotification[]>([]);
+  const [pendingUsers, setPendingUsers] = useState<PendingUser[]>([]);
   
   const [deleteTarget, setDeleteTarget] = useState<{ type: string; id: string; title: string } | null>(null);
+  const [rejectReason, setRejectReason] = useState('');
 
   // Verifica permissões
   useEffect(() => {
@@ -133,6 +146,16 @@ export default function Curation() {
 
       if (notificationsError) throw notificationsError;
       setPendingNotifications(notifications || []);
+
+      // Busca usuários pendentes de aprovação
+      const { data: users, error: usersError } = await supabase
+        .from('profiles')
+        .select('id, nome, email, criado_em, account_status, avatar_url')
+        .eq('account_status', 'pending')
+        .order('criado_em', { ascending: false });
+
+      if (usersError) throw usersError;
+      setPendingUsers(users || []);
 
     } catch (error: any) {
       toast.error('Erro ao carregar itens pendentes: ' + error.message);
@@ -263,6 +286,61 @@ export default function Curation() {
     }
   };
 
+  // Aprovar cadastro de usuário
+  const approveUser = async (userId: string) => {
+    setActionLoading(userId);
+    try {
+      const { error } = await supabase
+        .from('profiles')
+        .update({
+          account_status: 'approved',
+          approved_by: user?.id,
+          approved_at: new Date().toISOString()
+        })
+        .eq('id', userId);
+
+      if (error) throw error;
+
+      toast.success('Cadastro aprovado com sucesso!');
+      await fetchPendingItems();
+    } catch (error: any) {
+      toast.error('Erro ao aprovar cadastro: ' + error.message);
+    } finally {
+      setActionLoading(null);
+    }
+  };
+
+  // Rejeitar cadastro de usuário
+  const rejectUser = async (userId: string) => {
+    if (!rejectReason.trim()) {
+      toast.error('Por favor, informe o motivo da rejeição');
+      return;
+    }
+
+    setActionLoading(userId);
+    try {
+      const { error } = await supabase
+        .from('profiles')
+        .update({
+          account_status: 'rejected',
+          approved_by: user?.id,
+          approved_at: new Date().toISOString(),
+          rejection_reason: rejectReason
+        })
+        .eq('id', userId);
+
+      if (error) throw error;
+
+      toast.success('Cadastro rejeitado');
+      setRejectReason('');
+      await fetchPendingItems();
+    } catch (error: any) {
+      toast.error('Erro ao rejeitar cadastro: ' + error.message);
+    } finally {
+      setActionLoading(null);
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-96">
@@ -271,7 +349,7 @@ export default function Curation() {
     );
   }
 
-  const totalPending = pendingPosts.length + pendingCases.length;
+  const totalPending = pendingPosts.length + pendingCases.length + pendingUsers.length;
 
   return (
     <div className="space-y-6">
@@ -285,7 +363,17 @@ export default function Curation() {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid gap-4 md:grid-cols-3">
+      <div className="grid gap-4 md:grid-cols-4">
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Cadastros Pendentes</CardTitle>
+            <UserCheck className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{pendingUsers.length}</div>
+          </CardContent>
+        </Card>
+
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Posts Pendentes</CardTitle>
@@ -318,8 +406,12 @@ export default function Curation() {
       </div>
 
       {/* Tabs de Conteúdo */}
-      <Tabs defaultValue="posts" className="space-y-4">
+      <Tabs defaultValue="users" className="space-y-4">
         <TabsList>
+          <TabsTrigger value="users" className="gap-2">
+            <UserCheck className="h-4 w-4" />
+            Cadastros ({pendingUsers.length})
+          </TabsTrigger>
           <TabsTrigger value="posts" className="gap-2">
             <FileText className="h-4 w-4" />
             Posts ({pendingPosts.length})
@@ -333,6 +425,74 @@ export default function Curation() {
             Notificações ({pendingNotifications.length})
           </TabsTrigger>
         </TabsList>
+
+        {/* Cadastros Pendentes */}
+        <TabsContent value="users" className="space-y-4">
+          {pendingUsers.length === 0 ? (
+            <Card>
+              <CardContent className="flex flex-col items-center justify-center py-12">
+                <UserCheck className="h-12 w-12 text-muted-foreground opacity-50 mb-4" />
+                <p className="text-muted-foreground">Nenhum cadastro pendente de aprovação</p>
+              </CardContent>
+            </Card>
+          ) : (
+            pendingUsers.map((userItem) => (
+              <Card key={userItem.id}>
+                <CardHeader>
+                  <div className="flex items-start justify-between">
+                    <div className="space-y-1 flex-1">
+                      <CardTitle className="text-lg">{userItem.nome}</CardTitle>
+                      <CardDescription className="flex items-center gap-4 pt-2">
+                        <div className="flex items-center gap-1">
+                          <Mail className="h-4 w-4" />
+                          {userItem.email}
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <Calendar className="h-4 w-4" />
+                          {formatDistanceToNow(new Date(userItem.criado_em), { 
+                            addSuffix: true, 
+                            locale: ptBR 
+                          })}
+                        </div>
+                      </CardDescription>
+                    </div>
+                    <Badge variant="outline" className="ml-4">
+                      Aguardando Aprovação
+                    </Badge>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex gap-2">
+                    <Button
+                      onClick={() => approveUser(userItem.id)}
+                      disabled={actionLoading === userItem.id}
+                      variant="default"
+                      size="sm"
+                      className="gap-2"
+                    >
+                      {actionLoading === userItem.id ? (
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                      ) : (
+                        <Check className="h-4 w-4" />
+                      )}
+                      Aprovar Cadastro
+                    </Button>
+                    <Button
+                      onClick={() => rejectUser(userItem.id)}
+                      disabled={actionLoading === userItem.id}
+                      variant="destructive"
+                      size="sm"
+                      className="gap-2"
+                    >
+                      <X className="h-4 w-4" />
+                      Rejeitar
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))
+          )}
+        </TabsContent>
 
         {/* Posts Pendentes */}
         <TabsContent value="posts" className="space-y-4">
