@@ -565,6 +565,127 @@ export type Database = {
         }
         Relationships: []
       }
+      landing_page_blocks: {
+        Row: {
+          atualizado_em: string
+          block_type: string
+          content: Json
+          criado_em: string
+          id: string
+          landing_page_id: string
+          position: number
+        }
+        Insert: {
+          atualizado_em?: string
+          block_type: string
+          content?: Json
+          criado_em?: string
+          id?: string
+          landing_page_id: string
+          position?: number
+        }
+        Update: {
+          atualizado_em?: string
+          block_type?: string
+          content?: Json
+          criado_em?: string
+          id?: string
+          landing_page_id?: string
+          position?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "landing_page_blocks_landing_page_id_fkey"
+            columns: ["landing_page_id"]
+            isOneToOne: false
+            referencedRelation: "landing_pages"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      landing_page_leads: {
+        Row: {
+          criado_em: string
+          email: string
+          id: string
+          landing_page_id: string
+          mensagem: string | null
+          metadata: Json | null
+          nome: string
+          telefone: string | null
+        }
+        Insert: {
+          criado_em?: string
+          email: string
+          id?: string
+          landing_page_id: string
+          mensagem?: string | null
+          metadata?: Json | null
+          nome: string
+          telefone?: string | null
+        }
+        Update: {
+          criado_em?: string
+          email?: string
+          id?: string
+          landing_page_id?: string
+          mensagem?: string | null
+          metadata?: Json | null
+          nome?: string
+          telefone?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "landing_page_leads_landing_page_id_fkey"
+            columns: ["landing_page_id"]
+            isOneToOne: false
+            referencedRelation: "landing_pages"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      landing_pages: {
+        Row: {
+          atualizado_em: string
+          autor_id: string | null
+          criado_em: string
+          descricao: string | null
+          id: string
+          meta_description: string | null
+          meta_title: string | null
+          og_image: string | null
+          publicado: boolean | null
+          slug: string
+          titulo: string
+        }
+        Insert: {
+          atualizado_em?: string
+          autor_id?: string | null
+          criado_em?: string
+          descricao?: string | null
+          id?: string
+          meta_description?: string | null
+          meta_title?: string | null
+          og_image?: string | null
+          publicado?: boolean | null
+          slug: string
+          titulo: string
+        }
+        Update: {
+          atualizado_em?: string
+          autor_id?: string | null
+          criado_em?: string
+          descricao?: string | null
+          id?: string
+          meta_description?: string | null
+          meta_title?: string | null
+          og_image?: string | null
+          publicado?: boolean | null
+          slug?: string
+          titulo?: string
+        }
+        Relationships: []
+      }
       media_library: {
         Row: {
           alt_text: string | null
