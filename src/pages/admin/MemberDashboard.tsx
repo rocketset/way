@@ -33,38 +33,58 @@ export default function MemberDashboard() {
   const fetchStats = async () => {
     try {
       // Busca total de conteúdos publicados
-      const { count: contentsCount } = await supabase
+      const { count: contentsCount, error: contentsError } = await supabase
         .from('academy_content')
         .select('*', { count: 'exact', head: true })
         .eq('publicado', true);
 
+      if (contentsError) {
+        console.error('Erro ao buscar conteúdos:', contentsError);
+      }
+
       // Busca conteúdos de vídeo
-      const { count: videosCount } = await supabase
+      const { count: videosCount, error: videosError } = await supabase
         .from('academy_content')
         .select('*', { count: 'exact', head: true })
         .eq('publicado', true)
         .eq('formato', 'video');
 
+      if (videosError) {
+        console.error('Erro ao buscar vídeos:', videosError);
+      }
+
       // Busca total de materiais
-      const { count: materialsCount } = await supabase
+      const { count: materialsCount, error: materialsError } = await supabase
         .from('academy_materials')
         .select('*', { count: 'exact', head: true });
 
+      if (materialsError) {
+        console.error('Erro ao buscar materiais:', materialsError);
+      }
+
       // Busca progresso do usuário
-      const { count: completedCount } = await supabase
+      const { count: completedCount, error: progressError } = await supabase
         .from('academy_progress')
         .select('*', { count: 'exact', head: true })
         .eq('user_id', user?.id)
         .eq('concluido', true);
 
+      if (progressError) {
+        console.error('Erro ao buscar progresso:', progressError);
+      }
+
       // Busca última atualização de conteúdo
-      const { data: lastContent } = await supabase
+      const { data: lastContent, error: lastContentError } = await supabase
         .from('academy_content')
         .select('atualizado_em')
         .eq('publicado', true)
         .order('atualizado_em', { ascending: false })
         .limit(1)
         .single();
+
+      if (lastContentError && lastContentError.code !== 'PGRST116') {
+        console.error('Erro ao buscar última atualização:', lastContentError);
+      }
 
       setStats({
         totalContents: contentsCount || 0,
