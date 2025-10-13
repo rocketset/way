@@ -1,147 +1,18 @@
 // Página de notificações do painel administrativo
 // Exibe todas as atualizações e atividades recentes
 
-import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { Skeleton } from '@/components/ui/skeleton';
 import { Bell, Check, FileText, Briefcase, User, MessageSquare } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
-import { supabase } from '@/integrations/supabase/client';
-import { useAuth } from '@/hooks/useAuth';
-import { toast } from '@/hooks/use-toast';
-
-// Tipo de notificação
-interface Notification {
-  id: string;
-  type: 'comment' | 'post' | 'case' | 'user' | 'system';
-  title: string;
-  message: string;
-  link?: string;
-  read: boolean;
-  createdAt: Date;
-  avatar?: string;
-  icon?: 'bell' | 'message' | 'file' | 'briefcase' | 'user';
-}
+import { useNotifications } from '@/hooks/useNotifications';
 
 export default function Notifications() {
-  const { user } = useAuth();
-  const [notifications, setNotifications] = useState<Notification[]>([]);
-  const [loading, setLoading] = useState(true);
-  const unreadCount = notifications.filter(n => !n.read).length;
-
-  // Busca notificações do banco de dados
-  useEffect(() => {
-    if (!user) return;
-
-    const fetchNotifications = async () => {
-      try {
-        const { data, error } = await supabase
-          .from('notifications')
-          .select('*')
-          .eq('user_id', user.id)
-          .order('created_at', { ascending: false })
-          .limit(50);
-
-        if (error) throw error;
-
-        const formattedNotifications: Notification[] = (data || []).map(n => ({
-          id: n.id,
-          type: n.type as any,
-          title: n.title,
-          message: n.message,
-          link: n.link || undefined,
-          read: n.read,
-          createdAt: new Date(n.created_at!),
-          avatar: n.avatar_url || undefined,
-          icon: n.icon as any || 'bell',
-        }));
-
-        setNotifications(formattedNotifications);
-      } catch (error) {
-        console.error('Erro ao buscar notificações:', error);
-        toast({
-          title: 'Erro ao carregar notificações',
-          description: 'Não foi possível carregar suas notificações.',
-          variant: 'destructive',
-        });
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchNotifications();
-
-    // Inscreve-se para atualizações em tempo real
-    const channel = supabase
-      .channel('notifications-changes')
-      .on(
-        'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'notifications',
-          filter: `user_id=eq.${user.id}`,
-        },
-        (payload) => {
-          console.log('Notificação atualizada:', payload);
-          fetchNotifications();
-        }
-      )
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, [user]);
-
-  // Marca todas como lidas
-  const markAllAsRead = async () => {
-    if (!user) return;
-
-    try {
-      const { error } = await supabase
-        .from('notifications')
-        .update({ read: true })
-        .eq('user_id', user.id)
-        .eq('read', false);
-
-      if (error) throw error;
-
-      setNotifications(notifications.map(n => ({ ...n, read: true })));
-      toast({
-        title: 'Notificações marcadas como lidas',
-        description: 'Todas as notificações foram marcadas como lidas.',
-      });
-    } catch (error) {
-      console.error('Erro ao marcar notificações:', error);
-      toast({
-        title: 'Erro ao atualizar notificações',
-        description: 'Não foi possível marcar as notificações como lidas.',
-        variant: 'destructive',
-      });
-    }
-  };
-
-  // Marca uma como lida
-  const markAsRead = async (id: string) => {
-    try {
-      const { error } = await supabase
-        .from('notifications')
-        .update({ read: true })
-        .eq('id', id);
-
-      if (error) throw error;
-
-      setNotifications(notifications.map(n => 
-        n.id === id ? { ...n, read: true } : n
-      ));
-    } catch (error) {
-      console.error('Erro ao marcar notificação:', error);
-    }
-  };
+  const { notifications, isLoading, unreadCount, markAsRead, markAllAsRead } = useNotifications();
 
   // Ícone baseado no tipo
   const getIcon = (iconType?: string) => {
@@ -182,7 +53,7 @@ export default function Notifications() {
         </div>
 
         {unreadCount > 0 && (
-          <Button onClick={markAllAsRead} variant="destructive">
+          <Button onClick={() => markAllAsRead()} variant="destructive">
             <Check className="mr-2 h-4 w-4" />
             Marcar todos como lidos
           </Button>
@@ -193,10 +64,17 @@ export default function Notifications() {
       <Card>
         <ScrollArea className="h-[calc(100vh-280px)]">
           <div className="divide-y">
-            {loading ? (
-              <div className="p-12 text-center">
-                <Bell className="h-12 w-12 mx-auto text-muted-foreground opacity-50 mb-4 animate-pulse" />
-                <p className="text-muted-foreground">Carregando notificações...</p>
+            {isLoading ? (
+              <div className="p-4 space-y-4">
+                {[1, 2, 3, 4, 5].map((i) => (
+                  <div key={i} className="flex items-start gap-4">
+                    <Skeleton className="h-10 w-10 rounded-full" />
+                    <div className="flex-1 space-y-2">
+                      <Skeleton className="h-4 w-3/4" />
+                      <Skeleton className="h-3 w-1/2" />
+                    </div>
+                  </div>
+                ))}
               </div>
             ) : notifications.length === 0 ? (
               <div className="p-12 text-center">
@@ -216,9 +94,9 @@ export default function Notifications() {
                   >
                     {/* Avatar/Ícone */}
                     <div className="flex-shrink-0">
-                      {notification.avatar ? (
+                      {notification.avatar_url ? (
                         <Avatar>
-                          <AvatarImage src={notification.avatar} />
+                          <AvatarImage src={notification.avatar_url} />
                           <AvatarFallback>
                             <IconComponent className="h-5 w-5" />
                           </AvatarFallback>
@@ -252,7 +130,7 @@ export default function Notifications() {
                     {/* Tempo e Status */}
                     <div className="flex-shrink-0 flex items-center gap-2">
                       <span className="text-xs text-muted-foreground whitespace-nowrap">
-                        {getRelativeTime(notification.createdAt)}
+                        {getRelativeTime(notification.created_at)}
                       </span>
                       {!notification.read && (
                         <button
@@ -269,22 +147,6 @@ export default function Notifications() {
           </div>
         </ScrollArea>
       </Card>
-
-      {/* Paginação (para implementação futura) */}
-      <div className="flex justify-center gap-2">
-        <Button variant="outline" size="sm" disabled>
-          &lt;
-        </Button>
-        <Button variant="default" size="sm">
-          1
-        </Button>
-        <Button variant="outline" size="sm">
-          2
-        </Button>
-        <Button variant="outline" size="sm">
-          &gt;
-        </Button>
-      </div>
     </div>
   );
 }
