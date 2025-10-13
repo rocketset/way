@@ -91,7 +91,7 @@ const menuItems = [
   },
   { 
     icon: Briefcase, 
-    label: 'Cases', 
+    label: 'Gerenciar Cases', 
     path: '/admin/cases/list',
     roles: ['administrador', 'gestor_conteudo'],
     subItems: [
