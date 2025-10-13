@@ -42,6 +42,7 @@ interface Post {
   conteudo: string;
   categoria_id: string | null;
   publicado: boolean;
+  status: string;
   criado_em: string;
   categories?: { nome: string };
 }
@@ -116,6 +117,35 @@ export default function BlogPosts() {
   // Redireciona para a página de edição de post
   const handleEdit = (post: Post) => {
     navigate(`/admin/blog/posts/edit/${post.id}`);
+  };
+
+  // Função para alterar status
+  const handleStatusChange = async (id: string, newStatus: string) => {
+    try {
+      const { error } = await supabase
+        .from('posts')
+        .update({ status: newStatus as any })
+        .eq('id', id);
+
+      if (error) throw error;
+      
+      const statusLabels: Record<string, string> = {
+        rascunho: 'Rascunho',
+        em_edicao: 'Em Edição',
+        publicado: 'Publicado',
+        published: 'Publicado',
+        excluido: 'Excluído',
+        draft: 'Rascunho',
+        scheduled: 'Agendado',
+        archived: 'Arquivado'
+      };
+      
+      toast.success(`Status alterado para: ${statusLabels[newStatus] || newStatus}`);
+      fetchPosts();
+    } catch (error: any) {
+      toast.error('Erro ao atualizar status');
+      console.error('Erro:', error);
+    }
   };
 
   // Função para salvar (criar ou atualizar) post
@@ -223,11 +253,40 @@ export default function BlogPosts() {
                 <TableRow key={post.id}>
                   <TableCell className="font-medium">{post.titulo}</TableCell>
                   <TableCell>
-                    <span className={`inline-flex px-2 py-1 rounded-full text-xs ${
-                      post.publicado ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
-                    }`}>
-                      {post.publicado ? 'Publicado' : 'Rascunho'}
-                    </span>
+                    <Select
+                      value={post.status || 'rascunho'}
+                      onValueChange={(value) => handleStatusChange(post.id, value)}
+                    >
+                      <SelectTrigger className="w-[140px]">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="rascunho">
+                          <span className="flex items-center gap-2">
+                            <span className="h-2 w-2 rounded-full bg-gray-500" />
+                            Rascunho
+                          </span>
+                        </SelectItem>
+                        <SelectItem value="em_edicao">
+                          <span className="flex items-center gap-2">
+                            <span className="h-2 w-2 rounded-full bg-yellow-500" />
+                            Em Edição
+                          </span>
+                        </SelectItem>
+                        <SelectItem value="publicado">
+                          <span className="flex items-center gap-2">
+                            <span className="h-2 w-2 rounded-full bg-green-500" />
+                            Publicado
+                          </span>
+                        </SelectItem>
+                        <SelectItem value="excluido">
+                          <span className="flex items-center gap-2">
+                            <span className="h-2 w-2 rounded-full bg-red-500" />
+                            Excluído
+                          </span>
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
                   </TableCell>
                   <TableCell>
                     {new Date(post.criado_em).toLocaleDateString('pt-BR')}
