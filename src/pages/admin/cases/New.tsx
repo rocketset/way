@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "@/hooks/use-toast";
 import { ArrowLeft, Save, Upload, X } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
@@ -197,334 +198,348 @@ export default function NewCase() {
         </Button>
         <div>
           <h1 className="text-3xl font-bold">Criar Novo Case</h1>
-          <p className="text-muted-foreground">Preencha o título (obrigatório) e outras informações que desejar. Você pode salvar como rascunho e completar depois.</p>
+          <p className="text-muted-foreground">Preencha as informações em cada aba. O título é obrigatório.</p>
         </div>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
-        {/* Basic Info */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Informações Básicas</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div>
-              <Label>Título *</Label>
-              <Input
-                value={basicInfo.titulo}
-                onChange={(e) => setBasicInfo({ ...basicInfo, titulo: e.target.value })}
-                placeholder="Digite o título do case"
-                required
-              />
-            </div>
+        <Tabs defaultValue="basic" className="w-full">
+          <TabsList className="grid w-full grid-cols-4">
+            <TabsTrigger value="basic">Informações Básicas</TabsTrigger>
+            <TabsTrigger value="hero">Hero Section</TabsTrigger>
+            <TabsTrigger value="text">Colunas de Texto</TabsTrigger>
+            <TabsTrigger value="benefits">Benefícios</TabsTrigger>
+          </TabsList>
 
-            <div>
-              <Label>Categoria</Label>
-              <select
-                className="w-full p-2 border rounded-md bg-background text-foreground"
-                value={basicInfo.categoria_id}
-                onChange={(e) => setBasicInfo({ ...basicInfo, categoria_id: e.target.value })}
-              >
-                <option value="">Selecione uma categoria</option>
-                {categories?.map((cat) => (
-                  <option key={cat.id} value={cat.id}>
-                    {cat.nome}
-                  </option>
-                ))}
-              </select>
-            </div>
+          {/* Basic Info Tab */}
+          <TabsContent value="basic">
+            <Card>
+              <CardHeader>
+                <CardTitle>Informações Básicas</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div>
+                  <Label>Título *</Label>
+                  <Input
+                    value={basicInfo.titulo}
+                    onChange={(e) => setBasicInfo({ ...basicInfo, titulo: e.target.value })}
+                    placeholder="Digite o título do case"
+                    required
+                  />
+                </div>
 
-            <div>
-              <Label>Imagem de Capa</Label>
-              <p className="text-xs text-muted-foreground mb-2">Tamanho recomendado: 800x600px</p>
-              <div className="space-y-2">
-                {basicInfo.imagem_url && (
-                  <div className="relative inline-block">
-                    <img 
-                      src={basicInfo.imagem_url} 
-                      alt="Capa" 
-                      className="h-32 w-auto object-contain border rounded"
-                    />
+                <div>
+                  <Label>Categoria</Label>
+                  <select
+                    className="w-full p-2 border rounded-md bg-background text-foreground"
+                    value={basicInfo.categoria_id}
+                    onChange={(e) => setBasicInfo({ ...basicInfo, categoria_id: e.target.value })}
+                  >
+                    <option value="">Selecione uma categoria</option>
+                    {categories?.map((cat) => (
+                      <option key={cat.id} value={cat.id}>
+                        {cat.nome}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <Label>Imagem de Capa</Label>
+                  <p className="text-xs text-muted-foreground mb-2">Tamanho recomendado: 800x600px</p>
+                  <div className="space-y-2">
+                    {basicInfo.imagem_url && (
+                      <div className="relative inline-block">
+                        <img 
+                          src={basicInfo.imagem_url} 
+                          alt="Capa" 
+                          className="h-32 w-auto object-contain border rounded"
+                        />
+                        <Button
+                          type="button"
+                          variant="destructive"
+                          size="icon"
+                          className="absolute -top-2 -right-2 h-6 w-6"
+                          onClick={() => removeImage("basic")}
+                        >
+                          <X className="h-3 w-3" />
+                        </Button>
+                      </div>
+                    )}
                     <Button
                       type="button"
-                      variant="destructive"
-                      size="icon"
-                      className="absolute -top-2 -right-2 h-6 w-6"
-                      onClick={() => removeImage("basic")}
+                      variant="outline"
+                      onClick={() => openMediaSelector("basic")}
+                      className="w-full"
                     >
-                      <X className="h-3 w-3" />
+                      <Upload className="mr-2 h-4 w-4" />
+                      {basicInfo.imagem_url ? "Alterar Imagem" : "Selecionar Imagem"}
                     </Button>
                   </div>
-                )}
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={() => openMediaSelector("basic")}
-                  className="w-full"
-                >
-                  <Upload className="mr-2 h-4 w-4" />
-                  {basicInfo.imagem_url ? "Alterar Imagem" : "Selecionar Imagem"}
-                </Button>
-              </div>
-            </div>
+                </div>
 
-            <div>
-              <Label>Descrição</Label>
-              <Textarea
-                value={basicInfo.descricao}
-                onChange={(e) => setBasicInfo({ ...basicInfo, descricao: e.target.value })}
-                placeholder="Digite a descrição do case"
-                rows={4}
-              />
-            </div>
+                <div>
+                  <Label>Descrição</Label>
+                  <Textarea
+                    value={basicInfo.descricao}
+                    onChange={(e) => setBasicInfo({ ...basicInfo, descricao: e.target.value })}
+                    placeholder="Digite a descrição do case"
+                    rows={4}
+                  />
+                </div>
 
-            <div className="flex items-center space-x-2">
-              <Switch
-                checked={basicInfo.publicado}
-                onCheckedChange={(checked) => setBasicInfo({ ...basicInfo, publicado: checked })}
-              />
-              <Label>Publicar case</Label>
-            </div>
+                <div className="flex items-center space-x-2">
+                  <Switch
+                    checked={basicInfo.publicado}
+                    onCheckedChange={(checked) => setBasicInfo({ ...basicInfo, publicado: checked })}
+                  />
+                  <Label>Publicar case</Label>
+                </div>
 
-            <div className="flex items-center space-x-2">
-              <Switch
-                checked={basicInfo.is_featured}
-                onCheckedChange={(checked) => setBasicInfo({ ...basicInfo, is_featured: checked })}
-              />
-              <Label>Marcar como destaque</Label>
-            </div>
-          </CardContent>
-        </Card>
+                <div className="flex items-center space-x-2">
+                  <Switch
+                    checked={basicInfo.is_featured}
+                    onCheckedChange={(checked) => setBasicInfo({ ...basicInfo, is_featured: checked })}
+                  />
+                  <Label>Marcar como destaque</Label>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
 
-        {/* Hero Block */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Bloco 1: Hero Section</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div>
-              <Label>Logo/Marca</Label>
-              <p className="text-xs text-muted-foreground mb-2">Tamanho recomendado: 400x400px (formato quadrado)</p>
-              <div className="space-y-2">
-                {heroData.logo_url && (
-                  <div className="relative inline-block">
-                    <img 
-                      src={heroData.logo_url} 
-                      alt="Logo preview" 
-                      className="h-20 w-auto object-contain border rounded"
-                    />
+          {/* Hero Section Tab */}
+          <TabsContent value="hero">
+            <Card>
+              <CardHeader>
+                <CardTitle>Hero Section</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div>
+                  <Label>Logo/Marca</Label>
+                  <p className="text-xs text-muted-foreground mb-2">Tamanho recomendado: 400x400px (formato quadrado)</p>
+                  <div className="space-y-2">
+                    {heroData.logo_url && (
+                      <div className="relative inline-block">
+                        <img 
+                          src={heroData.logo_url} 
+                          alt="Logo preview" 
+                          className="h-20 w-auto object-contain border rounded"
+                        />
+                        <Button
+                          type="button"
+                          variant="destructive"
+                          size="icon"
+                          className="absolute -top-2 -right-2 h-6 w-6"
+                          onClick={() => removeImage("hero-logo")}
+                        >
+                          <X className="h-3 w-3" />
+                        </Button>
+                      </div>
+                    )}
                     <Button
                       type="button"
-                      variant="destructive"
-                      size="icon"
-                      className="absolute -top-2 -right-2 h-6 w-6"
-                      onClick={() => removeImage("hero-logo")}
+                      variant="outline"
+                      onClick={() => openMediaSelector("hero-logo")}
+                      className="w-full"
                     >
-                      <X className="h-3 w-3" />
+                      <Upload className="mr-2 h-4 w-4" />
+                      {heroData.logo_url ? "Alterar Logo" : "Selecionar Logo"}
                     </Button>
                   </div>
-                )}
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={() => openMediaSelector("hero-logo")}
-                  className="w-full"
-                >
-                  <Upload className="mr-2 h-4 w-4" />
-                  {heroData.logo_url ? "Alterar Logo" : "Selecionar Logo"}
-                </Button>
-              </div>
-            </div>
+                </div>
 
-            <div>
-              <Label>Título Principal</Label>
-              <Input
-                value={heroData.titulo}
-                onChange={(e) =>
-                  setHeroData({ ...heroData, titulo: e.target.value })
-                }
-                placeholder="Ex: JADEJADE"
-              />
-            </div>
+                <div>
+                  <Label>Título Principal</Label>
+                  <Input
+                    value={heroData.titulo}
+                    onChange={(e) =>
+                      setHeroData({ ...heroData, titulo: e.target.value })
+                    }
+                    placeholder="Ex: JADEJADE"
+                  />
+                </div>
 
-            <div>
-              <Label>Subtítulo</Label>
-              <Input
-                value={heroData.subtitulo}
-                onChange={(e) =>
-                  setHeroData({ ...heroData, subtitulo: e.target.value })
-                }
-                placeholder="Ex: Loja de moda jovem e moderna"
-              />
-            </div>
+                <div>
+                  <Label>Subtítulo</Label>
+                  <Input
+                    value={heroData.subtitulo}
+                    onChange={(e) =>
+                      setHeroData({ ...heroData, subtitulo: e.target.value })
+                    }
+                    placeholder="Ex: Loja de moda jovem e moderna"
+                  />
+                </div>
 
-            <div>
-              <Label>Descrição</Label>
-              <Textarea
-                value={heroData.descricao}
-                onChange={(e) =>
-                  setHeroData({ ...heroData, descricao: e.target.value })
-                }
-                placeholder="Descreva o case de forma detalhada"
-                rows={4}
-              />
-            </div>
+                <div>
+                  <Label>Descrição</Label>
+                  <Textarea
+                    value={heroData.descricao}
+                    onChange={(e) =>
+                      setHeroData({ ...heroData, descricao: e.target.value })
+                    }
+                    placeholder="Descreva o case de forma detalhada"
+                    rows={4}
+                  />
+                </div>
 
-            <div>
-              <Label>Tags</Label>
-              <TagsAutocomplete
-                selectedTagIds={selectedTagIds}
-                onChange={setSelectedTagIds}
-                allTags={caseTags}
-                tipo="case"
-                queryKey={['case-tags']}
-              />
-            </div>
+                <div>
+                  <Label>Tags</Label>
+                  <TagsAutocomplete
+                    selectedTagIds={selectedTagIds}
+                    onChange={setSelectedTagIds}
+                    allTags={caseTags}
+                    tipo="case"
+                    queryKey={['case-tags']}
+                  />
+                </div>
 
-            <div>
-              <Label>Imagem Principal</Label>
-              <p className="text-xs text-muted-foreground mb-2">Tamanho recomendado: 1920x1080px (proporção 16:9)</p>
-              <div className="space-y-2">
-                {heroData.imagem_principal && (
-                  <div className="relative inline-block">
-                    <img 
-                      src={heroData.imagem_principal} 
-                      alt="Hero preview" 
-                      className="h-32 w-auto object-contain border rounded"
-                    />
+                <div>
+                  <Label>Imagem Principal</Label>
+                  <p className="text-xs text-muted-foreground mb-2">Tamanho recomendado: 1920x1080px (proporção 16:9)</p>
+                  <div className="space-y-2">
+                    {heroData.imagem_principal && (
+                      <div className="relative inline-block">
+                        <img 
+                          src={heroData.imagem_principal} 
+                          alt="Hero preview" 
+                          className="h-32 w-auto object-contain border rounded"
+                        />
+                        <Button
+                          type="button"
+                          variant="destructive"
+                          size="icon"
+                          className="absolute -top-2 -right-2 h-6 w-6"
+                          onClick={() => removeImage("hero-main")}
+                        >
+                          <X className="h-3 w-3" />
+                        </Button>
+                      </div>
+                    )}
                     <Button
                       type="button"
-                      variant="destructive"
-                      size="icon"
-                      className="absolute -top-2 -right-2 h-6 w-6"
-                      onClick={() => removeImage("hero-main")}
+                      variant="outline"
+                      onClick={() => openMediaSelector("hero-main")}
+                      className="w-full"
                     >
-                      <X className="h-3 w-3" />
+                      <Upload className="mr-2 h-4 w-4" />
+                      {heroData.imagem_principal ? "Alterar Imagem" : "Selecionar Imagem"}
                     </Button>
                   </div>
-                )}
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={() => openMediaSelector("hero-main")}
-                  className="w-full"
-                >
-                  <Upload className="mr-2 h-4 w-4" />
-                  {heroData.imagem_principal ? "Alterar Imagem" : "Selecionar Imagem"}
-                </Button>
-              </div>
-            </div>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
 
-          </CardContent>
-        </Card>
+          {/* Text Columns Tab */}
+          <TabsContent value="text">
+            <Card>
+              <CardHeader>
+                <CardTitle>Colunas de Texto</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div>
+                  <Label>Coluna Esquerda</Label>
+                  <Textarea
+                    value={textColumnsData.coluna_esquerda}
+                    onChange={(e) =>
+                      setTextColumnsData({
+                        ...textColumnsData,
+                        coluna_esquerda: e.target.value,
+                      })
+                    }
+                    placeholder="Texto da primeira coluna (use quebras de linha para parágrafos)"
+                    rows={8}
+                  />
+                </div>
 
-        {/* Text Columns Block */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Bloco 2: Colunas de Texto</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div>
-              <Label>Coluna Esquerda</Label>
-              <Textarea
-                value={textColumnsData.coluna_esquerda}
-                onChange={(e) =>
-                  setTextColumnsData({
-                    ...textColumnsData,
-                    coluna_esquerda: e.target.value,
-                  })
-                }
-                placeholder="Texto da primeira coluna (use quebras de linha para parágrafos)"
-                rows={8}
-              />
-            </div>
+                <div>
+                  <Label>Coluna Direita</Label>
+                  <Textarea
+                    value={textColumnsData.coluna_direita}
+                    onChange={(e) =>
+                      setTextColumnsData({
+                        ...textColumnsData,
+                        coluna_direita: e.target.value,
+                      })
+                    }
+                    placeholder="Texto da segunda coluna (use quebras de linha para parágrafos)"
+                    rows={8}
+                  />
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
 
-            <div>
-              <Label>Coluna Direita</Label>
-              <Textarea
-                value={textColumnsData.coluna_direita}
-                onChange={(e) =>
-                  setTextColumnsData({
-                    ...textColumnsData,
-                    coluna_direita: e.target.value,
-                  })
-                }
-                placeholder="Texto da segunda coluna (use quebras de linha para parágrafos)"
-                rows={8}
-              />
-            </div>
+          {/* Benefits Tab */}
+          <TabsContent value="benefits">
+            <Card>
+              <CardHeader>
+                <CardTitle>Grid de Benefícios (4 Cards)</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {benefitsData.benefits.map((benefit, index) => (
+                    <Card key={index}>
+                      <CardContent className="pt-6 space-y-4">
+                        <div className="flex items-center justify-between">
+                          <Label>Card {index + 1}</Label>
+                        </div>
+                        
+                        <div>
+                          <Label>Ícone</Label>
+                          <IconPicker
+                            value={benefit.icon}
+                            onChange={(iconName) => {
+                              const newBenefits = [...benefitsData.benefits];
+                              newBenefits[index].icon = iconName;
+                              setBenefitsData({
+                                ...benefitsData,
+                                benefits: newBenefits,
+                              });
+                            }}
+                          />
+                        </div>
 
-          </CardContent>
-        </Card>
+                        <div>
+                          <Label>Título</Label>
+                          <Input
+                            value={benefit.titulo}
+                            onChange={(e) => {
+                              const newBenefits = [...benefitsData.benefits];
+                              newBenefits[index].titulo = e.target.value;
+                              setBenefitsData({
+                                ...benefitsData,
+                                benefits: newBenefits,
+                              });
+                            }}
+                            placeholder="Ex: Layout como extensão da identidade"
+                          />
+                        </div>
 
-        {/* Benefits Block */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Bloco 3: Grid de Benefícios (4 Cards)</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {benefitsData.benefits.map((benefit, index) => (
-                <Card key={index}>
-                  <CardContent className="pt-6 space-y-4">
-                    <div className="flex items-center justify-between">
-                      <Label>Card {index + 1}</Label>
-                    </div>
-                    
-                    <div>
-                      <Label>Ícone</Label>
-                      <IconPicker
-                        value={benefit.icon}
-                        onChange={(iconName) => {
-                          const newBenefits = [...benefitsData.benefits];
-                          newBenefits[index].icon = iconName;
-                          setBenefitsData({
-                            ...benefitsData,
-                            benefits: newBenefits,
-                          });
-                        }}
-                      />
-                    </div>
-
-                    <div>
-                      <Label>Título</Label>
-                      <Input
-                        value={benefit.titulo}
-                        onChange={(e) => {
-                          const newBenefits = [...benefitsData.benefits];
-                          newBenefits[index].titulo = e.target.value;
-                          setBenefitsData({
-                            ...benefitsData,
-                            benefits: newBenefits,
-                          });
-                        }}
-                        placeholder="Ex: Layout como extensão da identidade"
-                      />
-                    </div>
-
-                    <div>
-                      <Label>Descrição</Label>
-                      <Textarea
-                        value={benefit.descricao}
-                        onChange={(e) => {
-                          const newBenefits = [...benefitsData.benefits];
-                          newBenefits[index].descricao = e.target.value;
-                          setBenefitsData({
-                            ...benefitsData,
-                            benefits: newBenefits,
-                          });
-                        }}
-                        placeholder="Descreva o benefício em detalhes"
-                        rows={3}
-                      />
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-
-          </CardContent>
-        </Card>
+                        <div>
+                          <Label>Descrição</Label>
+                          <Textarea
+                            value={benefit.descricao}
+                            onChange={(e) => {
+                              const newBenefits = [...benefitsData.benefits];
+                              newBenefits[index].descricao = e.target.value;
+                              setBenefitsData({
+                                ...benefitsData,
+                                benefits: newBenefits,
+                              });
+                            }}
+                            placeholder="Descreva o benefício em detalhes"
+                            rows={3}
+                          />
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </Tabs>
 
         {/* Actions */}
         <div className="flex gap-4">
