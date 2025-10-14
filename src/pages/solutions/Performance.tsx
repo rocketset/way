@@ -86,7 +86,7 @@ const Performance = () => {
               <div className="space-y-6 md:space-y-8 animate-fade-in">
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 hover:bg-primary/20 hover:scale-105 transition-all duration-300 cursor-pointer group">
                   <Plus className="w-4 h-4 text-primary group-hover:rotate-90 transition-transform duration-300" />
-                  <span className="text-sm font-medium text-primary">Way.Digital</span>
+                  <span className="text-sm font-medium text-primary">Way.digital</span>
                 </div>
                 
                 <div className="flex items-start gap-4">
