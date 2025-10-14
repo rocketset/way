@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import ScrollToTop from "@/components/ScrollToTop";
+import { CookieConsent } from "@/components/CookieConsent";
 
 // Páginas públicas do site
 import Index from "./pages/Index";
@@ -79,6 +80,7 @@ const App = () => (
         <BrowserRouter>
           <AuthProvider>
             <ScrollToTop />
+            <CookieConsent />
           <Routes>
           {/* Rotas públicas do site */}
           <Route path="/" element={<Index />} />
