@@ -568,6 +568,36 @@ export type Database = {
         }
         Relationships: []
       }
+      intencoes_cadastro: {
+        Row: {
+          ativo: boolean | null
+          atualizado_em: string
+          criado_em: string
+          descricao: string | null
+          id: string
+          nome: string
+          ordem: number | null
+        }
+        Insert: {
+          ativo?: boolean | null
+          atualizado_em?: string
+          criado_em?: string
+          descricao?: string | null
+          id?: string
+          nome: string
+          ordem?: number | null
+        }
+        Update: {
+          ativo?: boolean | null
+          atualizado_em?: string
+          criado_em?: string
+          descricao?: string | null
+          id?: string
+          nome?: string
+          ordem?: number | null
+        }
+        Relationships: []
+      }
       landing_page_blocks: {
         Row: {
           atualizado_em: string
@@ -1131,14 +1161,19 @@ export type Database = {
           cargo: string | null
           criado_em: string
           email: string
+          email_principal: string | null
+          empresa: string | null
           id: string
           instagram: string | null
+          intencao_cadastro: string | null
           is_colunista: boolean | null
           linkedin: string | null
           nome: string
           rejection_reason: string | null
+          site_empresa: string | null
           site_pessoal: string | null
           twitter: string | null
+          whatsapp: string | null
         }
         Insert: {
           account_status?: string | null
@@ -1150,14 +1185,19 @@ export type Database = {
           cargo?: string | null
           criado_em?: string
           email: string
+          email_principal?: string | null
+          empresa?: string | null
           id: string
           instagram?: string | null
+          intencao_cadastro?: string | null
           is_colunista?: boolean | null
           linkedin?: string | null
           nome: string
           rejection_reason?: string | null
+          site_empresa?: string | null
           site_pessoal?: string | null
           twitter?: string | null
+          whatsapp?: string | null
         }
         Update: {
           account_status?: string | null
@@ -1169,14 +1209,49 @@ export type Database = {
           cargo?: string | null
           criado_em?: string
           email?: string
+          email_principal?: string | null
+          empresa?: string | null
           id?: string
           instagram?: string | null
+          intencao_cadastro?: string | null
           is_colunista?: boolean | null
           linkedin?: string | null
           nome?: string
           rejection_reason?: string | null
+          site_empresa?: string | null
           site_pessoal?: string | null
           twitter?: string | null
+          whatsapp?: string | null
+        }
+        Relationships: []
+      }
+      role_permissions: {
+        Row: {
+          ativo: boolean | null
+          atualizado_em: string
+          criado_em: string
+          id: string
+          modulo: string
+          permissao: string
+          role: Database["public"]["Enums"]["app_role"]
+        }
+        Insert: {
+          ativo?: boolean | null
+          atualizado_em?: string
+          criado_em?: string
+          id?: string
+          modulo: string
+          permissao: string
+          role: Database["public"]["Enums"]["app_role"]
+        }
+        Update: {
+          ativo?: boolean | null
+          atualizado_em?: string
+          criado_em?: string
+          id?: string
+          modulo?: string
+          permissao?: string
+          role?: Database["public"]["Enums"]["app_role"]
         }
         Relationships: []
       }

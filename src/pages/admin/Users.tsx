@@ -40,6 +40,11 @@ interface Profile {
   nome: string;
   email: string;
   avatar_url?: string | null;
+  whatsapp?: string | null;
+  email_principal?: string | null;
+  empresa?: string | null;
+  site_empresa?: string | null;
+  intencao_cadastro?: string | null;
   criado_em: string;
   role?: UserRole;
 }
@@ -56,6 +61,11 @@ export default function Users() {
     email: '',
     senha: '',
     avatar_url: '',
+    whatsapp: '',
+    email_principal: '',
+    empresa: '',
+    site_empresa: '',
+    intencao_cadastro: '',
     role: 'membro' as UserRole,
   });
   const [mediaSelectorOpen, setMediaSelectorOpen] = useState(false);
@@ -105,6 +115,11 @@ export default function Users() {
       email: '',
       senha: '',
       avatar_url: '',
+      whatsapp: '',
+      email_principal: '',
+      empresa: '',
+      site_empresa: '',
+      intencao_cadastro: '',
       role: 'membro',
     });
     setDialogOpen(true);
@@ -118,6 +133,11 @@ export default function Users() {
       email: user.email,
       senha: '',
       avatar_url: user.avatar_url || '',
+      whatsapp: user.whatsapp || '',
+      email_principal: user.email_principal || '',
+      empresa: user.empresa || '',
+      site_empresa: user.site_empresa || '',
+      intencao_cadastro: user.intencao_cadastro || '',
       role: user.role || 'membro',
     });
     setDialogOpen(true);
@@ -155,6 +175,11 @@ export default function Users() {
             nome: formData.nome,
             email: formData.email,
             avatar_url: formData.avatar_url || null,
+            whatsapp: formData.whatsapp || null,
+            email_principal: formData.email_principal || null,
+            empresa: formData.empresa || null,
+            site_empresa: formData.site_empresa || null,
+            intencao_cadastro: formData.intencao_cadastro || null,
           })
           .eq('id', editingUser.id);
 
@@ -451,9 +476,63 @@ export default function Users() {
               )}
             </div>
 
+            {/* Novos campos */}
+            <div className="space-y-2">
+              <Label htmlFor="whatsapp">WhatsApp</Label>
+              <Input
+                id="whatsapp"
+                type="tel"
+                value={formData.whatsapp}
+                onChange={(e) => setFormData({ ...formData, whatsapp: e.target.value })}
+                placeholder="+5511999999999"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="email_principal">E-mail Principal</Label>
+              <Input
+                id="email_principal"
+                type="email"
+                value={formData.email_principal}
+                onChange={(e) => setFormData({ ...formData, email_principal: e.target.value })}
+                placeholder="melhor.contato@email.com"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="empresa">Empresa</Label>
+              <Input
+                id="empresa"
+                value={formData.empresa}
+                onChange={(e) => setFormData({ ...formData, empresa: e.target.value })}
+                placeholder="Nome da empresa"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="site_empresa">Site da Empresa</Label>
+              <Input
+                id="site_empresa"
+                type="url"
+                value={formData.site_empresa}
+                onChange={(e) => setFormData({ ...formData, site_empresa: e.target.value })}
+                placeholder="https://www.empresa.com"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="intencao_cadastro">Intenção de Cadastro</Label>
+              <Input
+                id="intencao_cadastro"
+                value={formData.intencao_cadastro}
+                onChange={(e) => setFormData({ ...formData, intencao_cadastro: e.target.value })}
+                placeholder="Ex: Cliente, Parceiro..."
+              />
+            </div>
+
             {/* Campo Tipo de Usuário */}
             <div className="space-y-2">
-              <Label htmlFor="role">Tipo de Usuário</Label>
+              <Label htmlFor="role">Tipo de Usuário *</Label>
               <Select
                 open={roleSelectOpen}
                 onOpenChange={setRoleSelectOpen}
@@ -465,10 +544,9 @@ export default function Users() {
                 </SelectTrigger>
                 <SelectContent className="bg-popover border shadow-md z-[100] pointer-events-auto">
                   <SelectItem value="administrador">Administrador</SelectItem>
-                  <SelectItem value="colunista">Colunista</SelectItem>
-                  <SelectItem value="membro">Membro</SelectItem>
-                  <SelectItem value="cliente">Cliente</SelectItem>
                   <SelectItem value="gestor_conteudo">Gestor de Conteúdo</SelectItem>
+                  <SelectItem value="colunista">Colunista</SelectItem>
+                  <SelectItem value="cliente">Cliente</SelectItem>
                 </SelectContent>
               </Select>
             </div>

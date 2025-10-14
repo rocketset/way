@@ -141,6 +141,7 @@ const menuItems = [
   { icon: ImageIcon, label: 'Mídia', path: '/admin/media', roles: ['administrador', 'gestor_conteudo'] },
   { icon: Mail, label: 'Solicitações', path: '/admin/contacts', roles: ['administrador'] },
   { icon: Users, label: 'Usuários', path: '/admin/users', roles: ['administrador'] },
+  { icon: Shield, label: 'Permissões', path: '/admin/permissions', roles: ['administrador'] },
   { 
     icon: GraduationCap, 
     label: 'Way Academy', 

@@ -45,6 +45,7 @@ import CasesCategories from "./pages/admin/cases/Categories";
 import CasesTags from "./pages/admin/cases/Tags";
 import Contacts from "./pages/admin/Contacts";
 import Users from "./pages/admin/Users";
+import Permissions from "./pages/admin/Permissions";
 import MediaLibrary from "./pages/admin/media/MediaLibrary";
 import Academy from "./pages/admin/Academy";
 import AcademyManage from "./pages/admin/academy/Manage";
@@ -137,6 +138,7 @@ const App = () => (
             {/* Outras rotas admin */}
             <Route path="contacts" element={<Contacts />} />
             <Route path="users" element={<Users />} />
+            <Route path="permissions" element={<Permissions />} />
             
             {/* Novas seções */}
             <Route path="academy" element={<Academy />} />
