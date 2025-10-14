@@ -86,7 +86,8 @@ const Implementation = () => {
               <div className="space-y-6 md:space-y-8 animate-fade-in">
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 hover:bg-primary/20 hover:scale-105 transition-all duration-300 cursor-pointer group">
                   <Plus className="w-4 h-4 text-primary group-hover:rotate-90 transition-transform duration-300" />
-                  <span className="text-sm font-medium text-primary">Way.tech - Soluções Modulares</span>
+                  <span className="text-sm font-medium text-primary">Way.tech
+                </span>
                 </div>
                 
                 <div className="flex items-start gap-4">
@@ -175,10 +176,18 @@ const Implementation = () => {
         {/* Services Details */}
         <section className="relative py-20 bg-gradient-to-b from-[#1a1a1a] to-[#0a0a0a] overflow-hidden">
           {/* Plus icons animados de fundo */}
-          <div className="absolute top-10 left-10 text-primary/5 text-6xl animate-float" style={{ animationDelay: '0s' }}>+</div>
-          <div className="absolute top-20 right-20 text-primary/5 text-8xl animate-float" style={{ animationDelay: '1s' }}>+</div>
-          <div className="absolute bottom-20 left-1/4 text-primary/5 text-7xl animate-float" style={{ animationDelay: '2s' }}>+</div>
-          <div className="absolute bottom-10 right-1/3 text-primary/5 text-6xl animate-float" style={{ animationDelay: '1.5s' }}>+</div>
+          <div className="absolute top-10 left-10 text-primary/5 text-6xl animate-float" style={{
+          animationDelay: '0s'
+        }}>+</div>
+          <div className="absolute top-20 right-20 text-primary/5 text-8xl animate-float" style={{
+          animationDelay: '1s'
+        }}>+</div>
+          <div className="absolute bottom-20 left-1/4 text-primary/5 text-7xl animate-float" style={{
+          animationDelay: '2s'
+        }}>+</div>
+          <div className="absolute bottom-10 right-1/3 text-primary/5 text-6xl animate-float" style={{
+          animationDelay: '1.5s'
+        }}>+</div>
           
           <div className="container mx-auto px-4 md:px-12 relative z-10">
             <div className="max-w-5xl mx-auto space-y-6 md:space-y-8">
