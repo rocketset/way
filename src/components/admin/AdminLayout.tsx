@@ -120,18 +120,6 @@ const menuItems = [
     label: 'Plataforma',
     roles: ['administrador', 'gestor_conteudo', 'membro', 'cliente']
   },
-  { 
-    icon: Settings, 
-    label: 'Configurações', 
-    path: '/admin/google-reviews',
-    roles: ['administrador'],
-    subItems: [
-      { label: 'Avaliações Google', path: '/admin/google-reviews' },
-      { label: 'Mídia', path: '/admin/media' },
-      { label: 'Permissões', path: '/admin/permissions' },
-      { label: 'Usuários', path: '/admin/users' },
-    ]
-  },
   { icon: CheckSquare, label: 'Curadoria', path: '/admin/curation', roles: ['administrador', 'gestor_conteudo'] },
   { 
     icon: FileText, 
@@ -152,6 +140,18 @@ const menuItems = [
       { label: 'Gerenciar Conteúdos', path: '/admin/academy/manage', roles: ['administrador', 'gestor_conteudo'] },
       { label: 'Gerenciar Categorias', path: '/admin/academy/categories', roles: ['administrador'] },
       { label: 'Configurações', path: '/admin/academy/settings', roles: ['administrador'] },
+    ]
+  },
+  { 
+    icon: Settings, 
+    label: 'Configurações', 
+    path: '/admin/google-reviews',
+    roles: ['administrador'],
+    subItems: [
+      { label: 'Avaliações Google', path: '/admin/google-reviews' },
+      { label: 'Mídia', path: '/admin/media' },
+      { label: 'Permissões', path: '/admin/permissions' },
+      { label: 'Usuários', path: '/admin/users' },
     ]
   },
 
