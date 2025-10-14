@@ -260,14 +260,31 @@ export default function Users() {
     if (!confirm('Tem certeza que deseja excluir este usuário? Esta ação não pode ser desfeita.')) return;
 
     try {
-      // O trigger ON DELETE CASCADE irá remover o perfil automaticamente
-      const { error } = await supabase.auth.admin.deleteUser(id);
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        toast.error('Sessão expirada. Faça login novamente.');
+        return;
+      }
 
-      if (error) throw error;
+      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/delete-user`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${session.access_token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userId: id }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Erro ao excluir usuário');
+      }
+
       toast.success('Usuário excluído com sucesso!');
       fetchUsers();
     } catch (error: any) {
-      toast.error('Erro ao excluir usuário. Você pode não ter permissões suficientes.');
+      toast.error(error.message || 'Erro ao excluir usuário');
       console.error('Erro:', error);
     }
   };
