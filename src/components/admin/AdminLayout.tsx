@@ -944,12 +944,17 @@ export default function AdminLayout() {
               <MobileSidebar />
             </div>
             
-            <img 
-              src={logoWay} 
-              alt="Way+ E-commerce" 
-              className="h-8 w-auto cursor-pointer"
-              onClick={() => navigate('/admin')}
-            />
+            <div className="flex items-center gap-3">
+              <img 
+                src={logoWay} 
+                alt="Way+ E-commerce" 
+                className="h-8 w-auto cursor-pointer"
+                onClick={() => navigate('/admin')}
+              />
+              <div className="hidden sm:flex flex-col">
+                <span className="text-xs text-muted-foreground leading-none">Versão 1.0</span>
+              </div>
+            </div>
           </div>
 
           {/* Barra de Pesquisa e Ações - Lado Direito */}
