@@ -123,21 +123,14 @@ const menuItems = [
   { 
     icon: Settings, 
     label: 'Configurações', 
-    path: '/admin/settings',
+    path: '/admin/google-reviews',
     roles: ['administrador'],
-    subItems: []
-  },
-  { 
-    icon: (props: any) => (
-      <svg {...props} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4" />
-        <path d="M3 5v14a2 2 0 0 0 2 2h16v-5" />
-        <path d="M18 12a2 2 0 0 0 0 4h4v-4Z" />
-      </svg>
-    ), 
-    label: 'Avaliação do Google', 
-    path: '/admin/google-reviews', 
-    roles: ['administrador'] 
+    subItems: [
+      { label: 'Avaliações Google', path: '/admin/google-reviews' },
+      { label: 'Mídia', path: '/admin/media' },
+      { label: 'Permissões', path: '/admin/permissions' },
+      { label: 'Usuários', path: '/admin/users' },
+    ]
   },
   { icon: CheckSquare, label: 'Curadoria', path: '/admin/curation', roles: ['administrador', 'gestor_conteudo'] },
   { 
@@ -146,10 +139,7 @@ const menuItems = [
     path: '/admin/landing',
     roles: ['administrador', 'gestor_conteudo'],
   },
-  { icon: ImageIcon, label: 'Mídia', path: '/admin/media', roles: ['administrador', 'gestor_conteudo'] },
   { icon: Mail, label: 'Solicitações', path: '/admin/contacts', roles: ['administrador'] },
-  { icon: Users, label: 'Usuários', path: '/admin/users', roles: ['administrador'] },
-  { icon: Shield, label: 'Permissões', path: '/admin/permissions', roles: ['administrador'] },
   { 
     icon: GraduationCap, 
     label: 'Way Academy', 
