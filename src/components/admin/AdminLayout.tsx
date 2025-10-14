@@ -28,6 +28,7 @@ import {
   CheckSquare,
   Heart,
   FolderOpen,
+  Settings,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -118,6 +119,13 @@ const menuItems = [
     separator: true,
     label: 'Plataforma',
     roles: ['administrador', 'gestor_conteudo', 'membro', 'cliente']
+  },
+  { 
+    icon: Settings, 
+    label: 'Configurações', 
+    path: '/admin/settings',
+    roles: ['administrador'],
+    subItems: []
   },
   { 
     icon: (props: any) => (
