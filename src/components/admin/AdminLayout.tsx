@@ -953,36 +953,38 @@ export default function AdminLayout() {
           </div>
 
           {/* Barra de Pesquisa e Ações - Lado Direito */}
-          <div className="flex items-center gap-3">
-            {/* Barra de Pesquisa - Reduzida */}
-            <div className="relative w-64">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <div className="flex items-center gap-1.5 md:gap-3">
+            {/* Barra de Pesquisa - Responsiva */}
+            <div className="relative w-24 sm:w-40 md:w-56 lg:w-64">
+              <Search className="absolute left-2 md:left-3 top-1/2 -translate-y-1/2 h-3.5 md:h-4 w-3.5 md:w-4 text-muted-foreground" />
               <Input
                 type="text"
                 placeholder="Pesquisar"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 bg-muted/50 border-none h-9"
+                className="pl-7 md:pl-10 pr-2 bg-muted/50 border-none h-8 md:h-9 text-sm placeholder:text-xs md:placeholder:text-sm"
               />
             </div>
             
-            {/* Seletor de Tema */}
-            <ThemeSelector />
+            {/* Seletor de Tema - Oculto no mobile pequeno */}
+            <div className="hidden sm:block">
+              <ThemeSelector />
+            </div>
             
             {/* Sino de Notificações */}
             <Button
               variant="ghost"
               size="icon"
-              className="relative"
+              className="relative h-8 w-8 md:h-10 md:w-10"
               onClick={() => {
                 navigate('/admin/notifications');
               }}
             >
-              <Bell className="h-5 w-5" />
+              <Bell className="h-4 w-4 md:h-5 md:w-5" />
               {notificationCount > 0 && (
                 <Badge 
                   variant="destructive" 
-                  className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 text-xs"
+                  className="absolute -top-0.5 -right-0.5 md:-top-1 md:-right-1 h-4 w-4 md:h-5 md:w-5 flex items-center justify-center p-0 text-[10px] md:text-xs"
                 >
                   {notificationCount}
                 </Badge>
@@ -992,10 +994,10 @@ export default function AdminLayout() {
             {/* Dropdown da Conta do Usuário */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="relative h-10 w-10 rounded-full p-0">
-                  <Avatar className="h-10 w-10">
+                <Button variant="ghost" className="relative h-8 w-8 md:h-10 md:w-10 rounded-full p-0">
+                  <Avatar className="h-8 w-8 md:h-10 md:w-10">
                     <AvatarImage src={profileData?.avatar_url || ''} alt={profileData?.nome || 'Usuário'} />
-                    <AvatarFallback className="bg-primary text-primary-foreground">
+                    <AvatarFallback className="bg-primary text-primary-foreground text-xs md:text-sm">
                       {profileData?.nome?.charAt(0).toUpperCase() || user?.email?.charAt(0).toUpperCase() || 'U'}
                     </AvatarFallback>
                   </Avatar>
