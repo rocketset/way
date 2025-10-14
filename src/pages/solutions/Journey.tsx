@@ -538,6 +538,35 @@ const Journey = () => {
                 </Button>
               </div>
               
+              {/* Pricing Section */}
+              <div className="pt-16 max-w-3xl mx-auto text-center space-y-8 animate-fade-in">
+                <div className="space-y-4">
+                  <h3 className="text-2xl md:text-3xl font-bold text-foreground">
+                    Nosso preço é justo e acessível para cada etapa do seu e-commerce.
+                  </h3>
+                  <p className="text-lg text-muted-foreground">
+                    Mas o valor? Esse, você percebe no resultado.
+                  </p>
+                </div>
+                
+                <div className="bg-gradient-to-br from-primary/10 to-primary/5 rounded-3xl p-12 space-y-6">
+                  <p className="text-sm uppercase tracking-wider text-muted-foreground font-semibold">
+                    A PARTIR DE
+                  </p>
+                  
+                  <div className="space-y-2">
+                    <div className="flex items-baseline justify-center gap-2">
+                      <span className="text-3xl font-bold text-primary">R$</span>
+                      <span className="text-6xl md:text-7xl font-bold text-primary">7.500</span>
+                      <span className="text-2xl text-muted-foreground">/mês</span>
+                    </div>
+                    <p className="text-base text-muted-foreground">
+                      ou 5% do faturamento o que for maior.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              
               <div className="pt-12 grid md:grid-cols-3 gap-8">
                 {[
                   { icon: Rocket, text: "Implementação rápida" },
