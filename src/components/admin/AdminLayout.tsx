@@ -120,14 +120,6 @@ const menuItems = [
     label: 'Plataforma',
     roles: ['administrador', 'gestor_conteudo', 'membro', 'cliente']
   },
-  { icon: CheckSquare, label: 'Curadoria', path: '/admin/curation', roles: ['administrador', 'gestor_conteudo'] },
-  { 
-    icon: FileText, 
-    label: 'Landing Pages', 
-    path: '/admin/landing',
-    roles: ['administrador', 'gestor_conteudo'],
-  },
-  { icon: Mail, label: 'Solicitações', path: '/admin/contacts', roles: ['administrador'] },
   { 
     icon: GraduationCap, 
     label: 'Way Academy', 
@@ -142,6 +134,14 @@ const menuItems = [
       { label: 'Configurações', path: '/admin/academy/settings', roles: ['administrador'] },
     ]
   },
+  { icon: CheckSquare, label: 'Curadoria', path: '/admin/curation', roles: ['administrador', 'gestor_conteudo'] },
+  { 
+    icon: FileText, 
+    label: 'Landing Pages', 
+    path: '/admin/landing',
+    roles: ['administrador', 'gestor_conteudo'],
+  },
+  { icon: Mail, label: 'Solicitações', path: '/admin/contacts', roles: ['administrador'] },
   { 
     icon: Settings, 
     label: 'Configurações', 
