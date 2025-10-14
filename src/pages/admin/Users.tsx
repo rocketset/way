@@ -46,6 +46,7 @@ interface Profile {
   site_empresa?: string | null;
   intencao_cadastro?: string | null;
   criado_em: string;
+  ultima_atividade?: string | null;
   role?: UserRole;
 }
 
@@ -86,7 +87,7 @@ export default function Users() {
 
       if (error) throw error;
 
-      // Busca roles para cada usuário
+      // Busca roles e última atividade para cada usuário
       const usersWithRoles = await Promise.all(
         (profiles || []).map(async (profile) => {
           const { data: roleData } = await supabase
@@ -95,7 +96,20 @@ export default function Users() {
             .eq('user_id', profile.id)
             .maybeSingle();
           
-          return { ...profile, role: roleData?.role };
+          // Busca última atividade
+          const { data: activityData } = await supabase
+            .from('user_activity_logs')
+            .select('criado_em')
+            .eq('user_id', profile.id)
+            .order('criado_em', { ascending: false })
+            .limit(1)
+            .maybeSingle();
+          
+          return { 
+            ...profile, 
+            role: roleData?.role,
+            ultima_atividade: activityData?.criado_em 
+          };
         })
       );
 
@@ -340,6 +354,7 @@ export default function Users() {
               <TableHead>Nome</TableHead>
               <TableHead>E-mail</TableHead>
               <TableHead>Tipo</TableHead>
+              <TableHead>Última Atividade</TableHead>
               <TableHead>Data de Criação</TableHead>
               <TableHead className="text-right">Ações</TableHead>
             </TableRow>
@@ -347,7 +362,7 @@ export default function Users() {
           <TableBody>
             {users.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={6} className="text-center text-muted-foreground">
+                <TableCell colSpan={7} className="text-center text-muted-foreground">
                   Nenhum usuário cadastrado
                 </TableCell>
               </TableRow>
@@ -370,6 +385,21 @@ export default function Users() {
                   <TableCell className="font-medium">{user.nome}</TableCell>
                   <TableCell>{user.email}</TableCell>
                   <TableCell>{getRoleBadge(user)}</TableCell>
+                  <TableCell>
+                    {user.ultima_atividade ? (
+                      <div className="text-sm">
+                        <div>{new Date(user.ultima_atividade).toLocaleDateString('pt-BR')}</div>
+                        <div className="text-muted-foreground text-xs">
+                          {new Date(user.ultima_atividade).toLocaleTimeString('pt-BR', { 
+                            hour: '2-digit', 
+                            minute: '2-digit' 
+                          })}
+                        </div>
+                      </div>
+                    ) : (
+                      <span className="text-muted-foreground text-sm">Sem atividade</span>
+                    )}
+                  </TableCell>
                   <TableCell>
                     {new Date(user.criado_em).toLocaleDateString('pt-BR')}
                   </TableCell>
