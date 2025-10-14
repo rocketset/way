@@ -129,6 +129,7 @@ const menuItems = [
     subItems: [
       { label: 'Conteúdos', path: '/admin/academy' },
       { label: 'Lista de Fornecedores', path: '/admin/academy/suppliers' },
+      { label: 'Recursos', path: '/admin/academy/recursos', roles: ['administrador', 'gestor_conteudo', 'membro', 'cliente'] },
       { label: 'Gerenciar Conteúdos', path: '/admin/academy/manage', roles: ['administrador', 'gestor_conteudo'] },
       { label: 'Gerenciar Categorias', path: '/admin/academy/categories', roles: ['administrador'] },
       { label: 'Configurações', path: '/admin/academy/settings', roles: ['administrador'] },
