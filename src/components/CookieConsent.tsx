@@ -39,28 +39,27 @@ export function CookieConsent() {
   return (
     <div
       className={cn(
-        'fixed bottom-0 left-0 right-0 z-50 p-4 md:p-6 transition-all duration-300',
+        'fixed bottom-0 left-0 right-0 z-50 p-3 md:p-4 transition-all duration-300',
         isClosing ? 'translate-y-full opacity-0' : 'translate-y-0 opacity-100'
       )}
     >
       <div className="max-w-7xl mx-auto">
-        <div className="bg-card border border-border rounded-lg shadow-2xl p-6 md:p-8">
-          <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
+        <div className="bg-card border border-border rounded-lg shadow-lg p-4 md:p-5">
+          <div className="flex flex-col md:flex-row items-start md:items-center gap-3">
             {/* Ícone */}
             <div className="flex-shrink-0">
-              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                <Cookie className="w-6 h-6 text-primary" />
+              <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                <Cookie className="w-5 h-5 text-primary" />
               </div>
             </div>
 
             {/* Conteúdo */}
-            <div className="flex-1 space-y-2">
-              <h3 className="text-lg font-semibold text-foreground">
+            <div className="flex-1 space-y-1">
+              <h3 className="text-base font-semibold text-foreground">
                 🍪 Utilizamos cookies
               </h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                Utilizamos cookies para melhorar sua experiência de navegação, analisar o tráfego do site e personalizar conteúdo. 
-                Ao clicar em "Aceitar", você concorda com o uso de cookies conforme nossa{' '}
+              <p className="text-xs text-muted-foreground leading-relaxed">
+                Utilizamos cookies para melhorar sua experiência. Ao clicar em "Aceitar", você concorda com nossa{' '}
                 <a 
                   href="/privacy" 
                   className="text-primary hover:underline font-medium"
@@ -73,29 +72,31 @@ export function CookieConsent() {
             </div>
 
             {/* Botões */}
-            <div className="flex flex-col sm:flex-row gap-2 w-full md:w-auto">
+            <div className="flex flex-row gap-2 w-full md:w-auto">
               <Button
                 onClick={handleDecline}
                 variant="outline"
-                className="w-full sm:w-auto"
+                size="sm"
+                className="flex-1 sm:flex-initial"
               >
                 Recusar
               </Button>
               <Button
                 onClick={handleAccept}
-                className="w-full sm:w-auto"
+                size="sm"
+                className="flex-1 sm:flex-initial"
               >
-                Aceitar cookies
+                Aceitar
               </Button>
             </div>
 
             {/* Botão fechar */}
             <button
               onClick={handleClose}
-              className="absolute top-4 right-4 text-muted-foreground hover:text-foreground transition-colors"
+              className="absolute top-3 right-3 text-muted-foreground hover:text-foreground transition-colors"
               aria-label="Fechar"
             >
-              <X className="w-5 h-5" />
+              <X className="w-4 h-4" />
             </button>
           </div>
         </div>
