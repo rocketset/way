@@ -44,7 +44,7 @@ export function CookieConsent() {
       )}
     >
       <div className="max-w-7xl mx-auto">
-        <div className="bg-card border border-border rounded-lg shadow-lg p-4 md:p-5">
+        <div className="bg-white dark:bg-gray-100 border border-gray-200 dark:border-gray-300 rounded-lg shadow-lg p-4 md:p-5">
           <div className="flex flex-col md:flex-row items-start md:items-center gap-3">
             {/* Ícone */}
             <div className="flex-shrink-0">
@@ -55,10 +55,10 @@ export function CookieConsent() {
 
             {/* Conteúdo */}
             <div className="flex-1 space-y-1">
-              <h3 className="text-base font-semibold text-foreground">
+              <h3 className="text-base font-semibold text-gray-900 dark:text-gray-800">
                 🍪 Utilizamos cookies
               </h3>
-              <p className="text-xs text-muted-foreground leading-relaxed">
+              <p className="text-xs text-gray-600 dark:text-gray-700 leading-relaxed">
                 Utilizamos cookies para melhorar sua experiência. Ao clicar em "Aceitar", você concorda com nossa{' '}
                 <a 
                   href="/privacy" 
@@ -93,7 +93,7 @@ export function CookieConsent() {
             {/* Botão fechar */}
             <button
               onClick={handleClose}
-              className="absolute top-3 right-3 text-muted-foreground hover:text-foreground transition-colors"
+              className="absolute top-3 right-3 text-gray-500 hover:text-gray-900 transition-colors"
               aria-label="Fechar"
             >
               <X className="w-4 h-4" />
