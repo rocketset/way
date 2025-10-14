@@ -182,24 +182,24 @@ const Header = () => {
                             href={solution.path}
                             className="flex items-center gap-3 px-4 py-3 cursor-pointer hover:bg-primary/10 transition-all duration-300 rounded-lg group"
                           >
-                            {solution.label === "Jornada Way" && (
-                              <Rocket className="h-5 w-5 text-primary group-hover:text-primary transition-colors duration-300" />
-                            )}
                             <span className="font-medium group-hover:text-gray-900 transition-colors duration-300">
                               {solution.label}
                             </span>
+                            {solution.label === "Jornada Way" && (
+                              <Rocket className="h-5 w-5 text-primary group-hover:text-white transition-colors duration-300" />
+                            )}
                           </a>
                         ) : (
                           <Link
                             to={solution.path}
                             className="flex items-center gap-3 px-4 py-3 cursor-pointer hover:bg-primary/10 transition-all duration-300 rounded-lg group"
                           >
-                            {solution.label === "Jornada Way" && (
-                              <Rocket className="h-5 w-5 text-primary group-hover:text-primary transition-colors duration-300" />
-                            )}
                             <span className="font-medium group-hover:text-gray-900 transition-colors duration-300">
                               {solution.label}
                             </span>
+                            {solution.label === "Jornada Way" && (
+                              <Rocket className="h-5 w-5 text-primary group-hover:text-white transition-colors duration-300" />
+                            )}
                           </Link>
                         )}
                       </DropdownMenuItem>
