@@ -120,7 +120,24 @@ export default function Auth() {
             console.error('Erro ao atualizar perfil:', profileError);
           }
 
-          toast.success('Cadastro realizado! Aguarde a aprovação do administrador.');
+          // Fazer logout para impedir acesso automático
+          await supabase.auth.signOut();
+
+          // Mostrar mensagem de sucesso
+          toast.success('Cadastro realizado! Aguarde a aprovação do administrador para acessar a plataforma.', {
+            duration: 6000,
+          });
+
+          // Limpar formulário
+          setNome('');
+          setEmail('');
+          setPassword('');
+          setWhatsapp('');
+          setEmailPrincipal('');
+          setEmpresa('');
+          setSiteEmpresa('');
+          setIntencaoCadastro('');
+          setErrors({});
         }
       }
     } catch (error: any) {

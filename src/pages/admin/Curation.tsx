@@ -71,6 +71,11 @@ interface PendingUser {
   id: string;
   nome: string;
   email: string;
+  whatsapp?: string;
+  email_principal?: string;
+  empresa?: string;
+  site_empresa?: string;
+  intencao_cadastro?: string;
   criado_em: string;
   account_status: string;
   avatar_url?: string;
@@ -150,7 +155,7 @@ export default function Curation() {
       // Busca usuários pendentes de aprovação
       const { data: users, error: usersError } = await supabase
         .from('profiles')
-        .select('id, nome, email, criado_em, account_status, avatar_url')
+        .select('id, nome, email, whatsapp, email_principal, empresa, site_empresa, intencao_cadastro, criado_em, account_status, avatar_url')
         .eq('account_status', 'pending')
         .order('criado_em', { ascending: false });
 
@@ -290,6 +295,7 @@ export default function Curation() {
   const approveUser = async (userId: string) => {
     setActionLoading(userId);
     try {
+      // Atualiza status para aprovado
       const { error } = await supabase
         .from('profiles')
         .update({
@@ -301,7 +307,20 @@ export default function Curation() {
 
       if (error) throw error;
 
-      toast.success('Cadastro aprovado com sucesso!');
+      // Atribui role padrão 'cliente' ao usuário aprovado
+      const { error: roleError } = await supabase
+        .from('user_roles')
+        .insert({
+          user_id: userId,
+          role: 'cliente'
+        });
+
+      if (roleError) {
+        console.error('Erro ao atribuir role:', roleError);
+        // Não falha a aprovação se não conseguir atribuir role
+      }
+
+      toast.success('Cadastro aprovado com sucesso! O usuário agora tem acesso à plataforma.');
       await fetchPendingItems();
     } catch (error: any) {
       toast.error('Erro ao aprovar cadastro: ' + error.message);
@@ -441,27 +460,86 @@ export default function Curation() {
                 <CardHeader>
                   <div className="flex items-start justify-between">
                     <div className="space-y-1 flex-1">
-                      <CardTitle className="text-lg">{userItem.nome}</CardTitle>
-                      <CardDescription className="flex items-center gap-4 pt-2">
-                        <div className="flex items-center gap-1">
-                          <Mail className="h-4 w-4" />
-                          {userItem.email}
+                      <div className="flex items-center gap-3">
+                        {userItem.avatar_url ? (
+                          <img 
+                            src={userItem.avatar_url} 
+                            alt={userItem.nome}
+                            className="w-10 h-10 rounded-full object-cover"
+                          />
+                        ) : (
+                          <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center">
+                            <User className="h-5 w-5 text-muted-foreground" />
+                          </div>
+                        )}
+                        <div>
+                          <CardTitle className="text-lg">{userItem.nome}</CardTitle>
+                          <CardDescription className="flex items-center gap-4 pt-1">
+                            <div className="flex items-center gap-1">
+                              <Mail className="h-3 w-3" />
+                              {userItem.email}
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <Calendar className="h-3 w-3" />
+                              {formatDistanceToNow(new Date(userItem.criado_em), { 
+                                addSuffix: true, 
+                                locale: ptBR 
+                              })}
+                            </div>
+                          </CardDescription>
                         </div>
-                        <div className="flex items-center gap-1">
-                          <Calendar className="h-4 w-4" />
-                          {formatDistanceToNow(new Date(userItem.criado_em), { 
-                            addSuffix: true, 
-                            locale: ptBR 
-                          })}
-                        </div>
-                      </CardDescription>
+                      </div>
                     </div>
                     <Badge variant="outline" className="ml-4">
                       Aguardando Aprovação
                     </Badge>
                   </div>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="space-y-4">
+                  {/* Informações adicionais do cadastro */}
+                  {(userItem.whatsapp || userItem.email_principal || userItem.empresa || userItem.site_empresa || userItem.intencao_cadastro) && (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 p-4 bg-muted/50 rounded-lg text-sm">
+                      {userItem.whatsapp && (
+                        <div className="flex items-start gap-2">
+                          <strong className="min-w-[110px]">WhatsApp:</strong>
+                          <span className="text-muted-foreground">{userItem.whatsapp}</span>
+                        </div>
+                      )}
+                      {userItem.email_principal && (
+                        <div className="flex items-start gap-2">
+                          <strong className="min-w-[110px]">E-mail Principal:</strong>
+                          <span className="text-muted-foreground">{userItem.email_principal}</span>
+                        </div>
+                      )}
+                      {userItem.empresa && (
+                        <div className="flex items-start gap-2">
+                          <strong className="min-w-[110px]">Empresa:</strong>
+                          <span className="text-muted-foreground">{userItem.empresa}</span>
+                        </div>
+                      )}
+                      {userItem.site_empresa && (
+                        <div className="flex items-start gap-2">
+                          <strong className="min-w-[110px]">Site:</strong>
+                          <a 
+                            href={userItem.site_empresa} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="text-primary hover:underline"
+                          >
+                            {userItem.site_empresa}
+                          </a>
+                        </div>
+                      )}
+                      {userItem.intencao_cadastro && (
+                        <div className="flex items-start gap-2 md:col-span-2">
+                          <strong className="min-w-[110px]">Intenção:</strong>
+                          <Badge variant="secondary">{userItem.intencao_cadastro}</Badge>
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {/* Botões de ação */}
                   <div className="flex gap-2">
                     <Button
                       onClick={() => approveUser(userItem.id)}

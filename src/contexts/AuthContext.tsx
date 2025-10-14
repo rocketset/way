@@ -14,6 +14,7 @@ interface AuthContextType {
   session: Session | null;
   loading: boolean;
   userRole: UserRole | null;
+  accountStatus: string | null;
   isAdmin: boolean;
   isColunista: boolean;
   isMembro: boolean;
@@ -34,6 +35,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
   const [userRole, setUserRole] = useState<UserRole | null>(null);
+  const [accountStatus, setAccountStatus] = useState<string | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [isColunista, setIsColunista] = useState(false);
   const [isMembro, setIsMembro] = useState(false);
@@ -49,7 +51,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isCheckingAdmin, setIsCheckingAdmin] = useState(false);
   const [lastCheckedUserId, setLastCheckedUserId] = useState<string | null>(null);
 
-  // Função para verificar role do usuário
+  // Função para verificar role e status da conta do usuário
   const checkUserRole = async (userId: string) => {
     // Evita chamadas duplicadas para o mesmo usuário
     if (isCheckingAdmin || lastCheckedUserId === userId) {
@@ -60,6 +62,46 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setLastCheckedUserId(userId);
 
     try {
+      // Busca perfil do usuário com account_status
+      const { data: profile, error: profileError } = await supabase
+        .from('profiles')
+        .select('account_status')
+        .eq('id', userId)
+        .maybeSingle();
+
+      if (profileError) {
+        console.error('Erro ao buscar perfil:', profileError);
+      }
+
+      const status = profile?.account_status || null;
+      setAccountStatus(status);
+
+      // Se conta não está aprovada, não busca role e redireciona
+      if (status === 'pending') {
+        setUserRole(null);
+        setIsAdmin(false);
+        setIsColunista(false);
+        setIsMembro(false);
+        setIsGestorConteudo(false);
+        setIsCliente(false);
+        navigate('/admin/pending-approval');
+        return;
+      }
+
+      if (status === 'rejected') {
+        setUserRole(null);
+        setIsAdmin(false);
+        setIsColunista(false);
+        setIsMembro(false);
+        setIsGestorConteudo(false);
+        setIsCliente(false);
+        await supabase.auth.signOut();
+        toast.error('Seu cadastro foi rejeitado. Entre em contato com o suporte.');
+        navigate('/auth/login');
+        return;
+      }
+
+      // Se aprovado, busca a role
       const { data, error } = await supabase
         .from('user_roles')
         .select('role')
@@ -87,6 +129,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     } catch (error) {
       console.error('Erro ao verificar role:', error);
       setUserRole(null);
+      setAccountStatus(null);
       setIsAdmin(false);
       setIsColunista(false);
       setIsMembro(false);
@@ -147,8 +190,27 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       if (error) throw error;
 
-      // Registra atividade de login
+      // Verifica status da conta antes de prosseguir
       if (data.user) {
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('account_status')
+          .eq('id', data.user.id)
+          .single();
+
+        // Se pendente, não mostra mensagem de sucesso, apenas redireciona
+        if (profile?.account_status === 'pending') {
+          return { error: null };
+        }
+
+        // Se rejeitado, faz logout imediato
+        if (profile?.account_status === 'rejected') {
+          await supabase.auth.signOut();
+          toast.error('Seu cadastro foi rejeitado. Entre em contato com o suporte.');
+          return { error: { message: 'Cadastro rejeitado' } };
+        }
+
+        // Registra atividade de login apenas se aprovado
         await supabase.from('user_activity_logs').insert({
           user_id: data.user.id,
           activity_type: 'login',
@@ -208,6 +270,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         session,
         loading,
         userRole,
+        accountStatus,
         isAdmin,
         isColunista,
         isMembro,

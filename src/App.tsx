@@ -30,6 +30,7 @@ import Journey from "./pages/solutions/Journey";
 // Páginas administrativas
 import Auth from "./pages/admin/Auth";
 import ResetPassword from "./pages/admin/ResetPassword";
+import PendingApproval from "./pages/admin/PendingApproval";
 import AdminLayout from "./components/admin/AdminLayout";
 import Dashboard from "./pages/admin/Dashboard";
 import MemberDashboard from "./pages/admin/MemberDashboard";
@@ -100,6 +101,7 @@ const App = () => (
           {/* Rota de autenticação (login/registro) */}
           <Route path="/auth/login" element={<Auth />} />
           <Route path="/auth/reset-password" element={<ResetPassword />} />
+          <Route path="/admin/pending-approval" element={<PendingApproval />} />
           
           {/* Rota de visualização de conteúdo da Academy (fora do layout admin) */}
           <Route path="/academy/content/:id" element={<AcademyContent />} />
