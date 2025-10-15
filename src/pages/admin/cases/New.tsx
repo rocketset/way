@@ -401,7 +401,7 @@ export default function NewCase() {
                 </div>
 
                 <div>
-                  <Label>Descrição do Case</Label>
+                  <Label>Breve Resumo</Label>
                   <Textarea
                     value={heroData.descricao}
                     onChange={(e) =>
