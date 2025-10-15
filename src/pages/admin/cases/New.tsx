@@ -228,10 +228,9 @@ export default function NewCase() {
 
       <form onSubmit={handleSubmit} className="space-y-6">
         <Tabs defaultValue="basic" className="w-full">
-          <TabsList className="grid w-full grid-cols-5">
+          <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="basic">Informações Básicas</TabsTrigger>
             <TabsTrigger value="client">Cliente</TabsTrigger>
-            <TabsTrigger value="hero">Hero Section</TabsTrigger>
             <TabsTrigger value="text">Colunas de Texto</TabsTrigger>
             <TabsTrigger value="benefits">Benefícios</TabsTrigger>
           </TabsList>
@@ -304,32 +303,6 @@ export default function NewCase() {
                 </div>
 
                 <div>
-                  <Label>Descrição</Label>
-                  <Textarea
-                    value={basicInfo.descricao}
-                    onChange={(e) => setBasicInfo({ ...basicInfo, descricao: e.target.value })}
-                    placeholder="Digite a descrição do case"
-                    rows={4}
-                  />
-                </div>
-
-                <div className="flex items-center space-x-2">
-                  <Switch
-                    checked={basicInfo.publicado}
-                    onCheckedChange={(checked) => setBasicInfo({ ...basicInfo, publicado: checked })}
-                  />
-                  <Label>Publicar case</Label>
-                </div>
-
-                <div className="flex items-center space-x-2">
-                  <Switch
-                    checked={basicInfo.is_featured}
-                    onCheckedChange={(checked) => setBasicInfo({ ...basicInfo, is_featured: checked })}
-                  />
-                  <Label>Marcar como destaque</Label>
-                </div>
-
-                <div>
                   <Label>Logo/Marca</Label>
                   <p className="text-xs text-muted-foreground mb-2">Tamanho recomendado: 400x400px (formato quadrado)</p>
                   <div className="space-y-2">
@@ -361,6 +334,38 @@ export default function NewCase() {
                       {heroData.logo_url ? "Alterar Logo" : "Selecionar Logo"}
                     </Button>
                   </div>
+                </div>
+
+                <div>
+                  <Label>Título Principal</Label>
+                  <Input
+                    value={heroData.titulo}
+                    onChange={(e) =>
+                      setHeroData({ ...heroData, titulo: e.target.value })
+                    }
+                    placeholder="Ex: JADEJADE"
+                  />
+                </div>
+
+                <div>
+                  <Label>Subtítulo</Label>
+                  <Input
+                    value={heroData.subtitulo}
+                    onChange={(e) =>
+                      setHeroData({ ...heroData, subtitulo: e.target.value })
+                    }
+                    placeholder="Ex: Loja de moda jovem e moderna"
+                  />
+                </div>
+
+                <div>
+                  <Label>Descrição</Label>
+                  <Textarea
+                    value={basicInfo.descricao}
+                    onChange={(e) => setBasicInfo({ ...basicInfo, descricao: e.target.value })}
+                    placeholder="Digite a descrição do case"
+                    rows={4}
+                  />
                 </div>
 
                 <div>
@@ -429,6 +434,45 @@ export default function NewCase() {
                       {basicInfo.mockup_screenshot_url ? "Alterar Mockup" : "Selecionar Mockup"}
                     </Button>
                   </div>
+                </div>
+
+                <div>
+                  <Label>Descrição do Case</Label>
+                  <Textarea
+                    value={heroData.descricao}
+                    onChange={(e) =>
+                      setHeroData({ ...heroData, descricao: e.target.value })
+                    }
+                    placeholder="Descreva o case de forma detalhada"
+                    rows={4}
+                  />
+                </div>
+
+                <div>
+                  <Label>Tags</Label>
+                  <TagsAutocomplete
+                    selectedTagIds={selectedTagIds}
+                    onChange={setSelectedTagIds}
+                    allTags={caseTags}
+                    tipo="case"
+                    queryKey={['case-tags']}
+                  />
+                </div>
+
+                <div className="flex items-center space-x-2">
+                  <Switch
+                    checked={basicInfo.publicado}
+                    onCheckedChange={(checked) => setBasicInfo({ ...basicInfo, publicado: checked })}
+                  />
+                  <Label>Publicar case</Label>
+                </div>
+
+                <div className="flex items-center space-x-2">
+                  <Switch
+                    checked={basicInfo.is_featured}
+                    onCheckedChange={(checked) => setBasicInfo({ ...basicInfo, is_featured: checked })}
+                  />
+                  <Label>Marcar como destaque</Label>
                 </div>
               </CardContent>
             </Card>
@@ -508,61 +552,6 @@ export default function NewCase() {
                     value={clientData.localizacao}
                     onChange={(e) => setClientData({ ...clientData, localizacao: e.target.value })}
                     placeholder="Ex: São Paulo, Brasil"
-                  />
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          {/* Hero Section Tab */}
-          <TabsContent value="hero">
-            <Card>
-              <CardHeader>
-                <CardTitle>Hero Section</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div>
-                  <Label>Título Principal</Label>
-                  <Input
-                    value={heroData.titulo}
-                    onChange={(e) =>
-                      setHeroData({ ...heroData, titulo: e.target.value })
-                    }
-                    placeholder="Ex: JADEJADE"
-                  />
-                </div>
-
-                <div>
-                  <Label>Subtítulo</Label>
-                  <Input
-                    value={heroData.subtitulo}
-                    onChange={(e) =>
-                      setHeroData({ ...heroData, subtitulo: e.target.value })
-                    }
-                    placeholder="Ex: Loja de moda jovem e moderna"
-                  />
-                </div>
-
-                <div>
-                  <Label>Descrição</Label>
-                  <Textarea
-                    value={heroData.descricao}
-                    onChange={(e) =>
-                      setHeroData({ ...heroData, descricao: e.target.value })
-                    }
-                    placeholder="Descreva o case de forma detalhada"
-                    rows={4}
-                  />
-                </div>
-
-                <div>
-                  <Label>Tags</Label>
-                  <TagsAutocomplete
-                    selectedTagIds={selectedTagIds}
-                    onChange={setSelectedTagIds}
-                    allTags={caseTags}
-                    tipo="case"
-                    queryKey={['case-tags']}
                   />
                 </div>
               </CardContent>
