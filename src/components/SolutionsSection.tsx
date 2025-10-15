@@ -84,7 +84,7 @@ const SolutionsSection = () => {
     link: "/solucoes/performance-marketing"
   }, {
     icon: Compass,
-    badge: "Way.Jorney",
+    badge: "Way.Journey",
     title: "Jornada Way",
     subtitle: "Metodologia completa de transformação digital",
     description: "Uma metodologia completa para transformar seu e-commerce com análise 360° do seu negócio, plano de ação estruturado com metas e prazos definidos, além de suporte e mentoria em todas as etapas da transformação digital.",
