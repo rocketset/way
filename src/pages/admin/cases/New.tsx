@@ -401,40 +401,6 @@ export default function NewCase() {
                 </div>
 
                 <div>
-                  <Label>3º Imagem - Print do Site</Label>
-                  <p className="text-xs text-muted-foreground mb-2">Imagem do mockup do site/produto (aparece na página de listagem de cases)</p>
-                  <div className="space-y-2">
-                    {basicInfo.mockup_screenshot_url && (
-                      <div className="relative inline-block">
-                        <img 
-                          src={basicInfo.mockup_screenshot_url} 
-                          alt="Mockup preview" 
-                          className="h-32 w-auto object-contain border rounded"
-                        />
-                        <Button
-                          type="button"
-                          variant="destructive"
-                          size="icon"
-                          className="absolute -top-2 -right-2 h-6 w-6"
-                          onClick={() => removeImage("mockup")}
-                        >
-                          <X className="h-3 w-3" />
-                        </Button>
-                      </div>
-                    )}
-                    <Button
-                      type="button"
-                      variant="outline"
-                      onClick={() => openMediaSelector("mockup")}
-                      className="w-full"
-                    >
-                      <Upload className="mr-2 h-4 w-4" />
-                      {basicInfo.mockup_screenshot_url ? "Alterar Mockup" : "Selecionar Mockup"}
-                    </Button>
-                  </div>
-                </div>
-
-                <div>
                   <Label>Descrição do Case</Label>
                   <Textarea
                     value={heroData.descricao}
@@ -547,6 +513,40 @@ export default function NewCase() {
                         </CardContent>
                       </Card>
                     ))}
+                  </div>
+                </div>
+
+                <div>
+                  <Label>3º Imagem - Print do Site</Label>
+                  <p className="text-xs text-muted-foreground mb-2">Imagem do mockup do site/produto (aparece na página de listagem de cases)</p>
+                  <div className="space-y-2">
+                    {basicInfo.mockup_screenshot_url && (
+                      <div className="relative inline-block">
+                        <img 
+                          src={basicInfo.mockup_screenshot_url} 
+                          alt="Mockup preview" 
+                          className="h-32 w-auto object-contain border rounded"
+                        />
+                        <Button
+                          type="button"
+                          variant="destructive"
+                          size="icon"
+                          className="absolute -top-2 -right-2 h-6 w-6"
+                          onClick={() => removeImage("mockup")}
+                        >
+                          <X className="h-3 w-3" />
+                        </Button>
+                      </div>
+                    )}
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => openMediaSelector("mockup")}
+                      className="w-full"
+                    >
+                      <Upload className="mr-2 h-4 w-4" />
+                      {basicInfo.mockup_screenshot_url ? "Alterar Mockup" : "Selecionar Mockup"}
+                    </Button>
                   </div>
                 </div>
 
