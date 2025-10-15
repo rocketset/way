@@ -207,8 +207,8 @@ const Header = () => {
                   </DropdownMenuContent>
                 </DropdownMenu>
                 
-                {/* Plataformas Dropdown */}
-                <DropdownMenu>
+                {/* Plataformas Dropdown - TEMPORARIAMENTE REMOVIDO */}
+                {/* <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <button className="relative px-4 py-2 text-sm font-medium transition-all duration-300 rounded-full group text-foreground/70 hover:text-foreground">
                       <div className="absolute inset-0 bg-primary/5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -239,7 +239,7 @@ const Header = () => {
                       </DropdownMenuItem>
                     ))}
                   </DropdownMenuContent>
-                </DropdownMenu>
+                </DropdownMenu> */}
 
                 {/* Remaining items: CASES, BLOG, CONTATO */}
                 {navItems.slice(2).map((item, index) => (
@@ -400,8 +400,8 @@ const Header = () => {
                 </div>
               </div>
               
-              {/* Plataformas Menu */}
-              <div className="flex flex-col gap-2">
+              {/* Plataformas Menu - TEMPORARIAMENTE REMOVIDO */}
+              {/* <div className="flex flex-col gap-2">
                 <button
                   onClick={() => setIsPlatformMenuOpen(!isPlatformMenuOpen)}
                   className="flex items-center justify-between px-6 py-4 text-left font-medium rounded-xl transition-all duration-300 bg-background/50 text-foreground hover:bg-primary/5"
@@ -415,7 +415,6 @@ const Header = () => {
                   }`} />
                 </button>
                 
-                {/* Submenu de Plataformas */}
                 <div className={`overflow-hidden transition-all duration-300 ${
                   isPlatformMenuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
                 }`}>
@@ -435,7 +434,7 @@ const Header = () => {
                     ))}
                   </div>
                 </div>
-              </div>
+              </div> */}
               
               {navItems.slice(2).map((item, index) => (
                 <button
