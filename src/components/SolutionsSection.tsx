@@ -130,10 +130,10 @@ const SolutionsSection = () => {
               size="lg" 
               className="bg-primary text-background hover:bg-primary/90 font-medium px-8 py-6 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 group"
             >
-              <Link to="/contato" className="flex items-center gap-2">
+              <a href="https://wayecommerce.com.br/contact" className="flex items-center gap-2">
                 Fale com um especialista
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </Link>
+              </a>
             </Button>
           </div>
         </div>
