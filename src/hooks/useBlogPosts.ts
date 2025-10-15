@@ -22,12 +22,15 @@ export const useBlogPosts = (searchQuery?: string, selectedCategory?: string) =>
     queryKey: ['blog-posts', searchQuery, selectedCategory],
     queryFn: async () => {
       // Buscar posts publicados
-      const { data: posts, error } = await supabase
+      let query = supabase
         .from('posts')
         .select('*')
-        .eq('publicado', true)
-        .eq('status', 'published')
         .order('criado_em', { ascending: false });
+
+      // Filtrar posts publicados (aceita ambos os formatos de status)
+      query = query.or('publicado.eq.true,status.eq.published,status.eq.publicado');
+
+      const { data: posts, error } = await query;
 
       if (error) {
         console.error('Error fetching posts:', error);
