@@ -3,6 +3,7 @@
 
 import { useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { useCaseCategories } from '@/hooks/useCaseCategories';
 import { Button } from '@/components/ui/button';
 import {
   Table,
@@ -41,6 +42,7 @@ export default function CasesList() {
   const navigate = useNavigate();
   const [cases, setCases] = useState<Case[]>([]);
   const [loading, setLoading] = useState(true);
+  const { data: categories } = useCaseCategories();
 
   // Carrega cases ao montar o componente
   useEffect(() => {
@@ -89,6 +91,24 @@ export default function CasesList() {
       fetchCases();
     } catch (error: any) {
       toast.error('Erro ao atualizar status');
+      console.error('Erro:', error);
+    }
+  };
+
+  // Função para alterar categoria
+  const handleCategoryChange = async (id: string, categoryId: string | null) => {
+    try {
+      const { error } = await supabase
+        .from('cases')
+        .update({ categoria_id: categoryId })
+        .eq('id', id);
+
+      if (error) throw error;
+      
+      toast.success('Categoria atualizada com sucesso!');
+      fetchCases();
+    } catch (error: any) {
+      toast.error('Erro ao atualizar categoria');
       console.error('Erro:', error);
     }
   };
@@ -204,7 +224,24 @@ export default function CasesList() {
               cases.map((caseItem) => (
                 <TableRow key={caseItem.id}>
                   <TableCell className="font-medium">{caseItem.titulo}</TableCell>
-                  <TableCell>{caseItem.categories?.nome || '-'}</TableCell>
+                  <TableCell>
+                    <Select
+                      value={caseItem.categoria_id || 'sem-categoria'}
+                      onValueChange={(value) => handleCategoryChange(caseItem.id, value === 'sem-categoria' ? null : value)}
+                    >
+                      <SelectTrigger className="w-[160px]">
+                        <SelectValue placeholder="Selecione..." />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="sem-categoria">Sem categoria</SelectItem>
+                        {categories?.map((category) => (
+                          <SelectItem key={category.id} value={category.id}>
+                            {category.nome}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </TableCell>
                   <TableCell>
                     <Select
                       value={caseItem.content_status || 'rascunho'}
