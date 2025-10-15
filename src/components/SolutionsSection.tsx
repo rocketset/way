@@ -32,7 +32,7 @@ const SolutionsSection = () => {
     link: "/solucoes/implantacao-desenvolvimento"
   }, {
     icon: Target,
-    badge: "Way.consulting - Soluções Modulares",
+    badge: "Way.Consulting",
     title: "Consultoria",
     subtitle: "Orientação estratégica e visão de mercado especializada",
     description: "Orientação estratégica para impulsionar o crescimento sustentável do seu e-commerce. Nossos consultores especializados analisam profundamente seu negócio, identificam oportunidades e desenvolvem estratégias personalizadas que geram resultados mensuráveis.",
