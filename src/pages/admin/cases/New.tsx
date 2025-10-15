@@ -424,7 +424,7 @@ export default function NewCase() {
                 </div>
 
                 <div>
-                  <Label>Coluna Esquerda</Label>
+                  <Label>Coluna da Esquerda - Desafio</Label>
                   <Textarea
                     value={textColumnsData.coluna_esquerda}
                     onChange={(e) =>
@@ -439,7 +439,7 @@ export default function NewCase() {
                 </div>
 
                 <div>
-                  <Label>Coluna Direita</Label>
+                  <Label>Coluna da Direita - Resultado</Label>
                   <Textarea
                     value={textColumnsData.coluna_direita}
                     onChange={(e) =>
