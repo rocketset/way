@@ -398,7 +398,7 @@ export default function NewCase() {
                 </div>
 
                 <div>
-                  <Label>2º Imagem / Capa</Label>
+                  <Label>3º Imagem - Print do Site</Label>
                   <p className="text-xs text-muted-foreground mb-2">Imagem do mockup do site/produto (aparece na página de listagem de cases)</p>
                   <div className="space-y-2">
                     {basicInfo.mockup_screenshot_url && (
