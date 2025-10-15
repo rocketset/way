@@ -364,7 +364,7 @@ export default function NewCase() {
                 </div>
 
                 <div>
-                  <Label>Imagem Principal</Label>
+                  <Label>2º Imagem - Imagem da Capa / Principal</Label>
                   <p className="text-xs text-muted-foreground mb-2">Tamanho recomendado: 1920x1080px (proporção 16:9) - Aparece na página inicial</p>
                   <div className="space-y-2">
                     {heroData.imagem_principal && (
