@@ -149,6 +149,24 @@ export default function BlogPosts() {
     }
   };
 
+  // Função para alterar categoria
+  const handleCategoryChange = async (id: string, categoryId: string | null) => {
+    try {
+      const { error } = await supabase
+        .from('posts')
+        .update({ categoria_id: categoryId })
+        .eq('id', id);
+
+      if (error) throw error;
+      
+      toast.success('Categoria atualizada com sucesso!');
+      fetchPosts();
+    } catch (error: any) {
+      toast.error('Erro ao atualizar categoria');
+      console.error('Erro:', error);
+    }
+  };
+
   // Função para alternar destaque
   const handleToggleFeatured = async (id: string, currentValue: boolean) => {
     try {
@@ -258,6 +276,7 @@ export default function BlogPosts() {
           <TableHeader>
             <TableRow>
               <TableHead>Título</TableHead>
+              <TableHead>Categoria</TableHead>
               <TableHead>Status</TableHead>
               <TableHead>Destaque</TableHead>
               <TableHead>Data</TableHead>
@@ -267,7 +286,7 @@ export default function BlogPosts() {
           <TableBody>
             {posts.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={5} className="text-center text-muted-foreground">
+                <TableCell colSpan={6} className="text-center text-muted-foreground">
                   Nenhum post cadastrado
                 </TableCell>
               </TableRow>
@@ -275,6 +294,24 @@ export default function BlogPosts() {
               posts.map((post) => (
                 <TableRow key={post.id}>
                   <TableCell className="font-medium">{post.titulo}</TableCell>
+                  <TableCell>
+                    <Select
+                      value={post.categoria_id || 'sem-categoria'}
+                      onValueChange={(value) => handleCategoryChange(post.id, value === 'sem-categoria' ? null : value)}
+                    >
+                      <SelectTrigger className="w-[160px]">
+                        <SelectValue placeholder="Selecione..." />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="sem-categoria">Sem categoria</SelectItem>
+                        {categories.map((category) => (
+                          <SelectItem key={category.id} value={category.id}>
+                            {category.nome}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </TableCell>
                   <TableCell>
                     <Select
                       value={post.status || 'rascunho'}
