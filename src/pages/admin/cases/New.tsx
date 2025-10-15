@@ -228,11 +228,9 @@ export default function NewCase() {
 
       <form onSubmit={handleSubmit} className="space-y-6">
         <Tabs defaultValue="basic" className="w-full">
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="basic">Informações Básicas</TabsTrigger>
             <TabsTrigger value="client">Cliente</TabsTrigger>
-            <TabsTrigger value="text">Colunas de Texto</TabsTrigger>
-            <TabsTrigger value="benefits">Benefícios</TabsTrigger>
           </TabsList>
 
           {/* Basic Info Tab */}
@@ -459,6 +457,99 @@ export default function NewCase() {
                   />
                 </div>
 
+                <div>
+                  <Label>Coluna Esquerda</Label>
+                  <Textarea
+                    value={textColumnsData.coluna_esquerda}
+                    onChange={(e) =>
+                      setTextColumnsData({
+                        ...textColumnsData,
+                        coluna_esquerda: e.target.value,
+                      })
+                    }
+                    placeholder="Texto da primeira coluna (use quebras de linha para parágrafos)"
+                    rows={8}
+                  />
+                </div>
+
+                <div>
+                  <Label>Coluna Direita</Label>
+                  <Textarea
+                    value={textColumnsData.coluna_direita}
+                    onChange={(e) =>
+                      setTextColumnsData({
+                        ...textColumnsData,
+                        coluna_direita: e.target.value,
+                      })
+                    }
+                    placeholder="Texto da segunda coluna (use quebras de linha para parágrafos)"
+                    rows={8}
+                  />
+                </div>
+
+                <div className="space-y-4">
+                  <Label className="text-lg font-semibold">Grid de Benefícios (4 Cards)</Label>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {benefitsData.benefits.map((benefit, index) => (
+                      <Card key={index}>
+                        <CardContent className="pt-6 space-y-4">
+                          <div className="flex items-center justify-between">
+                            <Label>Card {index + 1}</Label>
+                          </div>
+                          
+                          <div>
+                            <Label>Ícone</Label>
+                            <IconPicker
+                              value={benefit.icon}
+                              onChange={(iconName) => {
+                                const newBenefits = [...benefitsData.benefits];
+                                newBenefits[index].icon = iconName;
+                                setBenefitsData({
+                                  ...benefitsData,
+                                  benefits: newBenefits,
+                                });
+                              }}
+                            />
+                          </div>
+
+                          <div>
+                            <Label>Título</Label>
+                            <Input
+                              value={benefit.titulo}
+                              onChange={(e) => {
+                                const newBenefits = [...benefitsData.benefits];
+                                newBenefits[index].titulo = e.target.value;
+                                setBenefitsData({
+                                  ...benefitsData,
+                                  benefits: newBenefits,
+                                });
+                              }}
+                              placeholder="Ex: Layout como extensão da identidade"
+                            />
+                          </div>
+
+                          <div>
+                            <Label>Descrição</Label>
+                            <Textarea
+                              value={benefit.descricao}
+                              onChange={(e) => {
+                                const newBenefits = [...benefitsData.benefits];
+                                newBenefits[index].descricao = e.target.value;
+                                setBenefitsData({
+                                  ...benefitsData,
+                                  benefits: newBenefits,
+                                });
+                              }}
+                              placeholder="Descreva o benefício em detalhes"
+                              rows={3}
+                            />
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                </div>
+
                 <div className="flex items-center space-x-2">
                   <Switch
                     checked={basicInfo.publicado}
@@ -553,116 +644,6 @@ export default function NewCase() {
                     onChange={(e) => setClientData({ ...clientData, localizacao: e.target.value })}
                     placeholder="Ex: São Paulo, Brasil"
                   />
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          {/* Text Columns Tab */}
-          <TabsContent value="text">
-            <Card>
-              <CardHeader>
-                <CardTitle>Colunas de Texto</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div>
-                  <Label>Coluna Esquerda</Label>
-                  <Textarea
-                    value={textColumnsData.coluna_esquerda}
-                    onChange={(e) =>
-                      setTextColumnsData({
-                        ...textColumnsData,
-                        coluna_esquerda: e.target.value,
-                      })
-                    }
-                    placeholder="Texto da primeira coluna (use quebras de linha para parágrafos)"
-                    rows={8}
-                  />
-                </div>
-
-                <div>
-                  <Label>Coluna Direita</Label>
-                  <Textarea
-                    value={textColumnsData.coluna_direita}
-                    onChange={(e) =>
-                      setTextColumnsData({
-                        ...textColumnsData,
-                        coluna_direita: e.target.value,
-                      })
-                    }
-                    placeholder="Texto da segunda coluna (use quebras de linha para parágrafos)"
-                    rows={8}
-                  />
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          {/* Benefits Tab */}
-          <TabsContent value="benefits">
-            <Card>
-              <CardHeader>
-                <CardTitle>Grid de Benefícios (4 Cards)</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {benefitsData.benefits.map((benefit, index) => (
-                    <Card key={index}>
-                      <CardContent className="pt-6 space-y-4">
-                        <div className="flex items-center justify-between">
-                          <Label>Card {index + 1}</Label>
-                        </div>
-                        
-                        <div>
-                          <Label>Ícone</Label>
-                          <IconPicker
-                            value={benefit.icon}
-                            onChange={(iconName) => {
-                              const newBenefits = [...benefitsData.benefits];
-                              newBenefits[index].icon = iconName;
-                              setBenefitsData({
-                                ...benefitsData,
-                                benefits: newBenefits,
-                              });
-                            }}
-                          />
-                        </div>
-
-                        <div>
-                          <Label>Título</Label>
-                          <Input
-                            value={benefit.titulo}
-                            onChange={(e) => {
-                              const newBenefits = [...benefitsData.benefits];
-                              newBenefits[index].titulo = e.target.value;
-                              setBenefitsData({
-                                ...benefitsData,
-                                benefits: newBenefits,
-                              });
-                            }}
-                            placeholder="Ex: Layout como extensão da identidade"
-                          />
-                        </div>
-
-                        <div>
-                          <Label>Descrição</Label>
-                          <Textarea
-                            value={benefit.descricao}
-                            onChange={(e) => {
-                              const newBenefits = [...benefitsData.benefits];
-                              newBenefits[index].descricao = e.target.value;
-                              setBenefitsData({
-                                ...benefitsData,
-                                benefits: newBenefits,
-                              });
-                            }}
-                            placeholder="Descreva o benefício em detalhes"
-                            rows={3}
-                          />
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))}
                 </div>
               </CardContent>
             </Card>
