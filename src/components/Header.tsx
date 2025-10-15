@@ -72,7 +72,7 @@ const Header = () => {
     { label: "Implantação e Desenvolvimento", path: "/solucoes/implantacao-desenvolvimento", isExternal: false },
     { label: "Consultorias", path: "https://preview--way.lovable.app/solucoes/consultoria", isExternal: true },
     { label: "Performance & Marketing", path: "/solucoes/performance-marketing", isExternal: false },
-    { label: "Jornada Way", path: "https://preview--way.lovable.app/solucoes/jornada", isExternal: true },
+    { label: "Jornada Way", path: "https://wayecommerce.com.br/solucoes/jornada", isExternal: true },
   ];
 
   const platformItems = [
