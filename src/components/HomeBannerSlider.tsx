@@ -59,7 +59,7 @@ const HomeBannerSlider = () => {
                 Conheça nossas soluções
               </a>
               <a
-                href="#contato"
+                href="https://wayecommerce.com.br/contact"
                 className="inline-flex items-center justify-center px-5 sm:px-6 py-2.5 sm:py-3 text-sm sm:text-base font-normal text-white border-2 border-white bg-transparent hover:bg-white hover:text-gray-900 rounded-sm transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
               >
                 Fale com um especialista
