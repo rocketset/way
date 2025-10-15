@@ -330,40 +330,6 @@ export default function NewCase() {
                 </div>
 
                 <div>
-                  <Label>2º Imagem / Capa</Label>
-                  <p className="text-xs text-muted-foreground mb-2">Imagem do mockup do site/produto (aparece na página de listagem de cases)</p>
-                  <div className="space-y-2">
-                    {basicInfo.mockup_screenshot_url && (
-                      <div className="relative inline-block">
-                        <img 
-                          src={basicInfo.mockup_screenshot_url} 
-                          alt="Mockup preview" 
-                          className="h-32 w-auto object-contain border rounded"
-                        />
-                        <Button
-                          type="button"
-                          variant="destructive"
-                          size="icon"
-                          className="absolute -top-2 -right-2 h-6 w-6"
-                          onClick={() => removeImage("mockup")}
-                        >
-                          <X className="h-3 w-3" />
-                        </Button>
-                      </div>
-                    )}
-                    <Button
-                      type="button"
-                      variant="outline"
-                      onClick={() => openMediaSelector("mockup")}
-                      className="w-full"
-                    >
-                      <Upload className="mr-2 h-4 w-4" />
-                      {basicInfo.mockup_screenshot_url ? "Alterar Mockup" : "Selecionar Mockup"}
-                    </Button>
-                  </div>
-                </div>
-
-                <div>
                   <Label>Logo/Marca</Label>
                   <p className="text-xs text-muted-foreground mb-2">Tamanho recomendado: 400x400px (formato quadrado)</p>
                   <div className="space-y-2">
@@ -431,20 +397,38 @@ export default function NewCase() {
                   </div>
                 </div>
 
-                <div className="flex items-center space-x-2">
-                  <Switch
-                    checked={basicInfo.publicado}
-                    onCheckedChange={(checked) => setBasicInfo({ ...basicInfo, publicado: checked })}
-                  />
-                  <Label>Publicar case</Label>
-                </div>
-
-                <div className="flex items-center space-x-2">
-                  <Switch
-                    checked={basicInfo.is_featured}
-                    onCheckedChange={(checked) => setBasicInfo({ ...basicInfo, is_featured: checked })}
-                  />
-                  <Label>Marcar como destaque</Label>
+                <div>
+                  <Label>2º Imagem / Capa</Label>
+                  <p className="text-xs text-muted-foreground mb-2">Imagem do mockup do site/produto (aparece na página de listagem de cases)</p>
+                  <div className="space-y-2">
+                    {basicInfo.mockup_screenshot_url && (
+                      <div className="relative inline-block">
+                        <img 
+                          src={basicInfo.mockup_screenshot_url} 
+                          alt="Mockup preview" 
+                          className="h-32 w-auto object-contain border rounded"
+                        />
+                        <Button
+                          type="button"
+                          variant="destructive"
+                          size="icon"
+                          className="absolute -top-2 -right-2 h-6 w-6"
+                          onClick={() => removeImage("mockup")}
+                        >
+                          <X className="h-3 w-3" />
+                        </Button>
+                      </div>
+                    )}
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => openMediaSelector("mockup")}
+                      className="w-full"
+                    >
+                      <Upload className="mr-2 h-4 w-4" />
+                      {basicInfo.mockup_screenshot_url ? "Alterar Mockup" : "Selecionar Mockup"}
+                    </Button>
+                  </div>
                 </div>
               </CardContent>
             </Card>
