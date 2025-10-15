@@ -357,7 +357,7 @@ export default function NewCase() {
                 </div>
 
                 <div>
-                  <Label>Descrição</Label>
+                  <Label>Sobre o Cliente</Label>
                   <Textarea
                     value={basicInfo.descricao}
                     onChange={(e) => setBasicInfo({ ...basicInfo, descricao: e.target.value })}
