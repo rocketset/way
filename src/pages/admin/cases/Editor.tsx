@@ -57,8 +57,11 @@ export default function CaseEditor() {
   });
 
   const [clientInfoData, setClientInfoData] = useState<ClientInfoBlockContent>({
-    banner_url: "",
-    sobre_cliente_texto: "",
+    logo_cliente: "",
+    nome_cliente: "",
+    site_cliente: "",
+    setor: "",
+    localizacao: "",
   });
 
   const [mockupScreenshotUrl, setMockupScreenshotUrl] = useState<string>("");
@@ -231,25 +234,46 @@ export default function CaseEditor() {
             </CardHeader>
             <CardContent className="space-y-4">
               <FileUpload
-                label="Imagem da Capa (Banner)"
+                label="Logo do Cliente"
                 accept="image/*"
-                currentUrl={clientInfoData.banner_url}
-                onUploadComplete={(url) => setClientInfoData({ ...clientInfoData, banner_url: url })}
-                folder="cases/banners"
-                maxSizeMB={5}
+                currentUrl={clientInfoData.logo_cliente}
+                onUploadComplete={(url) => setClientInfoData({ ...clientInfoData, logo_cliente: url })}
+                folder="cases/logos"
+                maxSizeMB={2}
                 showPreview={true}
-                helperText="Esta imagem aparece SOMENTE na primeira seção da página do case | Dimensões recomendadas: 1920x512px (formato 21:6) | Máx: 5MB"
+                helperText="Logo do cliente | Dimensões recomendadas: 400x400px (quadrado) | Máx: 2MB"
               />
               <div>
-                <Label>Sobre o Cliente</Label>
-                <CaseRichTextEditor
-                  value={clientInfoData.sobre_cliente_texto}
-                  onChange={(value) => setClientInfoData({ ...clientInfoData, sobre_cliente_texto: value })}
-                  placeholder="Texto descritivo sobre o cliente"
+                <Label>Nome do Cliente</Label>
+                <Input
+                  value={clientInfoData.nome_cliente}
+                  onChange={(e) => setClientInfoData({ ...clientInfoData, nome_cliente: e.target.value })}
+                  placeholder="Ex: JADEJADE"
                 />
-                <p className="text-sm text-muted-foreground mt-1">
-                  Use a barra de ferramentas para formatar o texto
-                </p>
+              </div>
+              <div>
+                <Label>Site do Cliente</Label>
+                <Input
+                  value={clientInfoData.site_cliente}
+                  onChange={(e) => setClientInfoData({ ...clientInfoData, site_cliente: e.target.value })}
+                  placeholder="Ex: https://www.jadejade.com.br"
+                />
+              </div>
+              <div>
+                <Label>Setor/Segmento</Label>
+                <Input
+                  value={clientInfoData.setor}
+                  onChange={(e) => setClientInfoData({ ...clientInfoData, setor: e.target.value })}
+                  placeholder="Ex: Moda e Vestuário"
+                />
+              </div>
+              <div>
+                <Label>Localização</Label>
+                <Input
+                  value={clientInfoData.localizacao}
+                  onChange={(e) => setClientInfoData({ ...clientInfoData, localizacao: e.target.value })}
+                  placeholder="Ex: São Paulo, Brasil"
+                />
               </div>
               <Button onClick={handleSaveClientInfo} disabled={saveMutation.isPending}>
                 <Save className="h-4 w-4 mr-2" />

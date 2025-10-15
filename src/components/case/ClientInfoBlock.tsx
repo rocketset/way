@@ -74,29 +74,35 @@ export const ClientInfoBlock = ({
               </Badge>)}
           </div>}
 
-        {/* Banner do Cliente */}
-        {data.banner_url && <div className="relative w-full aspect-[21/9] md:aspect-[21/7] lg:aspect-[21/6] rounded-2xl overflow-hidden shadow-2xl animate-fade-in group" style={{
+        {/* Client Info Card */}
+        {(data.logo_cliente || data.nome_cliente) && <div className="relative w-full rounded-2xl overflow-hidden shadow-2xl animate-fade-in border border-border bg-card p-8" style={{
         animationDelay: '200ms'
       }}>
-            <img src={data.banner_url} alt="Banner do cliente" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
+            <div className="grid md:grid-cols-[200px_1fr] gap-8 items-center">
+              {data.logo_cliente && <div className="flex justify-center md:justify-start">
+                  <img src={data.logo_cliente} alt="Logo do cliente" className="w-32 h-32 object-contain" />
+                </div>}
+              <div className="space-y-4">
+                {data.nome_cliente && <h3 className="text-2xl font-bold text-foreground">{data.nome_cliente}</h3>}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                  {data.setor && <div>
+                      <span className="text-muted-foreground">Setor:</span>
+                      <span className="ml-2 text-foreground font-medium">{data.setor}</span>
+                    </div>}
+                  {data.localizacao && <div>
+                      <span className="text-muted-foreground">Localização:</span>
+                      <span className="ml-2 text-foreground font-medium">{data.localizacao}</span>
+                    </div>}
+                  {data.site_cliente && <div className="md:col-span-2">
+                      <span className="text-muted-foreground">Site:</span>
+                      <a href={data.site_cliente} target="_blank" rel="noopener noreferrer" className="ml-2 text-primary hover:underline font-medium">
+                        {data.site_cliente}
+                      </a>
+                    </div>}
+                </div>
+              </div>
+            </div>
           </div>}
-
-        {/* Sobre o Cliente */}
-        <div className="grid md:grid-cols-[300px_1px_1fr] gap-8 items-start animate-fade-in" style={{
-        animationDelay: '300ms'
-      }}>
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground sticky top-24">
-            Sobre o Cliente
-          </h2>
-          <div className="hidden md:block w-px h-full bg-gradient-to-b from-transparent via-border to-transparent"></div>
-          <div 
-            className="text-lg text-muted-foreground leading-relaxed space-y-4 hover:text-foreground transition-colors duration-300 prose prose-invert max-w-none"
-            dangerouslySetInnerHTML={{
-              __html: DOMPurify.sanitize(data.sobre_cliente_texto)
-            }}
-          />
-        </div>
 
         {/* Hero Content Below */}
         {heroData && <div className="relative py-20 overflow-hidden rounded-3xl bg-gradient-to-br from-card via-card/50 to-background border border-border animate-fade-in" style={{

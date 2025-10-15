@@ -26,8 +26,11 @@ export interface BenefitsBlockContent {
 }
 
 export interface ClientInfoBlockContent {
-  banner_url?: string;
-  sobre_cliente_texto: string;
+  logo_cliente?: string;
+  nome_cliente: string;
+  site_cliente: string;
+  setor: string;
+  localizacao: string;
 }
 
 export interface CaseBlock {

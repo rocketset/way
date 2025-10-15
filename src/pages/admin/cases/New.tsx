@@ -15,13 +15,13 @@ import { IconPicker } from "@/components/editor/IconPicker";
 import { MediaSelector } from "@/components/editor/MediaSelector";
 import { TagsAutocomplete } from "@/components/editor/TagsAutocomplete";
 import { useCaseTags } from "@/hooks/useCaseTags";
-import type { HeroBlockContent, BenefitsBlockContent, TextColumnsBlockContent } from "@/hooks/useCaseBlocks";
+import type { HeroBlockContent, BenefitsBlockContent, TextColumnsBlockContent, ClientInfoBlockContent } from "@/hooks/useCaseBlocks";
 
 export default function NewCase() {
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [mediaSelectorOpen, setMediaSelectorOpen] = useState(false);
-  const [currentImageField, setCurrentImageField] = useState<"basic" | "hero-logo" | "hero-main" | null>(null);
+  const [currentImageField, setCurrentImageField] = useState<"basic" | "hero-logo" | "hero-main" | "client-logo" | "mockup" | null>(null);
   const [selectedTagIds, setSelectedTagIds] = useState<string[]>([]);
 
   const [basicInfo, setBasicInfo] = useState({
@@ -31,6 +31,7 @@ export default function NewCase() {
     imagem_url: "",
     publicado: false,
     is_featured: false,
+    mockup_screenshot_url: "",
   });
 
   const [heroData, setHeroData] = useState<HeroBlockContent>({
@@ -56,6 +57,14 @@ export default function NewCase() {
     ],
   });
 
+  const [clientData, setClientData] = useState<ClientInfoBlockContent>({
+    logo_cliente: "",
+    nome_cliente: "",
+    site_cliente: "",
+    setor: "",
+    localizacao: "",
+  });
+
   const { data: categories } = useQuery({
     queryKey: ["categories-case"],
     queryFn: async () => {
@@ -79,23 +88,31 @@ export default function NewCase() {
       setHeroData({ ...heroData, logo_url: url });
     } else if (currentImageField === "hero-main") {
       setHeroData({ ...heroData, imagem_principal: url });
+    } else if (currentImageField === "client-logo") {
+      setClientData({ ...clientData, logo_cliente: url });
+    } else if (currentImageField === "mockup") {
+      setBasicInfo({ ...basicInfo, mockup_screenshot_url: url });
     }
     setMediaSelectorOpen(false);
     setCurrentImageField(null);
   };
 
-  const openMediaSelector = (field: "basic" | "hero-logo" | "hero-main") => {
+  const openMediaSelector = (field: "basic" | "hero-logo" | "hero-main" | "client-logo" | "mockup") => {
     setCurrentImageField(field);
     setMediaSelectorOpen(true);
   };
 
-  const removeImage = (field: "basic" | "hero-logo" | "hero-main") => {
+  const removeImage = (field: "basic" | "hero-logo" | "hero-main" | "client-logo" | "mockup") => {
     if (field === "basic") {
       setBasicInfo({ ...basicInfo, imagem_url: "" });
     } else if (field === "hero-logo") {
       setHeroData({ ...heroData, logo_url: "" });
     } else if (field === "hero-main") {
       setHeroData({ ...heroData, imagem_principal: "" });
+    } else if (field === "client-logo") {
+      setClientData({ ...clientData, logo_cliente: "" });
+    } else if (field === "mockup") {
+      setBasicInfo({ ...basicInfo, mockup_screenshot_url: "" });
     }
   };
 
@@ -124,6 +141,7 @@ export default function NewCase() {
             imagem_url: basicInfo.imagem_url.trim() || null,
             publicado: basicInfo.publicado,
             is_featured: basicInfo.is_featured,
+            mockup_screenshot_url: basicInfo.mockup_screenshot_url.trim() || null,
           },
         ])
         .select()
@@ -135,20 +153,26 @@ export default function NewCase() {
       const blocksToInsert = [
         {
           case_id: newCase.id,
-          block_type: "hero",
+          block_type: "client_info",
           position: 0,
+          content: clientData,
+        },
+        {
+          case_id: newCase.id,
+          block_type: "hero",
+          position: 1,
           content: heroData,
         },
         {
           case_id: newCase.id,
           block_type: "text_columns",
-          position: 1,
+          position: 2,
           content: textColumnsData,
         },
         {
           case_id: newCase.id,
           block_type: "benefits",
-          position: 2,
+          position: 3,
           content: benefitsData,
         },
       ];
@@ -204,8 +228,9 @@ export default function NewCase() {
 
       <form onSubmit={handleSubmit} className="space-y-6">
         <Tabs defaultValue="basic" className="w-full">
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full grid-cols-5">
             <TabsTrigger value="basic">Informações Básicas</TabsTrigger>
+            <TabsTrigger value="client">Cliente</TabsTrigger>
             <TabsTrigger value="hero">Hero Section</TabsTrigger>
             <TabsTrigger value="text">Colunas de Texto</TabsTrigger>
             <TabsTrigger value="benefits">Benefícios</TabsTrigger>
@@ -302,6 +327,120 @@ export default function NewCase() {
                     onCheckedChange={(checked) => setBasicInfo({ ...basicInfo, is_featured: checked })}
                   />
                   <Label>Marcar como destaque</Label>
+                </div>
+
+                <div>
+                  <Label>Mockup Screenshot</Label>
+                  <p className="text-xs text-muted-foreground mb-2">Imagem do mockup do site/produto (aparece na página de listagem de cases)</p>
+                  <div className="space-y-2">
+                    {basicInfo.mockup_screenshot_url && (
+                      <div className="relative inline-block">
+                        <img 
+                          src={basicInfo.mockup_screenshot_url} 
+                          alt="Mockup preview" 
+                          className="h-32 w-auto object-contain border rounded"
+                        />
+                        <Button
+                          type="button"
+                          variant="destructive"
+                          size="icon"
+                          className="absolute -top-2 -right-2 h-6 w-6"
+                          onClick={() => removeImage("mockup")}
+                        >
+                          <X className="h-3 w-3" />
+                        </Button>
+                      </div>
+                    )}
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => openMediaSelector("mockup")}
+                      className="w-full"
+                    >
+                      <Upload className="mr-2 h-4 w-4" />
+                      {basicInfo.mockup_screenshot_url ? "Alterar Mockup" : "Selecionar Mockup"}
+                    </Button>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* Client Info Tab */}
+          <TabsContent value="client">
+            <Card>
+              <CardHeader>
+                <CardTitle>Informações do Cliente</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div>
+                  <Label>Logo do Cliente</Label>
+                  <p className="text-xs text-muted-foreground mb-2">Tamanho recomendado: 400x400px (formato quadrado)</p>
+                  <div className="space-y-2">
+                    {clientData.logo_cliente && (
+                      <div className="relative inline-block">
+                        <img 
+                          src={clientData.logo_cliente} 
+                          alt="Logo cliente preview" 
+                          className="h-20 w-auto object-contain border rounded"
+                        />
+                        <Button
+                          type="button"
+                          variant="destructive"
+                          size="icon"
+                          className="absolute -top-2 -right-2 h-6 w-6"
+                          onClick={() => removeImage("client-logo")}
+                        >
+                          <X className="h-3 w-3" />
+                        </Button>
+                      </div>
+                    )}
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => openMediaSelector("client-logo")}
+                      className="w-full"
+                    >
+                      <Upload className="mr-2 h-4 w-4" />
+                      {clientData.logo_cliente ? "Alterar Logo" : "Selecionar Logo"}
+                    </Button>
+                  </div>
+                </div>
+
+                <div>
+                  <Label>Nome do Cliente</Label>
+                  <Input
+                    value={clientData.nome_cliente}
+                    onChange={(e) => setClientData({ ...clientData, nome_cliente: e.target.value })}
+                    placeholder="Ex: JADEJADE"
+                  />
+                </div>
+
+                <div>
+                  <Label>Site do Cliente</Label>
+                  <Input
+                    value={clientData.site_cliente}
+                    onChange={(e) => setClientData({ ...clientData, site_cliente: e.target.value })}
+                    placeholder="Ex: https://www.jadejade.com.br"
+                  />
+                </div>
+
+                <div>
+                  <Label>Setor/Segmento</Label>
+                  <Input
+                    value={clientData.setor}
+                    onChange={(e) => setClientData({ ...clientData, setor: e.target.value })}
+                    placeholder="Ex: Moda e Vestuário"
+                  />
+                </div>
+
+                <div>
+                  <Label>Localização</Label>
+                  <Input
+                    value={clientData.localizacao}
+                    onChange={(e) => setClientData({ ...clientData, localizacao: e.target.value })}
+                    placeholder="Ex: São Paulo, Brasil"
+                  />
                 </div>
               </CardContent>
             </Card>
