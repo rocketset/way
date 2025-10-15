@@ -55,7 +55,7 @@ const SolutionsSection = () => {
     link: "/solucoes/consultoria"
   }, {
     icon: BarChart3,
-    badge: "Way.Digital - Soluções Modulares",
+    badge: "Way.Digital",
     title: "Performance & Marketing",
     subtitle: "Operação Data-Driven para crescimento sustentável",
     description: "Núcleo estratégico que transforma objetivos em planos práticos e mensuráveis. Combinamos criatividade e inteligência de dados para desenvolver estratégias e campanhas que geram resultados reais, otimizando investimentos e ampliando conversões.",
