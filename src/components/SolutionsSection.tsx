@@ -6,7 +6,7 @@ const SolutionsSection = () => {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const solutions = [{
     icon: ShoppingCart,
-    badge: "Way.tech - Soluções Modulares",
+    badge: "Way.Tech",
     title: "Implantação & Desenvolvimento",
     subtitle: "Do planejamento estratégico à integração com marketplaces",
     description: "Estruturamos, migramos e desenvolvemos soluções personalizadas para que seu e-commerce nasça forte e já pronto para escalar. Conectamos todos os seus canais de venda para impulsionar o crescimento do seu negócio.",
