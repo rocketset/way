@@ -270,7 +270,7 @@ export default function NewCase() {
                 </div>
 
                 <div>
-                  <Label>1º Imagem</Label>
+                  <Label>1º Imagem - Banner</Label>
                   <p className="text-xs text-muted-foreground mb-2">Tamanho recomendado: 800x600px</p>
                   <div className="space-y-2">
                     {basicInfo.imagem_url && (
