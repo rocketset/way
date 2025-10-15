@@ -47,13 +47,13 @@ const Header = () => {
 
   // Set active section based on current route
   useEffect(() => {
-    if (location.pathname === '/why-way') {
+    if (location.pathname === '/sobre' || location.pathname === '/why-way') {
       setActiveSection('por-que-way');
     } else if (location.pathname === '/blog' || location.pathname.startsWith('/blog/')) {
       setActiveSection('blog');
     } else if (location.pathname === '/cases' || location.pathname.startsWith('/cases/')) {
       setActiveSection('cases');
-    } else if (location.pathname === '/contact') {
+    } else if (location.pathname === '/contato' || location.pathname === '/contact') {
       setActiveSection('contato');
     } else if (location.pathname !== '/') {
       setActiveSection('');
@@ -62,17 +62,17 @@ const Header = () => {
 
   const navItems = [
     { id: "inicio", label: "Início", type: "link", path: "/" },
-    { id: "por-que-way", label: "Sobre", type: "link", path: "/why-way" },
+    { id: "por-que-way", label: "Sobre", type: "link", path: "/sobre" },
     { id: "cases", label: "Cases", type: "link", path: "/cases" },
     { id: "blog", label: "Blog", type: "link", path: "/blog" },
-    { id: "contato", label: "Contato", type: "link", path: "/contact" },
+    { id: "contato", label: "Contato", type: "link", path: "/contato" },
   ];
 
   const solutionItems = [
     { label: "Implantação e Desenvolvimento", path: "/solucoes/implantacao-desenvolvimento", isExternal: false },
     { label: "Consultorias", path: "https://preview--way.lovable.app/solucoes/consultoria", isExternal: true },
     { label: "Performance & Marketing", path: "/solucoes/performance-marketing", isExternal: false },
-    { label: "Jornada Way", path: "https://preview--way.lovable.app/solucoes/jornada", isExternal: true },
+    { label: "Jornada Way", path: "https://wayecommerce.com.br/solucoes/jornada", isExternal: true },
   ];
 
   const platformItems = [
