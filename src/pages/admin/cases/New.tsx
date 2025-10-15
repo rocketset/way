@@ -362,6 +362,90 @@ export default function NewCase() {
                     </Button>
                   </div>
                 </div>
+
+                <div>
+                  <Label>Logo/Marca</Label>
+                  <p className="text-xs text-muted-foreground mb-2">Tamanho recomendado: 400x400px (formato quadrado)</p>
+                  <div className="space-y-2">
+                    {heroData.logo_url && (
+                      <div className="relative inline-block">
+                        <img 
+                          src={heroData.logo_url} 
+                          alt="Logo preview" 
+                          className="h-20 w-auto object-contain border rounded"
+                        />
+                        <Button
+                          type="button"
+                          variant="destructive"
+                          size="icon"
+                          className="absolute -top-2 -right-2 h-6 w-6"
+                          onClick={() => removeImage("hero-logo")}
+                        >
+                          <X className="h-3 w-3" />
+                        </Button>
+                      </div>
+                    )}
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => openMediaSelector("hero-logo")}
+                      className="w-full"
+                    >
+                      <Upload className="mr-2 h-4 w-4" />
+                      {heroData.logo_url ? "Alterar Logo" : "Selecionar Logo"}
+                    </Button>
+                  </div>
+                </div>
+
+                <div>
+                  <Label>Imagem Principal</Label>
+                  <p className="text-xs text-muted-foreground mb-2">Tamanho recomendado: 1920x1080px (proporção 16:9) - Aparece na página inicial</p>
+                  <div className="space-y-2">
+                    {heroData.imagem_principal && (
+                      <div className="relative inline-block">
+                        <img 
+                          src={heroData.imagem_principal} 
+                          alt="Hero preview" 
+                          className="h-32 w-auto object-contain border rounded"
+                        />
+                        <Button
+                          type="button"
+                          variant="destructive"
+                          size="icon"
+                          className="absolute -top-2 -right-2 h-6 w-6"
+                          onClick={() => removeImage("hero-main")}
+                        >
+                          <X className="h-3 w-3" />
+                        </Button>
+                      </div>
+                    )}
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => openMediaSelector("hero-main")}
+                      className="w-full"
+                    >
+                      <Upload className="mr-2 h-4 w-4" />
+                      {heroData.imagem_principal ? "Alterar Imagem" : "Selecionar Imagem"}
+                    </Button>
+                  </div>
+                </div>
+
+                <div className="flex items-center space-x-2">
+                  <Switch
+                    checked={basicInfo.publicado}
+                    onCheckedChange={(checked) => setBasicInfo({ ...basicInfo, publicado: checked })}
+                  />
+                  <Label>Publicar case</Label>
+                </div>
+
+                <div className="flex items-center space-x-2">
+                  <Switch
+                    checked={basicInfo.is_featured}
+                    onCheckedChange={(checked) => setBasicInfo({ ...basicInfo, is_featured: checked })}
+                  />
+                  <Label>Marcar como destaque</Label>
+                </div>
               </CardContent>
             </Card>
           </TabsContent>
@@ -454,40 +538,6 @@ export default function NewCase() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <Label>Logo/Marca</Label>
-                  <p className="text-xs text-muted-foreground mb-2">Tamanho recomendado: 400x400px (formato quadrado)</p>
-                  <div className="space-y-2">
-                    {heroData.logo_url && (
-                      <div className="relative inline-block">
-                        <img 
-                          src={heroData.logo_url} 
-                          alt="Logo preview" 
-                          className="h-20 w-auto object-contain border rounded"
-                        />
-                        <Button
-                          type="button"
-                          variant="destructive"
-                          size="icon"
-                          className="absolute -top-2 -right-2 h-6 w-6"
-                          onClick={() => removeImage("hero-logo")}
-                        >
-                          <X className="h-3 w-3" />
-                        </Button>
-                      </div>
-                    )}
-                    <Button
-                      type="button"
-                      variant="outline"
-                      onClick={() => openMediaSelector("hero-logo")}
-                      className="w-full"
-                    >
-                      <Upload className="mr-2 h-4 w-4" />
-                      {heroData.logo_url ? "Alterar Logo" : "Selecionar Logo"}
-                    </Button>
-                  </div>
-                </div>
-
-                <div>
                   <Label>Título Principal</Label>
                   <Input
                     value={heroData.titulo}
@@ -530,40 +580,6 @@ export default function NewCase() {
                     tipo="case"
                     queryKey={['case-tags']}
                   />
-                </div>
-
-                <div>
-                  <Label>Imagem Principal</Label>
-                  <p className="text-xs text-muted-foreground mb-2">Tamanho recomendado: 1920x1080px (proporção 16:9)</p>
-                  <div className="space-y-2">
-                    {heroData.imagem_principal && (
-                      <div className="relative inline-block">
-                        <img 
-                          src={heroData.imagem_principal} 
-                          alt="Hero preview" 
-                          className="h-32 w-auto object-contain border rounded"
-                        />
-                        <Button
-                          type="button"
-                          variant="destructive"
-                          size="icon"
-                          className="absolute -top-2 -right-2 h-6 w-6"
-                          onClick={() => removeImage("hero-main")}
-                        >
-                          <X className="h-3 w-3" />
-                        </Button>
-                      </div>
-                    )}
-                    <Button
-                      type="button"
-                      variant="outline"
-                      onClick={() => openMediaSelector("hero-main")}
-                      className="w-full"
-                    >
-                      <Upload className="mr-2 h-4 w-4" />
-                      {heroData.imagem_principal ? "Alterar Imagem" : "Selecionar Imagem"}
-                    </Button>
-                  </div>
                 </div>
               </CardContent>
             </Card>
