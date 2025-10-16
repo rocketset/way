@@ -79,18 +79,6 @@ const CaseDetail = () => {
       <ScrollToTop />
       <Header />
       <div className="min-h-screen bg-background">
-        {/* Banner principal do case */}
-        {caseData?.imagem_url && (
-          <div className="w-full h-[400px] md:h-[500px] lg:h-[600px] relative overflow-hidden">
-            <img
-              src={caseData.imagem_url}
-              alt={caseData.titulo}
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/20 to-transparent" />
-          </div>
-        )}
-
         {/* Render Dynamic Blocks */}
         {blocks?.map(block => {
         // Find hero block to pass to ClientInfoBlock
@@ -101,7 +89,7 @@ const CaseDetail = () => {
         } : undefined;
         switch (block.block_type) {
           case "client_info":
-            return <ClientInfoBlock key={block.id} data={block.content as import("@/hooks/useCaseBlocks").ClientInfoBlockContent} caseId={id || ""} heroData={heroData} />;
+            return <ClientInfoBlock key={block.id} data={block.content as import("@/hooks/useCaseBlocks").ClientInfoBlockContent} caseId={id || ""} heroData={heroData} caseBannerData={caseData} />;
           case "hero":
             // Skip rendering hero separately as it's now inside ClientInfoBlock
             return null;

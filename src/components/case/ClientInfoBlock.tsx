@@ -10,6 +10,7 @@ interface ClientInfoBlockProps {
   data: ClientInfoBlockContent;
   caseId: string;
   heroData?: HeroBlockContent;
+  caseBannerData?: any;
 }
 const tagColors: Record<string, string> = {
   instagram: "bg-pink-500/10 text-pink-400 border-pink-500/20",
@@ -20,7 +21,8 @@ const tagColors: Record<string, string> = {
 export const ClientInfoBlock = ({
   data,
   caseId,
-  heroData
+  heroData,
+  caseBannerData
 }: ClientInfoBlockProps) => {
   const getTagColor = (tag: string) => {
     const normalized = tag.toLowerCase();
@@ -73,6 +75,20 @@ export const ClientInfoBlock = ({
                 {tag.nome}
               </Badge>)}
           </div>}
+
+        {/* Banner principal do case */}
+        {caseBannerData?.imagem_url && (
+          <div className="w-full h-[400px] md:h-[500px] lg:h-[600px] relative overflow-hidden rounded-2xl animate-fade-in" style={{
+            animationDelay: '150ms'
+          }}>
+            <img
+              src={caseBannerData.imagem_url}
+              alt={caseBannerData.titulo || 'Banner do case'}
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/20 to-transparent" />
+          </div>
+        )}
 
         {/* Client Info Card */}
         {(data.logo_cliente || data.nome_cliente) && <div className="relative w-full rounded-2xl overflow-hidden shadow-2xl animate-fade-in border border-border bg-card p-8" style={{
