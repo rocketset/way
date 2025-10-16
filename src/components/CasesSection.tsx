@@ -42,8 +42,9 @@ const CasesSection = () => {
       return;
     }
     const mapped = (data || []).map((c: any) => {
-      // Usar o banner (imagem_url) direto da tabela cases
-      const imagemBanner = c.imagem_url || '/placeholder.svg';
+      // Preferir o Banner (imagem_url); se não houver, usar a imagem_principal do bloco Hero
+      const heroBlock = c.case_content_blocks?.find((b: any) => b.block_type === 'hero');
+      const imagemBanner = c.imagem_url || heroBlock?.content?.imagem_principal || '/placeholder.svg';
       const tags = c.case_tags?.map((ct: any) => ct.tags.nome) || [];
       return {
         ...c,
@@ -110,7 +111,12 @@ const CasesSection = () => {
             }} onClick={() => navigate(`/cases/${caseItem.id}`)}>
                     {/* Image */}
                     <div className="relative aspect-[3/4] overflow-hidden rounded-lg mb-4 bg-muted">
-                      <img src={caseItem.imagem_url || "/placeholder.svg"} alt={caseItem.titulo} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                      <img 
+                        src={caseItem.imagem_url || "/placeholder.svg"}
+                        alt={caseItem.titulo}
+                        onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/placeholder.svg"; }}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                      />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     </div>
 
