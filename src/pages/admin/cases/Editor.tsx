@@ -10,13 +10,12 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft, Save } from "lucide-react";
+import { ArrowLeft, Save, Upload, X } from "lucide-react";
 import { IconPicker } from "@/components/editor/IconPicker";
 import { TagsAutocomplete } from "@/components/editor/TagsAutocomplete";
-import FileUpload from "@/components/admin/FileUpload";
+import { MediaSelector } from "@/components/editor/MediaSelector";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { CaseRichTextEditor } from "@/components/admin/CaseRichTextEditor";
 import type {
   HeroBlockContent,
   TextColumnsBlockContent,
@@ -32,6 +31,8 @@ export default function CaseEditor() {
   const { data: caseTags = [] } = useCaseTags();
   const saveMutation = useSaveCaseBlock();
   const [selectedTagIds, setSelectedTagIds] = useState<string[]>([]);
+  const [mediaSelectorOpen, setMediaSelectorOpen] = useState(false);
+  const [currentImageField, setCurrentImageField] = useState<"hero-logo" | "hero-main" | "client-logo" | "mockup" | null>(null);
 
   const [heroData, setHeroData] = useState<HeroBlockContent>({
     logo_url: "",
@@ -119,25 +120,77 @@ export default function CaseEditor() {
     return blocks?.find((b) => b.block_type === blockType)?.id;
   };
 
-  const handleSaveHero = async () => {
+  const handleImageSelect = (url: string) => {
+    if (currentImageField === "hero-logo") {
+      setHeroData({ ...heroData, logo_url: url });
+    } else if (currentImageField === "hero-main") {
+      setHeroData({ ...heroData, imagem_principal: url });
+    } else if (currentImageField === "client-logo") {
+      setClientInfoData({ ...clientInfoData, logo_cliente: url });
+    } else if (currentImageField === "mockup") {
+      setMockupScreenshotUrl(url);
+    }
+    setMediaSelectorOpen(false);
+    setCurrentImageField(null);
+  };
+
+  const openMediaSelector = (field: "hero-logo" | "hero-main" | "client-logo" | "mockup") => {
+    setCurrentImageField(field);
+    setMediaSelectorOpen(true);
+  };
+
+  const removeImage = (field: "hero-logo" | "hero-main" | "client-logo" | "mockup") => {
+    if (field === "hero-logo") {
+      setHeroData({ ...heroData, logo_url: "" });
+    } else if (field === "hero-main") {
+      setHeroData({ ...heroData, imagem_principal: "" });
+    } else if (field === "client-logo") {
+      setClientInfoData({ ...clientInfoData, logo_cliente: "" });
+    } else if (field === "mockup") {
+      setMockupScreenshotUrl("");
+    }
+  };
+
+  const handleSaveAll = async () => {
     try {
-      // Save hero block content
-      await saveMutation.mutateAsync({
-        caseId: id!,
-        blockType: "hero",
-        content: heroData,
-        position: 0,
-        blockId: getBlockId("hero"),
-      });
+      // Save all blocks
+      await Promise.all([
+        saveMutation.mutateAsync({
+          caseId: id!,
+          blockType: "client_info",
+          content: clientInfoData,
+          position: 0,
+          blockId: getBlockId("client_info"),
+        }),
+        saveMutation.mutateAsync({
+          caseId: id!,
+          blockType: "hero",
+          content: heroData,
+          position: 1,
+          blockId: getBlockId("hero"),
+        }),
+        saveMutation.mutateAsync({
+          caseId: id!,
+          blockType: "text_columns",
+          content: textColumnsData,
+          position: 2,
+          blockId: getBlockId("text_columns"),
+        }),
+        saveMutation.mutateAsync({
+          caseId: id!,
+          blockType: "benefits",
+          content: benefitsData,
+          position: 3,
+          blockId: getBlockId("benefits"),
+        }),
+      ]);
 
       // Update case tags
-      // First delete existing tags
       await supabase
         .from('case_tags')
         .delete()
         .eq('case_id', id!);
       
-      // Then insert new tags
       if (selectedTagIds.length > 0) {
         const tagRelations = selectedTagIds.map(tagId => ({
           case_id: id!,
@@ -148,57 +201,17 @@ export default function CaseEditor() {
           .from('case_tags')
           .insert(tagRelations);
       }
-      
-      toast.success('Hero e tags salvos com sucesso!');
-    } catch (error) {
-      console.error('Error saving hero:', error);
-      toast.error('Erro ao salvar');
-    }
-  };
 
-  const handleSaveTextColumns = () => {
-    saveMutation.mutate({
-      caseId: id!,
-      blockType: "text_columns",
-      content: textColumnsData,
-      position: 1,
-      blockId: getBlockId("text_columns"),
-    });
-  };
-
-  const handleSaveBenefits = () => {
-    saveMutation.mutate({
-      caseId: id!,
-      blockType: "benefits",
-      content: benefitsData,
-      position: 2,
-      blockId: getBlockId("benefits"),
-    });
-  };
-
-  const handleSaveClientInfo = () => {
-    saveMutation.mutate({
-      caseId: id!,
-      blockType: "client_info",
-      content: clientInfoData,
-      position: -1, // Position before hero
-      blockId: getBlockId("client_info"),
-    });
-  };
-
-  const handleSaveMockup = async () => {
-    try {
-      const { error } = await supabase
+      // Save mockup
+      await supabase
         .from('cases')
         .update({ mockup_screenshot_url: mockupScreenshotUrl })
         .eq('id', id!);
-
-      if (error) throw error;
       
-      toast.success('Screenshot do mockup salvo com sucesso!');
+      toast.success('Todas as alterações foram salvas!');
     } catch (error) {
-      console.error('Error saving mockup:', error);
-      toast.error('Erro ao salvar screenshot');
+      console.error('Error saving:', error);
+      toast.error('Erro ao salvar');
     }
   };
 
@@ -218,122 +231,114 @@ export default function CaseEditor() {
         </div>
       </div>
 
-      <Tabs defaultValue="client-info" className="w-full">
-        <TabsList className="grid w-full grid-cols-5">
-          <TabsTrigger value="client-info">Info Cliente</TabsTrigger>
-          <TabsTrigger value="hero">Hero</TabsTrigger>
-          <TabsTrigger value="text-columns">Colunas</TabsTrigger>
-          <TabsTrigger value="benefits">Benefícios</TabsTrigger>
-          <TabsTrigger value="mockup">Mockup</TabsTrigger>
+      <Tabs defaultValue="basic" className="w-full">
+        <TabsList className="grid w-full grid-cols-2">
+          <TabsTrigger value="basic">Informações Básicas</TabsTrigger>
+          <TabsTrigger value="client">Cliente</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="client-info">
+        <TabsContent value="basic">
           <Card>
             <CardHeader>
-              <CardTitle>Informações do Cliente</CardTitle>
+              <CardTitle>Informações Básicas</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <FileUpload
-                label="Logo do Cliente"
-                accept="image/*"
-                currentUrl={clientInfoData.logo_cliente}
-                onUploadComplete={(url) => setClientInfoData({ ...clientInfoData, logo_cliente: url })}
-                folder="cases/logos"
-                maxSizeMB={2}
-                showPreview={true}
-                helperText="Logo do cliente | Dimensões recomendadas: 400x400px (quadrado) | Máx: 2MB"
-              />
               <div>
-                <Label>Nome do Cliente</Label>
-                <Input
-                  value={clientInfoData.nome_cliente}
-                  onChange={(e) => setClientInfoData({ ...clientInfoData, nome_cliente: e.target.value })}
-                  placeholder="Ex: JADEJADE"
-                />
+                <Label>Logo/Marca</Label>
+                <p className="text-xs text-muted-foreground mb-2">Tamanho recomendado: 400x400px (formato quadrado)</p>
+                <div className="space-y-2">
+                  {heroData.logo_url && (
+                    <div className="relative inline-block">
+                      <img 
+                        src={heroData.logo_url} 
+                        alt="Logo preview" 
+                        className="h-20 w-auto object-contain border rounded"
+                      />
+                      <Button
+                        type="button"
+                        variant="destructive"
+                        size="icon"
+                        className="absolute -top-2 -right-2 h-6 w-6"
+                        onClick={() => removeImage("hero-logo")}
+                      >
+                        <X className="h-3 w-3" />
+                      </Button>
+                    </div>
+                  )}
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => openMediaSelector("hero-logo")}
+                    className="w-full"
+                  >
+                    <Upload className="mr-2 h-4 w-4" />
+                    {heroData.logo_url ? "Alterar Logo" : "Selecionar Logo"}
+                  </Button>
+                </div>
               </div>
-              <div>
-                <Label>Site do Cliente</Label>
-                <Input
-                  value={clientInfoData.site_cliente}
-                  onChange={(e) => setClientInfoData({ ...clientInfoData, site_cliente: e.target.value })}
-                  placeholder="Ex: https://www.jadejade.com.br"
-                />
-              </div>
-              <div>
-                <Label>Setor/Segmento</Label>
-                <Input
-                  value={clientInfoData.setor}
-                  onChange={(e) => setClientInfoData({ ...clientInfoData, setor: e.target.value })}
-                  placeholder="Ex: Moda e Vestuário"
-                />
-              </div>
-              <div>
-                <Label>Localização</Label>
-                <Input
-                  value={clientInfoData.localizacao}
-                  onChange={(e) => setClientInfoData({ ...clientInfoData, localizacao: e.target.value })}
-                  placeholder="Ex: São Paulo, Brasil"
-                />
-              </div>
-              <Button onClick={handleSaveClientInfo} disabled={saveMutation.isPending}>
-                <Save className="h-4 w-4 mr-2" />
-                Salvar Info Cliente
-              </Button>
-            </CardContent>
-          </Card>
-        </TabsContent>
 
-        <TabsContent value="hero">
-          <Card>
-            <CardHeader>
-              <CardTitle>Seção Hero</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <FileUpload
-                label="Logo"
-                accept="image/*"
-                currentUrl={heroData.logo_url}
-                onUploadComplete={(url) => setHeroData({ ...heroData, logo_url: url })}
-                folder="cases/logos"
-                maxSizeMB={2}
-                showPreview={true}
-                helperText="Dimensões recomendadas: 300x100px (formato 3:1) | Máx: 2MB"
-              />
               <div>
-                <Label>Título</Label>
+                <Label>Título Principal</Label>
                 <Input
                   value={heroData.titulo}
                   onChange={(e) => setHeroData({ ...heroData, titulo: e.target.value })}
-                  placeholder="Título principal"
+                  placeholder="Ex: JADEJADE"
                 />
               </div>
+
               <div>
                 <Label>Subtítulo</Label>
                 <Input
                   value={heroData.subtitulo}
                   onChange={(e) => setHeroData({ ...heroData, subtitulo: e.target.value })}
-                  placeholder="Subtítulo"
+                  placeholder="Ex: Loja de moda jovem e moderna"
                 />
               </div>
+
               <div>
-                <Label>Descrição</Label>
-                <CaseRichTextEditor
+                <Label>Breve Resumo</Label>
+                <Textarea
                   value={heroData.descricao}
-                  onChange={(value) => setHeroData({ ...heroData, descricao: value })}
-                  placeholder="Descrição detalhada"
-                  minHeight="120px"
+                  onChange={(e) => setHeroData({ ...heroData, descricao: e.target.value })}
+                  placeholder="Descreva o case de forma detalhada"
+                  rows={4}
                 />
               </div>
-              <FileUpload
-                label="Imagem Principal (Aparece nas Listagens)"
-                accept="image/*"
-                currentUrl={heroData.imagem_principal}
-                onUploadComplete={(url) => setHeroData({ ...heroData, imagem_principal: url })}
-                folder="cases/hero"
-                maxSizeMB={3}
-                showPreview={true}
-                helperText="Esta imagem aparece na página inicial e na lista de cases | Dimensões recomendadas: 800x800px (quadrada) | Máx: 3MB"
-              />
+
+              <div>
+                <Label>Imagem Principal (Aparece nas Listagens)</Label>
+                <p className="text-xs text-muted-foreground mb-2">Tamanho recomendado: 1920x1080px (proporção 16:9)</p>
+                <div className="space-y-2">
+                  {heroData.imagem_principal && (
+                    <div className="relative inline-block">
+                      <img 
+                        src={heroData.imagem_principal} 
+                        alt="Hero preview" 
+                        className="h-32 w-auto object-contain border rounded"
+                      />
+                      <Button
+                        type="button"
+                        variant="destructive"
+                        size="icon"
+                        className="absolute -top-2 -right-2 h-6 w-6"
+                        onClick={() => removeImage("hero-main")}
+                      >
+                        <X className="h-3 w-3" />
+                      </Button>
+                    </div>
+                  )}
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => openMediaSelector("hero-main")}
+                    className="w-full"
+                  >
+                    <Upload className="mr-2 h-4 w-4" />
+                    {heroData.imagem_principal ? "Alterar Imagem" : "Selecionar Imagem"}
+                  </Button>
+                </div>
+              </div>
+
               <div>
                 <Label>Tags</Label>
                 <TagsAutocomplete
@@ -344,133 +349,235 @@ export default function CaseEditor() {
                   queryKey={['case-tags']}
                 />
               </div>
-              <Button onClick={handleSaveHero} disabled={saveMutation.isPending}>
-                <Save className="h-4 w-4 mr-2" />
-                Salvar Hero
-              </Button>
-            </CardContent>
-          </Card>
-        </TabsContent>
 
-        <TabsContent value="text-columns">
-          <Card>
-            <CardHeader>
-              <CardTitle>Colunas de Texto</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
               <div>
-                <Label className="text-lg font-semibold flex items-center gap-2">
-                  <span className="text-primary">🎯</span> Desafio:
-                </Label>
-                <p className="text-sm text-muted-foreground mb-2">
-                  Descreva o desafio enfrentado pelo cliente
-                </p>
-                <CaseRichTextEditor
+                <Label>Coluna da Esquerda - Desafio</Label>
+                <Textarea
                   value={textColumnsData.coluna_esquerda}
-                  onChange={(value) => setTextColumnsData({ ...textColumnsData, coluna_esquerda: value })}
-                  placeholder="Texto do desafio..."
+                  onChange={(e) =>
+                    setTextColumnsData({
+                      ...textColumnsData,
+                      coluna_esquerda: e.target.value,
+                    })
+                  }
+                  placeholder="Texto da primeira coluna (use quebras de linha para parágrafos)"
+                  rows={8}
                 />
               </div>
+
               <div>
-                <Label className="text-lg font-semibold flex items-center gap-2">
-                  <span className="text-accent">🏆</span> Resultado:
-                </Label>
-                <p className="text-sm text-muted-foreground mb-2">
-                  Descreva os resultados alcançados
-                </p>
-                <CaseRichTextEditor
+                <Label>Coluna da Direita - Resultado</Label>
+                <Textarea
                   value={textColumnsData.coluna_direita}
-                  onChange={(value) => setTextColumnsData({ ...textColumnsData, coluna_direita: value })}
-                  placeholder="Texto dos resultados..."
+                  onChange={(e) =>
+                    setTextColumnsData({
+                      ...textColumnsData,
+                      coluna_direita: e.target.value,
+                    })
+                  }
+                  placeholder="Texto da segunda coluna (use quebras de linha para parágrafos)"
+                  rows={8}
                 />
               </div>
-              <Button onClick={handleSaveTextColumns} disabled={saveMutation.isPending}>
-                <Save className="h-4 w-4 mr-2" />
-                Salvar Colunas
-              </Button>
-            </CardContent>
-          </Card>
-        </TabsContent>
 
-        <TabsContent value="benefits">
-          <Card>
-            <CardHeader>
-              <CardTitle>Grid de Benefícios</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              {benefitsData.benefits.map((benefit, index) => (
-                <div key={index} className="p-4 border rounded-lg space-y-3">
-                  <h3 className="font-semibold">Benefício {index + 1}</h3>
-                  <div>
-                    <Label>Ícone</Label>
-                    <IconPicker
-                      value={benefit.icon}
-                      onChange={(iconName) => {
-                        const newBenefits = [...benefitsData.benefits];
-                        newBenefits[index].icon = iconName;
-                        setBenefitsData({ ...benefitsData, benefits: newBenefits });
-                      }}
-                    />
-                  </div>
-                  <div>
-                    <Label>Título</Label>
-                    <Input
-                      value={benefit.titulo}
-                      onChange={(e) => {
-                        const newBenefits = [...benefitsData.benefits];
-                        newBenefits[index].titulo = e.target.value;
-                        setBenefitsData({ ...benefitsData, benefits: newBenefits });
-                      }}
-                      placeholder="Título do benefício"
-                    />
-                  </div>
-                  <div>
-                    <Label>Descrição</Label>
-                    <Textarea
-                      value={benefit.descricao}
-                      onChange={(e) => {
-                        const newBenefits = [...benefitsData.benefits];
-                        newBenefits[index].descricao = e.target.value;
-                        setBenefitsData({ ...benefitsData, benefits: newBenefits });
-                      }}
-                      placeholder="Descrição do benefício"
-                      rows={3}
-                    />
-                  </div>
+              <div className="space-y-4">
+                <Label className="text-lg font-semibold">Grid de Benefícios (4 Cards)</Label>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {benefitsData.benefits.map((benefit, index) => (
+                    <Card key={index}>
+                      <CardContent className="pt-6 space-y-4">
+                        <div className="flex items-center justify-between">
+                          <Label>Card {index + 1}</Label>
+                        </div>
+                        
+                        <div>
+                          <Label>Ícone</Label>
+                          <IconPicker
+                            value={benefit.icon}
+                            onChange={(iconName) => {
+                              const newBenefits = [...benefitsData.benefits];
+                              newBenefits[index].icon = iconName;
+                              setBenefitsData({
+                                ...benefitsData,
+                                benefits: newBenefits,
+                              });
+                            }}
+                          />
+                        </div>
+
+                        <div>
+                          <Label>Título</Label>
+                          <Input
+                            value={benefit.titulo}
+                            onChange={(e) => {
+                              const newBenefits = [...benefitsData.benefits];
+                              newBenefits[index].titulo = e.target.value;
+                              setBenefitsData({
+                                ...benefitsData,
+                                benefits: newBenefits,
+                              });
+                            }}
+                            placeholder="Título do benefício"
+                          />
+                        </div>
+
+                        <div>
+                          <Label>Descrição</Label>
+                          <Textarea
+                            value={benefit.descricao}
+                            onChange={(e) => {
+                              const newBenefits = [...benefitsData.benefits];
+                              newBenefits[index].descricao = e.target.value;
+                              setBenefitsData({
+                                ...benefitsData,
+                                benefits: newBenefits,
+                              });
+                            }}
+                            placeholder="Descrição do benefício"
+                            rows={3}
+                          />
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
                 </div>
-              ))}
-              <Button onClick={handleSaveBenefits} disabled={saveMutation.isPending}>
-                <Save className="h-4 w-4 mr-2" />
-                Salvar Benefícios
-              </Button>
+              </div>
+
+              <div>
+                <Label>Screenshot do Site/App (Mockup)</Label>
+                <p className="text-xs text-muted-foreground mb-2">Imagem do mockup do site/produto (aparece na página de listagem de cases)</p>
+                <div className="space-y-2">
+                  {mockupScreenshotUrl && (
+                    <div className="relative inline-block">
+                      <img 
+                        src={mockupScreenshotUrl} 
+                        alt="Mockup preview" 
+                        className="h-32 w-auto object-contain border rounded"
+                      />
+                      <Button
+                        type="button"
+                        variant="destructive"
+                        size="icon"
+                        className="absolute -top-2 -right-2 h-6 w-6"
+                        onClick={() => removeImage("mockup")}
+                      >
+                        <X className="h-3 w-3" />
+                      </Button>
+                    </div>
+                  )}
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => openMediaSelector("mockup")}
+                    className="w-full"
+                  >
+                    <Upload className="mr-2 h-4 w-4" />
+                    {mockupScreenshotUrl ? "Alterar Mockup" : "Selecionar Mockup"}
+                  </Button>
+                </div>
+              </div>
             </CardContent>
           </Card>
         </TabsContent>
 
-        <TabsContent value="mockup">
+        <TabsContent value="client">
           <Card>
             <CardHeader>
-              <CardTitle>Screenshot do Mockup</CardTitle>
+              <CardTitle>Informações do Cliente</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <FileUpload
-                label="Screenshot do Site/App"
-                accept="image/*"
-                currentUrl={mockupScreenshotUrl}
-                onUploadComplete={(url) => setMockupScreenshotUrl(url)}
-                folder="cases/mockups"
-                maxSizeMB={5}
-                showPreview={true}
-                helperText="Esta imagem aparecerá dentro do mockup do MacBook na página do case | Dimensões recomendadas: 1920x1200px (16:10) | Máx: 5MB"
-              />
-              <Button onClick={handleSaveMockup}>
-                <Save className="h-4 w-4 mr-2" />
-                Salvar Screenshot
-              </Button>
+              <div>
+                <Label>Logo do Cliente</Label>
+                <p className="text-xs text-muted-foreground mb-2">Tamanho recomendado: 400x400px (formato quadrado)</p>
+                <div className="space-y-2">
+                  {clientInfoData.logo_cliente && (
+                    <div className="relative inline-block">
+                      <img 
+                        src={clientInfoData.logo_cliente} 
+                        alt="Logo cliente preview" 
+                        className="h-20 w-auto object-contain border rounded"
+                      />
+                      <Button
+                        type="button"
+                        variant="destructive"
+                        size="icon"
+                        className="absolute -top-2 -right-2 h-6 w-6"
+                        onClick={() => removeImage("client-logo")}
+                      >
+                        <X className="h-3 w-3" />
+                      </Button>
+                    </div>
+                  )}
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => openMediaSelector("client-logo")}
+                    className="w-full"
+                  >
+                    <Upload className="mr-2 h-4 w-4" />
+                    {clientInfoData.logo_cliente ? "Alterar Logo" : "Selecionar Logo"}
+                  </Button>
+                </div>
+              </div>
+
+              <div>
+                <Label>Nome do Cliente</Label>
+                <Input
+                  value={clientInfoData.nome_cliente}
+                  onChange={(e) => setClientInfoData({ ...clientInfoData, nome_cliente: e.target.value })}
+                  placeholder="Ex: JADEJADE"
+                />
+              </div>
+
+              <div>
+                <Label>Site do Cliente</Label>
+                <Input
+                  value={clientInfoData.site_cliente}
+                  onChange={(e) => setClientInfoData({ ...clientInfoData, site_cliente: e.target.value })}
+                  placeholder="Ex: https://www.jadejade.com.br"
+                />
+              </div>
+
+              <div>
+                <Label>Setor/Segmento</Label>
+                <Input
+                  value={clientInfoData.setor}
+                  onChange={(e) => setClientInfoData({ ...clientInfoData, setor: e.target.value })}
+                  placeholder="Ex: Moda e Vestuário"
+                />
+              </div>
+
+              <div>
+                <Label>Localização</Label>
+                <Input
+                  value={clientInfoData.localizacao}
+                  onChange={(e) => setClientInfoData({ ...clientInfoData, localizacao: e.target.value })}
+                  placeholder="Ex: São Paulo, Brasil"
+                />
+              </div>
             </CardContent>
           </Card>
         </TabsContent>
       </Tabs>
+
+      <div className="mt-6 flex gap-4">
+        <Button variant="outline" onClick={() => navigate("/admin/cases/list")}>
+          Cancelar
+        </Button>
+        <Button onClick={handleSaveAll} disabled={saveMutation.isPending}>
+          <Save className="mr-2 h-4 w-4" />
+          Salvar Tudo
+        </Button>
+      </div>
+
+      <MediaSelector
+        open={mediaSelectorOpen}
+        onClose={() => {
+          setMediaSelectorOpen(false);
+          setCurrentImageField(null);
+        }}
+        onSelect={handleImageSelect}
+      />
     </div>
   );
 }

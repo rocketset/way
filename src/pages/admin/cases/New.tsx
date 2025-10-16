@@ -9,18 +9,19 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
-import { ArrowLeft, Save } from "lucide-react";
+import { ArrowLeft, Save, Upload, X } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { IconPicker } from "@/components/editor/IconPicker";
-import FileUpload from "@/components/admin/FileUpload";
+import { MediaSelector } from "@/components/editor/MediaSelector";
 import { TagsAutocomplete } from "@/components/editor/TagsAutocomplete";
 import { useCaseTags } from "@/hooks/useCaseTags";
-import { CaseRichTextEditor } from "@/components/admin/CaseRichTextEditor";
 import type { HeroBlockContent, BenefitsBlockContent, TextColumnsBlockContent, ClientInfoBlockContent } from "@/hooks/useCaseBlocks";
 
 export default function NewCase() {
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [mediaSelectorOpen, setMediaSelectorOpen] = useState(false);
+  const [currentImageField, setCurrentImageField] = useState<"hero-logo" | "hero-main" | "client-logo" | "mockup" | null>(null);
   const [selectedTagIds, setSelectedTagIds] = useState<string[]>([]);
 
   const [basicInfo, setBasicInfo] = useState({
@@ -78,6 +79,37 @@ export default function NewCase() {
   });
 
   const { data: caseTags = [] } = useCaseTags();
+
+  const handleImageSelect = (url: string) => {
+    if (currentImageField === "hero-logo") {
+      setHeroData({ ...heroData, logo_url: url });
+    } else if (currentImageField === "hero-main") {
+      setHeroData({ ...heroData, imagem_principal: url });
+    } else if (currentImageField === "client-logo") {
+      setClientData({ ...clientData, logo_cliente: url });
+    } else if (currentImageField === "mockup") {
+      setMockupScreenshotUrl(url);
+    }
+    setMediaSelectorOpen(false);
+    setCurrentImageField(null);
+  };
+
+  const openMediaSelector = (field: "hero-logo" | "hero-main" | "client-logo" | "mockup") => {
+    setCurrentImageField(field);
+    setMediaSelectorOpen(true);
+  };
+
+  const removeImage = (field: "hero-logo" | "hero-main" | "client-logo" | "mockup") => {
+    if (field === "hero-logo") {
+      setHeroData({ ...heroData, logo_url: "" });
+    } else if (field === "hero-main") {
+      setHeroData({ ...heroData, imagem_principal: "" });
+    } else if (field === "client-logo") {
+      setClientData({ ...clientData, logo_cliente: "" });
+    } else if (field === "mockup") {
+      setMockupScreenshotUrl("");
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -181,12 +213,9 @@ export default function NewCase() {
 
       <form onSubmit={handleSubmit} className="space-y-6">
         <Tabs defaultValue="basic" className="w-full">
-          <TabsList className="grid w-full grid-cols-5">
-            <TabsTrigger value="basic">Básico</TabsTrigger>
-            <TabsTrigger value="client-info">Info Cliente</TabsTrigger>
-            <TabsTrigger value="hero">Hero</TabsTrigger>
-            <TabsTrigger value="text-columns">Colunas</TabsTrigger>
-            <TabsTrigger value="benefits">Benefícios</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-2">
+            <TabsTrigger value="basic">Informações Básicas</TabsTrigger>
+            <TabsTrigger value="client">Cliente</TabsTrigger>
           </TabsList>
 
           {/* Basic Info Tab */}
@@ -222,6 +251,246 @@ export default function NewCase() {
                   </select>
                 </div>
 
+                <div>
+                  <Label>Logo/Marca</Label>
+                  <p className="text-xs text-muted-foreground mb-2">Tamanho recomendado: 400x400px (formato quadrado)</p>
+                  <div className="space-y-2">
+                    {heroData.logo_url && (
+                      <div className="relative inline-block">
+                        <img 
+                          src={heroData.logo_url} 
+                          alt="Logo preview" 
+                          className="h-20 w-auto object-contain border rounded"
+                        />
+                        <Button
+                          type="button"
+                          variant="destructive"
+                          size="icon"
+                          className="absolute -top-2 -right-2 h-6 w-6"
+                          onClick={() => removeImage("hero-logo")}
+                        >
+                          <X className="h-3 w-3" />
+                        </Button>
+                      </div>
+                    )}
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => openMediaSelector("hero-logo")}
+                      className="w-full"
+                    >
+                      <Upload className="mr-2 h-4 w-4" />
+                      {heroData.logo_url ? "Alterar Logo" : "Selecionar Logo"}
+                    </Button>
+                  </div>
+                </div>
+
+                <div>
+                  <Label>Título Principal</Label>
+                  <Input
+                    value={heroData.titulo}
+                    onChange={(e) =>
+                      setHeroData({ ...heroData, titulo: e.target.value })
+                    }
+                    placeholder="Ex: JADEJADE"
+                  />
+                </div>
+
+                <div>
+                  <Label>Subtítulo</Label>
+                  <Input
+                    value={heroData.subtitulo}
+                    onChange={(e) =>
+                      setHeroData({ ...heroData, subtitulo: e.target.value })
+                    }
+                    placeholder="Ex: Loja de moda jovem e moderna"
+                  />
+                </div>
+
+                <div>
+                  <Label>Breve Resumo</Label>
+                  <Textarea
+                    value={heroData.descricao}
+                    onChange={(e) =>
+                      setHeroData({ ...heroData, descricao: e.target.value })
+                    }
+                    placeholder="Descreva o case de forma detalhada"
+                    rows={4}
+                  />
+                </div>
+
+                <div>
+                  <Label>Imagem Principal (Aparece nas Listagens)</Label>
+                  <p className="text-xs text-muted-foreground mb-2">Tamanho recomendado: 1920x1080px (proporção 16:9)</p>
+                  <div className="space-y-2">
+                    {heroData.imagem_principal && (
+                      <div className="relative inline-block">
+                        <img 
+                          src={heroData.imagem_principal} 
+                          alt="Hero preview" 
+                          className="h-32 w-auto object-contain border rounded"
+                        />
+                        <Button
+                          type="button"
+                          variant="destructive"
+                          size="icon"
+                          className="absolute -top-2 -right-2 h-6 w-6"
+                          onClick={() => removeImage("hero-main")}
+                        >
+                          <X className="h-3 w-3" />
+                        </Button>
+                      </div>
+                    )}
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => openMediaSelector("hero-main")}
+                      className="w-full"
+                    >
+                      <Upload className="mr-2 h-4 w-4" />
+                      {heroData.imagem_principal ? "Alterar Imagem" : "Selecionar Imagem"}
+                    </Button>
+                  </div>
+                </div>
+
+                <div>
+                  <Label>Tags</Label>
+                  <TagsAutocomplete
+                    selectedTagIds={selectedTagIds}
+                    onChange={setSelectedTagIds}
+                    allTags={caseTags}
+                    tipo="case"
+                    queryKey={['case-tags']}
+                  />
+                </div>
+
+                <div>
+                  <Label>Coluna da Esquerda - Desafio</Label>
+                  <Textarea
+                    value={textColumnsData.coluna_esquerda}
+                    onChange={(e) =>
+                      setTextColumnsData({
+                        ...textColumnsData,
+                        coluna_esquerda: e.target.value,
+                      })
+                    }
+                    placeholder="Texto da primeira coluna (use quebras de linha para parágrafos)"
+                    rows={8}
+                  />
+                </div>
+
+                <div>
+                  <Label>Coluna da Direita - Resultado</Label>
+                  <Textarea
+                    value={textColumnsData.coluna_direita}
+                    onChange={(e) =>
+                      setTextColumnsData({
+                        ...textColumnsData,
+                        coluna_direita: e.target.value,
+                      })
+                    }
+                    placeholder="Texto da segunda coluna (use quebras de linha para parágrafos)"
+                    rows={8}
+                  />
+                </div>
+
+                <div className="space-y-4">
+                  <Label className="text-lg font-semibold">Grid de Benefícios (4 Cards)</Label>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {benefitsData.benefits.map((benefit, index) => (
+                      <Card key={index}>
+                        <CardContent className="pt-6 space-y-4">
+                          <div className="flex items-center justify-between">
+                            <Label>Card {index + 1}</Label>
+                          </div>
+                          
+                          <div>
+                            <Label>Ícone</Label>
+                            <IconPicker
+                              value={benefit.icon}
+                              onChange={(iconName) => {
+                                const newBenefits = [...benefitsData.benefits];
+                                newBenefits[index].icon = iconName;
+                                setBenefitsData({
+                                  ...benefitsData,
+                                  benefits: newBenefits,
+                                });
+                              }}
+                            />
+                          </div>
+
+                          <div>
+                            <Label>Título</Label>
+                            <Input
+                              value={benefit.titulo}
+                              onChange={(e) => {
+                                const newBenefits = [...benefitsData.benefits];
+                                newBenefits[index].titulo = e.target.value;
+                                setBenefitsData({
+                                  ...benefitsData,
+                                  benefits: newBenefits,
+                                });
+                              }}
+                              placeholder="Título do benefício"
+                            />
+                          </div>
+
+                          <div>
+                            <Label>Descrição</Label>
+                            <Textarea
+                              value={benefit.descricao}
+                              onChange={(e) => {
+                                const newBenefits = [...benefitsData.benefits];
+                                newBenefits[index].descricao = e.target.value;
+                                setBenefitsData({
+                                  ...benefitsData,
+                                  benefits: newBenefits,
+                                });
+                              }}
+                              placeholder="Descrição do benefício"
+                              rows={3}
+                            />
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  <Label>Screenshot do Site/App (Mockup)</Label>
+                  <p className="text-xs text-muted-foreground mb-2">Imagem do mockup do site/produto (aparece na página de listagem de cases)</p>
+                  <div className="space-y-2">
+                    {mockupScreenshotUrl && (
+                      <div className="relative inline-block">
+                        <img 
+                          src={mockupScreenshotUrl} 
+                          alt="Mockup preview" 
+                          className="h-32 w-auto object-contain border rounded"
+                        />
+                        <Button
+                          type="button"
+                          variant="destructive"
+                          size="icon"
+                          className="absolute -top-2 -right-2 h-6 w-6"
+                          onClick={() => removeImage("mockup")}
+                        >
+                          <X className="h-3 w-3" />
+                        </Button>
+                      </div>
+                    )}
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => openMediaSelector("mockup")}
+                      className="w-full"
+                    >
+                      <Upload className="mr-2 h-4 w-4" />
+                      {mockupScreenshotUrl ? "Alterar Mockup" : "Selecionar Mockup"}
+                    </Button>
+                  </div>
+                </div>
+
                 <div className="flex items-center space-x-2">
                   <Switch
                     checked={basicInfo.publicado}
@@ -242,22 +511,46 @@ export default function NewCase() {
           </TabsContent>
 
           {/* Client Info Tab */}
-          <TabsContent value="client-info">
+          <TabsContent value="client">
             <Card>
               <CardHeader>
                 <CardTitle>Informações do Cliente</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                <FileUpload
-                  label="Logo do Cliente"
-                  accept="image/*"
-                  currentUrl={clientData.logo_cliente}
-                  onUploadComplete={(url) => setClientData({ ...clientData, logo_cliente: url })}
-                  folder="cases/logos"
-                  maxSizeMB={2}
-                  showPreview={true}
-                  helperText="Logo do cliente | Dimensões recomendadas: 400x400px (quadrado) | Máx: 2MB"
-                />
+                <div>
+                  <Label>Logo do Cliente</Label>
+                  <p className="text-xs text-muted-foreground mb-2">Tamanho recomendado: 400x400px (formato quadrado)</p>
+                  <div className="space-y-2">
+                    {clientData.logo_cliente && (
+                      <div className="relative inline-block">
+                        <img 
+                          src={clientData.logo_cliente} 
+                          alt="Logo cliente preview" 
+                          className="h-20 w-auto object-contain border rounded"
+                        />
+                        <Button
+                          type="button"
+                          variant="destructive"
+                          size="icon"
+                          className="absolute -top-2 -right-2 h-6 w-6"
+                          onClick={() => removeImage("client-logo")}
+                        >
+                          <X className="h-3 w-3" />
+                        </Button>
+                      </div>
+                    )}
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => openMediaSelector("client-logo")}
+                      className="w-full"
+                    >
+                      <Upload className="mr-2 h-4 w-4" />
+                      {clientData.logo_cliente ? "Alterar Logo" : "Selecionar Logo"}
+                    </Button>
+                  </div>
+                </div>
+
                 <div>
                   <Label>Nome do Cliente</Label>
                   <Input
@@ -266,6 +559,7 @@ export default function NewCase() {
                     placeholder="Ex: JADEJADE"
                   />
                 </div>
+
                 <div>
                   <Label>Site do Cliente</Label>
                   <Input
@@ -274,6 +568,7 @@ export default function NewCase() {
                     placeholder="Ex: https://www.jadejade.com.br"
                   />
                 </div>
+
                 <div>
                   <Label>Setor/Segmento</Label>
                   <Input
@@ -282,6 +577,7 @@ export default function NewCase() {
                     placeholder="Ex: Moda e Vestuário"
                   />
                 </div>
+
                 <div>
                   <Label>Localização</Label>
                   <Input
@@ -290,161 +586,6 @@ export default function NewCase() {
                     placeholder="Ex: São Paulo, Brasil"
                   />
                 </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          {/* Hero Tab */}
-          <TabsContent value="hero">
-            <Card>
-              <CardHeader>
-                <CardTitle>Seção Hero</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <FileUpload
-                  label="Logo"
-                  accept="image/*"
-                  currentUrl={heroData.logo_url}
-                  onUploadComplete={(url) => setHeroData({ ...heroData, logo_url: url })}
-                  folder="cases/logos"
-                  maxSizeMB={2}
-                  showPreview={true}
-                  helperText="Dimensões recomendadas: 300x100px (formato 3:1) | Máx: 2MB"
-                />
-                <div>
-                  <Label>Título</Label>
-                  <Input
-                    value={heroData.titulo}
-                    onChange={(e) => setHeroData({ ...heroData, titulo: e.target.value })}
-                    placeholder="Título principal"
-                  />
-                </div>
-                <div>
-                  <Label>Subtítulo</Label>
-                  <Input
-                    value={heroData.subtitulo}
-                    onChange={(e) => setHeroData({ ...heroData, subtitulo: e.target.value })}
-                    placeholder="Subtítulo"
-                  />
-                </div>
-                <div>
-                  <Label>Descrição</Label>
-                  <CaseRichTextEditor
-                    value={heroData.descricao}
-                    onChange={(value) => setHeroData({ ...heroData, descricao: value })}
-                    placeholder="Descrição detalhada"
-                    minHeight="120px"
-                  />
-                </div>
-                <FileUpload
-                  label="Imagem Principal (Aparece nas Listagens)"
-                  accept="image/*"
-                  currentUrl={heroData.imagem_principal}
-                  onUploadComplete={(url) => setHeroData({ ...heroData, imagem_principal: url })}
-                  folder="cases/hero"
-                  maxSizeMB={3}
-                  showPreview={true}
-                  helperText="Esta imagem aparece na página inicial e na lista de cases | Dimensões recomendadas: 800x800px (quadrada) | Máx: 3MB"
-                />
-                <div>
-                  <Label>Tags</Label>
-                  <TagsAutocomplete
-                    selectedTagIds={selectedTagIds}
-                    onChange={setSelectedTagIds}
-                    allTags={caseTags}
-                    tipo="case"
-                    queryKey={['case-tags']}
-                  />
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          {/* Text Columns Tab */}
-          <TabsContent value="text-columns">
-            <Card>
-              <CardHeader>
-                <CardTitle>Colunas de Texto</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div>
-                  <Label className="text-lg font-semibold flex items-center gap-2">
-                    <span className="text-primary">🎯</span> Desafio:
-                  </Label>
-                  <p className="text-sm text-muted-foreground mb-2">
-                    Descreva o desafio enfrentado pelo cliente
-                  </p>
-                  <CaseRichTextEditor
-                    value={textColumnsData.coluna_esquerda}
-                    onChange={(value) => setTextColumnsData({ ...textColumnsData, coluna_esquerda: value })}
-                    placeholder="Texto do desafio..."
-                  />
-                </div>
-                <div>
-                  <Label className="text-lg font-semibold flex items-center gap-2">
-                    <span className="text-accent">🏆</span> Resultado:
-                  </Label>
-                  <p className="text-sm text-muted-foreground mb-2">
-                    Descreva os resultados alcançados
-                  </p>
-                  <CaseRichTextEditor
-                    value={textColumnsData.coluna_direita}
-                    onChange={(value) => setTextColumnsData({ ...textColumnsData, coluna_direita: value })}
-                    placeholder="Texto dos resultados..."
-                  />
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          {/* Benefits Tab */}
-          <TabsContent value="benefits">
-            <Card>
-              <CardHeader>
-                <CardTitle>Grid de Benefícios</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                {benefitsData.benefits.map((benefit, index) => (
-                  <div key={index} className="p-4 border rounded-lg space-y-3">
-                    <h3 className="font-semibold">Benefício {index + 1}</h3>
-                    <div>
-                      <Label>Ícone</Label>
-                      <IconPicker
-                        value={benefit.icon}
-                        onChange={(iconName) => {
-                          const newBenefits = [...benefitsData.benefits];
-                          newBenefits[index].icon = iconName;
-                          setBenefitsData({ ...benefitsData, benefits: newBenefits });
-                        }}
-                      />
-                    </div>
-                    <div>
-                      <Label>Título</Label>
-                      <Input
-                        value={benefit.titulo}
-                        onChange={(e) => {
-                          const newBenefits = [...benefitsData.benefits];
-                          newBenefits[index].titulo = e.target.value;
-                          setBenefitsData({ ...benefitsData, benefits: newBenefits });
-                        }}
-                        placeholder="Título do benefício"
-                      />
-                    </div>
-                    <div>
-                      <Label>Descrição</Label>
-                      <Textarea
-                        value={benefit.descricao}
-                        onChange={(e) => {
-                          const newBenefits = [...benefitsData.benefits];
-                          newBenefits[index].descricao = e.target.value;
-                          setBenefitsData({ ...benefitsData, benefits: newBenefits });
-                        }}
-                        placeholder="Descrição do benefício"
-                        rows={3}
-                      />
-                    </div>
-                  </div>
-                ))}
               </CardContent>
             </Card>
           </TabsContent>
@@ -465,6 +606,15 @@ export default function NewCase() {
           </Button>
         </div>
       </form>
+
+      <MediaSelector
+        open={mediaSelectorOpen}
+        onClose={() => {
+          setMediaSelectorOpen(false);
+          setCurrentImageField(null);
+        }}
+        onSelect={handleImageSelect}
+      />
     </div>
   );
 }
