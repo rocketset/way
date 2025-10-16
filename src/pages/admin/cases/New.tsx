@@ -14,6 +14,7 @@ import { useQuery } from "@tanstack/react-query";
 import { IconPicker } from "@/components/editor/IconPicker";
 import { MediaSelector } from "@/components/editor/MediaSelector";
 import { TagsAutocomplete } from "@/components/editor/TagsAutocomplete";
+import FileUpload from "@/components/admin/FileUpload";
 import { useCaseTags } from "@/hooks/useCaseTags";
 import type { HeroBlockContent, BenefitsBlockContent, TextColumnsBlockContent, ClientInfoBlockContent } from "@/hooks/useCaseBlocks";
 
@@ -21,7 +22,7 @@ export default function NewCase() {
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [mediaSelectorOpen, setMediaSelectorOpen] = useState(false);
-  const [currentImageField, setCurrentImageField] = useState<"basic-banner" | "hero-logo" | "hero-main" | "client-logo" | "mockup" | null>(null);
+  const [currentImageField, setCurrentImageField] = useState<"hero-logo" | "hero-main" | "client-logo" | "mockup" | null>(null);
   const [selectedTagIds, setSelectedTagIds] = useState<string[]>([]);
 
   const [basicInfo, setBasicInfo] = useState({
@@ -83,9 +84,7 @@ export default function NewCase() {
   const { data: caseTags = [] } = useCaseTags();
 
   const handleImageSelect = (url: string) => {
-    if (currentImageField === "basic-banner") {
-      setBasicInfo({ ...basicInfo, imagem_url: url });
-    } else if (currentImageField === "hero-logo") {
+    if (currentImageField === "hero-logo") {
       setHeroData({ ...heroData, logo_url: url });
     } else if (currentImageField === "hero-main") {
       setHeroData({ ...heroData, imagem_principal: url });
@@ -98,15 +97,13 @@ export default function NewCase() {
     setCurrentImageField(null);
   };
 
-  const openMediaSelector = (field: "basic-banner" | "hero-logo" | "hero-main" | "client-logo" | "mockup") => {
+  const openMediaSelector = (field: "hero-logo" | "hero-main" | "client-logo" | "mockup") => {
     setCurrentImageField(field);
     setMediaSelectorOpen(true);
   };
 
-  const removeImage = (field: "basic-banner" | "hero-logo" | "hero-main" | "client-logo" | "mockup") => {
-    if (field === "basic-banner") {
-      setBasicInfo({ ...basicInfo, imagem_url: "" });
-    } else if (field === "hero-logo") {
+  const removeImage = (field: "hero-logo" | "hero-main" | "client-logo" | "mockup") => {
+    if (field === "hero-logo") {
       setHeroData({ ...heroData, logo_url: "" });
     } else if (field === "hero-main") {
       setHeroData({ ...heroData, imagem_principal: "" });
@@ -258,37 +255,15 @@ export default function NewCase() {
                 </div>
 
                 <div>
-                  <Label>1º Imagem - Banner</Label>
-                  <p className="text-xs text-muted-foreground mb-2">Tamanho recomendado: 800x600px</p>
-                  <div className="space-y-2">
-                    {basicInfo.imagem_url && (
-                      <div className="relative inline-block">
-                        <img 
-                          src={basicInfo.imagem_url} 
-                          alt="Banner preview" 
-                          className="h-32 w-auto object-contain border rounded"
-                        />
-                        <Button
-                          type="button"
-                          variant="destructive"
-                          size="icon"
-                          className="absolute -top-2 -right-2 h-6 w-6"
-                          onClick={() => removeImage("basic-banner")}
-                        >
-                          <X className="h-3 w-3" />
-                        </Button>
-                      </div>
-                    )}
-                    <Button
-                      type="button"
-                      variant="outline"
-                      onClick={() => openMediaSelector("basic-banner")}
-                      className="w-full"
-                    >
-                      <Upload className="mr-2 h-4 w-4" />
-                      {basicInfo.imagem_url ? "Alterar Banner" : "Selecionar Banner"}
-                    </Button>
-                  </div>
+                  <FileUpload
+                    label="1º Imagem - Banner"
+                    accept="image/*"
+                    currentUrl={basicInfo.imagem_url}
+                    onUploadComplete={(url) => setBasicInfo({ ...basicInfo, imagem_url: url })}
+                    folder="cases/banners"
+                    showPreview
+                    helperText="Tamanho recomendado: 800x600px"
+                  />
                 </div>
 
                 <div>
