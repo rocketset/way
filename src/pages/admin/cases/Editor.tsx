@@ -32,7 +32,9 @@ export default function CaseEditor() {
   const saveMutation = useSaveCaseBlock();
   const [selectedTagIds, setSelectedTagIds] = useState<string[]>([]);
   const [mediaSelectorOpen, setMediaSelectorOpen] = useState(false);
-  const [currentImageField, setCurrentImageField] = useState<"hero-logo" | "hero-main" | "client-logo" | "mockup" | null>(null);
+  const [currentImageField, setCurrentImageField] = useState<"basic-banner" | "hero-logo" | "hero-main" | "client-logo" | "mockup" | null>(null);
+  const [basicDescription, setBasicDescription] = useState<string>("");
+  const [basicBannerUrl, setBasicBannerUrl] = useState<string>("");
 
   const [heroData, setHeroData] = useState<HeroBlockContent>({
     logo_url: "",
@@ -109,10 +111,16 @@ export default function CaseEditor() {
     loadCaseTags();
   }, [id]);
 
-  // Load mockup screenshot URL
+  // Load mockup screenshot URL and basic info
   useEffect(() => {
     if (caseData?.mockup_screenshot_url) {
       setMockupScreenshotUrl(caseData.mockup_screenshot_url);
+    }
+    if (caseData?.descricao) {
+      setBasicDescription(caseData.descricao);
+    }
+    if (caseData?.imagem_url) {
+      setBasicBannerUrl(caseData.imagem_url);
     }
   }, [caseData]);
 
@@ -121,7 +129,9 @@ export default function CaseEditor() {
   };
 
   const handleImageSelect = (url: string) => {
-    if (currentImageField === "hero-logo") {
+    if (currentImageField === "basic-banner") {
+      setBasicBannerUrl(url);
+    } else if (currentImageField === "hero-logo") {
       setHeroData({ ...heroData, logo_url: url });
     } else if (currentImageField === "hero-main") {
       setHeroData({ ...heroData, imagem_principal: url });
@@ -134,13 +144,15 @@ export default function CaseEditor() {
     setCurrentImageField(null);
   };
 
-  const openMediaSelector = (field: "hero-logo" | "hero-main" | "client-logo" | "mockup") => {
+  const openMediaSelector = (field: "basic-banner" | "hero-logo" | "hero-main" | "client-logo" | "mockup") => {
     setCurrentImageField(field);
     setMediaSelectorOpen(true);
   };
 
-  const removeImage = (field: "hero-logo" | "hero-main" | "client-logo" | "mockup") => {
-    if (field === "hero-logo") {
+  const removeImage = (field: "basic-banner" | "hero-logo" | "hero-main" | "client-logo" | "mockup") => {
+    if (field === "basic-banner") {
+      setBasicBannerUrl("");
+    } else if (field === "hero-logo") {
       setHeroData({ ...heroData, logo_url: "" });
     } else if (field === "hero-main") {
       setHeroData({ ...heroData, imagem_principal: "" });
@@ -202,10 +214,14 @@ export default function CaseEditor() {
           .insert(tagRelations);
       }
 
-      // Save mockup
+      // Save mockup and basic info
       await supabase
         .from('cases')
-        .update({ mockup_screenshot_url: mockupScreenshotUrl })
+        .update({ 
+          mockup_screenshot_url: mockupScreenshotUrl,
+          descricao: basicDescription,
+          imagem_url: basicBannerUrl
+        })
         .eq('id', id!);
       
       toast.success('Todas as alterações foram salvas!');
@@ -243,6 +259,40 @@ export default function CaseEditor() {
               <CardTitle>Informações Básicas</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
+              <div>
+                <Label>1º Imagem - Banner</Label>
+                <p className="text-xs text-muted-foreground mb-2">Tamanho recomendado: 800x600px</p>
+                <div className="space-y-2">
+                  {basicBannerUrl && (
+                    <div className="relative inline-block">
+                      <img 
+                        src={basicBannerUrl} 
+                        alt="Banner preview" 
+                        className="h-32 w-auto object-contain border rounded"
+                      />
+                      <Button
+                        type="button"
+                        variant="destructive"
+                        size="icon"
+                        className="absolute -top-2 -right-2 h-6 w-6"
+                        onClick={() => removeImage("basic-banner")}
+                      >
+                        <X className="h-3 w-3" />
+                      </Button>
+                    </div>
+                  )}
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => openMediaSelector("basic-banner")}
+                    className="w-full"
+                  >
+                    <Upload className="mr-2 h-4 w-4" />
+                    {basicBannerUrl ? "Alterar Banner" : "Selecionar Banner"}
+                  </Button>
+                </div>
+              </div>
+
               <div>
                 <Label>Logo/Marca</Label>
                 <p className="text-xs text-muted-foreground mb-2">Tamanho recomendado: 400x400px (formato quadrado)</p>
@@ -348,10 +398,20 @@ export default function CaseEditor() {
                   tipo="case"
                   queryKey={['case-tags']}
                 />
-              </div>
+                </div>
 
-              <div>
-                <Label>Coluna da Esquerda - Desafio</Label>
+                <div>
+                  <Label>Sobre o Cliente</Label>
+                  <Textarea
+                    value={basicDescription}
+                    onChange={(e) => setBasicDescription(e.target.value)}
+                    placeholder="Digite informações sobre o cliente"
+                    rows={4}
+                  />
+                </div>
+
+                <div>
+                  <Label>Coluna da Esquerda - Desafio</Label>
                 <Textarea
                   value={textColumnsData.coluna_esquerda}
                   onChange={(e) =>
