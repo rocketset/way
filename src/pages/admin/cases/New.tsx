@@ -142,6 +142,7 @@ export default function NewCase() {
             publicado: basicInfo.publicado,
             is_featured: basicInfo.is_featured,
             mockup_screenshot_url: basicInfo.mockup_screenshot_url.trim() || null,
+            content_status: basicInfo.publicado ? 'publicado' : 'rascunho',
           },
         ])
         .select()
