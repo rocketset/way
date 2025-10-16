@@ -465,6 +465,7 @@ export type Database = {
       }
       contacts: {
         Row: {
+          assunto: string | null
           criado_em: string
           email: string
           empresa: string | null
@@ -475,6 +476,7 @@ export type Database = {
           telefone: string | null
         }
         Insert: {
+          assunto?: string | null
           criado_em?: string
           email: string
           empresa?: string | null
@@ -485,6 +487,7 @@ export type Database = {
           telefone?: string | null
         }
         Update: {
+          assunto?: string | null
           criado_em?: string
           email?: string
           empresa?: string | null
