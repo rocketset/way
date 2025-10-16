@@ -79,6 +79,18 @@ const CaseDetail = () => {
       <ScrollToTop />
       <Header />
       <div className="min-h-screen bg-background">
+        {/* Banner principal do case */}
+        {caseData?.imagem_url && (
+          <div className="w-full h-[400px] md:h-[500px] lg:h-[600px] relative overflow-hidden">
+            <img
+              src={caseData.imagem_url}
+              alt={caseData.titulo}
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/20 to-transparent" />
+          </div>
+        )}
+
         {/* Render Dynamic Blocks */}
         {blocks?.map(block => {
         // Find hero block to pass to ClientInfoBlock
