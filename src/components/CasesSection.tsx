@@ -42,13 +42,13 @@ const CasesSection = () => {
       return;
     }
     const mapped = (data || []).map((c: any) => {
-      // Preferir o Banner (imagem_url); se não houver, usar a imagem_principal do bloco Hero
+      // Preferir a imagem_principal do bloco Hero (usada nas listagens); se não houver, usar o Banner (imagem_url)
       const heroBlock = c.case_content_blocks?.find((b: any) => b.block_type === 'hero');
-      const imagemBanner = c.imagem_url || heroBlock?.content?.imagem_principal || '/placeholder.svg';
+      const imagemListagem = heroBlock?.content?.imagem_principal || c.imagem_url || '/placeholder.svg';
       const tags = c.case_tags?.map((ct: any) => ct.tags.nome) || [];
       return {
         ...c,
-        imagem_url: imagemBanner,
+        imagem_url: imagemListagem,
         tags
       } as CaseItem;
     });
