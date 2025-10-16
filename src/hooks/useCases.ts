@@ -43,11 +43,17 @@ export const useCases = (searchQuery = "", selectedCategory = "Todos") => {
       if (error) throw error;
 
       const formattedCases = data?.map((c: any) => {
+        // Buscar a imagem principal do bloco hero (usada nas listagens)
+        const heroBlock = c.case_content_blocks?.find(
+          (block: any) => block.block_type === 'hero'
+        );
+        const imagemPrincipal = heroBlock?.content?.imagem_principal || '/placeholder.svg';
+
         return {
           id: c.id,
           titulo: c.titulo,
           descricao: c.descricao,
-          imagem_url: c.imagem_url || '/placeholder.svg',
+          imagem_url: imagemPrincipal,
           publicado: c.publicado,
           criado_em: c.criado_em,
           categoria_id: c.categoria_id,
