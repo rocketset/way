@@ -78,7 +78,7 @@ export const ClientInfoBlock = ({
 
         {/* Banner principal do case */}
         {caseBannerData?.imagem_url && (
-          <div className="w-full h-[400px] md:h-[500px] lg:h-[600px] relative overflow-hidden rounded-2xl animate-fade-in" style={{
+          <div className="w-full max-w-[800px] h-[600px] mx-auto relative overflow-hidden rounded-2xl animate-fade-in" style={{
             animationDelay: '150ms'
           }}>
             <img
