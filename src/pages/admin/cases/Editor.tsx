@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowLeft, Save, Upload, X } from "lucide-react";
@@ -35,6 +36,8 @@ export default function CaseEditor() {
   const [currentImageField, setCurrentImageField] = useState<"basic-banner" | "hero-logo" | "hero-main" | "client-logo" | "mockup" | null>(null);
   const [basicDescription, setBasicDescription] = useState<string>("");
   const [basicBannerUrl, setBasicBannerUrl] = useState<string>("");
+  const [isPublished, setIsPublished] = useState<boolean>(false);
+  const [isFeatured, setIsFeatured] = useState<boolean>(false);
 
   const [heroData, setHeroData] = useState<HeroBlockContent>({
     logo_url: "",
@@ -121,6 +124,12 @@ export default function CaseEditor() {
     }
     if (caseData?.imagem_url) {
       setBasicBannerUrl(caseData.imagem_url);
+    }
+    if (caseData?.publicado !== undefined) {
+      setIsPublished(caseData.publicado);
+    }
+    if (caseData?.is_featured !== undefined) {
+      setIsFeatured(caseData.is_featured);
     }
   }, [caseData]);
 
@@ -220,7 +229,10 @@ export default function CaseEditor() {
         .update({ 
           mockup_screenshot_url: mockupScreenshotUrl,
           descricao: basicDescription,
-          imagem_url: basicBannerUrl
+          imagem_url: basicBannerUrl,
+          publicado: isPublished,
+          is_featured: isFeatured,
+          content_status: isPublished ? 'publicado' : 'rascunho'
         })
         .eq('id', id!);
       
@@ -535,6 +547,24 @@ export default function CaseEditor() {
                     {mockupScreenshotUrl ? "Alterar Mockup" : "Selecionar Mockup"}
                   </Button>
                 </div>
+              </div>
+
+              <div className="flex items-center space-x-2">
+                <Switch
+                  checked={isPublished}
+                  onCheckedChange={(checked) => setIsPublished(checked)}
+                  id="publicado"
+                />
+                <Label htmlFor="publicado">Publicar case</Label>
+              </div>
+
+              <div className="flex items-center space-x-2">
+                <Switch
+                  checked={isFeatured}
+                  onCheckedChange={(checked) => setIsFeatured(checked)}
+                  id="destaque"
+                />
+                <Label htmlFor="destaque">Marcar como destaque</Label>
               </div>
             </CardContent>
           </Card>

@@ -42,12 +42,12 @@ const CasesSection = () => {
       return;
     }
     const mapped = (data || []).map((c: any) => {
-      const heroBlock = c.case_content_blocks?.find((b: any) => b.block_type === 'hero');
-      const imagemPrincipal = heroBlock?.content?.imagem_principal || '/placeholder.svg';
+      // Usar o banner (imagem_url) direto da tabela cases
+      const imagemBanner = c.imagem_url || '/placeholder.svg';
       const tags = c.case_tags?.map((ct: any) => ct.tags.nome) || [];
       return {
         ...c,
-        imagem_url: imagemPrincipal,
+        imagem_url: imagemBanner,
         tags
       } as CaseItem;
     });
