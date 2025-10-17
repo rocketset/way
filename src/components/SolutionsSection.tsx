@@ -82,24 +82,27 @@ const SolutionsSection = () => {
       label: "Tráfego Pago"
     }],
     link: "/solucoes/performance-marketing"
-  }, {
-    icon: Compass,
-    badge: "Way.Journey",
-    title: "Jornada Way",
-    subtitle: "Metodologia completa de transformação digital",
-    description: "Uma metodologia completa para transformar seu e-commerce com análise 360° do seu negócio, plano de ação estruturado com metas e prazos definidos, além de suporte e mentoria em todas as etapas da transformação digital.",
-    services: [{
-      icon: Map,
-      label: "Diagnóstico Completo"
-    }, {
-      icon: Route,
-      label: "Roadmap Personalizado"
-    }, {
-      icon: Compass,
-      label: "Acompanhamento Contínuo"
-    }],
-    link: "/solucoes/jornada"
-  }];
+  }
+  // JORNADA WAY - TEMPORARIAMENTE REMOVIDO (para uso futuro)
+  // {
+  //   icon: Compass,
+  //   badge: "Way.Journey",
+  //   title: "Jornada Way",
+  //   subtitle: "Metodologia completa de transformação digital",
+  //   description: "Uma metodologia completa para transformar seu e-commerce com análise 360° do seu negócio, plano de ação estruturado com metas e prazos definidos, além de suporte e mentoria em todas as etapas da transformação digital.",
+  //   services: [{
+  //     icon: Map,
+  //     label: "Diagnóstico Completo"
+  //   }, {
+  //     icon: Route,
+  //     label: "Roadmap Personalizado"
+  //   }, {
+  //     icon: Compass,
+  //     label: "Acompanhamento Contínuo"
+  //   }],
+  //   link: "/solucoes/jornada"
+  // }
+  ];
   return <section id="solucoes" className="relative py-20 bg-gradient-to-b from-background via-background to-card overflow-hidden">
       {/* Animated background elements */}
 
@@ -122,7 +125,7 @@ const SolutionsSection = () => {
           
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto animate-fade-in" style={{
           animationDelay: '0.2s'
-        }}>Temos 4 hubs integrados para transformar seu e-commerce em uma operação de alta performance.</p>
+        }}>Temos 3 hubs integrados para transformar seu e-commerce em uma operação de alta performance.</p>
           
           <div className="mt-8 animate-fade-in" style={{ animationDelay: '0.3s' }}>
             <Button 
