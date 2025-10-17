@@ -8,6 +8,7 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import ScrollToTop from "@/components/ScrollToTop";
 import { CookieConsent } from "@/components/CookieConsent";
+import { GoogleScripts } from "@/components/GoogleScripts";
 
 // Páginas públicas do site
 import Index from "./pages/Index";
@@ -40,6 +41,7 @@ import BlogPostEditor from "./pages/admin/blog/PostEditor";
 import BlogCategories from "./pages/admin/blog/Categories";
 import BlogTags from "./pages/admin/blog/Tags";
 import Columnists from "./pages/admin/Columnists";
+import GoogleIntegrations from "./pages/admin/GoogleIntegrations";
 import CasesList from "./pages/admin/cases/List";
 import NewCase from "./pages/admin/cases/New";
 import CaseEditor from "./pages/admin/cases/Editor";
@@ -79,6 +81,7 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <AuthProvider>
+            <GoogleScripts />
             <ScrollToTop />
             <CookieConsent />
           <Routes>
@@ -123,6 +126,7 @@ const App = () => (
             <Route path="blog/categories" element={<BlogCategories />} />
             <Route path="blog/tags" element={<BlogTags />} />
             <Route path="blog/columnists" element={<Columnists />} />
+            <Route path="google-integrations" element={<GoogleIntegrations />} />
             
             {/* Rotas de Cases */}
             <Route path="cases/list" element={<CasesList />} />

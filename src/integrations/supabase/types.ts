@@ -499,6 +499,33 @@ export type Database = {
         }
         Relationships: []
       }
+      google_integrations: {
+        Row: {
+          analytics_id: string | null
+          created_at: string
+          id: string
+          search_console_verification: string | null
+          tag_manager_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          analytics_id?: string | null
+          created_at?: string
+          id?: string
+          search_console_verification?: string | null
+          tag_manager_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          analytics_id?: string | null
+          created_at?: string
+          id?: string
+          search_console_verification?: string | null
+          tag_manager_id?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       google_place_config: {
         Row: {
           created_at: string
