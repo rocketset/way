@@ -27,8 +27,8 @@ export const useBlogPosts = (searchQuery?: string, selectedCategory?: string) =>
         .select('*')
         .order('criado_em', { ascending: false });
 
-      // Filtrar posts publicados (aceita ambos os formatos de status)
-      query = query.or('publicado.eq.true,status.eq.published,status.eq.publicado');
+      // Filtrar posts publicados
+      query = query.or('publicado.eq.true,status.eq.published');
 
       const { data: posts, error } = await query;
 
