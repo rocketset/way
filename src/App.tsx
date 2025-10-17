@@ -9,6 +9,7 @@ import { ThemeProvider } from "@/contexts/ThemeContext";
 import ScrollToTop from "@/components/ScrollToTop";
 import { CookieConsent } from "@/components/CookieConsent";
 import { GoogleScripts } from "@/components/GoogleScripts";
+import { StructuredData } from "@/components/StructuredData";
 
 // Páginas públicas do site
 import Index from "./pages/Index";
@@ -82,6 +83,7 @@ const App = () => (
         <BrowserRouter>
           <AuthProvider>
             <GoogleScripts />
+            <StructuredData />
             <ScrollToTop />
             <CookieConsent />
           <Routes>
