@@ -13,14 +13,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useToast } from "@/hooks/use-toast";
 import { Mail, Phone, Send, CheckCircle2, Sparkles, MessageSquare, Instagram, Linkedin, Plus, ArrowRight, Briefcase } from "lucide-react";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { SEO } from "@/components/SEO";
 const contactSchema = z.object({
   name: z.string().trim().min(2, {
     message: "Nome deve ter pelo menos 2 caracteres"
@@ -130,6 +124,11 @@ const Contact = () => {
     label: "Google"
   }];
   return <div className="min-h-screen bg-background">
+      <SEO
+        title="Contato"
+        description="Entre em contato com a Way E-commerce. Estamos prontos para transformar seu e-commerce com estratégia, tecnologia e performance."
+        canonical="https://wayecommerce.com.br/contato"
+      />
       <Header />
 
       {/* Hero Section */}
@@ -152,19 +151,9 @@ const Contact = () => {
 
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center animate-fade-in">
-            <Breadcrumb className="mb-6 flex justify-center">
-              <BreadcrumbList>
-                <BreadcrumbItem>
-                  <BreadcrumbLink asChild>
-                    <Link to="/">Home</Link>
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator />
-                <BreadcrumbItem>
-                  <BreadcrumbPage>Contato</BreadcrumbPage>
-                </BreadcrumbItem>
-              </BreadcrumbList>
-            </Breadcrumb>
+            <div className="flex justify-center mb-6">
+              <Breadcrumbs items={[{ label: "Contato" }]} />
+            </div>
             
             <div className="inline-flex items-center gap-3 px-5 py-2 bg-primary/10 rounded-full mb-6 animate-scale-in border border-primary/20 backdrop-blur-sm">
               <Plus className="w-5 h-5 text-primary animate-spin" style={{

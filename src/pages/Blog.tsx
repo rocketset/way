@@ -12,14 +12,8 @@ import { Search, Calendar, ArrowRight } from "lucide-react";
 import { useBlogPosts } from "@/hooks/useBlogPosts";
 import { useBlogCategories } from "@/hooks/useBlogCategories";
 import { formatDate, formatReadingTime } from "@/utils/dateUtils";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { SEO } from "@/components/SEO";
 
 const Blog = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -40,25 +34,21 @@ const Blog = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title="Blog"
+        description="Fique por dentro das últimas tendências em e-commerce, marketing digital, tecnologia e estratégias para escalar seu negócio online. Conteúdo exclusivo da Way E-commerce."
+        canonical="https://wayecommerce.com.br/blog"
+        keywords="blog e-commerce, marketing digital, estratégias digitais, tendências online"
+      />
       <Header />
       
       {/* Hero Section */}
       <section className="pt-24 pb-8 px-4">
         <div className="container mx-auto">
           <div className="max-w-3xl mx-auto text-center space-y-4">
-            <Breadcrumb className="mb-4 flex justify-center">
-              <BreadcrumbList>
-                <BreadcrumbItem>
-                  <BreadcrumbLink asChild>
-                    <Link to="/">Home</Link>
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator />
-                <BreadcrumbItem>
-                  <BreadcrumbPage>Blog</BreadcrumbPage>
-                </BreadcrumbItem>
-              </BreadcrumbList>
-            </Breadcrumb>
+            <div className="flex justify-center mb-4">
+              <Breadcrumbs items={[{ label: "Blog" }]} />
+            </div>
             
             <h1 className="text-3xl md:text-4xl font-bold">
               Blog da <span className="text-primary">Way</span>

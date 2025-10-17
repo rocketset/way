@@ -12,14 +12,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { useCases } from "@/hooks/useCases";
 import { useCaseCategories } from "@/hooks/useCaseCategories";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { SEO } from "@/components/SEO";
 
 const Cases = () => {
   const [selectedCategory, setSelectedCategory] = useState("Todos");
@@ -58,25 +52,21 @@ const Cases = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title="Cases de Sucesso"
+        description="Conheça histórias reais de empresas que transformaram seus negócios com as soluções da Way E-commerce. Cases de sucesso em implantação, performance e consultoria."
+        canonical="https://wayecommerce.com.br/cases"
+        keywords="cases de sucesso, portfolio, clientes way, resultados e-commerce"
+      />
       <Header />
       
       {/* Hero Section */}
       <section className="pt-24 pb-8 px-4">
         <div className="container mx-auto">
           <div className="max-w-3xl mx-auto text-center space-y-4 animate-fade-in">
-            <Breadcrumb className="mb-4 flex justify-center">
-              <BreadcrumbList>
-                <BreadcrumbItem>
-                  <BreadcrumbLink asChild>
-                    <Link to="/">Home</Link>
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator />
-                <BreadcrumbItem>
-                  <BreadcrumbPage>Cases</BreadcrumbPage>
-                </BreadcrumbItem>
-              </BreadcrumbList>
-            </Breadcrumb>
+            <div className="flex justify-center mb-4">
+              <Breadcrumbs items={[{ label: "Cases" }]} />
+            </div>
             
             <h1 className="text-3xl md:text-4xl font-bold">
               Cases de <span className="text-primary">Sucesso</span>

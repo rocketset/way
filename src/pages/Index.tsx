@@ -9,10 +9,31 @@ import NewsSection from "@/components/NewsSection";
 import CtaResultsSection from "@/components/CtaResultsSection";
 import { GoogleReviews } from "@/components/GoogleReviews";
 import Footer from "@/components/Footer";
+import { SEO } from "@/components/SEO";
 
 const Index = () => {
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": "https://wayecommerce.com.br/#organization",
+    "name": "Way E-commerce",
+    "url": "https://wayecommerce.com.br",
+    "logo": "https://wayecommerce.com.br/logo-way.png",
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "5.0",
+      "reviewCount": "47"
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background relative overflow-hidden">
+      <SEO
+        title="De consultoria a performance: sua operação digital em outro nível"
+        description="Fazemos seu e-commerce crescer com estratégia, tecnologia, integrações e performance. Estrutura, processo e resultado para escalar suas vendas com previsibilidade."
+        keywords="e-commerce, consultoria, performance, marketing digital, implantação, desenvolvimento"
+        schema={organizationSchema}
+      />
       {/* Animated Plus Background Pattern */}
       <div className="fixed inset-0 plus-pattern opacity-30 pointer-events-none" />
       
@@ -54,6 +75,9 @@ const Index = () => {
         </div>
         <div className="animate-fade-in" style={{ animationDelay: '0.5s' }}>
           <CtaResultsSection />
+        </div>
+        <div className="animate-fade-in" style={{ animationDelay: '0.6s' }}>
+          <GoogleReviews />
         </div>
         <div className="animate-fade-in" style={{ animationDelay: '0.8s' }}>
           <NewsSection />
