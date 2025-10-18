@@ -279,7 +279,7 @@ const Header = () => {
             <div className="hidden lg:flex items-center gap-3">
             <Button
               variant="outline"
-              className="font-medium px-5 py-2.5 border border-primary/30 text-primary hover:border-primary hover:bg-primary/5 backdrop-blur-sm transition-all duration-300 rounded-lg"
+              className="font-medium px-5 py-2.5 border border-primary/30 text-primary hover:border-primary hover:bg-primary/5 hover:text-white backdrop-blur-sm transition-all duration-300 rounded-lg"
               asChild
             >
               <Link to="/admin">Entrar</Link>
