@@ -206,13 +206,6 @@ const Implementation = () => {
                           {service.title}
                         </h3>
                       </div>
-                      
-                      {/* Partner Logos - Only for E-commerce */}
-                      {service.hasLogos && <div className="flex flex-wrap gap-2 justify-start md:justify-end max-w-full md:max-w-[200px]">
-                          {ecommerceLogos.map((logo, logoIndex) => <img key={logoIndex} src={logo} alt="Partner logo" className="h-6 md:h-8 w-auto object-contain opacity-70 hover:opacity-100 hover:scale-110 transition-all duration-300 cursor-pointer" style={{
-                      animationDelay: `${logoIndex * 0.05}s`
-                    }} />)}
-                        </div>}
                     </div>
                     
                     <p className="text-primary font-semibold mb-3 md:mb-4 text-base md:text-lg leading-relaxed">
