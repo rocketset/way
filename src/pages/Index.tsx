@@ -27,34 +27,25 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-black relative overflow-hidden">
       <SEO
         title="De consultoria a performance: sua operação digital em outro nível"
         description="Fazemos seu e-commerce crescer com estratégia, tecnologia, integrações e performance. Estrutura, processo e resultado para escalar suas vendas com previsibilidade."
         keywords="e-commerce, consultoria, performance, marketing digital, implantação, desenvolvimento"
         schema={organizationSchema}
       />
-      {/* Animated Plus Background Pattern */}
-      <div className="fixed inset-0 plus-pattern opacity-30 pointer-events-none" />
       
-      {/* Floating Plus Icons */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        {[...Array(15)].map((_, i) => (
-          <div
-            key={`plus-${i}`}
-            className="absolute text-primary/10"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              fontSize: `${Math.random() * 60 + 20}px`,
-              animation: `float ${10 + Math.random() * 20}s ease-in-out infinite`,
-              animationDelay: `${Math.random() * 5}s`,
-            }}
-          >
-            +
-          </div>
-        ))}
+      {/* Linhas decorativas diagonais - fundo fixo */}
+      <div className="fixed inset-0 overflow-hidden opacity-10 pointer-events-none">
+        <div className="absolute top-0 right-0 w-[800px] h-[800px] border-t-2 border-r-2 border-white rotate-45 transform translate-x-1/2 -translate-y-1/2"></div>
+        <div className="absolute top-1/4 right-1/4 w-[600px] h-[600px] border-t-2 border-r-2 border-white/70 rotate-45"></div>
+        <div className="absolute bottom-0 right-0 w-[400px] h-[400px] border-t-2 border-r-2 border-white/50 rotate-45 transform translate-x-1/3 translate-y-1/3"></div>
+        <div className="absolute top-1/2 left-0 w-[500px] h-[500px] border-t-2 border-r-2 border-white/40 rotate-45 transform -translate-x-1/2"></div>
+        <div className="absolute bottom-1/4 left-1/4 w-[700px] h-[700px] border-t-2 border-r-2 border-white/30 rotate-45"></div>
       </div>
+
+      {/* Gradient overlay sutil */}
+      <div className="fixed inset-0 bg-gradient-to-r from-black/60 via-transparent to-transparent pointer-events-none" />
 
       <Header />
       
