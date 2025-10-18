@@ -101,7 +101,7 @@ const Cases = () => {
                     className={`rounded-full text-sm transition-all duration-300 ${
                       selectedCategory === category
                         ? "bg-primary text-primary-foreground hover:bg-primary/90"
-                        : "bg-card border-border text-foreground hover:bg-primary/10 hover:border-primary"
+                        : "bg-card border-border text-foreground hover:bg-primary/10 hover:border-primary hover:text-white"
                     }`}
                   >
                     {category}
