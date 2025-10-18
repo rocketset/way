@@ -740,7 +740,21 @@ function MobileSidebar() {
           {/* Menu */}
           <ScrollArea className="flex-1 px-3 py-4">
             <nav className="space-y-2">
-              {menuItems.filter(item => item.roles.includes(effectiveRole || 'membro')).map((item) => {
+              {menuItems.filter(item => item.roles.includes(effectiveRole || 'membro')).map((item, index) => {
+                // Renderiza separadores
+                if (item.separator) {
+                  return (
+                    <div key={`separator-${index}`} className="pt-4 pb-2">
+                      <div className="px-3">
+                        <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
+                          {item.label}
+                        </div>
+                        <div className="h-px bg-border" />
+                      </div>
+                    </div>
+                  );
+                }
+
                 const Icon = item.icon;
                 const isActive = isItemActive(item);
                 const hasSubmenu = !!item.subItems;
