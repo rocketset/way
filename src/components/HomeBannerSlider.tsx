@@ -1,84 +1,59 @@
-import { useState, useEffect } from "react";
-import heroBg from "@/assets/hero-solutions-bg.jpg";
-
-const solutions = [
-  {
-    title: "Implante seu e-commerce do jeito certo.",
-    description: "Planejamento, tecnologia e operação integrados para lançar sua loja com base sólida e escalável.",
-    button: "🚀 Quero implantar meu e-commerce"
-  },
-  {
-    title: "Transforme seu e-commerce em um negócio previsível.",
-    description: "Consultoria especializada para estruturar, otimizar e escalar sua operação digital com inteligência de dados.",
-    button: "💼 Falar com um consultor"
-  },
-  {
-    title: "Aumente suas vendas com performance real.",
-    description: "Gestão de tráfego, CRM e otimização contínua para gerar resultados mensuráveis e sustentáveis.",
-    button: "📈 Quero escalar minhas vendas"
-  }
-];
+import { Button } from "@/components/ui/button";
 
 const HomeBannerSlider = () => {
-  const [currentTextIndex, setCurrentTextIndex] = useState(0);
-
-  // Animação de texto alternado
-  useEffect(() => {
-    const textInterval = setInterval(() => {
-      setCurrentTextIndex((prev) => (prev + 1) % solutions.length);
-    }, 5000);
-
-    return () => clearInterval(textInterval);
-  }, []);
-
   return (
     <section id="inicio" className="relative w-full overflow-hidden bg-background">
-      {/* Imagem de fundo fixa */}
-      <div className="relative w-full h-[70vh] sm:h-[75vh] md:h-auto md:aspect-[21/9]">
-        <img
-          src={heroBg}
-          alt="Soluções Way E-commerce"
-          className="w-full h-full object-cover object-[center_30%] md:object-center"
-        />
-      </div>
+      {/* Background com elementos gráficos */}
+      <div className="relative w-full min-h-[85vh] lg:min-h-[90vh] bg-gradient-to-br from-gray-950 via-gray-900 to-black">
+        {/* Linhas decorativas diagonais */}
+        <div className="absolute inset-0 overflow-hidden opacity-20">
+          <div className="absolute top-0 right-0 w-[800px] h-[800px] border-t-2 border-r-2 border-primary rotate-45 transform translate-x-1/2 -translate-y-1/2"></div>
+          <div className="absolute top-1/4 right-1/4 w-[600px] h-[600px] border-t-2 border-r-2 border-primary/70 rotate-45"></div>
+          <div className="absolute bottom-0 right-0 w-[400px] h-[400px] border-t-2 border-r-2 border-primary/50 rotate-45 transform translate-x-1/3 translate-y-1/3"></div>
+        </div>
 
-      {/* Overlay com texto e botões */}
-      <div className="absolute inset-0 flex items-center justify-start z-10 bg-gradient-to-r from-black/70 via-black/40 to-transparent">
-        <div className="container mx-auto px-4 sm:px-6 md:px-8">
-          <div className="max-w-3xl space-y-4 sm:space-y-6">
-            {/* Conteúdo animado */}
-            {solutions.map((solution, index) => (
-              <div
-                key={index}
-                className={`transition-all duration-700 ${
-                  index === currentTextIndex
-                    ? "opacity-100 translate-y-0"
-                    : "opacity-0 absolute translate-y-4 pointer-events-none"
-                }`}
+        {/* Gradient overlay sutil */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-transparent"></div>
+
+        {/* Conteúdo principal */}
+        <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 h-full min-h-[85vh] lg:min-h-[90vh] flex items-center">
+          <div className="max-w-4xl space-y-6 md:space-y-8 py-20">
+            {/* Título principal */}
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-primary leading-[1.1] tracking-tight">
+              Aceleramos o futuro
+              <br />
+              do varejo digital
+            </h1>
+
+            {/* Subtítulo */}
+            <p className="text-xl sm:text-2xl md:text-3xl text-white/90 font-light leading-relaxed">
+              Independente, estratégica e
+              <br />
+              focada em performance.
+            </p>
+
+            {/* Descrição */}
+            <p className="text-lg sm:text-xl md:text-2xl text-white/80 font-light leading-relaxed max-w-2xl">
+              Somos a Way E-commerce — a aceleradora de negócios que transforma.
+            </p>
+
+            {/* Call to action */}
+            <div className="pt-4 md:pt-6">
+              <Button 
+                size="lg"
+                className="text-base sm:text-lg px-8 py-6 h-auto font-semibold shadow-2xl hover:shadow-primary/20 transition-all duration-300 hover:scale-105"
+                asChild
               >
-                {/* Título */}
-                <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light text-white leading-tight mb-4">
-                  {solution.title}
-                </h1>
-
-                {/* Descrição */}
-                <p className="text-base sm:text-lg md:text-xl text-white/90 leading-relaxed mb-6">
-                  {solution.description}
-                </p>
-
-                {/* Botão */}
-                <div className="flex flex-col sm:flex-row gap-3 pt-2">
-                  <a
-                    href="/contact"
-                    className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base font-medium text-primary-foreground bg-primary hover:bg-primary/90 rounded-sm transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
-                  >
-                    {solution.button}
-                  </a>
-                </div>
-              </div>
-            ))}
+                <a href="/contact">
+                  Quero acelerar meu negócio
+                </a>
+              </Button>
+            </div>
           </div>
         </div>
+
+        {/* Efeito de brilho sutil no canto */}
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
       </div>
     </section>
   );
