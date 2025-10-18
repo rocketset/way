@@ -308,7 +308,7 @@ const WhyWay = () => {
               </div>
 
               <p className="text-base md:text-lg text-muted-foreground max-w-4xl mx-auto leading-relaxed">
-                Estamos presentes em toda a jornada de compra, acompanhando a operação em cada etapa, da criação da loja até a evolução contínua. Nosso papel é simplificar a entrada no digital ou escalar negócios já existentes, transformando desafios em crescimento real.
+                A Way E-commerce é uma aceleradora de negócios digitais independente, especializada em transformar operações físicas em canais online rentáveis. Com presença nacional e um ecossistema de especialistas em e-commerce, performance e tecnologia, atuamos em toda a jornada — da implantação à escala, impulsionando marcas que desejam crescer com estrutura e previsibilidade.
               </p>
             </div>
 
