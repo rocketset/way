@@ -29,7 +29,7 @@ const HomeBannerSlider = () => {
             <p className="text-xl sm:text-2xl md:text-3xl text-white/90 font-extralight leading-relaxed">
               Independente, estratégica e
               <br />
-              focada em performance.
+              focada em expansão.
             </p>
 
             {/* Descrição */}
