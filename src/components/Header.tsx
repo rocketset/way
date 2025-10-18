@@ -63,7 +63,7 @@ const Header = () => {
   const navItems = [
     { id: "inicio", label: "Início", type: "link", path: "/" },
     { id: "por-que-way", label: "Sobre", type: "link", path: "/why-way" },
-    { id: "cases", label: "Cases", type: "link", path: "/cases" },
+    { id: "cases", label: "Portfólio", type: "link", path: "/cases" },
     { id: "blog", label: "Blog", type: "link", path: "/blog" },
     { id: "contato", label: "Contato", type: "link", path: "/contact" },
   ];
