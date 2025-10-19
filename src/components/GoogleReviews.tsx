@@ -33,12 +33,6 @@ export const GoogleReviews = () => {
       </div>;
   };
   return <section className="relative py-12 px-4 bg-gradient-to-b from-[#1a1a1a] to-[#0a0a0a] rounded-3xl mx-4 overflow-hidden">
-      {/* Plus icons animados de fundo */}
-      <div className="absolute top-10 left-10 text-primary/5 text-6xl animate-float" style={{ animationDelay: '0s' }}>+</div>
-      <div className="absolute top-20 right-20 text-primary/5 text-8xl animate-float" style={{ animationDelay: '1s' }}>+</div>
-      <div className="absolute bottom-20 left-1/4 text-primary/5 text-7xl animate-float" style={{ animationDelay: '2s' }}>+</div>
-      <div className="absolute bottom-10 right-1/3 text-primary/5 text-6xl animate-float" style={{ animationDelay: '1.5s' }}>+</div>
-      
       <div className="container mx-auto max-w-6xl relative z-10">
         <div className="text-center mb-12 animate-fade-in">
           <h2 className="text-4xl font-bold text-white mb-4">
