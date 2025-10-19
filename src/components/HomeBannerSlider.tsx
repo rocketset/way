@@ -49,13 +49,13 @@ const HomeBannerSlider = () => {
               </p>
             </div>
 
+            {/* Clients Carousel */}
+            <div className="pt-6">
+              <ClientsCarousel />
+            </div>
+
           </div>
         </div>
-      </div>
-
-      {/* Clients Carousel */}
-      <div className="relative -mt-8">
-        <ClientsCarousel />
       </div>
     </section>
   );
