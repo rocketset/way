@@ -13,7 +13,7 @@ const HomeBannerSlider = () => {
         </div>
 
         {/* Content container - Centralized */}
-        <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 lg:py-20 my-0 py-[48px]">
+        <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 lg:pt-20 lg:pb-10 my-0 py-[48px]">
           <div className="max-w-4xl mx-auto text-center space-y-8 my-[91px]">
             
             {/* Main Title */}
