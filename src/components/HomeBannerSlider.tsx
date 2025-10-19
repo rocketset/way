@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import cleanHeroBg from "@/assets/clean-hero-bg.jpg";
+import ClientsCarousel from "@/components/ClientsCarousel";
 
 const HomeBannerSlider = () => {
   return (
@@ -41,8 +42,20 @@ const HomeBannerSlider = () => {
               </Button>
             </div>
 
+            {/* Social Proof Text */}
+            <div className="pt-8">
+              <p className="text-sm sm:text-base text-primary font-bold tracking-wider">
+                + DE 700 EMPRESAS ATENDIDAS POR TODO O BRASIL
+              </p>
+            </div>
+
           </div>
         </div>
+      </div>
+
+      {/* Clients Carousel */}
+      <div className="relative -mt-8">
+        <ClientsCarousel />
       </div>
     </section>
   );
