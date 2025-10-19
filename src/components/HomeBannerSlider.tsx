@@ -32,7 +32,7 @@ const HomeBannerSlider = () => {
             <div className="pt-6">
               <Button 
                 size="lg"
-                className="text-base sm:text-lg lg:text-xl px-10 py-7 h-auto font-medium shadow-2xl hover:shadow-primary/30 transition-all duration-300 hover:scale-105"
+                className="text-base sm:text-lg lg:text-xl px-10 py-7 h-auto font-normal shadow-2xl hover:shadow-primary/30 transition-all duration-300 hover:scale-105"
                 asChild
               >
                 <a href="/contact">
