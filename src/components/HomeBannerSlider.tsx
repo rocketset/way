@@ -19,7 +19,7 @@ const HomeBannerSlider = () => {
           <div className="max-w-4xl mx-auto text-center space-y-8">
             
             {/* Main Title */}
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-light text-white leading-[1.1] tracking-tight">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-normal text-white leading-[1.2] tracking-tight">
               Soluções estratégicas para acelerar o crescimento do seu negócio.
             </h1>
 
