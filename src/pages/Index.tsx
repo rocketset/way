@@ -72,7 +72,7 @@ const Index = () => {
         <div className="animate-fade-in" style={{
         animationDelay: '0.6s'
       }}>
-          <GoogleReviews />
+          
         </div>
         <div className="animate-fade-in" style={{
         animationDelay: '0.8s'
