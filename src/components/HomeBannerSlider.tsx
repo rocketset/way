@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import growthHero from "@/assets/growth-chart-hero.jpg";
+import cleanHeroBg from "@/assets/clean-hero-bg.jpg";
 
 const HomeBannerSlider = () => {
   return (
@@ -9,7 +9,7 @@ const HomeBannerSlider = () => {
         {/* Background image with overlay */}
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url(${growthHero})` }}
+          style={{ backgroundImage: `url(${cleanHeroBg})` }}
         >
           <div className="absolute inset-0 bg-black/60"></div>
         </div>
