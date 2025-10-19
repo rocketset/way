@@ -16,6 +16,7 @@ import { IconPicker } from "@/components/editor/IconPicker";
 import { TagsAutocomplete } from "@/components/editor/TagsAutocomplete";
 import { MediaSelector } from "@/components/editor/MediaSelector";
 import FileUpload from "@/components/admin/FileUpload";
+import { CaseRichTextEditor } from "@/components/admin/CaseRichTextEditor";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import type {
@@ -334,11 +335,11 @@ export default function CaseEditor() {
 
               <div>
                 <Label>Breve Resumo</Label>
-                <Textarea
+                <CaseRichTextEditor
                   value={heroData.descricao}
-                  onChange={(e) => setHeroData({ ...heroData, descricao: e.target.value })}
+                  onChange={(value) => setHeroData({ ...heroData, descricao: value })}
                   placeholder="Descreva o case de forma detalhada"
-                  rows={4}
+                  minHeight="150px"
                 />
               </div>
 
@@ -389,41 +390,41 @@ export default function CaseEditor() {
 
                 <div>
                   <Label>Sobre o Cliente</Label>
-                  <Textarea
+                  <CaseRichTextEditor
                     value={basicDescription}
-                    onChange={(e) => setBasicDescription(e.target.value)}
+                    onChange={(value) => setBasicDescription(value)}
                     placeholder="Digite informações sobre o cliente"
-                    rows={4}
+                    minHeight="150px"
                   />
                 </div>
 
                 <div>
                   <Label>Coluna da Esquerda - Desafio</Label>
-                <Textarea
+                <CaseRichTextEditor
                   value={textColumnsData.coluna_esquerda}
-                  onChange={(e) =>
+                  onChange={(value) =>
                     setTextColumnsData({
                       ...textColumnsData,
-                      coluna_esquerda: e.target.value,
+                      coluna_esquerda: value,
                     })
                   }
                   placeholder="Texto da primeira coluna (use quebras de linha para parágrafos)"
-                  rows={8}
+                  minHeight="200px"
                 />
               </div>
 
               <div>
                 <Label>Coluna da Direita - Resultado</Label>
-                <Textarea
+                <CaseRichTextEditor
                   value={textColumnsData.coluna_direita}
-                  onChange={(e) =>
+                  onChange={(value) =>
                     setTextColumnsData({
                       ...textColumnsData,
-                      coluna_direita: e.target.value,
+                      coluna_direita: value,
                     })
                   }
                   placeholder="Texto da segunda coluna (use quebras de linha para parágrafos)"
-                  rows={8}
+                  minHeight="200px"
                 />
               </div>
 
