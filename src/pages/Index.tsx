@@ -47,7 +47,7 @@ const Index = () => {
         <div className="animate-fade-in" style={{
         animationDelay: '0.1s'
       }}>
-          <WhyChooseSection className="my-0 py-0" />
+          <WhyChooseSection className="py-0 my-0" />
         </div>
         <div className="animate-fade-in" style={{
         animationDelay: '0.2s'
