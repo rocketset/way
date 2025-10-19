@@ -54,9 +54,6 @@ const WhyChooseSection = () => {
                 </div>)}
             </div>
 
-            {/* Logos dos Clientes */}
-            <ClientsCarousel />
-
             <p className="text-base max-w-4xl mx-auto leading-relaxed mt-12 text-gray-200 md:text-xl">
               A Way E-commerce é uma aceleradora de negócios digitais independente, especializada em transformar operações físicas em canais online rentáveis. Com presença nacional e um ecossistema de especialistas em e-commerce, performance e tecnologia, atuamos em toda a jornada — da implantação à escala, impulsionando marcas que desejam crescer com estrutura e previsibilidade.
             </p>
