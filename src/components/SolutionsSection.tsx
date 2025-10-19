@@ -111,7 +111,7 @@ const SolutionsSection = () => {
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-2 mb-4 animate-fade-in">
             <Plus className="w-5 h-5 text-primary plus-rotate" />
-            <span className="text-xs font-bold text-primary tracking-wider">SOLUÇÕES INTEGRADAS</span>
+            <span className="text-xs font-bold text-primary tracking-wider">NOSSAS SOLUÇÕES</span>
             <Plus className="w-5 h-5 text-primary plus-rotate" />
           </div>
           
@@ -127,12 +127,10 @@ const SolutionsSection = () => {
           animationDelay: '0.2s'
         }}>Temos 3 hubs integrados para transformar seu e-commerce em uma operação de alta performance.</p>
           
-          <div className="mt-8 animate-fade-in" style={{ animationDelay: '0.3s' }}>
-            <Button 
-              asChild 
-              size="lg" 
-              className="bg-primary text-background hover:bg-primary/90 font-medium px-8 py-6 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 group"
-            >
+          <div className="mt-8 animate-fade-in" style={{
+          animationDelay: '0.3s'
+        }}>
+            <Button asChild size="lg" className="bg-primary text-background hover:bg-primary/90 font-medium px-8 py-6 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 group">
               <a href="https://wayecommerce.com.br/contact" className="flex items-center gap-2">
                 Fale com um especialista
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -202,7 +200,7 @@ const SolutionsSection = () => {
                     
                     {/* Interactive arrow indicator */}
                     <div className="flex items-center gap-2 text-primary opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-2 group-hover:translate-y-0">
-                      <span className="text-sm font-semibold">Saiba mais sobre esta solução</span>
+                      <span className="text-sm font-semibold">FSaiba mais sobre esta solução</span>
                       <ArrowRight className="w-5 h-5 animate-pulse" />
                     </div>
                   </div>
