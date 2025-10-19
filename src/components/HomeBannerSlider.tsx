@@ -9,7 +9,7 @@ const HomeBannerSlider = () => {
         <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{
         backgroundImage: `url(${cleanHeroBg})`
       }}>
-          <div className="absolute inset-0 bg-black/60 py-0 my-0"></div>
+          <div className="absolute inset-0 bg-black/60 py-0 my-[50px]"></div>
         </div>
 
         {/* Content container - Centralized */}
