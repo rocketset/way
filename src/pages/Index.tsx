@@ -10,7 +10,6 @@ import CtaResultsSection from "@/components/CtaResultsSection";
 import { GoogleReviews } from "@/components/GoogleReviews";
 import Footer from "@/components/Footer";
 import { SEO } from "@/components/SEO";
-
 const Index = () => {
   const organizationSchema = {
     "@context": "https://schema.org",
@@ -25,15 +24,8 @@ const Index = () => {
       "reviewCount": "47"
     }
   };
-
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-black relative overflow-hidden">
-      <SEO
-        title="De consultoria a performance: sua operação digital em outro nível"
-        description="Fazemos seu e-commerce crescer com estratégia, tecnologia, integrações e performance. Estrutura, processo e resultado para escalar suas vendas com previsibilidade."
-        keywords="e-commerce, consultoria, performance, marketing digital, implantação, desenvolvimento"
-        schema={organizationSchema}
-      />
+  return <div className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-black relative overflow-hidden">
+      <SEO title="De consultoria a performance: sua operação digital em outro nível" description="Fazemos seu e-commerce crescer com estratégia, tecnologia, integrações e performance. Estrutura, processo e resultado para escalar suas vendas com previsibilidade." keywords="e-commerce, consultoria, performance, marketing digital, implantação, desenvolvimento" schema={organizationSchema} />
       
       {/* Linhas decorativas diagonais - fundo fixo */}
       <div className="fixed inset-0 overflow-hidden opacity-10 pointer-events-none">
@@ -52,25 +44,39 @@ const Index = () => {
       {/* Sections with stagger animation */}
       <div className="relative z-10">
         <HomeBannerSlider />
-        <div className="animate-fade-in" style={{ animationDelay: '0.1s' }}>
-          <WhyChooseSection />
+        <div className="animate-fade-in" style={{
+        animationDelay: '0.1s'
+      }}>
+          <WhyChooseSection className="my-0 py-0" />
         </div>
-        <div className="animate-fade-in" style={{ animationDelay: '0.2s' }}>
+        <div className="animate-fade-in" style={{
+        animationDelay: '0.2s'
+      }}>
           <PartnersCarousel />
         </div>
-        <div className="animate-fade-in" style={{ animationDelay: '0.3s' }}>
+        <div className="animate-fade-in" style={{
+        animationDelay: '0.3s'
+      }}>
           <SolutionsSection />
         </div>
-        <div className="animate-fade-in" style={{ animationDelay: '0.4s' }}>
+        <div className="animate-fade-in" style={{
+        animationDelay: '0.4s'
+      }}>
           <CasesSection />
         </div>
-        <div className="animate-fade-in" style={{ animationDelay: '0.5s' }}>
+        <div className="animate-fade-in" style={{
+        animationDelay: '0.5s'
+      }}>
           <CtaResultsSection />
         </div>
-        <div className="animate-fade-in" style={{ animationDelay: '0.6s' }}>
+        <div className="animate-fade-in" style={{
+        animationDelay: '0.6s'
+      }}>
           <GoogleReviews />
         </div>
-        <div className="animate-fade-in" style={{ animationDelay: '0.8s' }}>
+        <div className="animate-fade-in" style={{
+        animationDelay: '0.8s'
+      }}>
           <NewsSection />
         </div>
         <Footer />
@@ -86,8 +92,6 @@ const Index = () => {
           }
         }
       `}</style>
-    </div>
-  );
+    </div>;
 };
-
 export default Index;
