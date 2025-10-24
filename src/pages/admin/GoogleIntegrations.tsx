@@ -5,12 +5,17 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useGoogleIntegrations, useSaveGoogleIntegrations } from "@/hooks/useGoogleIntegrations";
+import { useSitemapConfig, useGenerateSitemap } from "@/hooks/useSitemapConfig";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Info, ExternalLink } from "lucide-react";
+import { Info, ExternalLink, RefreshCw, CheckCircle2, AlertCircle, Clock } from "lucide-react";
+import { formatDistanceToNow } from "date-fns";
+import { ptBR } from "date-fns/locale";
 
 export default function GoogleIntegrations() {
   const { data: config, isLoading } = useGoogleIntegrations();
   const saveConfig = useSaveGoogleIntegrations();
+  const { data: sitemapConfig, isLoading: sitemapLoading } = useSitemapConfig();
+  const generateSitemap = useGenerateSitemap();
 
   const [analyticsId, setAnalyticsId] = useState("");
   const [tagManagerId, setTagManagerId] = useState("");
@@ -75,6 +80,40 @@ export default function GoogleIntegrations() {
       tag_manager_id: extractTagManagerId(tagManagerId) || null,
       search_console_verification: extractSearchConsoleCode(searchConsoleVerification) || null,
     });
+  };
+
+  const handleGenerateSitemap = () => {
+    generateSitemap.mutate();
+  };
+
+  const getStatusIcon = () => {
+    if (!sitemapConfig) return <Clock className="h-4 w-4 text-muted-foreground" />;
+    
+    switch (sitemapConfig.status) {
+      case 'success':
+        return <CheckCircle2 className="h-4 w-4 text-green-500" />;
+      case 'generating':
+        return <RefreshCw className="h-4 w-4 text-blue-500 animate-spin" />;
+      case 'error':
+        return <AlertCircle className="h-4 w-4 text-destructive" />;
+      default:
+        return <Clock className="h-4 w-4 text-muted-foreground" />;
+    }
+  };
+
+  const getStatusText = () => {
+    if (!sitemapConfig) return 'Nunca gerado';
+    
+    switch (sitemapConfig.status) {
+      case 'success':
+        return 'Atualizado';
+      case 'generating':
+        return 'Gerando...';
+      case 'error':
+        return 'Erro na geração';
+      default:
+        return 'Pendente';
+    }
   };
 
   return (
@@ -243,23 +282,57 @@ export default function GoogleIntegrations() {
             <CardHeader>
               <CardTitle className="flex items-center justify-between">
                 Sitemap XML
-                <Button variant="outline" size="sm" asChild>
-                  <a
-                    href="/sitemap.xml"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2"
+                <div className="flex items-center gap-2">
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={handleGenerateSitemap}
+                    disabled={generateSitemap.isPending || sitemapConfig?.status === 'generating'}
                   >
-                    Visualizar
-                    <ExternalLink className="h-4 w-4" />
-                  </a>
-                </Button>
+                    <RefreshCw className={`h-4 w-4 mr-2 ${generateSitemap.isPending ? 'animate-spin' : ''}`} />
+                    Atualizar
+                  </Button>
+                  <Button variant="outline" size="sm" asChild>
+                    <a
+                      href="/sitemap.xml"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2"
+                    >
+                      Visualizar
+                      <ExternalLink className="h-4 w-4" />
+                    </a>
+                  </Button>
+                </div>
               </CardTitle>
               <CardDescription>
                 Sitemap dinâmico com todas as páginas públicas do site
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
+              {/* Status da última atualização */}
+              <div className="rounded-lg border bg-muted/50 p-4 space-y-2">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    {getStatusIcon()}
+                    <span className="text-sm font-medium">{getStatusText()}</span>
+                  </div>
+                  {sitemapConfig?.total_urls && (
+                    <span className="text-sm text-muted-foreground">
+                      {sitemapConfig.total_urls} URLs
+                    </span>
+                  )}
+                </div>
+                {sitemapConfig?.last_generated_at && (
+                  <p className="text-xs text-muted-foreground">
+                    Última atualização: {formatDistanceToNow(new Date(sitemapConfig.last_generated_at), { 
+                      addSuffix: true,
+                      locale: ptBR 
+                    })}
+                  </p>
+                )}
+              </div>
+
               <div className="space-y-2">
                 <p className="text-sm text-muted-foreground">
                   O sitemap é gerado automaticamente e inclui:
@@ -271,6 +344,7 @@ export default function GoogleIntegrations() {
                   <li>Landing pages publicadas</li>
                 </ul>
               </div>
+              
               <div className="space-y-2">
                 <Label>URL do Sitemap</Label>
                 <div className="flex gap-2">

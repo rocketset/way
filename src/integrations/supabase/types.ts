@@ -1285,6 +1285,33 @@ export type Database = {
         }
         Relationships: []
       }
+      sitemap_config: {
+        Row: {
+          created_at: string
+          id: string
+          last_generated_at: string | null
+          status: string | null
+          total_urls: number | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          last_generated_at?: string | null
+          status?: string | null
+          total_urls?: number | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          last_generated_at?: string | null
+          status?: string | null
+          total_urls?: number | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       tags: {
         Row: {
           atualizado_em: string
