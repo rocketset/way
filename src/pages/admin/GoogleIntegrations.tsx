@@ -24,11 +24,56 @@ export default function GoogleIntegrations() {
     }
   }, [config]);
 
+  // Função para extrair ID do Google Analytics de scripts ou texto
+  const extractAnalyticsId = (input: string): string => {
+    if (!input) return "";
+    
+    // Já é um ID válido
+    if (/^G-[A-Z0-9]+$/i.test(input.trim())) {
+      return input.trim();
+    }
+    
+    // Extrair de script gtag.js
+    const gtagMatch = input.match(/gtag\/js\?id=(G-[A-Z0-9]+)/i) || 
+                      input.match(/gtag\(['"]config['"],\s*['"]([G-][A-Z0-9]+)['"]/i);
+    if (gtagMatch) return gtagMatch[1];
+    
+    return input.trim();
+  };
+
+  // Função para extrair ID do Google Tag Manager de scripts
+  const extractTagManagerId = (input: string): string => {
+    if (!input) return "";
+    
+    // Já é um ID válido
+    if (/^GTM-[A-Z0-9]+$/i.test(input.trim())) {
+      return input.trim();
+    }
+    
+    // Extrair de script GTM
+    const gtmMatch = input.match(/GTM-[A-Z0-9]+/i);
+    if (gtmMatch) return gtmMatch[0];
+    
+    return input.trim();
+  };
+
+  // Função para extrair código de verificação do Search Console
+  const extractSearchConsoleCode = (input: string): string => {
+    if (!input) return "";
+    
+    // Extrair de meta tag
+    const metaMatch = input.match(/content=["']([^"']+)["']/i);
+    if (metaMatch) return metaMatch[1];
+    
+    // Já é o código
+    return input.trim();
+  };
+
   const handleSave = () => {
     saveConfig.mutate({
-      analytics_id: analyticsId || null,
-      tag_manager_id: tagManagerId || null,
-      search_console_verification: searchConsoleVerification || null,
+      analytics_id: extractAnalyticsId(analyticsId) || null,
+      tag_manager_id: extractTagManagerId(tagManagerId) || null,
+      search_console_verification: extractSearchConsoleCode(searchConsoleVerification) || null,
     });
   };
 
@@ -79,15 +124,16 @@ export default function GoogleIntegrations() {
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="analytics-id">ID de Medição (Measurement ID)</Label>
-                <Input
+                <Label htmlFor="analytics-id">ID de Medição ou Script Completo</Label>
+                <textarea
                   id="analytics-id"
-                  placeholder="G-XXXXXXXXXX"
+                  placeholder="Cole aqui o script completo do Google Analytics ou apenas o ID (G-XXXXXXXXXX)"
                   value={analyticsId}
                   onChange={(e) => setAnalyticsId(e.target.value)}
+                  className="w-full min-h-[120px] rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 font-mono"
                 />
                 <p className="text-sm text-muted-foreground">
-                  Encontre seu ID em: Analytics → Admin → Streams de dados → Web → ID de Medição
+                  ✅ Aceita: ID direto (G-XXXXXXXXXX) ou script completo copiado do Google Analytics
                 </p>
               </div>
             </CardContent>
@@ -116,15 +162,16 @@ export default function GoogleIntegrations() {
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="tag-manager-id">ID do Container</Label>
-                <Input
+                <Label htmlFor="tag-manager-id">ID do Container ou Script Completo</Label>
+                <textarea
                   id="tag-manager-id"
-                  placeholder="GTM-XXXXXXX"
+                  placeholder="Cole aqui o script completo do Google Tag Manager ou apenas o ID (GTM-XXXXXXX)"
                   value={tagManagerId}
                   onChange={(e) => setTagManagerId(e.target.value)}
+                  className="w-full min-h-[120px] rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 font-mono"
                 />
                 <p className="text-sm text-muted-foreground">
-                  Encontre seu ID em: Tag Manager → Workspace → ID do Container (canto superior direito)
+                  ✅ Aceita: ID direto (GTM-XXXXXXX) ou script completo copiado do Google Tag Manager
                 </p>
               </div>
             </CardContent>
@@ -153,15 +200,16 @@ export default function GoogleIntegrations() {
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="search-console">Código de Verificação</Label>
-                <Input
+                <Label htmlFor="search-console">Código de Verificação ou Meta Tag Completa</Label>
+                <textarea
                   id="search-console"
-                  placeholder="abc123def456..."
+                  placeholder='Cole aqui a meta tag completa ou apenas o código de verificação'
                   value={searchConsoleVerification}
                   onChange={(e) => setSearchConsoleVerification(e.target.value)}
+                  className="w-full min-h-[120px] rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 font-mono"
                 />
                 <p className="text-sm text-muted-foreground">
-                  Em Search Console → Adicionar propriedade → Verificação → Tag HTML → copie apenas o código (sem a meta tag)
+                  ✅ Aceita: código direto ou meta tag completa (&lt;meta name="google-site-verification" content="..."/&gt;)
                 </p>
               </div>
             </CardContent>

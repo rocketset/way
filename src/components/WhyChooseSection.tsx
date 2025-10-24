@@ -1,7 +1,12 @@
 import { Plus, Grid3x3, Eye, Headphones } from "lucide-react";
 import brazilFlag from "@/assets/brazil-flag.png";
 import ClientsCarousel from "./ClientsCarousel";
-const WhyChooseSection = () => {
+
+interface WhyChooseSectionProps {
+  className?: string;
+}
+
+const WhyChooseSection = ({ className = "" }: WhyChooseSectionProps) => {
   const stats = [{
     number: "190",
     label: "Lojas implantadas"
@@ -16,7 +21,7 @@ const WhyChooseSection = () => {
     number: "700",
     label: "Clientes atendidos"
   }];
-  return <section className="py-20 px-4 bg-background relative overflow-hidden">
+  return <section className={`py-20 px-4 bg-background relative overflow-hidden ${className}`}>
       {/* Animated background elements */}
       <div className="absolute top-1/4 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '6s' }} />
       <div className="absolute bottom-1/4 left-0 w-96 h-96 bg-yellow-500/5 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '8s', animationDelay: '2s' }} />
