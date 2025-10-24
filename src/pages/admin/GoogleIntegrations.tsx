@@ -238,6 +238,64 @@ export default function GoogleIntegrations() {
             </CardContent>
           </Card>
 
+          {/* Sitemap Dinâmico */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center justify-between">
+                Sitemap XML
+                <Button variant="outline" size="sm" asChild>
+                  <a
+                    href="/sitemap.xml"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2"
+                  >
+                    Visualizar
+                    <ExternalLink className="h-4 w-4" />
+                  </a>
+                </Button>
+              </CardTitle>
+              <CardDescription>
+                Sitemap dinâmico com todas as páginas públicas do site
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <p className="text-sm text-muted-foreground">
+                  O sitemap é gerado automaticamente e inclui:
+                </p>
+                <ul className="text-sm text-muted-foreground list-disc list-inside space-y-1 ml-2">
+                  <li>Todas as páginas estáticas (home, soluções, contato, etc.)</li>
+                  <li>Posts do blog publicados</li>
+                  <li>Cases publicados</li>
+                  <li>Landing pages publicadas</li>
+                </ul>
+              </div>
+              <div className="space-y-2">
+                <Label>URL do Sitemap</Label>
+                <div className="flex gap-2">
+                  <Input 
+                    value="https://wayecommerce.com.br/sitemap.xml" 
+                    readOnly 
+                    className="font-mono text-sm"
+                  />
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      navigator.clipboard.writeText('https://wayecommerce.com.br/sitemap.xml');
+                    }}
+                  >
+                    Copiar
+                  </Button>
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  📌 Use esta URL ao enviar o sitemap para o Google Search Console
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+
           <Separator />
 
           <div className="flex justify-end gap-4">

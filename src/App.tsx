@@ -70,6 +70,7 @@ import LandingPagesList from "./pages/admin/landing/List";
 import NewLandingPage from "./pages/admin/landing/New";
 import EditLandingPage from "./pages/admin/landing/Edit";
 import LandingPageView from "./pages/LandingPageView";
+import Sitemap from "./pages/Sitemap";
 
 // Configuração do React Query
 const queryClient = new QueryClient();
@@ -115,6 +116,9 @@ const App = () => (
           
           {/* Rota pública de landing pages */}
           <Route path="/lp/:slug" element={<LandingPageView />} />
+          
+          {/* Rota do Sitemap */}
+          <Route path="/sitemap.xml" element={<Sitemap />} />
           
           {/* Rotas administrativas protegidas */}
           <Route path="/admin" element={<AdminLayout />}>
