@@ -6,6 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { Eye, EyeOff } from 'lucide-react';
 import { useState } from 'react';
+import DOMPurify from 'dompurify';
 
 interface Props {
   block: HTMLBlock;
@@ -49,7 +50,10 @@ export function HTMLBlockEditor({
         {showPreview ? (
           <div
             className="border rounded p-4 bg-background min-h-[100px]"
-            dangerouslySetInnerHTML={{ __html: block.content }}
+            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(block.content, {
+              ALLOWED_TAGS: ['div', 'span', 'p', 'br', 'strong', 'em', 'u', 'a', 'img', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ul', 'ol', 'li', 'blockquote', 'code', 'pre'],
+              ALLOWED_ATTR: ['href', 'src', 'alt', 'title', 'class', 'id', 'target', 'rel']
+            }) }}
           />
         ) : (
           <Textarea
@@ -62,7 +66,7 @@ export function HTMLBlockEditor({
         )}
 
         <p className="text-xs text-muted-foreground mt-2">
-          Atenção: HTML não sanitizado pode apresentar riscos de segurança
+          ✓ HTML é sanitizado automaticamente para segurança. Tags e atributos perigosos são removidos.
         </p>
       </div>
 

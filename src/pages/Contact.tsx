@@ -15,6 +15,8 @@ import { Mail, Phone, Send, CheckCircle2, Sparkles, MessageSquare, Instagram, Li
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { SEO } from "@/components/SEO";
+import DOMPurify from "dompurify";
+
 const contactSchema = z.object({
   name: z.string().trim().min(2, {
     message: "Nome deve ter pelo menos 2 caracteres"
@@ -41,7 +43,7 @@ const contactSchema = z.object({
     message: "Mensagem deve ter pelo menos 10 caracteres"
   }).max(1000, {
     message: "Mensagem deve ter no máximo 1000 caracteres"
-  })
+  }).transform((val) => DOMPurify.sanitize(val, { ALLOWED_TAGS: [] })) // Strip all HTML tags
 });
 type ContactFormData = z.infer<typeof contactSchema>;
 const Contact = () => {

@@ -10,6 +10,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { useToast } from "@/hooks/use-toast";
 import { Plus, ArrowRight, MessageSquare } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import DOMPurify from "dompurify";
 
 const contactSchema = z.object({
   name: z.string().trim().min(2, {
@@ -37,7 +38,7 @@ const contactSchema = z.object({
     message: "Mensagem deve ter pelo menos 10 caracteres"
   }).max(1000, {
     message: "Mensagem deve ter no máximo 1000 caracteres"
-  })
+  }).transform((val) => DOMPurify.sanitize(val, { ALLOWED_TAGS: [] })) // Strip all HTML tags
 });
 
 type ContactFormData = z.infer<typeof contactSchema>;

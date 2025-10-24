@@ -7,13 +7,15 @@ import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { z } from "zod";
+import DOMPurify from "dompurify";
 
 const contactSchema = z.object({
   nome: z.string().trim().min(2, "Nome muito curto").max(100),
   email: z.string().trim().email("E-mail inválido").max(255),
   telefone: z.string().trim().min(10, "Telefone inválido").max(20),
   assunto: z.string().min(1, "Selecione um assunto"),
-  mensagem: z.string().trim().min(10, "Mensagem muito curta").max(1000),
+  mensagem: z.string().trim().min(10, "Mensagem muito curta").max(1000)
+    .transform((val) => DOMPurify.sanitize(val, { ALLOWED_TAGS: [] })), // Strip all HTML tags
 });
 
 const ContactSection = () => {

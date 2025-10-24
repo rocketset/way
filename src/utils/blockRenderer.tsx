@@ -2,6 +2,7 @@ import { EditorBlock } from '@/types/editor';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Poll } from '@/components/Poll';
+import DOMPurify from 'dompurify';
 
 /**
  * Renderiza um bloco do editor em JSX para visualização
@@ -14,7 +15,7 @@ export const renderEditorBlock = (block: EditorBlock, index: number, postId?: st
       return (
         <div
           key={key}
-          dangerouslySetInnerHTML={{ __html: block.content }}
+          dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(block.content) }}
           className={`
             prose-p:text-foreground/80 prose-p:leading-relaxed text-${block.alignment || 'left'}
             [&_a]:text-primary [&_a]:underline [&_a]:underline-offset-2
@@ -38,7 +39,7 @@ export const renderEditorBlock = (block: EditorBlock, index: number, postId?: st
             ${block.level === 5 ? 'text-lg mt-3 mb-2' : ''}
             ${block.level === 6 ? 'text-base mt-2 mb-1' : ''}
           `}
-          dangerouslySetInnerHTML={{ __html: block.content }}
+          dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(block.content) }}
         />
       );
 
@@ -66,7 +67,7 @@ export const renderEditorBlock = (block: EditorBlock, index: number, postId?: st
                 </span>
               </div>
             ) : (
-              <li key={i} dangerouslySetInnerHTML={{ __html: item.content }} />
+              <li key={i} dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(item.content) }} />
             )
           ))}
         </ListTag>
@@ -79,7 +80,7 @@ export const renderEditorBlock = (block: EditorBlock, index: number, postId?: st
           className="border-l-4 border-primary pl-6 py-2 my-6 italic text-lg bg-muted/30 rounded-r"
         >
           <div
-            dangerouslySetInnerHTML={{ __html: block.content }}
+            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(block.content) }}
             className={`
               text-foreground/90 mb-2
               [&_a]:text-primary [&_a]:underline [&_a]:underline-offset-2
@@ -249,10 +250,14 @@ export const renderEditorBlock = (block: EditorBlock, index: number, postId?: st
       );
 
     case 'html':
+      // Sanitized HTML rendering for security - only safe tags and attributes allowed
       return (
         <div
           key={key}
-          dangerouslySetInnerHTML={{ __html: block.content }}
+          dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(block.content, {
+            ALLOWED_TAGS: ['div', 'span', 'p', 'br', 'strong', 'em', 'u', 'a', 'img', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ul', 'ol', 'li', 'blockquote', 'code', 'pre', 'table', 'thead', 'tbody', 'tr', 'th', 'td'],
+            ALLOWED_ATTR: ['href', 'src', 'alt', 'title', 'class', 'id', 'target', 'rel']
+          }) }}
           className="my-6"
         />
       );
