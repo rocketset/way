@@ -71,6 +71,9 @@ import NewLandingPage from "./pages/admin/landing/New";
 import EditLandingPage from "./pages/admin/landing/Edit";
 import LandingPageView from "./pages/LandingPageView";
 import Sitemap from "./pages/Sitemap";
+import Briefing from "./pages/Briefing";
+import Briefings from "./pages/admin/Briefings";
+import BriefingView from "./pages/admin/BriefingView";
 
 // Configuração do React Query
 const queryClient = new QueryClient();
@@ -120,6 +123,9 @@ const App = () => (
           {/* Rota do Sitemap */}
           <Route path="/sitemap.xml" element={<Sitemap />} />
           
+          {/* Rota pública de Briefing */}
+          <Route path="/briefing" element={<Briefing />} />
+          
           {/* Rotas administrativas protegidas */}
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<Dashboard />} />
@@ -168,6 +174,11 @@ const App = () => (
             <Route path="account" element={<Account />} />
             <Route path="support" element={<Support />} />
             <Route path="google-reviews" element={<GoogleReviewsSync />} />
+            
+            {/* Rotas de Briefings */}
+            <Route path="briefings" element={<Briefings />} />
+            <Route path="briefings/:id" element={<BriefingView />} />
+            <Route path="briefings/:id/pdf" element={<BriefingView />} />
           </Route>
           
           {/* Rota 404 - deve ser sempre a última */}

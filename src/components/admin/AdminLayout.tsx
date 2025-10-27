@@ -29,6 +29,7 @@ import {
   Heart,
   FolderOpen,
   Settings,
+  ClipboardList,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -143,6 +144,7 @@ const menuItems = [
     roles: ['administrador', 'gestor_conteudo'],
   },
   { icon: Mail, label: 'Solicitações', path: '/admin/contacts', roles: ['administrador'] },
+  { icon: ClipboardList, label: 'Briefings Comerciais', path: '/admin/briefings', roles: ['administrador'] },
   { 
     icon: Settings, 
     label: 'Configurações', 

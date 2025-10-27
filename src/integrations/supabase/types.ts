@@ -222,6 +222,87 @@ export type Database = {
         }
         Relationships: []
       }
+      briefings: {
+        Row: {
+          atualizado_em: string
+          cargo_funcao: string | null
+          cidade: string | null
+          cnpj: string
+          comunicacao_relacionamento: Json
+          contato: string
+          criado_em: string
+          data_inicio_projeto: string | null
+          endereco: string | null
+          estado: string | null
+          estrutura_organizacao: Json
+          forma_juridica: string | null
+          id: string
+          lido: boolean | null
+          mercado_estrategia: Json
+          nome_empresa: string
+          observacoes_gerais: string | null
+          operacao_logistica: Json
+          produtos_fornecimento: Json
+          responsavel_projeto: string
+          segmento: string
+          sistemas_integracoes: Json
+          site_atual: string | null
+          status: string
+        }
+        Insert: {
+          atualizado_em?: string
+          cargo_funcao?: string | null
+          cidade?: string | null
+          cnpj: string
+          comunicacao_relacionamento?: Json
+          contato: string
+          criado_em?: string
+          data_inicio_projeto?: string | null
+          endereco?: string | null
+          estado?: string | null
+          estrutura_organizacao?: Json
+          forma_juridica?: string | null
+          id?: string
+          lido?: boolean | null
+          mercado_estrategia?: Json
+          nome_empresa: string
+          observacoes_gerais?: string | null
+          operacao_logistica?: Json
+          produtos_fornecimento?: Json
+          responsavel_projeto: string
+          segmento: string
+          sistemas_integracoes?: Json
+          site_atual?: string | null
+          status?: string
+        }
+        Update: {
+          atualizado_em?: string
+          cargo_funcao?: string | null
+          cidade?: string | null
+          cnpj?: string
+          comunicacao_relacionamento?: Json
+          contato?: string
+          criado_em?: string
+          data_inicio_projeto?: string | null
+          endereco?: string | null
+          estado?: string | null
+          estrutura_organizacao?: Json
+          forma_juridica?: string | null
+          id?: string
+          lido?: boolean | null
+          mercado_estrategia?: Json
+          nome_empresa?: string
+          observacoes_gerais?: string | null
+          operacao_logistica?: Json
+          produtos_fornecimento?: Json
+          responsavel_projeto?: string
+          segmento?: string
+          sistemas_integracoes?: Json
+          site_atual?: string | null
+          status?: string
+        }
+        Relationships: []
+      }
       case_content_blocks: {
         Row: {
           atualizado_em: string
