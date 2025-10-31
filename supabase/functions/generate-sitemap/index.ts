@@ -20,6 +20,11 @@ interface LandingPage {
   atualizado_em: string;
 }
 
+interface Columnist {
+  id: string;
+  atualizado_em: string;
+}
+
 Deno.serve(async (req) => {
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
@@ -71,6 +76,19 @@ Deno.serve(async (req) => {
     if (lpError) {
       console.error('Error fetching landing pages:', lpError);
       throw lpError;
+    }
+
+    // Buscar colunistas aprovados
+    const { data: columnists, error: columnistsError } = await supabase
+      .from('profiles')
+      .select('id, atualizado_em')
+      .eq('is_colunista', true)
+      .eq('account_status', 'approved')
+      .order('atualizado_em', { ascending: false });
+
+    if (columnistsError) {
+      console.error('Error fetching columnists:', columnistsError);
+      throw columnistsError;
     }
 
     // URLs estáticas
@@ -144,6 +162,18 @@ Deno.serve(async (req) => {
       }
     });
 
+    // Adicionar colunistas
+    (columnists as Columnist[] || []).forEach(columnist => {
+      const lastmod = columnist.atualizado_em ? new Date(columnist.atualizado_em).toISOString().split('T')[0] : currentDate;
+      xml += '  <url>\n';
+      xml += `    <loc>${baseUrl}/colunista/${columnist.id}</loc>\n`;
+      xml += `    <lastmod>${lastmod}</lastmod>\n`;
+      xml += `    <changefreq>monthly</changefreq>\n`;
+      xml += `    <priority>0.6</priority>\n`;
+      xml += '  </url>\n';
+      totalUrls++;
+    });
+
     xml += '</urlset>';
 
     console.log(`Sitemap generated with ${totalUrls} URLs`);
@@ -187,6 +217,8 @@ Deno.serve(async (req) => {
   } catch (error) {
     console.error('Error generating sitemap:', error);
 
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+
     // Atualizar status para erro
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
@@ -205,7 +237,7 @@ Deno.serve(async (req) => {
     }
 
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ error: errorMessage }),
       {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         status: 500,
