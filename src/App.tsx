@@ -74,6 +74,7 @@ import Sitemap from "./pages/Sitemap";
 import Briefing from "./pages/Briefing";
 import Briefings from "./pages/admin/Briefings";
 import BriefingView from "./pages/admin/BriefingView";
+import SiteSettings from "./pages/admin/SiteSettings";
 
 // Configuração do React Query
 const queryClient = new QueryClient();
@@ -179,6 +180,9 @@ const App = () => (
             <Route path="briefings" element={<Briefings />} />
             <Route path="briefings/:id" element={<BriefingView />} />
             <Route path="briefings/:id/pdf" element={<BriefingView />} />
+            
+            {/* Configurações do Site */}
+            <Route path="site-settings" element={<SiteSettings />} />
           </Route>
           
           {/* Rota 404 - deve ser sempre a última */}

@@ -151,6 +151,7 @@ const menuItems = [
     path: '/admin/google-reviews',
     roles: ['administrador'],
     subItems: [
+      { label: 'Site Way', path: '/admin/site-settings' },
       { label: 'Integrações Google', path: '/admin/google-integrations' },
       { label: 'Avaliações Google', path: '/admin/google-reviews' },
       { label: 'Mídia', path: '/admin/media' },

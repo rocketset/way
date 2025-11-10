@@ -1366,6 +1366,84 @@ export type Database = {
         }
         Relationships: []
       }
+      site_settings: {
+        Row: {
+          address: string | null
+          atualizado_em: string
+          city: string | null
+          company_description: string | null
+          company_founding_year: string | null
+          company_name: string
+          country: string | null
+          criado_em: string
+          email: string | null
+          facebook_url: string | null
+          google_reviews_url: string | null
+          id: string
+          instagram_url: string | null
+          linkedin_url: string | null
+          logo_url: string | null
+          phone: string | null
+          rating_value: number | null
+          review_count: number | null
+          site_url: string | null
+          state: string | null
+          twitter_url: string | null
+          whatsapp: string | null
+          youtube_url: string | null
+        }
+        Insert: {
+          address?: string | null
+          atualizado_em?: string
+          city?: string | null
+          company_description?: string | null
+          company_founding_year?: string | null
+          company_name?: string
+          country?: string | null
+          criado_em?: string
+          email?: string | null
+          facebook_url?: string | null
+          google_reviews_url?: string | null
+          id?: string
+          instagram_url?: string | null
+          linkedin_url?: string | null
+          logo_url?: string | null
+          phone?: string | null
+          rating_value?: number | null
+          review_count?: number | null
+          site_url?: string | null
+          state?: string | null
+          twitter_url?: string | null
+          whatsapp?: string | null
+          youtube_url?: string | null
+        }
+        Update: {
+          address?: string | null
+          atualizado_em?: string
+          city?: string | null
+          company_description?: string | null
+          company_founding_year?: string | null
+          company_name?: string
+          country?: string | null
+          criado_em?: string
+          email?: string | null
+          facebook_url?: string | null
+          google_reviews_url?: string | null
+          id?: string
+          instagram_url?: string | null
+          linkedin_url?: string | null
+          logo_url?: string | null
+          phone?: string | null
+          rating_value?: number | null
+          review_count?: number | null
+          site_url?: string | null
+          state?: string | null
+          twitter_url?: string | null
+          whatsapp?: string | null
+          youtube_url?: string | null
+        }
+        Relationships: []
+      }
       sitemap_config: {
         Row: {
           created_at: string
