@@ -52,7 +52,7 @@ export function PollBlockEditor({
 
   return (
     <div className="group relative">
-      <div className="border rounded-lg p-4 bg-blue-500/10 hover:border-border transition-all">
+      <div className="border border-transparent rounded-lg p-4 bg-blue-500/10 hover:border-border/40 transition-all">
         <div className="space-y-4">
           <div className="space-y-2">
             <Label>Pergunta da Enquete</Label>
@@ -107,7 +107,7 @@ export function PollBlockEditor({
             </Button>
           </div>
 
-          <div className="space-y-3 pt-3 border-t">
+          <div className="space-y-3 pt-3 border-t border-border/30">
             <div className="flex items-center space-x-2">
               <Checkbox
                 id="require-login"

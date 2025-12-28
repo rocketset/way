@@ -82,7 +82,7 @@ export function ListBlockEditor({
 
   return (
     <div className="group relative">
-      <div className="border rounded-lg p-4 hover:border-border transition-all">
+      <div className="border border-transparent rounded-lg p-4 hover:border-border/40 transition-all">
         <div className="flex items-center gap-2 mb-3">
           <Select
             value={block.listType}

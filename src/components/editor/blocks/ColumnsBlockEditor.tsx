@@ -112,7 +112,7 @@ export function ColumnsBlockEditor({
 
   return (
     <div className="group relative">
-      <div className="border rounded-lg p-4 hover:border-border transition-all">
+      <div className="border border-transparent rounded-lg p-4 hover:border-border/40 transition-all">
         <div className="flex items-center gap-2 mb-4">
           <Label>Número de Colunas:</Label>
           <Select value={block.columnCount.toString()} onValueChange={handleColumnCountChange}>
@@ -131,8 +131,8 @@ export function ColumnsBlockEditor({
           className="grid gap-4"
           style={{ gridTemplateColumns: `repeat(${block.columnCount}, minmax(0, 1fr))` }}
         >
-          {block.columns.map((column, colIndex) => (
-            <div key={colIndex} className="border rounded-lg p-3 bg-muted/20 space-y-2">
+            {block.columns.map((column, colIndex) => (
+            	<div key={colIndex} className="border border-border/30 rounded-lg p-3 bg-muted/20 space-y-2">
               <div className="text-xs font-medium text-muted-foreground mb-2">
                 Coluna {colIndex + 1}
               </div>
