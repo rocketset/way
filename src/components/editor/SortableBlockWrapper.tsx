@@ -52,20 +52,18 @@ export function SortableBlockWrapper({ id, children }: SortableBlockWrapperProps
         {...attributes}
         {...listeners}
         className="
-          absolute left-0 top-1/2 -translate-y-1/2 -translate-x-full
+          absolute -left-8 top-1/2 -translate-y-1/2
           opacity-0 group-hover:opacity-100
           transition-opacity duration-200
           cursor-grab active:cursor-grabbing
-          p-1 hover:bg-muted rounded
+          p-1 hover:bg-muted/50 rounded
         "
       >
-        <GripVertical className="h-5 w-5 text-muted-foreground" />
+        <GripVertical className="h-4 w-4 text-muted-foreground/70" />
       </div>
 
       {/* Conteúdo do bloco */}
-      <div className="relative">
-        {children}
-      </div>
+      {children}
     </div>
   );
 }
