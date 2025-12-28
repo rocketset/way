@@ -31,7 +31,7 @@ export function HTMLBlockEditor({
 
   return (
     <div className="group relative">
-      <div className="border rounded-lg p-4 bg-yellow-500/10 hover:border-border transition-all">
+      <div className="border border-transparent rounded-lg p-4 bg-yellow-500/10 hover:border-border/40 transition-all">
         <div className="flex items-center justify-between mb-3">
           <Label className="text-xs font-semibold flex items-center gap-2">
             <span className="text-yellow-600">⚠</span>

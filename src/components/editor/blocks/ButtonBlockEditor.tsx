@@ -27,7 +27,7 @@ export function ButtonBlockEditor({
 }: Props) {
   return (
     <div className="group relative">
-      <div className="border rounded-lg p-4 hover:border-border transition-all">
+      <div className="border border-transparent rounded-lg p-4 hover:border-border/40 transition-all">
         <div className="space-y-3">
           <div className="space-y-2">
             <Label>Texto do Botão</Label>
