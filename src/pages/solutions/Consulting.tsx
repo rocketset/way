@@ -94,11 +94,11 @@ const Consulting = () => {
                 </div>
               </div>
               
-              <div className="relative animate-fade-in group flex items-center justify-center" style={{
+              <div className="relative animate-fade-in group flex items-center justify-center h-full" style={{
               animationDelay: '0.3s'
             }}>
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/30 to-primary/10 rounded-3xl blur-3xl group-hover:blur-2xl transition-all duration-500 opacity-50 group-hover:opacity-100"></div>
-                <div className="relative aspect-square rounded-3xl overflow-hidden border border-primary/20 group-hover:border-primary/40 transition-all duration-500 hover:scale-105 transform w-[70%]">
+                <div className="relative aspect-square rounded-3xl overflow-hidden border border-primary/20 group-hover:border-primary/40 transition-all duration-500 hover:scale-105 transform w-full">
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent"></div>
                   <img alt="Mentoria e Consultoria" src="/lovable-uploads/4febb48a-4651-410c-9449-9c830ed7065b.jpg" className="w-full h-full relative z-10 object-cover" />
                   <Plus className="absolute top-4 right-4 w-8 h-8 text-primary/30 animate-[spin_10s_linear_infinite] group-hover:text-primary/50 transition-colors" />
