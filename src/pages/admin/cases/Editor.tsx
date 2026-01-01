@@ -493,14 +493,17 @@ export default function CaseEditor() {
 
               <div>
                 <Label>Screenshot do Site/App (Mockup)</Label>
-                <p className="text-xs text-muted-foreground mb-2">Imagem do mockup do site/produto (aparece na página de listagem de cases)</p>
+                <p className="text-xs text-muted-foreground mb-2">
+                  Imagem do mockup do site/produto (aparece na página de listagem de cases). 
+                  <span className="font-semibold text-primary">Tamanho recomendado: 1920 x 2400 px</span>
+                </p>
                 <div className="space-y-2">
                   {mockupScreenshotUrl && (
-                    <div className="relative inline-block">
+                    <div className="relative inline-block max-w-full">
                       <img 
                         src={mockupScreenshotUrl} 
                         alt="Mockup preview" 
-                        className="h-32 w-auto object-contain border rounded"
+                        className="max-h-[400px] w-auto object-contain border rounded"
                       />
                       <Button
                         type="button"
