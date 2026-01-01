@@ -21,9 +21,26 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
-import { Plus, Pencil, Trash2, Eye } from 'lucide-react';
+import { Plus, Pencil, Trash2, Eye, GripVertical } from 'lucide-react';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  DragEndEvent,
+} from '@dnd-kit/core';
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  useSortable,
+  verticalListSortingStrategy,
+} from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 
 interface Case {
   id: string;
@@ -35,7 +52,148 @@ interface Case {
   content_status: 'rascunho' | 'em_edicao' | 'publicado' | 'excluido';
   is_featured: boolean;
   criado_em: string;
+  ordem: number;
   categories?: { nome: string };
+}
+
+// Componente de linha arrastável
+function SortableRow({ 
+  caseItem, 
+  categories, 
+  onStatusChange, 
+  onCategoryChange, 
+  onToggleFeatured, 
+  onDelete, 
+  onView, 
+  onEdit 
+}: {
+  caseItem: Case;
+  categories: { id: string; nome: string }[] | undefined;
+  onStatusChange: (id: string, status: 'rascunho' | 'em_edicao' | 'publicado' | 'excluido') => void;
+  onCategoryChange: (id: string, categoryId: string | null) => void;
+  onToggleFeatured: (id: string, currentValue: boolean) => void;
+  onDelete: (id: string) => void;
+  onView: (id: string) => void;
+  onEdit: (id: string) => void;
+}) {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id: caseItem.id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0.5 : 1,
+  };
+
+  return (
+    <TableRow ref={setNodeRef} style={style} className={isDragging ? 'bg-muted' : ''}>
+      <TableCell className="w-[50px]">
+        <button
+          className="cursor-grab active:cursor-grabbing p-1 hover:bg-muted rounded"
+          {...attributes}
+          {...listeners}
+        >
+          <GripVertical className="h-4 w-4 text-muted-foreground" />
+        </button>
+      </TableCell>
+      <TableCell className="font-medium">{caseItem.titulo}</TableCell>
+      <TableCell>
+        <Select
+          value={caseItem.categoria_id || 'sem-categoria'}
+          onValueChange={(value) => onCategoryChange(caseItem.id, value === 'sem-categoria' ? null : value)}
+        >
+          <SelectTrigger className="w-[160px]">
+            <SelectValue placeholder="Selecione..." />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="sem-categoria">Sem categoria</SelectItem>
+            {categories?.map((category) => (
+              <SelectItem key={category.id} value={category.id}>
+                {category.nome}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </TableCell>
+      <TableCell>
+        <Select
+          value={caseItem.content_status || 'rascunho'}
+          onValueChange={(value) => onStatusChange(caseItem.id, value as 'rascunho' | 'em_edicao' | 'publicado' | 'excluido')}
+        >
+          <SelectTrigger className="w-[140px]">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="rascunho">
+              <span className="flex items-center gap-2">
+                <span className="h-2 w-2 rounded-full bg-gray-500" />
+                Rascunho
+              </span>
+            </SelectItem>
+            <SelectItem value="em_edicao">
+              <span className="flex items-center gap-2">
+                <span className="h-2 w-2 rounded-full bg-yellow-500" />
+                Em Edição
+              </span>
+            </SelectItem>
+            <SelectItem value="publicado">
+              <span className="flex items-center gap-2">
+                <span className="h-2 w-2 rounded-full bg-green-500" />
+                Publicado
+              </span>
+            </SelectItem>
+            <SelectItem value="excluido">
+              <span className="flex items-center gap-2">
+                <span className="h-2 w-2 rounded-full bg-red-500" />
+                Excluído
+              </span>
+            </SelectItem>
+          </SelectContent>
+        </Select>
+      </TableCell>
+      <TableCell>
+        <Switch
+          checked={caseItem.is_featured || false}
+          onCheckedChange={() => onToggleFeatured(caseItem.id, caseItem.is_featured || false)}
+        />
+      </TableCell>
+      <TableCell>
+        {new Date(caseItem.criado_em).toLocaleDateString('pt-BR')}
+      </TableCell>
+      <TableCell className="text-right space-x-1">
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={() => onView(caseItem.id)}
+          title="Visualizar case"
+        >
+          <Eye className="h-4 w-4" />
+        </Button>
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={() => onEdit(caseItem.id)}
+          title="Editar case"
+        >
+          <Pencil className="h-4 w-4" />
+        </Button>
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={() => onDelete(caseItem.id)}
+          title="Deletar"
+        >
+          <Trash2 className="h-4 w-4" />
+        </Button>
+      </TableCell>
+    </TableRow>
+  );
 }
 
 export default function CasesList() {
@@ -43,6 +201,17 @@ export default function CasesList() {
   const [cases, setCases] = useState<Case[]>([]);
   const [loading, setLoading] = useState(true);
   const { data: categories } = useCaseCategories();
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8,
+      },
+    }),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
 
   // Carrega cases ao montar o componente
   useEffect(() => {
@@ -58,7 +227,7 @@ export default function CasesList() {
           *,
           categories (nome)
         `)
-        .order('criado_em', { ascending: false });
+        .order('ordem', { ascending: true });
 
       if (error) throw error;
       setCases(data || []);
@@ -67,6 +236,40 @@ export default function CasesList() {
       console.error('Erro:', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  // Função para reordenar após drag
+  const handleDragEnd = async (event: DragEndEvent) => {
+    const { active, over } = event;
+
+    if (over && active.id !== over.id) {
+      const oldIndex = cases.findIndex((c) => c.id === active.id);
+      const newIndex = cases.findIndex((c) => c.id === over.id);
+
+      const newCases = arrayMove(cases, oldIndex, newIndex);
+      setCases(newCases);
+
+      // Atualizar ordem no banco de dados
+      try {
+        const updates = newCases.map((c, index) => ({
+          id: c.id,
+          ordem: index + 1,
+        }));
+
+        for (const update of updates) {
+          await supabase
+            .from('cases')
+            .update({ ordem: update.ordem })
+            .eq('id', update.id);
+        }
+
+        toast.success('Ordem atualizada com sucesso!');
+      } catch (error) {
+        console.error('Erro ao atualizar ordem:', error);
+        toast.error('Erro ao salvar nova ordem');
+        fetchCases(); // Recarrega para reverter
+      }
     }
   };
 
@@ -158,26 +361,12 @@ export default function CasesList() {
     navigate('/admin/cases/new');
   };
 
-  // Função para obter estilo do badge de status
-  const getStatusBadgeClass = (status: string) => {
-    const styles: Record<string, string> = {
-      rascunho: 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-100',
-      em_edicao: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-100',
-      publicado: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100',
-      excluido: 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-100'
-    };
-    return styles[status] || styles.rascunho;
+  const handleView = (id: string) => {
+    window.open(`/cases/${id}`, '_blank');
   };
 
-  // Função para obter label do status
-  const getStatusLabel = (status: string) => {
-    const labels: Record<string, string> = {
-      rascunho: 'Rascunho',
-      em_edicao: 'Em Edição',
-      publicado: 'Publicado',
-      excluido: 'Excluído'
-    };
-    return labels[status] || 'Rascunho';
+  const handleEdit = (id: string) => {
+    navigate(`/admin/cases/${id}/editor`);
   };
 
   if (loading) {
@@ -191,7 +380,7 @@ export default function CasesList() {
         <div>
           <h1 className="text-3xl font-bold">Cases de Sucesso</h1>
           <p className="text-muted-foreground mt-2">
-            Gerencie os cases da sua empresa
+            Gerencie os cases da sua empresa. Arraste para reordenar a prioridade de exibição.
           </p>
         </div>
         <Button onClick={handleCreate}>
@@ -200,124 +389,55 @@ export default function CasesList() {
         </Button>
       </div>
 
-      {/* Tabela de cases */}
+      {/* Tabela de cases com drag-and-drop */}
       <div className="border rounded-lg">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Título</TableHead>
-              <TableHead>Categoria</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Destaque</TableHead>
-              <TableHead>Data</TableHead>
-              <TableHead className="text-right">Ações</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {cases.length === 0 ? (
+        <DndContext
+          sensors={sensors}
+          collisionDetection={closestCenter}
+          onDragEnd={handleDragEnd}
+        >
+          <Table>
+            <TableHeader>
               <TableRow>
-                <TableCell colSpan={6} className="text-center text-muted-foreground">
-                  Nenhum case cadastrado
-                </TableCell>
+                <TableHead className="w-[50px]">Ordem</TableHead>
+                <TableHead>Título</TableHead>
+                <TableHead>Categoria</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Destaque</TableHead>
+                <TableHead>Data</TableHead>
+                <TableHead className="text-right">Ações</TableHead>
               </TableRow>
-            ) : (
-              cases.map((caseItem) => (
-                <TableRow key={caseItem.id}>
-                  <TableCell className="font-medium">{caseItem.titulo}</TableCell>
-                  <TableCell>
-                    <Select
-                      value={caseItem.categoria_id || 'sem-categoria'}
-                      onValueChange={(value) => handleCategoryChange(caseItem.id, value === 'sem-categoria' ? null : value)}
-                    >
-                      <SelectTrigger className="w-[160px]">
-                        <SelectValue placeholder="Selecione..." />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="sem-categoria">Sem categoria</SelectItem>
-                        {categories?.map((category) => (
-                          <SelectItem key={category.id} value={category.id}>
-                            {category.nome}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </TableCell>
-                  <TableCell>
-                    <Select
-                      value={caseItem.content_status || 'rascunho'}
-                      onValueChange={(value) => handleStatusChange(caseItem.id, value as 'rascunho' | 'em_edicao' | 'publicado' | 'excluido')}
-                    >
-                      <SelectTrigger className="w-[140px]">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="rascunho">
-                          <span className="flex items-center gap-2">
-                            <span className="h-2 w-2 rounded-full bg-gray-500" />
-                            Rascunho
-                          </span>
-                        </SelectItem>
-                        <SelectItem value="em_edicao">
-                          <span className="flex items-center gap-2">
-                            <span className="h-2 w-2 rounded-full bg-yellow-500" />
-                            Em Edição
-                          </span>
-                        </SelectItem>
-                        <SelectItem value="publicado">
-                          <span className="flex items-center gap-2">
-                            <span className="h-2 w-2 rounded-full bg-green-500" />
-                            Publicado
-                          </span>
-                        </SelectItem>
-                        <SelectItem value="excluido">
-                          <span className="flex items-center gap-2">
-                            <span className="h-2 w-2 rounded-full bg-red-500" />
-                            Excluído
-                          </span>
-                        </SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </TableCell>
-                  <TableCell>
-                    <Switch
-                      checked={caseItem.is_featured || false}
-                      onCheckedChange={() => handleToggleFeatured(caseItem.id, caseItem.is_featured || false)}
-                    />
-                  </TableCell>
-                  <TableCell>
-                    {new Date(caseItem.criado_em).toLocaleDateString('pt-BR')}
-                  </TableCell>
-                  <TableCell className="text-right space-x-1">
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => window.open(`/cases/${caseItem.id}`, '_blank')}
-                      title="Visualizar case"
-                    >
-                      <Eye className="h-4 w-4" />
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => navigate(`/admin/cases/${caseItem.id}/editor`)}
-                      title="Editar case"
-                    >
-                      <Pencil className="h-4 w-4" />
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => handleDelete(caseItem.id)}
-                      title="Deletar"
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
+            </TableHeader>
+            <TableBody>
+              {cases.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={7} className="text-center text-muted-foreground">
+                    Nenhum case cadastrado
                   </TableCell>
                 </TableRow>
-              ))
-            )}
-          </TableBody>
-        </Table>
+              ) : (
+                <SortableContext
+                  items={cases.map((c) => c.id)}
+                  strategy={verticalListSortingStrategy}
+                >
+                  {cases.map((caseItem) => (
+                    <SortableRow
+                      key={caseItem.id}
+                      caseItem={caseItem}
+                      categories={categories}
+                      onStatusChange={handleStatusChange}
+                      onCategoryChange={handleCategoryChange}
+                      onToggleFeatured={handleToggleFeatured}
+                      onDelete={handleDelete}
+                      onView={handleView}
+                      onEdit={handleEdit}
+                    />
+                  ))}
+                </SortableContext>
+              )}
+            </TableBody>
+          </Table>
+        </DndContext>
       </div>
     </div>
   );
