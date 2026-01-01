@@ -177,12 +177,12 @@ const FeaturedCasesSection = () => {
         {selectedCase && (
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start animate-fade-in">
             {/* Left - Image */}
-            <div className="relative group">
+            <div className="relative">
               <div className="relative overflow-hidden rounded-xl border border-border bg-muted shadow-lg">
                 <img
                   src={selectedCase.mockup_screenshot_url || selectedCase.imagem_principal || "/placeholder.svg"}
                   alt={selectedCase.titulo}
-                  className="w-full h-auto object-cover aspect-[4/3] transition-transform duration-500 group-hover:scale-105"
+                  className="w-full h-auto object-contain"
                 />
               </div>
             </div>
