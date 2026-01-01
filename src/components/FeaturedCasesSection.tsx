@@ -48,7 +48,7 @@ const FeaturedCasesSection = () => {
         .eq("publicado", true)
         .eq("is_featured", true)
         .order("criado_em", { ascending: false })
-        .limit(6);
+        .limit(10);
 
       if (error) throw error;
 
