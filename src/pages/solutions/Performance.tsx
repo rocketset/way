@@ -92,7 +92,7 @@ const Performance = () => {
                 <div className="flex items-start gap-4">
                   <Activity className="w-10 h-10 md:w-12 md:h-12 text-primary flex-shrink-0 mt-1" />
                   <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-primary leading-tight">
-                    Performance <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">& Marketing</span>
+                    Performance <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">e Marketing</span>
                   </h1>
                 </div>
                 
@@ -116,7 +116,7 @@ const Performance = () => {
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/30 to-primary/10 rounded-3xl blur-3xl group-hover:blur-2xl transition-all duration-500 opacity-50 group-hover:opacity-100"></div>
                 <div className="relative aspect-square rounded-3xl overflow-hidden border border-primary/20 group-hover:border-primary/40 transition-all duration-500 hover:scale-105 transform w-[70%]">
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent"></div>
-                  <img src={performanceServices} alt="Soluções de Performance & Marketing" className="w-full h-full object-contain relative z-10 transition-transform duration-500" />
+                  <img src={performanceServices} alt="Soluções de Performance e Marketing" className="w-full h-full object-contain relative z-10 transition-transform duration-500" />
                   {/* Floating Plus decorations */}
                   <Plus className="absolute top-4 right-4 w-8 h-8 text-primary/30 animate-[spin_10s_linear_infinite] group-hover:text-primary/50 transition-colors" />
                   <Plus className="absolute bottom-4 left-4 w-6 h-6 text-primary/20 animate-[spin_15s_linear_infinite_reverse] group-hover:text-primary/40 transition-colors" />

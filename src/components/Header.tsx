@@ -70,8 +70,8 @@ const Header = () => {
 
   const solutionItems = [
     { label: "Implantação e Desenvolvimento", path: "/solucoes/implantacao-desenvolvimento", isExternal: false },
-    { label: "Consultorias", path: "https://wayecommerce.com.br/solucoes/consultoria", isExternal: true },
-    { label: "Performance & Marketing", path: "/solucoes/performance-marketing", isExternal: false },
+    { label: "Mentoria e Consultoria", path: "/solucoes/consultoria", isExternal: false },
+    { label: "Performance e Marketing", path: "/solucoes/performance-marketing", isExternal: false },
     // JORNADA WAY - TEMPORARIAMENTE REMOVIDO (para uso futuro)
     // { label: "Jornada Way", path: "https://wayecommerce.com.br/solucoes/jornada", isExternal: true },
   ];
