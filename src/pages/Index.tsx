@@ -1,13 +1,12 @@
 import Header from "@/components/Header";
 import HomeBannerSlider from "@/components/HomeBannerSlider";
-import ClientsCarousel from "@/components/ClientsCarousel";
 import WhyChooseSection from "@/components/WhyChooseSection";
 import SolutionsSection from "@/components/SolutionsSection";
 import PartnersCarousel from "@/components/PartnersCarousel";
-import CasesSection from "@/components/CasesSection";
+import FeaturedCasesSection from "@/components/FeaturedCasesSection";
+import TrustedBrandsSection from "@/components/TrustedBrandsSection";
 import NewsSection from "@/components/NewsSection";
 import CtaResultsSection from "@/components/CtaResultsSection";
-import { GoogleReviews } from "@/components/GoogleReviews";
 import Footer from "@/components/Footer";
 import { SEO } from "@/components/SEO";
 const Index = () => {
@@ -62,7 +61,12 @@ const Index = () => {
         <div className="animate-fade-in" style={{
         animationDelay: '0.4s'
       }}>
-          <CasesSection />
+          <FeaturedCasesSection />
+        </div>
+        <div className="animate-fade-in" style={{
+        animationDelay: '0.45s'
+      }}>
+          <TrustedBrandsSection />
         </div>
         <div className="animate-fade-in" style={{
         animationDelay: '0.5s'
