@@ -86,7 +86,7 @@ const FeaturedCasesSection = () => {
   if (loading) {
     return (
       <section className="py-24 bg-background">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 md:px-12">
           <Skeleton className="h-8 w-32 mb-4" />
           <Skeleton className="h-12 w-64 mb-8" />
           <div className="flex gap-4 mb-8">
@@ -114,7 +114,7 @@ const FeaturedCasesSection = () => {
         ✦
       </div>
 
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 md:px-12">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12">
           <div>
