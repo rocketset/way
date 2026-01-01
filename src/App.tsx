@@ -75,6 +75,7 @@ import Briefing from "./pages/Briefing";
 import Briefings from "./pages/admin/Briefings";
 import BriefingView from "./pages/admin/BriefingView";
 import SiteSettings from "./pages/admin/SiteSettings";
+import Gallery from "./pages/admin/Gallery";
 
 // Configuração do React Query
 const queryClient = new QueryClient();
@@ -183,6 +184,9 @@ const App = () => (
             
             {/* Configurações do Site */}
             <Route path="site-settings" element={<SiteSettings />} />
+            
+            {/* Galeria de Fotos */}
+            <Route path="gallery" element={<Gallery />} />
           </Route>
           
           {/* Rota 404 - deve ser sempre a última */}
