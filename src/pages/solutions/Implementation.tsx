@@ -93,7 +93,7 @@ const Implementation = () => {
                 <div className="flex items-start gap-4">
                   <ShoppingCart className="w-10 h-10 md:w-12 md:h-12 text-primary flex-shrink-0 mt-1" />
                   <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary leading-tight">
-                    Implantação <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">& Desenvolvimento</span>
+                    Implantação <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">e Desenvolvimento</span>
                   </h1>
                 </div>
                 
