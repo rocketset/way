@@ -1,12 +1,12 @@
-import { Plus, Grid3x3, Eye, Headphones } from "lucide-react";
+import { Plus, Grid3x3, TrendingUp, RotateCcw } from "lucide-react";
 import brazilFlag from "@/assets/brazil-flag.png";
 import ClientsCarousel from "./ClientsCarousel";
-
 interface WhyChooseSectionProps {
   className?: string;
 }
-
-const WhyChooseSection = ({ className = "" }: WhyChooseSectionProps) => {
+const WhyChooseSection = ({
+  className = ""
+}: WhyChooseSectionProps) => {
   const stats = [{
     number: "190",
     label: "Lojas implantadas"
@@ -23,8 +23,13 @@ const WhyChooseSection = ({ className = "" }: WhyChooseSectionProps) => {
   }];
   return <section className={`py-20 px-4 bg-background relative overflow-hidden ${className}`}>
       {/* Animated background elements */}
-      <div className="absolute top-1/4 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '6s' }} />
-      <div className="absolute bottom-1/4 left-0 w-96 h-96 bg-yellow-500/5 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '8s', animationDelay: '2s' }} />
+      <div className="absolute top-1/4 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-pulse" style={{
+      animationDuration: '6s'
+    }} />
+      <div className="absolute bottom-1/4 left-0 w-96 h-96 bg-yellow-500/5 rounded-full blur-3xl animate-pulse" style={{
+      animationDuration: '8s',
+      animationDelay: '2s'
+    }} />
       
       <div className="container mx-auto relative z-10">
         <div className="max-w-6xl mx-auto">
@@ -59,9 +64,7 @@ const WhyChooseSection = ({ className = "" }: WhyChooseSectionProps) => {
                 </div>)}
             </div>
 
-            <p className="text-base max-w-4xl mx-auto leading-relaxed mt-12 text-gray-200 md:text-xl">
-              A Way E-commerce é uma aceleradora de negócios digitais independente, especializada em transformar operações físicas em canais online rentáveis. Com presença nacional e um ecossistema de especialistas em e-commerce, performance e tecnologia, atuamos em toda a jornada — da implantação à escala, impulsionando marcas que desejam crescer com estrutura e previsibilidade.
-            </p>
+            <p className="text-base max-w-4xl mx-auto leading-relaxed mt-12 text-gray-200 md:text-xl">Com origem no Nordeste e atuação nacional, a Way E-commerce é uma aceleradora de operações digitais especializada em estruturar e escalar negócios no online. Atuamos em toda a jornada da implantação à evolução contínua. Unindo estratégia, tecnologia e performance para gerar crescimento previsível e sustentável.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
@@ -77,10 +80,8 @@ const WhyChooseSection = ({ className = "" }: WhyChooseSectionProps) => {
                 <div className="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-xl bg-primary group-hover:scale-110 group-hover:rotate-12 transition-all duration-500 shadow-lg">
                   <Grid3x3 className="w-8 h-8 text-primary-foreground" />
                 </div>
-                <h3 className="text-xl font-bold mb-4 group-hover:text-primary transition-colors duration-300">Soluções Modulares</h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  Customizamos cada projeto conforme a maturidade da operação. Co-criamos com nossos parceiros, sem perder ganhos de escala e eficiência.
-                </p>
+                <h3 className="text-xl font-bold mb-4 group-hover:text-primary transition-colors duration-300">Estruturação Estratégica</h3>
+                <p className="text-muted-foreground leading-relaxed">Implantamos operações de e-commerce com base em diagnóstico, arquitetura de tecnologia e processos claros. Cada projeto nasce preparado para operar, vender e evoluir sem retrabalho.</p>
               </div>
             </div>
 
@@ -94,12 +95,10 @@ const WhyChooseSection = ({ className = "" }: WhyChooseSectionProps) => {
               
               <div className="relative">
                 <div className="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-xl bg-primary group-hover:scale-110 group-hover:rotate-12 transition-all duration-500 shadow-lg">
-                  <Eye className="w-8 h-8 text-primary-foreground" />
+                  <RotateCcw className="w-8 h-8 text-primary-foreground" />
                 </div>
-                <h3 className="text-xl font-bold mb-4 group-hover:text-primary transition-colors duration-300">Transparência</h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  Trabalhamos como parceiros de negócio. A rentabilidade precisa ser saudável para ambos os lados, e nossas metas estão sempre alinhadas às metas de venda do cliente.
-                </p>
+                <h3 className="text-xl font-bold mb-4 group-hover:text-primary transition-colors duration-300">Evolução Contínua</h3>
+                <p className="text-muted-foreground leading-relaxed">Atuamos de forma próxima e estratégica, acompanhando dados, operação e performance para orientar decisões, corrigir rotas e evoluir a operação com consistência.</p>
               </div>
             </div>
 
@@ -113,12 +112,10 @@ const WhyChooseSection = ({ className = "" }: WhyChooseSectionProps) => {
               
               <div className="relative">
                 <div className="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-xl bg-primary group-hover:scale-110 group-hover:rotate-12 transition-all duration-500 shadow-lg">
-                  <Headphones className="w-8 h-8 text-primary-foreground" />
+                  <TrendingUp className="w-8 h-8 text-primary-foreground" />
                 </div>
-                <h3 className="text-xl font-bold mb-4 group-hover:text-primary transition-colors duration-300">Atendimento</h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  Mais do que suporte, oferecemos direcionamento estratégico e acompanhamento próximo, garantindo evolução constante e decisões mais assertivas.
-                </p>
+                <h3 className="text-xl font-bold mb-4 group-hover:text-primary transition-colors duration-300">Escala com Previsibilidade</h3>
+                <p className="text-muted-foreground leading-relaxed">Com a base estruturada, focamos em crescimento sustentável, expansão de canais e performance. Escalar deixa de ser aposta e passa a ser processo.</p>
               </div>
             </div>
           </div>

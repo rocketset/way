@@ -17,13 +17,10 @@ const HomeBannerSlider = () => {
           <div className="max-w-4xl mx-auto text-center space-y-8 my-[91px]">
             
             {/* Main Title */}
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-normal text-white leading-[1.2] tracking-tight">
-              Soluções estratégicas para acelerar o crescimento do seu negócio.
-            </h1>
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-normal text-white leading-[1.2] tracking-tight">Estruturamos e aceleramos operações de E-commerce com método, tecnologia e performance.</h1>
 
             {/* Subtitle/Description */}
-            <p className="text-lg sm:text-xl lg:text-2xl text-white/90 font-light leading-relaxed max-w-3xl mx-auto">
-              Na <span className="text-primary font-semibold">Way E-commerce</span>, unimos estratégia, tecnologia e performance para escalar marcas que pensam grande. Somos uma <span className="text-primary font-semibold">aceleradora de negócios digitais</span>, com foco em estrutura, expansão e resultados reais.
+            <p className="text-lg sm:text-xl lg:text-2xl text-white/90 font-light leading-relaxed max-w-3xl mx-auto">Na Way E-commerce, atuamos da implantação à escala, com um método próprio e validado, aplicado em mais de 190 projetos no Brasil, focado em estrutura, expansão e crescimento sustentável.<span className="text-primary font-semibold">aceleradoras de negócios do Nordeste</span>, unimos estratégia, tecnologia e performance para escalar marcas que pensam grande. Somos uma <span className="text-primary font-semibold">aceleradora de negócios digitais</span>, com foco em estrutura, expansão e resultados reais.
             </p>
 
             {/* CTA Button */}
