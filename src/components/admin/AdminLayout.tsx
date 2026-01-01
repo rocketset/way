@@ -153,6 +153,8 @@ const menuItems = [
     subItems: [
       { label: 'Site Way', path: '/admin/site-settings' },
       { label: 'Galeria de Fotos', path: '/admin/gallery' },
+      { label: 'Logos Clientes', path: '/admin/client-logos' },
+      { label: 'Logos Parceiros', path: '/admin/partner-logos' },
       { label: 'Integrações Google', path: '/admin/google-integrations' },
       { label: 'Avaliações Google', path: '/admin/google-reviews' },
       { label: 'Mídia', path: '/admin/media' },

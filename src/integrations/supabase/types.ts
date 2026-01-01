@@ -457,6 +457,47 @@ export type Database = {
         }
         Relationships: []
       }
+      client_logos: {
+        Row: {
+          ativo: boolean | null
+          atualizado_em: string
+          case_id: string | null
+          criado_em: string
+          id: string
+          logo_url: string
+          nome: string
+          ordem: number | null
+        }
+        Insert: {
+          ativo?: boolean | null
+          atualizado_em?: string
+          case_id?: string | null
+          criado_em?: string
+          id?: string
+          logo_url: string
+          nome: string
+          ordem?: number | null
+        }
+        Update: {
+          ativo?: boolean | null
+          atualizado_em?: string
+          case_id?: string | null
+          criado_em?: string
+          id?: string
+          logo_url?: string
+          nome?: string
+          ordem?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "client_logos_case_id_fkey"
+            columns: ["case_id"]
+            isOneToOne: false
+            referencedRelation: "cases"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       comments: {
         Row: {
           approved: boolean
@@ -953,6 +994,36 @@ export type Database = {
           type?: string
           updated_at?: string | null
           user_id?: string | null
+        }
+        Relationships: []
+      }
+      partner_logos: {
+        Row: {
+          ativo: boolean | null
+          atualizado_em: string
+          criado_em: string
+          id: string
+          logo_url: string
+          nome: string
+          ordem: number | null
+        }
+        Insert: {
+          ativo?: boolean | null
+          atualizado_em?: string
+          criado_em?: string
+          id?: string
+          logo_url: string
+          nome: string
+          ordem?: number | null
+        }
+        Update: {
+          ativo?: boolean | null
+          atualizado_em?: string
+          criado_em?: string
+          id?: string
+          logo_url?: string
+          nome?: string
+          ordem?: number | null
         }
         Relationships: []
       }
