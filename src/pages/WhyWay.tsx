@@ -7,12 +7,14 @@ import Header from "@/components/Header";
 import WhyWaySection from "@/components/WhyWaySection";
 import Footer from "@/components/Footer";
 import { useCases } from "@/hooks/useCases";
+import { useGalleryPhotos } from "@/hooks/useGalleryPhotos";
 import PartnersCarousel from "@/components/PartnersCarousel";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { SEO } from "@/components/SEO";
 import whyWayHero from "@/assets/why-way-hero.jpeg";
 import leadershipPhoto from "@/assets/leadership-photo.jpg";
 import brazilFlag from "@/assets/brazil-flag.png";
+// Fallback static images
 import galleryTeam1 from "@/assets/gallery/team-1.jpg";
 import galleryTeam2 from "@/assets/gallery/team-2.jpg";
 import galleryTeam3 from "@/assets/gallery/team-3.jpg";
@@ -23,6 +25,9 @@ import galleryTeam7 from "@/assets/gallery/team-7.png";
 import galleryTeam8 from "@/assets/gallery/team-8.png";
 import galleryTeam9 from "@/assets/gallery/team-9.png";
 import galleryTeam10 from "@/assets/gallery/team-10.png";
+
+const staticGalleryPhotos = [galleryTeam1, galleryTeam2, galleryTeam3, galleryTeam4, galleryTeam5, galleryTeam6, galleryTeam7, galleryTeam8, galleryTeam9, galleryTeam10];
+
 const WhyWay = () => {
   const navigate = useNavigate();
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
@@ -34,7 +39,13 @@ const WhyWay = () => {
     data: casesData,
     isLoading: casesLoading
   } = useCases("", "Todos");
-  const galleryPhotos = [galleryTeam1, galleryTeam2, galleryTeam3, galleryTeam4, galleryTeam5, galleryTeam6, galleryTeam7, galleryTeam8, galleryTeam9, galleryTeam10];
+  
+  const { data: dynamicPhotos } = useGalleryPhotos(true);
+  
+  // Use dynamic photos from DB if available, otherwise fallback to static
+  const galleryPhotos = dynamicPhotos && dynamicPhotos.length > 0 
+    ? dynamicPhotos.map(p => p.image_url) 
+    : staticGalleryPhotos;
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);

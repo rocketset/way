@@ -583,6 +583,36 @@ export type Database = {
         }
         Relationships: []
       }
+      gallery_photos: {
+        Row: {
+          alt_text: string | null
+          ativo: boolean | null
+          atualizado_em: string
+          criado_em: string
+          id: string
+          image_url: string
+          ordem: number | null
+        }
+        Insert: {
+          alt_text?: string | null
+          ativo?: boolean | null
+          atualizado_em?: string
+          criado_em?: string
+          id?: string
+          image_url: string
+          ordem?: number | null
+        }
+        Update: {
+          alt_text?: string | null
+          ativo?: boolean | null
+          atualizado_em?: string
+          criado_em?: string
+          id?: string
+          image_url?: string
+          ordem?: number | null
+        }
+        Relationships: []
+      }
       google_integrations: {
         Row: {
           analytics_id: string | null
