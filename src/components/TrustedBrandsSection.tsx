@@ -45,9 +45,9 @@ const TrustedBrandsSection = () => {
   ];
 
   return (
-    <section className="py-20 bg-background">
+    <section className="pt-8 pb-20 bg-background">
       {/* Decorative element */}
-      <div className="flex justify-center mb-12">
+      <div className="flex justify-center mb-8">
         <span className="text-primary/30 text-4xl font-serif">✦</span>
       </div>
 
