@@ -28,7 +28,7 @@ export const useCases = (searchQuery = "", selectedCategory = "Todos") => {
           case_content_blocks(block_type, content)
         `)
         .eq("publicado", true)
-        .order("criado_em", { ascending: false });
+        .order("ordem", { ascending: true });
 
       if (searchQuery) {
         query = query.or(`titulo.ilike.%${searchQuery}%,descricao.ilike.%${searchQuery}%`);

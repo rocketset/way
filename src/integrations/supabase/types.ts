@@ -385,6 +385,7 @@ export type Database = {
           moderated_at: string | null
           moderated_by: string | null
           moderation_status: string | null
+          ordem: number | null
           publicado: boolean | null
           titulo: string
         }
@@ -401,6 +402,7 @@ export type Database = {
           moderated_at?: string | null
           moderated_by?: string | null
           moderation_status?: string | null
+          ordem?: number | null
           publicado?: boolean | null
           titulo: string
         }
@@ -417,6 +419,7 @@ export type Database = {
           moderated_at?: string | null
           moderated_by?: string | null
           moderation_status?: string | null
+          ordem?: number | null
           publicado?: boolean | null
           titulo?: string
         }
