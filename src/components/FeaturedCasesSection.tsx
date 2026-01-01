@@ -194,18 +194,32 @@ const FeaturedCasesSection = () => {
               </h3>
 
               <p className="text-muted-foreground leading-relaxed">
-                {selectedCase.descricao || selectedCase.subtitulo}
+                {selectedCase.subtitulo}
               </p>
+
+              {/* Resumo do projeto */}
+              {selectedCase.descricao && selectedCase.descricao !== selectedCase.subtitulo && (
+                <p className="text-sm text-muted-foreground leading-relaxed border-l-2 border-primary/30 pl-4">
+                  {selectedCase.descricao}
+                </p>
+              )}
 
               {/* Benefits/Entregas */}
               {selectedCase.benefits.length > 0 && (
-                <ul className="space-y-3">
+                <ul className="space-y-4">
                   {selectedCase.benefits.slice(0, 4).map((benefit, i) => (
                     <li key={i} className="flex items-start gap-3">
-                      <Check className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
-                      <span className="text-foreground">
-                        {benefit.titulo}
-                      </span>
+                      <Check className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
+                      <div className="space-y-1">
+                        <span className="text-foreground font-medium block">
+                          {benefit.titulo}
+                        </span>
+                        {benefit.descricao && (
+                          <span className="text-sm text-muted-foreground block">
+                            {benefit.descricao}
+                          </span>
+                        )}
+                      </div>
                     </li>
                   ))}
                 </ul>
