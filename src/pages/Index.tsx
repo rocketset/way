@@ -5,7 +5,7 @@ import SolutionsSection from "@/components/SolutionsSection";
 import PartnersCarousel from "@/components/PartnersCarousel";
 import FeaturedCasesSection from "@/components/FeaturedCasesSection";
 import TrustedBrandsSection from "@/components/TrustedBrandsSection";
-import TestimonialsSection from "@/components/TestimonialsSection";
+import { GoogleReviews } from "@/components/GoogleReviews";
 import NewsSection from "@/components/NewsSection";
 import CtaResultsSection from "@/components/CtaResultsSection";
 import Footer from "@/components/Footer";
@@ -72,7 +72,7 @@ const Index = () => {
         <div className="animate-fade-in" style={{
         animationDelay: '0.5s'
       }}>
-          <TestimonialsSection />
+          <GoogleReviews />
         </div>
         <div className="animate-fade-in" style={{
         animationDelay: '0.55s'
