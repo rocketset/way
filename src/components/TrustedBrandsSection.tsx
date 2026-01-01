@@ -60,11 +60,11 @@ const TrustedBrandsSection = () => {
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 md:gap-8">
           {clients.map((client) => {
             const content = (
-              <div className="flex items-center justify-center h-28 md:h-32 p-6 rounded-lg bg-card/50 border border-border/50 hover:border-border hover:bg-card transition-all duration-300 group">
+              <div className="flex items-center justify-center h-32 md:h-36 p-6 rounded-lg bg-card/50 border border-border/50 hover:border-border hover:bg-card transition-all duration-300 group">
                 <img
                   src={client.logo}
                   alt={client.name}
-                  className="max-h-14 md:max-h-20 w-auto object-contain grayscale group-hover:grayscale-0 opacity-70 group-hover:opacity-100 transition-all duration-300"
+                  className="max-h-16 md:max-h-24 w-auto object-contain grayscale-0 group-hover:grayscale opacity-100 group-hover:opacity-60 transition-all duration-300"
                 />
               </div>
             );
