@@ -200,7 +200,7 @@ const SolutionsSection = () => {
                     
                     {/* Interactive arrow indicator */}
                     <div className="flex items-center gap-2 text-primary opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-2 group-hover:translate-y-0">
-                      <span className="text-sm font-semibold">Saiba mais sobre esta solução</span>
+                      <span className="text-sm font-semibold">FSaiba mais sobre esta solução</span>
                       <ArrowRight className="w-5 h-5 animate-pulse" />
                     </div>
                   </div>
