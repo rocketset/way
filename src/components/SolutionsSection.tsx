@@ -33,7 +33,7 @@ const SolutionsSection = () => {
   }, {
     icon: Target,
     badge: "Way.Consulting",
-    title: "Consultoria",
+    title: "Mentoria e Consultoria",
     subtitle: "Orientação estratégica e visão de mercado especializada",
     description: "Orientação estratégica para impulsionar o crescimento sustentável do seu e-commerce. Nossos consultores especializados analisam profundamente seu negócio, identificam oportunidades e desenvolvem estratégias personalizadas que geram resultados mensuráveis.",
     services: [{
