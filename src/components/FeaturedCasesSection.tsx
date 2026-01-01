@@ -137,12 +137,12 @@ const FeaturedCasesSection = () => {
         </div>
 
         {/* Client Tabs */}
-        <div className="flex flex-wrap gap-2 md:gap-4 mb-10 pb-4 border-b border-border overflow-x-auto">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 md:gap-4 mb-10 pb-4 border-b border-border">
           {cases.map((caseItem, index) => (
             <button
               key={caseItem.id}
               onClick={() => setSelectedIndex(index)}
-              className={`flex items-center justify-center min-w-[120px] h-16 px-6 rounded-md transition-all duration-300 border ${
+              className={`flex items-center justify-center h-16 px-4 rounded-md transition-all duration-300 border ${
                 selectedIndex === index
                   ? "border-primary bg-background shadow-md"
                   : "border-transparent bg-muted/30 hover:bg-muted/50"
@@ -160,7 +160,7 @@ const FeaturedCasesSection = () => {
                 />
               ) : (
                 <span
-                  className={`font-semibold text-sm transition-colors ${
+                  className={`font-semibold text-sm text-center transition-colors ${
                     selectedIndex === index
                       ? "text-foreground"
                       : "text-muted-foreground"
