@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import { useClientLogos } from "@/hooks/useClientLogos";
 import daniel from "@/assets/clients/daniel.png";
 import atacadao from "@/assets/clients/atacadao.png";
 import barauna from "@/assets/clients/barauna.png";
@@ -21,77 +22,40 @@ import nectar from "@/assets/clients/nectar.png";
 import rutra from "@/assets/clients/rutra.png";
 import verona from "@/assets/clients/verona.png";
 import verazo from "@/assets/clients/verazo.png";
+
+const staticClients = [
+  { name: "Daniel Carvalho", logo: daniel },
+  { name: "Atacadão dos Eletros", logo: atacadao },
+  { name: "Baraúna", logo: barauna },
+  { name: "O Carretão", logo: carretao },
+  { name: "Cartopel", logo: cartopel },
+  { name: "Casatudo", logo: casatudo },
+  { name: "Chipart", logo: chipart },
+  { name: "Club da Moda", logo: clubdamoda },
+  { name: "Colorsign", logo: colorsign },
+  { name: "Couré", logo: coure },
+  { name: "Shopar", logo: shopar },
+  { name: "Ekta Professional", logo: ekta },
+  { name: "Eletropolo", logo: eletropolo },
+  { name: "Extrema", logo: extrema },
+  { name: "Inovare Nutrition", logo: inovare },
+  { name: "King Colchões", logo: kingcolchoes },
+  { name: "LDF", logo: ldf },
+  { name: "Moni Pratas", logo: monipratas },
+  { name: "Néctar Plus", logo: nectar },
+  { name: "Rutra", logo: rutra },
+  { name: "Verona", logo: verona },
+  { name: "Verazo", logo: verazo },
+];
+
 const ClientsCarousel = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const clients = [{
-    name: "Daniel Carvalho",
-    logo: daniel
-  }, {
-    name: "Atacadão dos Eletros",
-    logo: atacadao
-  }, {
-    name: "Baraúna",
-    logo: barauna
-  }, {
-    name: "O Carretão",
-    logo: carretao
-  }, {
-    name: "Cartopel",
-    logo: cartopel
-  }, {
-    name: "Casatudo",
-    logo: casatudo
-  }, {
-    name: "Chipart",
-    logo: chipart
-  }, {
-    name: "Club da Moda",
-    logo: clubdamoda
-  }, {
-    name: "Colorsign",
-    logo: colorsign
-  }, {
-    name: "Couré",
-    logo: coure
-  }, {
-    name: "Shopar",
-    logo: shopar
-  }, {
-    name: "Ekta Professional",
-    logo: ekta
-  }, {
-    name: "Eletropolo",
-    logo: eletropolo
-  }, {
-    name: "Extrema",
-    logo: extrema
-  }, {
-    name: "Inovare Nutrition",
-    logo: inovare
-  }, {
-    name: "King Colchões",
-    logo: kingcolchoes
-  }, {
-    name: "LDF",
-    logo: ldf
-  }, {
-    name: "Moni Pratas",
-    logo: monipratas
-  }, {
-    name: "Néctar Plus",
-    logo: nectar
-  }, {
-    name: "Rutra",
-    logo: rutra
-  }, {
-    name: "Verona",
-    logo: verona
-  }, {
-    name: "Verazo",
-    logo: verazo
-  }];
+  const { data: dbClients } = useClientLogos(true);
 
-  // Duplicate clients array for seamless infinite scroll
+  const clients = dbClients && dbClients.length > 0
+    ? dbClients.map(c => ({ name: c.nome, logo: c.logo_url }))
+    : staticClients;
+
   const allClients = [...clients, ...clients, ...clients];
   return <section className="relative bg-transparent overflow-hidden py-[7px] w-screen -mx-[50vw] left-[50%] right-[50%]">
       {/* Subtle gradient overlays for fade effect */}
