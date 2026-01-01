@@ -49,7 +49,7 @@ const FeaturedCasesSection = () => {
         `)
         .eq("publicado", true)
         .eq("is_featured", true)
-        .order("criado_em", { ascending: false })
+        .order("ordem", { ascending: true })
         .limit(10);
 
       if (error) throw error;
