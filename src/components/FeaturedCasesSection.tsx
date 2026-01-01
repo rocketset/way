@@ -17,6 +17,7 @@ interface FeaturedCase {
   titulo: string;
   descricao: string;
   imagem_principal: string | null;
+  mockup_screenshot_url: string | null;
   logo_url: string | null;
   subtitulo: string | null;
   tags: string[];
@@ -40,6 +41,7 @@ const FeaturedCasesSection = () => {
           id,
           titulo,
           descricao,
+          mockup_screenshot_url,
           case_content_blocks (block_type, content),
           case_tags (tag_id, tags!inner(nome))
         `)
@@ -63,6 +65,7 @@ const FeaturedCasesSection = () => {
           titulo: heroBlock?.content?.titulo || c.titulo,
           descricao: heroBlock?.content?.subtitulo || c.descricao,
           imagem_principal: heroBlock?.content?.imagem_principal || null,
+          mockup_screenshot_url: c.mockup_screenshot_url || null,
           logo_url: heroBlock?.content?.logo_url || null,
           subtitulo: heroBlock?.content?.subtitulo || null,
           tags: c.case_tags?.map((ct: any) => ct.tags.nome) || [],
@@ -177,7 +180,7 @@ const FeaturedCasesSection = () => {
             <div className="relative group">
               <div className="relative overflow-hidden rounded-xl border border-border bg-muted shadow-lg">
                 <img
-                  src={selectedCase.imagem_principal || "/placeholder.svg"}
+                  src={selectedCase.mockup_screenshot_url || selectedCase.imagem_principal || "/placeholder.svg"}
                   alt={selectedCase.titulo}
                   className="w-full h-auto object-cover aspect-[4/3] transition-transform duration-500 group-hover:scale-105"
                 />
