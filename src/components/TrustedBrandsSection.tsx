@@ -57,14 +57,14 @@ const TrustedBrandsSection = () => {
         </h2>
 
         {/* Logos Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 md:gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 md:gap-8">
           {clients.map((client) => {
             const content = (
-              <div className="flex items-center justify-center h-24 md:h-28 p-4 rounded-lg bg-card/50 border border-border/50 hover:border-border hover:bg-card transition-all duration-300 group">
+              <div className="flex items-center justify-center h-28 md:h-32 p-6 rounded-lg bg-card/50 border border-border/50 hover:border-border hover:bg-card transition-all duration-300 group">
                 <img
                   src={client.logo}
                   alt={client.name}
-                  className="max-h-12 md:max-h-16 w-auto object-contain grayscale group-hover:grayscale-0 opacity-70 group-hover:opacity-100 transition-all duration-300"
+                  className="max-h-14 md:max-h-20 w-auto object-contain grayscale group-hover:grayscale-0 opacity-70 group-hover:opacity-100 transition-all duration-300"
                 />
               </div>
             );
