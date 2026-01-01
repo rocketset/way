@@ -7,7 +7,7 @@ const SolutionsSection = () => {
   const solutions = [{
     icon: ShoppingCart,
     badge: "Way.Tech",
-    title: "Implantação & Desenvolvimento",
+    title: "Implantação e Desenvolvimento",
     subtitle: "Do planejamento estratégico à integração com marketplaces",
     description: "Estruturamos, migramos e desenvolvemos soluções personalizadas para que seu e-commerce nasça forte e já pronto para escalar. Conectamos todos os seus canais de venda para impulsionar o crescimento do seu negócio.",
     services: [{
@@ -56,7 +56,7 @@ const SolutionsSection = () => {
   }, {
     icon: BarChart3,
     badge: "Way.Digital",
-    title: "Performance & Marketing",
+    title: "Performance e Marketing",
     subtitle: "Operação Data-Driven para crescimento sustentável",
     description: "Núcleo estratégico que transforma objetivos em planos práticos e mensuráveis. Combinamos criatividade e inteligência de dados para desenvolver estratégias e campanhas que geram resultados reais, otimizando investimentos e ampliando conversões.",
     services: [{
