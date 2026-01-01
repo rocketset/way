@@ -3,7 +3,7 @@ import { useGoogleReviews, useGooglePlaceConfig } from "@/hooks/useGoogleReviews
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+
 export const GoogleReviews = () => {
   const {
     data: reviews,
@@ -52,53 +52,38 @@ export const GoogleReviews = () => {
             </div>}
         </div>
 
-        <Carousel
-          opts={{
-            align: "start",
-            loop: true,
-          }}
-          className="w-full"
-        >
-          <CarouselContent className="-ml-6">
-            {reviews.map(review => (
-              <CarouselItem key={review.id} className="pl-6 md:basis-1/3 lg:basis-1/6">
-                <Card className="hover:shadow-lg hover:shadow-[0_0_30px_rgba(252,211,77,0.3)] transition-all duration-300 hover:-translate-y-1 h-full">
-                  <CardContent className="p-6">
-                    <div className="flex items-start gap-4 mb-4">
-                      <Avatar className="w-12 h-12">
-                        <AvatarImage src={review.profile_photo_url || undefined} alt={review.author_name} />
-                        <AvatarFallback>
-                          {review.author_name.charAt(0).toUpperCase()}
-                        </AvatarFallback>
-                      </Avatar>
-                      <div className="flex-1 min-w-0">
-                        <h3 className="font-semibold text-foreground truncate">
-                          {review.author_name}
-                        </h3>
-                        <p className="text-sm text-muted-foreground">
-                          {review.relative_time_description}
-                        </p>
-                      </div>
-                    </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {reviews.slice(0, 6).map(review => (
+            <Card key={review.id} className="hover:shadow-lg hover:shadow-[0_0_30px_rgba(252,211,77,0.3)] transition-all duration-300 hover:-translate-y-1 h-full">
+              <CardContent className="p-6">
+                <div className="flex items-start gap-4 mb-4">
+                  <Avatar className="w-12 h-12">
+                    <AvatarImage src={review.profile_photo_url || undefined} alt={review.author_name} />
+                    <AvatarFallback>
+                      {review.author_name.charAt(0).toUpperCase()}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-semibold text-foreground truncate">
+                      {review.author_name}
+                    </h3>
+                    <p className="text-sm text-muted-foreground">
+                      {review.relative_time_description}
+                    </p>
+                  </div>
+                </div>
 
-                    <div className="mb-3">
-                      {renderStars(review.rating)}
-                    </div>
+                <div className="mb-3">
+                  {renderStars(review.rating)}
+                </div>
 
-                    {review.text && <p className="text-sm text-muted-foreground line-clamp-4">
-                        {review.text}
-                      </p>}
-                  </CardContent>
-                </Card>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-          
-          <div className="flex justify-center gap-4 mt-8">
-            <CarouselPrevious className="relative left-0 top-0 translate-y-0" />
-            <CarouselNext className="relative right-0 top-0 translate-y-0" />
-          </div>
-        </Carousel>
+                {review.text && <p className="text-sm text-muted-foreground line-clamp-4">
+                    {review.text}
+                  </p>}
+              </CardContent>
+            </Card>
+          ))}
+        </div>
 
         {placeConfig?.place_name && <div className="text-center mt-8">
             <a href={`https://www.google.com/maps/place/?q=place_id:${placeConfig.place_id}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-primary hover:underline">
