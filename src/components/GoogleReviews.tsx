@@ -61,7 +61,7 @@ export const GoogleReviews = () => {
         >
           <CarouselContent className="-ml-6">
             {reviews.map(review => (
-              <CarouselItem key={review.id} className="pl-6 md:basis-1/2 lg:basis-1/3">
+              <CarouselItem key={review.id} className="pl-6 md:basis-1/3 lg:basis-1/6">
                 <Card className="hover:shadow-lg hover:shadow-[0_0_30px_rgba(252,211,77,0.3)] transition-all duration-300 hover:-translate-y-1 h-full">
                   <CardContent className="p-6">
                     <div className="flex items-start gap-4 mb-4">
