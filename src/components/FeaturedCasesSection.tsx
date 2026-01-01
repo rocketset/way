@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Check, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import * as LucideIcons from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -16,6 +17,7 @@ interface FeaturedCase {
   id: string;
   titulo: string;
   descricao: string;
+  resumo: string | null;
   imagem_principal: string | null;
   mockup_screenshot_url: string | null;
   logo_url: string | null;
@@ -63,7 +65,8 @@ const FeaturedCasesSection = () => {
         return {
           id: c.id,
           titulo: heroBlock?.content?.titulo || c.titulo,
-          descricao: heroBlock?.content?.subtitulo || c.descricao,
+          descricao: c.descricao,
+          resumo: heroBlock?.content?.resumo || null,
           imagem_principal: heroBlock?.content?.imagem_principal || null,
           mockup_screenshot_url: c.mockup_screenshot_url || null,
           logo_url: heroBlock?.content?.logo_url || null,
@@ -175,7 +178,7 @@ const FeaturedCasesSection = () => {
 
         {/* Selected Case Content */}
         {selectedCase && (
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start animate-fade-in">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center animate-fade-in">
             {/* Left - Image */}
             <div className="relative">
               <div className="relative overflow-hidden rounded-xl border border-border bg-muted shadow-lg">
@@ -188,40 +191,49 @@ const FeaturedCasesSection = () => {
             </div>
 
             {/* Right - Content */}
-            <div className="space-y-6">
+            <div className="space-y-5">
               <h3 className="text-2xl md:text-3xl font-bold text-foreground">
                 {selectedCase.titulo}
               </h3>
 
-              <p className="text-muted-foreground leading-relaxed">
-                {selectedCase.subtitulo}
-              </p>
+              {selectedCase.subtitulo && (
+                <p className="text-muted-foreground leading-relaxed">
+                  {selectedCase.subtitulo}
+                </p>
+              )}
 
-              {/* Resumo do projeto */}
-              {selectedCase.descricao && selectedCase.descricao !== selectedCase.subtitulo && (
+              {/* Breve resumo do projeto */}
+              {selectedCase.resumo && (
                 <p className="text-sm text-muted-foreground leading-relaxed border-l-2 border-primary/30 pl-4">
-                  {selectedCase.descricao}
+                  {selectedCase.resumo}
                 </p>
               )}
 
               {/* Benefits/Entregas */}
               {selectedCase.benefits.length > 0 && (
                 <ul className="space-y-4">
-                  {selectedCase.benefits.slice(0, 4).map((benefit, i) => (
-                    <li key={i} className="flex items-start gap-3">
-                      <Check className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
-                      <div className="space-y-1">
-                        <span className="text-foreground font-medium block">
-                          {benefit.titulo}
-                        </span>
-                        {benefit.descricao && (
-                          <span className="text-sm text-muted-foreground block">
-                            {benefit.descricao}
+                  {selectedCase.benefits.slice(0, 4).map((benefit, i) => {
+                    const iconName = benefit.icon?.replace(/([a-z])([A-Z])/g, '$1$2') || 'Check';
+                    const IconComponent = (LucideIcons as any)[iconName] || LucideIcons.Check;
+                    
+                    return (
+                      <li key={i} className="flex items-start gap-3">
+                        <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                          <IconComponent className="w-4 h-4 text-primary" />
+                        </div>
+                        <div className="space-y-1">
+                          <span className="text-foreground font-medium block">
+                            {benefit.titulo}
                           </span>
-                        )}
-                      </div>
-                    </li>
-                  ))}
+                          {benefit.descricao && (
+                            <span className="text-sm text-muted-foreground block">
+                              {benefit.descricao}
+                            </span>
+                          )}
+                        </div>
+                      </li>
+                    );
+                  })}
                 </ul>
               )}
 
