@@ -1072,7 +1072,7 @@ export default function AdminLayout() {
 
         {/* Área de Conteúdo - renderiza as páginas filhas */}
         <main className="flex-1 overflow-y-auto flex flex-col">
-          <div className="flex-1 container mx-auto p-6">
+          <div className="flex-1 p-6">
             <Outlet />
           </div>
           
