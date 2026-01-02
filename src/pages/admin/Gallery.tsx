@@ -5,12 +5,16 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Card, CardContent } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Plus, Pencil, Trash2, Image as ImageIcon, Eye } from "lucide-react";
+import { Plus, Pencil, Trash2, Image as ImageIcon, Eye, GripVertical } from "lucide-react";
 import { useGalleryPhotos, useCreateGalleryPhoto, useUpdateGalleryPhoto, useDeleteGalleryPhoto, GalleryPhoto } from "@/hooks/useGalleryPhotos";
 import { Skeleton } from "@/components/ui/skeleton";
 import FileUpload from "@/components/admin/FileUpload";
 import ImagePositionPicker from "@/components/admin/ImagePositionPicker";
 import { Badge } from "@/components/ui/badge";
+import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors, DragEndEvent } from "@dnd-kit/core";
+import { arrayMove, SortableContext, sortableKeyboardCoordinates, useSortable, rectSortingStrategy } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
+import { toast } from "sonner";
 
 // Fallback static images for preview
 import galleryTeam1 from "@/assets/gallery/team-1.jpg";
@@ -25,6 +29,99 @@ import galleryTeam9 from "@/assets/gallery/team-9.png";
 import galleryTeam10 from "@/assets/gallery/team-10.png";
 
 const staticGalleryPhotos = [galleryTeam1, galleryTeam2, galleryTeam3, galleryTeam4, galleryTeam5, galleryTeam6, galleryTeam7, galleryTeam8, galleryTeam9, galleryTeam10];
+
+// Sortable Photo Item Component
+const SortablePhotoItem = ({ 
+  photo, 
+  onEdit, 
+  onDelete, 
+  onToggleActive 
+}: { 
+  photo: GalleryPhoto; 
+  onEdit: (photo: GalleryPhoto) => void;
+  onDelete: (id: string) => void;
+  onToggleActive: (photo: GalleryPhoto) => void;
+}) => {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id: photo.id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0.5 : 1,
+    zIndex: isDragging ? 1000 : 1,
+  };
+
+  return (
+    <Card 
+      ref={setNodeRef}
+      style={style}
+      className={`overflow-hidden transition-all ${!photo.ativo ? "opacity-50" : ""} ${isDragging ? "ring-2 ring-primary shadow-lg" : ""}`}
+    >
+      <div className="relative aspect-square">
+        <img
+          src={photo.image_url}
+          alt={photo.alt_text || "Foto da galeria"}
+          className="w-full h-full"
+          style={{ 
+            objectFit: photo.object_fit || 'cover',
+            objectPosition: photo.object_position || 'center'
+          }}
+        />
+        <Badge className="absolute top-1 left-1 text-xs">#{photo.ordem + 1}</Badge>
+        {!photo.ativo && (
+          <Badge variant="destructive" className="absolute top-1 right-1 text-xs">Inativo</Badge>
+        )}
+        
+        {/* Drag handle overlay */}
+        <div 
+          {...attributes} 
+          {...listeners}
+          className="absolute inset-0 flex items-center justify-center bg-black/0 hover:bg-black/30 transition-colors cursor-grab active:cursor-grabbing group"
+        >
+          <GripVertical className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity drop-shadow-lg" />
+        </div>
+      </div>
+      <CardContent className="p-2">
+        <div className="flex items-center justify-between">
+          <span className="text-xs text-muted-foreground truncate flex-1">
+            {photo.alt_text || "Sem descrição"}
+          </span>
+          <div className="flex gap-1">
+            <Button 
+              size="icon" 
+              variant="ghost" 
+              className="h-6 w-6" 
+              onClick={(e) => {
+                e.stopPropagation();
+                onEdit(photo);
+              }}
+            >
+              <Pencil className="w-3 h-3" />
+            </Button>
+            <Button 
+              size="icon" 
+              variant="ghost" 
+              className="h-6 w-6 text-destructive" 
+              onClick={(e) => {
+                e.stopPropagation();
+                onDelete(photo.id);
+              }}
+            >
+              <Trash2 className="w-3 h-3" />
+            </Button>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+};
 
 const Gallery = () => {
   const { data: photos, isLoading } = useGalleryPhotos(false);
@@ -43,6 +140,18 @@ const Gallery = () => {
     object_position: "50% 50%",
     row_span: 1,
   });
+
+  // DnD sensors
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8,
+      },
+    }),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
 
   // Get photos sorted by ordem for display
   const sortedPhotos = photos?.slice().sort((a, b) => a.ordem - b.ordem) || [];
@@ -125,6 +234,34 @@ const Gallery = () => {
       id: photo.id,
       ativo: !photo.ativo,
     });
+  };
+
+  // Handle drag end for reordering
+  const handleDragEnd = async (event: DragEndEvent) => {
+    const { active, over } = event;
+
+    if (over && active.id !== over.id) {
+      const oldIndex = sortedPhotos.findIndex((p) => p.id === active.id);
+      const newIndex = sortedPhotos.findIndex((p) => p.id === over.id);
+
+      if (oldIndex !== -1 && newIndex !== -1) {
+        const reorderedPhotos = arrayMove(sortedPhotos, oldIndex, newIndex);
+        
+        // Update ordem for all affected photos
+        toast.promise(
+          Promise.all(
+            reorderedPhotos.map((photo, index) =>
+              updatePhoto.mutateAsync({ id: photo.id, ordem: index })
+            )
+          ),
+          {
+            loading: 'Reordenando fotos...',
+            success: 'Fotos reordenadas!',
+            error: 'Erro ao reordenar fotos',
+          }
+        );
+      }
+    }
   };
 
   return (
@@ -288,68 +425,34 @@ const Gallery = () => {
         </p>
       </div>
 
-      {/* All Photos List */}
+      {/* All Photos List with Drag & Drop */}
       {photos && photos.length > 0 && (
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <h2 className="text-lg font-semibold">Todas as Fotos ({photos.length})</h2>
+            <div>
+              <h2 className="text-lg font-semibold">Todas as Fotos ({photos.length})</h2>
+              <p className="text-sm text-muted-foreground">Arraste para reordenar as fotos</p>
+            </div>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
-            {sortedPhotos.map((photo) => (
-              <Card 
-                key={photo.id} 
-                className={`overflow-hidden cursor-pointer hover:ring-2 hover:ring-primary transition-all ${!photo.ativo ? "opacity-50" : ""}`}
-                onClick={() => handleOpenDialogForEdit(photo)}
-              >
-                <div className="relative aspect-square">
-                  <img
-                    src={photo.image_url}
-                    alt={photo.alt_text || "Foto da galeria"}
-                    className="w-full h-full"
-                    style={{ 
-                      objectFit: photo.object_fit || 'cover',
-                      objectPosition: photo.object_position || 'center'
-                    }}
+          <DndContext
+            sensors={sensors}
+            collisionDetection={closestCenter}
+            onDragEnd={handleDragEnd}
+          >
+            <SortableContext items={sortedPhotos.map(p => p.id)} strategy={rectSortingStrategy}>
+              <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
+                {sortedPhotos.map((photo) => (
+                  <SortablePhotoItem
+                    key={photo.id}
+                    photo={photo}
+                    onEdit={handleOpenDialogForEdit}
+                    onDelete={handleDelete}
+                    onToggleActive={handleToggleActive}
                   />
-                  <Badge className="absolute top-1 left-1 text-xs">#{photo.ordem + 1}</Badge>
-                  {!photo.ativo && (
-                    <Badge variant="destructive" className="absolute top-1 right-1 text-xs">Inativo</Badge>
-                  )}
-                </div>
-                <CardContent className="p-2">
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs text-muted-foreground truncate flex-1">
-                      {photo.alt_text || "Sem descrição"}
-                    </span>
-                    <div className="flex gap-1">
-                      <Button 
-                        size="icon" 
-                        variant="ghost" 
-                        className="h-6 w-6" 
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleOpenDialogForEdit(photo);
-                        }}
-                      >
-                        <Pencil className="w-3 h-3" />
-                      </Button>
-                      <Button 
-                        size="icon" 
-                        variant="ghost" 
-                        className="h-6 w-6 text-destructive" 
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleDelete(photo.id);
-                        }}
-                      >
-                        <Trash2 className="w-3 h-3" />
-                      </Button>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+                ))}
+              </div>
+            </SortableContext>
+          </DndContext>
         </div>
       )}
 
