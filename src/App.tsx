@@ -10,6 +10,7 @@ import ScrollToTop from "@/components/ScrollToTop";
 import { CookieConsent } from "@/components/CookieConsent";
 import { GoogleScripts } from "@/components/GoogleScripts";
 import { StructuredData } from "@/components/StructuredData";
+import WhatsAppFloatingButton from "@/components/WhatsAppFloatingButton";
 
 // Páginas públicas do site
 import Index from "./pages/Index";
@@ -97,6 +98,7 @@ const App = () => (
             <StructuredData />
             <ScrollToTop />
             <CookieConsent />
+            <WhatsAppFloatingButton />
           <Routes>
           {/* Rotas públicas do site */}
           <Route path="/" element={<Index />} />
