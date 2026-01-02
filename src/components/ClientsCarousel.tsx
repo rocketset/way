@@ -52,9 +52,10 @@ const ClientsCarousel = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const { data: dbClients } = useClientLogos(true);
 
+  // Use static clients if no DB clients available
   const clients = dbClients && dbClients.length > 0
-    ? dbClients.map(c => ({ name: c.nome, logo: c.logo_url }))
-    : staticClients;
+    ? dbClients.map(c => ({ name: c.nome, logo: c.logo_url, isFromDb: true }))
+    : staticClients.map(c => ({ ...c, isFromDb: false }));
 
   const allClients = [...clients, ...clients, ...clients];
   return <section className="relative bg-transparent overflow-hidden py-[7px] w-screen -mx-[50vw] left-[50%] right-[50%]">
@@ -72,7 +73,15 @@ const ClientsCarousel = () => {
           {allClients.map((client, index) => <div key={`${client.name}-${index}`} className="flex-shrink-0 h-40 flex items-center justify-center group cursor-pointer">
               {/* Logo container */}
               <div className="relative h-full flex items-center justify-center px-10 transition-all duration-300 group-hover:scale-110">
-                <img src={client.logo} alt={client.name} className="max-h-28 w-auto object-contain brightness-0 invert opacity-60 group-hover:opacity-100 transition-all duration-300 group-hover:drop-shadow-2xl" />
+                <img 
+                  src={client.logo} 
+                  alt={client.name} 
+                  className={`max-h-28 w-auto object-contain transition-all duration-300 group-hover:drop-shadow-2xl ${
+                    client.isFromDb 
+                      ? "opacity-80 group-hover:opacity-100" 
+                      : "brightness-0 invert opacity-60 group-hover:opacity-100"
+                  }`} 
+                />
               </div>
             </div>)}
         </div>
