@@ -122,6 +122,7 @@ const menuItems = [
     subItems: [
       { label: 'Configurações Gerais', path: '/admin/site-settings' },
       { label: 'SEO', path: '/admin/seo' },
+      { label: 'Construtor de Formulários', path: '/admin/form-builder' },
       { label: 'Assuntos Formulários', path: '/admin/form-subjects' },
       { label: 'Galeria de Fotos', path: '/admin/gallery' },
       { label: 'Logos Clientes', path: '/admin/client-logos' },

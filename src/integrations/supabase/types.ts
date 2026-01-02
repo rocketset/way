@@ -627,6 +627,113 @@ export type Database = {
         }
         Relationships: []
       }
+      form_configs: {
+        Row: {
+          ativo: boolean | null
+          atualizado_em: string
+          criado_em: string
+          descricao: string | null
+          id: string
+          mostrar_whatsapp: boolean | null
+          nome: string
+          slug: string
+          subtitulo_formulario: string | null
+          texto_botao_enviar: string | null
+          titulo_formulario: string | null
+        }
+        Insert: {
+          ativo?: boolean | null
+          atualizado_em?: string
+          criado_em?: string
+          descricao?: string | null
+          id?: string
+          mostrar_whatsapp?: boolean | null
+          nome: string
+          slug: string
+          subtitulo_formulario?: string | null
+          texto_botao_enviar?: string | null
+          titulo_formulario?: string | null
+        }
+        Update: {
+          ativo?: boolean | null
+          atualizado_em?: string
+          criado_em?: string
+          descricao?: string | null
+          id?: string
+          mostrar_whatsapp?: boolean | null
+          nome?: string
+          slug?: string
+          subtitulo_formulario?: string | null
+          texto_botao_enviar?: string | null
+          titulo_formulario?: string | null
+        }
+        Relationships: []
+      }
+      form_fields: {
+        Row: {
+          ativo: boolean | null
+          atualizado_em: string
+          criado_em: string
+          dica: string | null
+          form_config_id: string
+          id: string
+          label: string
+          largura: string | null
+          nome_campo: string
+          obrigatorio: boolean | null
+          opcoes: Json | null
+          ordem: number | null
+          placeholder: string | null
+          tipo_campo: string
+          validacao: Json | null
+          valor_padrao: string | null
+        }
+        Insert: {
+          ativo?: boolean | null
+          atualizado_em?: string
+          criado_em?: string
+          dica?: string | null
+          form_config_id: string
+          id?: string
+          label: string
+          largura?: string | null
+          nome_campo: string
+          obrigatorio?: boolean | null
+          opcoes?: Json | null
+          ordem?: number | null
+          placeholder?: string | null
+          tipo_campo?: string
+          validacao?: Json | null
+          valor_padrao?: string | null
+        }
+        Update: {
+          ativo?: boolean | null
+          atualizado_em?: string
+          criado_em?: string
+          dica?: string | null
+          form_config_id?: string
+          id?: string
+          label?: string
+          largura?: string | null
+          nome_campo?: string
+          obrigatorio?: boolean | null
+          opcoes?: Json | null
+          ordem?: number | null
+          placeholder?: string | null
+          tipo_campo?: string
+          validacao?: Json | null
+          valor_padrao?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "form_fields_form_config_id_fkey"
+            columns: ["form_config_id"]
+            isOneToOne: false
+            referencedRelation: "form_configs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       gallery_photos: {
         Row: {
           alt_text: string | null
