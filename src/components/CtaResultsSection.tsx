@@ -11,6 +11,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Plus, ArrowRight, MessageSquare } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import DOMPurify from "dompurify";
+import { useIntencoesCadastro } from "@/hooks/useIntencoesCadastro";
 
 const contactSchema = z.object({
   name: z.string().trim().min(2, {
@@ -46,6 +47,7 @@ type ContactFormData = z.infer<typeof contactSchema>;
 const CtaResultsSection = () => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { data: intencoes } = useIntencoesCadastro('home');
 
   const form = useForm<ContactFormData>({
     resolver: zodResolver(contactSchema),
@@ -242,13 +244,16 @@ const CtaResultsSection = () => {
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent className="bg-card border-border z-50">
-                            <SelectItem value="implantacao">Implantação de E-commerce</SelectItem>
-                            <SelectItem value="migracao">Migração de Plataforma de E-commerce</SelectItem>
-                            <SelectItem value="vender-mais">Quero vender mais pelo meu E-commerce</SelectItem>
-                            <SelectItem value="marketplace">Quero vender em Marketplace</SelectItem>
-                            <SelectItem value="evolucao">Evolução/On-going</SelectItem>
-                            <SelectItem value="parcerias">Parcerias Comerciais</SelectItem>
-                            <SelectItem value="sac">Falar com o SAC</SelectItem>
+                            {intencoes?.map((intencao) => (
+                              <SelectItem key={intencao.id} value={intencao.valor_slug || intencao.id}>
+                                {intencao.nome}
+                              </SelectItem>
+                            ))}
+                            {!intencoes?.length && (
+                              <SelectItem value="contato" disabled>
+                                Carregando...
+                              </SelectItem>
+                            )}
                           </SelectContent>
                         </Select>
                         <FormMessage />

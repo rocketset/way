@@ -8,6 +8,7 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { z } from "zod";
 import DOMPurify from "dompurify";
+import { useIntencoesCadastro } from "@/hooks/useIntencoesCadastro";
 
 const contactSchema = z.object({
   nome: z.string().trim().min(2, "Nome muito curto").max(100),
@@ -29,6 +30,7 @@ const ContactSection = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
+  const { data: intencoes } = useIntencoesCadastro('home');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -201,11 +203,16 @@ const ContactSection = () => {
                         <SelectValue placeholder="Assunto" />
                       </SelectTrigger>
                       <SelectContent className="bg-card border-border">
-                        <SelectItem value="loja-virtual">Quero fazer uma loja virtual</SelectItem>
-                        <SelectItem value="vender-mais">Quero vender mais pelo meu E-commerce</SelectItem>
-                        <SelectItem value="marketplace">Quero vender em marketplace</SelectItem>
-                        <SelectItem value="parceiro">Quero me tornar um parceiro</SelectItem>
-                        <SelectItem value="sac">Quero falar com o SAC</SelectItem>
+                        {intencoes?.map((intencao) => (
+                          <SelectItem key={intencao.id} value={intencao.valor_slug || intencao.id}>
+                            {intencao.nome}
+                          </SelectItem>
+                        ))}
+                        {!intencoes?.length && (
+                          <SelectItem value="contato" disabled>
+                            Carregando...
+                          </SelectItem>
+                        )}
                       </SelectContent>
                     </Select>
                   </div>
