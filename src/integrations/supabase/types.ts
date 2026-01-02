@@ -808,29 +808,41 @@ export type Database = {
         Row: {
           ativo: boolean | null
           atualizado_em: string
+          cor_destaque: string | null
           criado_em: string
           descricao: string | null
+          exibir_em: string[] | null
+          icone: string | null
           id: string
           nome: string
           ordem: number | null
+          valor_slug: string | null
         }
         Insert: {
           ativo?: boolean | null
           atualizado_em?: string
+          cor_destaque?: string | null
           criado_em?: string
           descricao?: string | null
+          exibir_em?: string[] | null
+          icone?: string | null
           id?: string
           nome: string
           ordem?: number | null
+          valor_slug?: string | null
         }
         Update: {
           ativo?: boolean | null
           atualizado_em?: string
+          cor_destaque?: string | null
           criado_em?: string
           descricao?: string | null
+          exibir_em?: string[] | null
+          icone?: string | null
           id?: string
           nome?: string
           ordem?: number | null
+          valor_slug?: string | null
         }
         Relationships: []
       }

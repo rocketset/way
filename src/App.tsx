@@ -79,6 +79,7 @@ import Gallery from "./pages/admin/Gallery";
 import ClientLogos from "./pages/admin/ClientLogos";
 import PartnerLogos from "./pages/admin/PartnerLogos";
 import SEO from "./pages/admin/SEO";
+import FormSubjects from "./pages/admin/FormSubjects";
 
 // Configuração do React Query
 const queryClient = new QueryClient();
@@ -195,6 +196,9 @@ const App = () => (
             
             {/* SEO */}
             <Route path="seo" element={<SEO />} />
+            
+            {/* Assuntos dos Formulários */}
+            <Route path="form-subjects" element={<FormSubjects />} />
           </Route>
           
           {/* Rota 404 - deve ser sempre a última */}

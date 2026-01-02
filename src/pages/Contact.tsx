@@ -17,6 +17,7 @@ import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { SEO } from "@/components/SEO";
 import DOMPurify from "dompurify";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
+import { useIntencoesCadastro } from "@/hooks/useIntencoesCadastro";
 
 const contactSchema = z.object({
   name: z.string().trim().min(2, {
@@ -53,6 +54,7 @@ const Contact = () => {
   } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { settings } = useSiteSettings();
+  const { data: intencoes } = useIntencoesCadastro('contato');
   
   const form = useForm<ContactFormData>({
     resolver: zodResolver(contactSchema),
@@ -265,13 +267,16 @@ const Contact = () => {
                               </SelectTrigger>
                             </FormControl>
                             <SelectContent>
-                              <SelectItem value="implantacao">Implantação de E-commerce</SelectItem>
-                              <SelectItem value="migracao">Migração de Plataforma de E-commerce</SelectItem>
-                              <SelectItem value="vender-mais">Quero vender mais pelo meu E-commerce</SelectItem>
-                              <SelectItem value="marketplace">Quero vender em Marketplace</SelectItem>
-                              <SelectItem value="evolucao">Evolução/On-going</SelectItem>
-                              <SelectItem value="parcerias">Parcerias Comerciais</SelectItem>
-                              <SelectItem value="sac">Falar com o SAC</SelectItem>
+                              {intencoes?.map((intencao) => (
+                                <SelectItem key={intencao.id} value={intencao.valor_slug || intencao.id}>
+                                  {intencao.nome}
+                                </SelectItem>
+                              ))}
+                              {!intencoes?.length && (
+                                <SelectItem value="contato" disabled>
+                                  Carregando...
+                                </SelectItem>
+                              )}
                             </SelectContent>
                           </Select>
                           <FormMessage />
