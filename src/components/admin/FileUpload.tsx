@@ -21,6 +21,9 @@ type FileUploadProps = {
   maxSizeMB?: number;
   showPreview?: boolean;
   helperText?: string;
+  /** Maximum width/height for logos - will auto-resize */
+  maxLogoWidth?: number;
+  maxLogoHeight?: number;
 };
 
 export default function FileUpload({
@@ -32,6 +35,8 @@ export default function FileUpload({
   maxSizeMB = 10,
   showPreview = true,
   helperText,
+  maxLogoWidth,
+  maxLogoHeight,
 }: FileUploadProps) {
   const [uploading, setUploading] = useState(false);
   const [previewUrl, setPreviewUrl] = useState(currentUrl || '');
@@ -87,9 +92,14 @@ export default function FileUpload({
 
         const baseName = fileToUpload.name.replace(/\.[^.]+$/, '');
 
+        // For logos, use specific max dimensions; otherwise default to 1920
+        const maxDimension = maxLogoWidth || maxLogoHeight 
+          ? Math.max(maxLogoWidth || 400, maxLogoHeight || 150)
+          : 1920;
+
         const options = {
           maxSizeMB: Math.min(maxSizeMB, 2), // Comprimir para no máximo 2MB ou o limite definido
-          maxWidthOrHeight: 1920,
+          maxWidthOrHeight: maxDimension,
           useWebWorker: true,
           fileType: targetMime as 'image/jpeg' | 'image/png' | 'image/webp',
         };
