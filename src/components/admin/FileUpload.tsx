@@ -3,6 +3,7 @@
 
 import { useState } from 'react';
 import heic2any from 'heic2any';
+import imageCompression from 'browser-image-compression';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -65,7 +66,30 @@ export default function FileUpload({
       }
     }
 
-    // Verificar tamanho do arquivo
+    // Comprimir imagem se for um formato suportado
+    const compressibleTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+    const fileType = fileToUpload.type || '';
+    
+    if (compressibleTypes.includes(fileType) || fileType === '') {
+      try {
+        toast.message('Comprimindo imagem...');
+        const options = {
+          maxSizeMB: Math.min(maxSizeMB, 2), // Comprimir para no máximo 2MB ou o limite definido
+          maxWidthOrHeight: 1920,
+          useWebWorker: true,
+          fileType: 'image/jpeg' as const,
+        };
+        
+        const compressedFile = await imageCompression(fileToUpload, options);
+        fileToUpload = new File([compressedFile], fileToUpload.name.replace(/\.[^.]+$/, '.jpg'), { 
+          type: 'image/jpeg' 
+        });
+      } catch (err) {
+        console.warn('Não foi possível comprimir a imagem, enviando original:', err);
+      }
+    }
+
+    // Verificar tamanho do arquivo após compressão
     const fileSizeMB = fileToUpload.size / (1024 * 1024);
     if (fileSizeMB > maxSizeMB) {
       toast.error(`Arquivo muito grande. Tamanho máximo: ${maxSizeMB}MB`);
