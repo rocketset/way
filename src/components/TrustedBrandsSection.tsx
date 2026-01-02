@@ -39,10 +39,17 @@ const staticClients: ClientBrand[] = [
 const TrustedBrandsSection = () => {
   const { data: dbClients } = useClientLogos(true);
 
-  // Filter clients for grid display (ambos or grid) and use static as fallback
+  const normalizeExibirEm = (value?: string | null) => (value || "").toLowerCase().trim();
+
+  // Filter clients for grid display (both or grid) and use static as fallback
+  const filteredDbClients = (dbClients || []).filter((c) => {
+    const v = normalizeExibirEm(c.exibir_em);
+    // Support both Portuguese + English values
+    return v === "" || v === "both" || v === "ambos" || v === "grid";
+  });
+
   const clients: ClientBrand[] = dbClients && dbClients.length > 0
-    ? dbClients
-        .filter(c => c.exibir_em === 'ambos' || c.exibir_em === 'grid')
+    ? (filteredDbClients.length > 0 ? filteredDbClients : dbClients)
         .map(c => ({ 
           name: c.nome, 
           logo: c.logo_url, 
