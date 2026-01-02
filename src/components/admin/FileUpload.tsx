@@ -2,6 +2,7 @@
 // Faz upload para o Supabase Storage e retorna a URL pública
 
 import { useState } from 'react';
+import heic2any from 'heic2any';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -35,30 +36,74 @@ export default function FileUpload({
   const [previewUrl, setPreviewUrl] = useState(currentUrl || '');
 
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
+    const selectedFile = event.target.files?.[0];
+    if (!selectedFile) return;
+
+    // allow selecting the same file again
+    event.target.value = '';
+
+    let fileToUpload: File = selectedFile;
+
+    // Normalizar extensão
+    const initialExt = (selectedFile.name.split('.').pop() || '').toLowerCase();
+
+    // iPhone/Apple costuma enviar HEIC/HEIF (muitas vezes vindo como octet-stream)
+    if (['heic', 'heif'].includes(initialExt) || ['image/heic', 'image/heif'].includes(selectedFile.type)) {
+      try {
+        toast.message('Convertendo HEIC para JPG...');
+        const converted = (await heic2any({
+          blob: selectedFile,
+          toType: 'image/jpeg',
+          quality: 0.9,
+        })) as Blob;
+
+        const jpgName = selectedFile.name.replace(/\.(heic|heif)$/i, '.jpg');
+        fileToUpload = new File([converted], jpgName, { type: 'image/jpeg' });
+      } catch (err) {
+        toast.error('Formato HEIC não suportado. Converta para JPG/PNG e tente novamente.');
+        return;
+      }
+    }
 
     // Verificar tamanho do arquivo
-    const fileSizeMB = file.size / (1024 * 1024);
+    const fileSizeMB = fileToUpload.size / (1024 * 1024);
     if (fileSizeMB > maxSizeMB) {
       toast.error(`Arquivo muito grande. Tamanho máximo: ${maxSizeMB}MB`);
       return;
     }
 
+    const ext = (fileToUpload.name.split('.').pop() || '').toLowerCase();
+    const inferContentType = (e: string) => {
+      const map: Record<string, string> = {
+        jpg: 'image/jpeg',
+        jpeg: 'image/jpeg',
+        png: 'image/png',
+        webp: 'image/webp',
+        gif: 'image/gif',
+        svg: 'image/svg+xml',
+      };
+      return map[e] || '';
+    };
+
+    const contentType =
+      fileToUpload.type && fileToUpload.type !== 'application/octet-stream'
+        ? fileToUpload.type
+        : inferContentType(ext) || 'image/jpeg';
+
     setUploading(true);
 
     try {
       // Gerar nome único para o arquivo
-      const fileExt = file.name.split('.').pop();
-      const fileName = `${folder}/${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
+      const safeExt = ext || 'jpg';
+      const fileName = `${folder}/${Date.now()}-${Math.random().toString(36).substring(7)}.${safeExt}`;
 
       // Upload para o Supabase Storage
       const { data, error } = await supabase.storage
         .from('media-library')
-        .upload(fileName, file, {
+        .upload(fileName, fileToUpload, {
           cacheControl: '3600',
           upsert: false,
-          contentType: file.type || 'image/jpeg',
+          contentType,
         });
 
       if (error) throw error;
