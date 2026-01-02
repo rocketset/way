@@ -164,13 +164,21 @@ const Gallery = () => {
               {Array.from({ length: totalPositions }).map((_, index) => {
                 const photo = sortedPhotos.find(p => p.ordem === index);
                 const fallbackImage = staticGalleryPhotos[index];
-                const hasPhoto = !!photo;
+                const hasPhoto = photo !== undefined;
                 const imageUrl = hasPhoto ? photo.image_url : fallbackImage;
                 const isInactive = hasPhoto && !photo.ativo;
                 const objectFit = hasPhoto ? photo.object_fit || 'cover' : 'cover';
                 const objectPosition = hasPhoto ? photo.object_position || 'center' : 'center';
                 const rowSpan = hasPhoto ? photo.row_span || 1 : 1;
                 const colSpan = getColSpan(index);
+                
+                const handleClick = () => {
+                  if (hasPhoto && photo) {
+                    handleOpenDialogForEdit(photo);
+                  } else {
+                    handleOpenDialogForNew(index);
+                  }
+                };
                 
                 return (
                   <div
@@ -183,7 +191,7 @@ const Gallery = () => {
                       ${isInactive ? 'opacity-50' : ''}
                     `}
                     style={{ gridRow: `span ${rowSpan}` }}
-                    onClick={() => hasPhoto ? handleOpenDialogForEdit(photo) : handleOpenDialogForNew(index)}
+                    onClick={handleClick}
                   >
                     {imageUrl ? (
                       <>
@@ -197,10 +205,17 @@ const Gallery = () => {
                           }}
                         />
                         <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-2">
-                          <Button size="sm" variant="secondary" className="gap-2">
-                            <Pencil className="w-4 h-4" />
-                            {hasPhoto ? 'Editar' : 'Adicionar'}
-                          </Button>
+                          {hasPhoto ? (
+                            <Button size="sm" variant="secondary" className="gap-2">
+                              <Pencil className="w-4 h-4" />
+                              Editar Foto
+                            </Button>
+                          ) : (
+                            <Button size="sm" variant="secondary" className="gap-2">
+                              <Plus className="w-4 h-4" />
+                              Adicionar Foto
+                            </Button>
+                          )}
                         </div>
                       </>
                     ) : (
@@ -215,7 +230,7 @@ const Gallery = () => {
                       variant={hasPhoto ? "default" : "secondary"} 
                       className="absolute top-2 left-2 text-xs"
                     >
-                      #{index + 1}
+                      #{index + 1} {hasPhoto ? '✓' : ''}
                     </Badge>
                     
                     {/* Status badges */}
@@ -234,7 +249,7 @@ const Gallery = () => {
                     )}
                     
                     {/* Quick actions on hover */}
-                    {hasPhoto && (
+                    {hasPhoto && photo && (
                       <div className="absolute bottom-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                         <Button
                           size="icon"
