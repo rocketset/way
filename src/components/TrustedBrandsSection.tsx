@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useClientLogos } from "@/hooks/useClientLogos";
 import daniel from "@/assets/clients/daniel.png";
 import atacadao from "@/assets/clients/atacadao.png";
 import barauna from "@/assets/clients/barauna.png";
@@ -11,38 +12,48 @@ import colorsign from "@/assets/clients/colorsign.png";
 import coure from "@/assets/clients/coure.png";
 import shopar from "@/assets/clients/shopar.png";
 import ekta from "@/assets/clients/ekta.png";
-import eletropolo from "@/assets/clients/eletropolo.png";
-import extrema from "@/assets/clients/extrema.png";
-import inovare from "@/assets/clients/inovare.png";
-import kingcolchoes from "@/assets/clients/kingcolchoes.png";
-import ldf from "@/assets/clients/ldf.png";
-import monipratas from "@/assets/clients/monipratas.png";
-import nectar from "@/assets/clients/nectar.png";
-import rutra from "@/assets/clients/rutra.png";
-import verona from "@/assets/clients/verona.png";
-import verazo from "@/assets/clients/verazo.png";
 
 interface ClientBrand {
   name: string;
   logo: string;
-  caseId?: string;
+  caseId?: string | null;
+  isFromDb?: boolean;
 }
 
+// Static fallback clients
+const staticClients: ClientBrand[] = [
+  { name: "Daniel Carvalho", logo: daniel },
+  { name: "Atacadão dos Eletros", logo: atacadao },
+  { name: "Baraúna", logo: barauna },
+  { name: "O Carretão", logo: carretao },
+  { name: "Cartopel", logo: cartopel },
+  { name: "Casatudo", logo: casatudo },
+  { name: "Chipart", logo: chipart },
+  { name: "Club da Moda", logo: clubdamoda },
+  { name: "Colorsign", logo: colorsign },
+  { name: "Couré", logo: coure },
+  { name: "Shopar", logo: shopar },
+  { name: "Ekta Professional", logo: ekta },
+];
+
 const TrustedBrandsSection = () => {
-  const clients: ClientBrand[] = [
-    { name: "Daniel Carvalho", logo: daniel },
-    { name: "Atacadão dos Eletros", logo: atacadao },
-    { name: "Baraúna", logo: barauna },
-    { name: "O Carretão", logo: carretao },
-    { name: "Cartopel", logo: cartopel },
-    { name: "Casatudo", logo: casatudo },
-    { name: "Chipart", logo: chipart },
-    { name: "Club da Moda", logo: clubdamoda },
-    { name: "Colorsign", logo: colorsign, caseId: "1da013dc-6664-404d-af56-acfbf1b154d2" },
-    { name: "Couré", logo: coure },
-    { name: "Shopar", logo: shopar },
-    { name: "Ekta Professional", logo: ekta },
-  ];
+  const { data: dbClients } = useClientLogos(true);
+
+  // Filter clients for grid display (ambos or grid) and use static as fallback
+  const clients: ClientBrand[] = dbClients && dbClients.length > 0
+    ? dbClients
+        .filter(c => c.exibir_em === 'ambos' || c.exibir_em === 'grid')
+        .map(c => ({ 
+          name: c.nome, 
+          logo: c.logo_url, 
+          caseId: c.case_id,
+          isFromDb: true 
+        }))
+    : staticClients;
+
+  if (clients.length === 0) {
+    return null;
+  }
 
   return (
     <section className="pt-8 pb-20 bg-background">
@@ -57,14 +68,18 @@ const TrustedBrandsSection = () => {
         </h2>
 
         {/* Logos Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 md:gap-8">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 md:gap-6">
           {clients.map((client) => {
             const content = (
-              <div className="flex items-center justify-center h-32 md:h-36 p-6 rounded-lg bg-card/50 border border-border/50 hover:border-border hover:bg-card transition-all duration-300 group">
+              <div className="flex items-center justify-center h-24 md:h-28 p-4 rounded-lg bg-card/50 border border-border/50 hover:border-border hover:bg-card transition-all duration-300 group">
                 <img
                   src={client.logo}
                   alt={client.name}
-                  className="max-h-16 md:max-h-24 w-auto object-contain grayscale-0 group-hover:grayscale opacity-100 group-hover:opacity-60 transition-all duration-300"
+                  className={`max-h-12 md:max-h-16 w-auto object-contain transition-all duration-300 ${
+                    client.isFromDb 
+                      ? "opacity-80 group-hover:opacity-100" 
+                      : "grayscale-0 group-hover:grayscale opacity-100 group-hover:opacity-60"
+                  }`}
                 />
               </div>
             );

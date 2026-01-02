@@ -52,38 +52,46 @@ const ClientsCarousel = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const { data: dbClients } = useClientLogos(true);
 
-  // Use static clients if no DB clients available
+  // Filter clients for carousel display and use static as fallback
   const clients = dbClients && dbClients.length > 0
-    ? dbClients.map(c => ({ name: c.nome, logo: c.logo_url, isFromDb: true }))
+    ? dbClients
+        .filter(c => c.exibir_em === 'ambos' || c.exibir_em === 'carrossel')
+        .map(c => ({ name: c.nome, logo: c.logo_url, isFromDb: true }))
     : staticClients.map(c => ({ ...c, isFromDb: false }));
 
   const allClients = [...clients, ...clients, ...clients];
-  return <section className="relative bg-transparent overflow-hidden py-[7px] w-screen -mx-[50vw] left-[50%] right-[50%]">
+  
+  return (
+    <section className="relative bg-transparent overflow-hidden py-4 w-screen -mx-[50vw] left-[50%] right-[50%]">
       {/* Subtle gradient overlays for fade effect */}
-      <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
-      <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+      <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+      <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
 
-      {/* Scrollable carousel */}
+      {/* Scrollable carousel - more compact */}
       <div 
         ref={scrollContainerRef}
-        className="relative overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing"
+        className="relative overflow-x-auto scrollbar-hide"
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
       >
-        <div className="flex gap-8 animate-scroll-left">
-          {allClients.map((client, index) => <div key={`${client.name}-${index}`} className="flex-shrink-0 h-40 flex items-center justify-center group cursor-pointer">
-              {/* Logo container */}
-              <div className="relative h-full flex items-center justify-center px-10 transition-all duration-300 group-hover:scale-110">
+        <div className="flex gap-12 animate-scroll-left items-center">
+          {allClients.map((client, index) => (
+            <div 
+              key={`${client.name}-${index}`} 
+              className="flex-shrink-0 h-14 flex items-center justify-center group"
+            >
+              <div className="relative h-full flex items-center justify-center px-4 transition-all duration-300 group-hover:scale-105">
                 <img 
                   src={client.logo} 
                   alt={client.name} 
-                  className={`max-h-28 w-auto object-contain transition-all duration-300 group-hover:drop-shadow-2xl ${
+                  className={`max-h-10 w-auto object-contain transition-all duration-300 ${
                     client.isFromDb 
-                      ? "opacity-80 group-hover:opacity-100" 
-                      : "brightness-0 invert opacity-60 group-hover:opacity-100"
+                      ? "opacity-70 group-hover:opacity-100" 
+                      : "brightness-0 invert opacity-50 group-hover:opacity-80"
                   }`} 
                 />
               </div>
-            </div>)}
+            </div>
+          ))}
         </div>
       </div>
 
@@ -102,7 +110,7 @@ const ClientsCarousel = () => {
         }
 
         .animate-scroll-left {
-          animation: scroll-left 45s linear infinite;
+          animation: scroll-left 35s linear infinite;
           display: flex;
           width: max-content;
         }
@@ -113,10 +121,12 @@ const ClientsCarousel = () => {
 
         @media (prefers-reduced-motion: reduce) {
           .animate-scroll-left {
-            animation-duration: 100s;
+            animation-duration: 80s;
           }
         }
       `}</style>
-    </section>;
+    </section>
+  );
 };
+
 export default ClientsCarousel;
