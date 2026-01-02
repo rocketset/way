@@ -366,13 +366,13 @@ const Gallery = () => {
 
       {/* Edit/Add Dialog */}
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="max-w-lg">
-          <DialogHeader>
+        <DialogContent className="max-w-lg max-h-[90vh] overflow-hidden flex flex-col">
+          <DialogHeader className="flex-shrink-0">
             <DialogTitle>
               {editingPhoto ? `Editar Foto #${editingPhoto.ordem + 1}` : `Adicionar Foto - Posição ${formData.ordem + 1}`}
             </DialogTitle>
           </DialogHeader>
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-4 overflow-y-auto flex-1 pr-2">
             <div className="space-y-2">
               <FileUpload
                 label="Imagem"
