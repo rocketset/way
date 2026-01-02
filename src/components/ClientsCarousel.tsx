@@ -52,12 +52,21 @@ const ClientsCarousel = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const { data: dbClients } = useClientLogos(true);
 
+
+  const normalizeExibirEm = (value?: string | null) => (value || "").toLowerCase().trim();
+
   // Filter clients for carousel display and use static as fallback
+  const filteredDbClients = (dbClients || []).filter((c) => {
+    const v = normalizeExibirEm(c.exibir_em);
+    // Support both Portuguese + English values
+    return v === "" || v === "both" || v === "ambos" || v === "carrossel" || v === "carousel";
+  });
+
   const clients = dbClients && dbClients.length > 0
-    ? dbClients
-        .filter(c => c.exibir_em === 'ambos' || c.exibir_em === 'carrossel')
+    ? (filteredDbClients.length > 0 ? filteredDbClients : dbClients)
         .map(c => ({ name: c.nome, logo: c.logo_url, isFromDb: true }))
     : staticClients.map(c => ({ ...c, isFromDb: false }));
+
 
   const allClients = [...clients, ...clients, ...clients];
   
