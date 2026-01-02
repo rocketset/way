@@ -6,6 +6,7 @@ export interface PartnerLogo {
   id: string;
   nome: string;
   logo_url: string;
+  site_url: string | null;
   ordem: number | null;
   ativo: boolean | null;
   criado_em: string;
