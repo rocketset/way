@@ -53,6 +53,9 @@ const Gallery = () => {
     alt_text: "",
     ordem: 0,
     ativo: true,
+    object_fit: "cover" as 'cover' | 'contain' | 'fill',
+    object_position: "center" as 'top' | 'center' | 'bottom',
+    row_span: 1,
   });
 
   // Get photos sorted by ordem for display
@@ -75,6 +78,9 @@ const Gallery = () => {
       alt_text: "",
       ordem: editingPosition ?? photos?.length ?? 0,
       ativo: true,
+      object_fit: "cover",
+      object_position: "center",
+      row_span: 1,
     });
     setEditingPhoto(null);
     setEditingPosition(null);
@@ -88,6 +94,9 @@ const Gallery = () => {
         alt_text: photo.alt_text || "",
         ordem: photo.ordem,
         ativo: photo.ativo,
+        object_fit: photo.object_fit || "cover",
+        object_position: photo.object_position || "center",
+        row_span: photo.row_span || 1,
       });
     } else {
       setEditingPosition(position ?? null);
@@ -96,6 +105,9 @@ const Gallery = () => {
         alt_text: "",
         ordem: position ?? photos?.length ?? 0,
         ativo: true,
+        object_fit: "cover",
+        object_position: "center",
+        row_span: 1,
       });
     }
     setIsDialogOpen(true);
@@ -164,6 +176,9 @@ const Gallery = () => {
                 const hasPhoto = item.photo;
                 const imageUrl = hasPhoto ? item.photo!.image_url : item.fallbackImage;
                 const isInactive = hasPhoto && !item.photo!.ativo;
+                const objectFit = hasPhoto ? item.photo!.object_fit || 'cover' : 'cover';
+                const objectPosition = hasPhoto ? item.photo!.object_position || 'center' : 'center';
+                const rowSpan = hasPhoto ? item.photo!.row_span || 1 : 1;
                 
                 return (
                   <div
@@ -175,6 +190,7 @@ const Gallery = () => {
                       group cursor-pointer hover:border-primary transition-all duration-300
                       ${isInactive ? 'opacity-50' : ''}
                     `}
+                    style={{ gridRow: `span ${rowSpan}` }}
                     onClick={() => handleOpenDialog(item.photo || undefined, item.index)}
                   >
                     {imageUrl ? (
@@ -182,7 +198,11 @@ const Gallery = () => {
                         <img
                           src={imageUrl}
                           alt={hasPhoto ? item.photo!.alt_text || "Foto da galeria" : "Placeholder"}
-                          className="w-full h-full object-cover object-[center_30%] group-hover:scale-105 transition-transform duration-500"
+                          className="w-full h-full group-hover:scale-105 transition-transform duration-500"
+                          style={{ 
+                            objectFit: objectFit,
+                            objectPosition: objectPosition === 'top' ? 'top' : objectPosition === 'bottom' ? 'bottom' : 'center'
+                          }}
                         />
                         <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                           <Button size="sm" variant="secondary" className="gap-2">
@@ -335,6 +355,58 @@ const Gallery = () => {
               <p className="text-xs text-muted-foreground">
                 Posições 0, 5, 6 e 9 ocupam 2 colunas no desktop
               </p>
+            </div>
+
+            {/* Display Settings */}
+            <div className="space-y-4 p-4 bg-muted/50 rounded-lg">
+              <h4 className="font-medium text-sm">Ajustes de Exibição</h4>
+              
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="object_fit">Modo de Corte</Label>
+                  <select
+                    id="object_fit"
+                    value={formData.object_fit}
+                    onChange={(e) => setFormData({ ...formData, object_fit: e.target.value as 'cover' | 'contain' | 'fill' })}
+                    className="w-full h-10 px-3 rounded-md border border-input bg-background text-sm"
+                  >
+                    <option value="cover">Preencher (corta)</option>
+                    <option value="contain">Encaixar (não corta)</option>
+                    <option value="fill">Esticar</option>
+                  </select>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="object_position">Posição do Corte</Label>
+                  <select
+                    id="object_position"
+                    value={formData.object_position}
+                    onChange={(e) => setFormData({ ...formData, object_position: e.target.value as 'top' | 'center' | 'bottom' })}
+                    className="w-full h-10 px-3 rounded-md border border-input bg-background text-sm"
+                  >
+                    <option value="top">Topo</option>
+                    <option value="center">Centro</option>
+                    <option value="bottom">Base</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="row_span">Altura do Quadro</Label>
+                <select
+                  id="row_span"
+                  value={formData.row_span}
+                  onChange={(e) => setFormData({ ...formData, row_span: parseInt(e.target.value) })}
+                  className="w-full h-10 px-3 rounded-md border border-input bg-background text-sm"
+                >
+                  <option value={1}>Normal (1x)</option>
+                  <option value={2}>Alto (2x)</option>
+                  <option value={3}>Extra Alto (3x)</option>
+                </select>
+                <p className="text-xs text-muted-foreground">
+                  Aumentar a altura mostra mais da imagem sem cortar
+                </p>
+              </div>
             </div>
 
             <div className="flex items-center gap-2">

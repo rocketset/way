@@ -8,6 +8,9 @@ export interface GalleryPhoto {
   alt_text: string | null;
   ordem: number;
   ativo: boolean;
+  object_fit: 'cover' | 'contain' | 'fill';
+  object_position: 'top' | 'center' | 'bottom';
+  row_span: number;
   criado_em: string;
   atualizado_em: string;
 }
