@@ -57,7 +57,7 @@ const SortableLogoItem = ({
         <div 
           {...attributes} 
           {...listeners}
-          className="flex items-center justify-center h-24 bg-[#1a1a1a] rounded mb-3 cursor-grab active:cursor-grabbing group relative"
+          className="flex items-center justify-center h-24 bg-checkerboard rounded mb-3 cursor-grab active:cursor-grabbing group relative"
         >
           <img
             src={logo.logo_url}
