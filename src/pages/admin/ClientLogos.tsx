@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Plus, Trash2, Edit2, X, Check, Building2, GripVertical, Eye } from "lucide-react";
+import { Plus, Trash2, Edit2, X, Check, Building2, GripVertical, Eye, Store, LayoutGrid, Rows3 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import FileUpload from "@/components/admin/FileUpload";
 import {
@@ -23,6 +23,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors, DragEndEvent } from "@dnd-kit/core";
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, useSortable, rectSortingStrategy } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
@@ -31,11 +32,13 @@ import { toast } from "sonner";
 // Sortable Logo Item Component
 const SortableLogoItem = ({ 
   logo, 
+  caseName,
   onEdit, 
   onDelete, 
   onToggleActive 
 }: { 
   logo: ClientLogo; 
+  caseName?: string;
   onEdit: (logo: ClientLogo) => void;
   onDelete: (id: string) => void;
   onToggleActive: (id: string, ativo: boolean) => void;
@@ -81,6 +84,25 @@ const SortableLogoItem = ({
             <p className="font-medium text-sm truncate flex-1">{logo.nome}</p>
             <Badge variant="secondary" className="text-xs ml-2">#{(logo.ordem ?? 0) + 1}</Badge>
           </div>
+          {caseName && (
+            <div className="flex items-center gap-1 text-xs text-muted-foreground">
+              <Store className="w-3 h-3" />
+              <span className="truncate">{caseName}</span>
+            </div>
+          )}
+          <div className="flex items-center gap-1">
+            {logo.exibir_em === 'both' ? (
+              <Badge variant="outline" className="text-xs">
+                <LayoutGrid className="w-3 h-3 mr-1" />
+                Carrossel + Grid
+              </Badge>
+            ) : (
+              <Badge variant="outline" className="text-xs">
+                <Rows3 className="w-3 h-3 mr-1" />
+                Só Carrossel
+              </Badge>
+            )}
+          </div>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Switch
@@ -119,8 +141,14 @@ const ClientLogos = () => {
 
   const [isAdding, setIsAdding] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
-  const [newLogo, setNewLogo] = useState({ nome: "", logo_url: "", case_id: "", ordem: 0 });
-  const [editData, setEditData] = useState({ nome: "", logo_url: "", case_id: "", ordem: 0 });
+  const [newLogo, setNewLogo] = useState({ nome: "", logo_url: "", case_id: "", ordem: 0, exibir_em: "both" });
+  const [editData, setEditData] = useState({ nome: "", logo_url: "", case_id: "", ordem: 0, exibir_em: "both" });
+
+  // Helper to get case name by ID
+  const getCaseName = (caseId: string | null) => {
+    if (!caseId) return undefined;
+    return allCases.find(c => c.id === caseId)?.titulo;
+  };
 
   // DnD sensors
   const sensors = useSensors(
@@ -145,8 +173,9 @@ const ClientLogos = () => {
       case_id: newLogo.case_id || null,
       ordem: sortedLogos.length,
       ativo: true,
+      exibir_em: newLogo.exibir_em,
     });
-    setNewLogo({ nome: "", logo_url: "", case_id: "", ordem: 0 });
+    setNewLogo({ nome: "", logo_url: "", case_id: "", ordem: 0, exibir_em: "both" });
     setIsAdding(false);
   };
 
@@ -157,6 +186,7 @@ const ClientLogos = () => {
       logo_url: editData.logo_url,
       case_id: editData.case_id || null,
       ordem: editData.ordem,
+      exibir_em: editData.exibir_em,
     });
     setEditingId(null);
   };
@@ -178,6 +208,7 @@ const ClientLogos = () => {
       logo_url: logo.logo_url,
       case_id: logo.case_id || "",
       ordem: logo.ordem || 0,
+      exibir_em: logo.exibir_em || "both",
     });
   };
 
@@ -258,6 +289,29 @@ const ClientLogos = () => {
                 </Select>
               </div>
             </div>
+            <div className="space-y-2">
+              <Label>Exibir em</Label>
+              <RadioGroup
+                value={newLogo.exibir_em}
+                onValueChange={(value) => setNewLogo({ ...newLogo, exibir_em: value })}
+                className="flex gap-4"
+              >
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="carousel" id="new-carousel" />
+                  <Label htmlFor="new-carousel" className="flex items-center gap-1 cursor-pointer">
+                    <Rows3 className="w-4 h-4" />
+                    Só Carrossel
+                  </Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="both" id="new-both" />
+                  <Label htmlFor="new-both" className="flex items-center gap-1 cursor-pointer">
+                    <LayoutGrid className="w-4 h-4" />
+                    Carrossel + Grid
+                  </Label>
+                </div>
+              </RadioGroup>
+            </div>
             <FileUpload
               label="Logo"
               onUploadComplete={(url) => setNewLogo({ ...newLogo, logo_url: url })}
@@ -314,6 +368,29 @@ const ClientLogos = () => {
                   </SelectContent>
                 </Select>
               </div>
+            </div>
+            <div className="space-y-2">
+              <Label>Exibir em</Label>
+              <RadioGroup
+                value={editData.exibir_em}
+                onValueChange={(value) => setEditData({ ...editData, exibir_em: value })}
+                className="flex gap-4"
+              >
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="carousel" id="edit-carousel" />
+                  <Label htmlFor="edit-carousel" className="flex items-center gap-1 cursor-pointer">
+                    <Rows3 className="w-4 h-4" />
+                    Só Carrossel
+                  </Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="both" id="edit-both" />
+                  <Label htmlFor="edit-both" className="flex items-center gap-1 cursor-pointer">
+                    <LayoutGrid className="w-4 h-4" />
+                    Carrossel + Grid
+                  </Label>
+                </div>
+              </RadioGroup>
             </div>
             <FileUpload
               label="Logo"
@@ -374,6 +451,7 @@ const ClientLogos = () => {
                 <SortableLogoItem
                   key={logo.id}
                   logo={logo}
+                  caseName={getCaseName(logo.case_id)}
                   onEdit={startEdit}
                   onDelete={handleDelete}
                   onToggleActive={handleToggleActive}

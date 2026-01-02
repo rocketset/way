@@ -9,6 +9,7 @@ export interface ClientLogo {
   case_id: string | null;
   ordem: number | null;
   ativo: boolean | null;
+  exibir_em: string;
   criado_em: string;
   atualizado_em: string;
 }
