@@ -67,22 +67,36 @@ export default function FileUpload({
     }
 
     // Comprimir imagem se for um formato suportado
-    const compressibleTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+    // IMPORTANT: manter o tipo do arquivo para preservar transparência (ex.: PNG)
+    const compressibleTypes = ['image/jpeg', 'image/png', 'image/webp'];
     const fileType = fileToUpload.type || '';
-    
+
     if (compressibleTypes.includes(fileType) || fileType === '') {
       try {
         toast.message('Comprimindo imagem...');
+
+        const targetMime =
+          fileType && fileType !== 'application/octet-stream' ? fileType : 'image/jpeg';
+
+        const targetExt =
+          targetMime === 'image/png'
+            ? 'png'
+            : targetMime === 'image/webp'
+              ? 'webp'
+              : 'jpg';
+
+        const baseName = fileToUpload.name.replace(/\.[^.]+$/, '');
+
         const options = {
           maxSizeMB: Math.min(maxSizeMB, 2), // Comprimir para no máximo 2MB ou o limite definido
           maxWidthOrHeight: 1920,
           useWebWorker: true,
-          fileType: 'image/jpeg' as const,
+          fileType: targetMime as 'image/jpeg' | 'image/png' | 'image/webp',
         };
-        
+
         const compressedFile = await imageCompression(fileToUpload, options);
-        fileToUpload = new File([compressedFile], fileToUpload.name.replace(/\.[^.]+$/, '.jpg'), { 
-          type: 'image/jpeg' 
+        fileToUpload = new File([compressedFile], `${baseName}.${targetExt}`, {
+          type: targetMime,
         });
       } catch (err) {
         console.warn('Não foi possível comprimir a imagem, enviando original:', err);
