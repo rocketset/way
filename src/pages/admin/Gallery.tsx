@@ -30,18 +30,29 @@ import galleryTeam10 from "@/assets/gallery/team-10.png";
 
 const staticGalleryPhotos = [galleryTeam1, galleryTeam2, galleryTeam3, galleryTeam4, galleryTeam5, galleryTeam6, galleryTeam7, galleryTeam8, galleryTeam9, galleryTeam10];
 
-// Sortable Photo Item Component
-const SortablePhotoItem = ({ 
-  photo, 
+// Sortable Preview Item Component for the grid preview
+const SortablePreviewItem = ({ 
+  photo,
+  index,
+  colSpan,
+  fallbackImage,
   onEdit, 
   onDelete, 
-  onToggleActive 
+  onToggleActive,
+  onAddNew,
 }: { 
-  photo: GalleryPhoto; 
+  photo?: GalleryPhoto;
+  index: number;
+  colSpan: number;
+  fallbackImage?: string;
   onEdit: (photo: GalleryPhoto) => void;
   onDelete: (id: string) => void;
   onToggleActive: (photo: GalleryPhoto) => void;
+  onAddNew: (position: number) => void;
 }) => {
+  const hasPhoto = photo !== undefined;
+  const id = hasPhoto ? photo.id : `placeholder-${index}`;
+  
   const {
     attributes,
     listeners,
@@ -49,77 +60,153 @@ const SortablePhotoItem = ({
     transform,
     transition,
     isDragging,
-  } = useSortable({ id: photo.id });
+  } = useSortable({ 
+    id,
+    disabled: !hasPhoto, // Disable dragging for placeholders
+  });
 
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
-    opacity: isDragging ? 0.5 : 1,
     zIndex: isDragging ? 1000 : 1,
+    gridRow: `span ${hasPhoto ? photo.row_span || 1 : 1}`,
+  };
+
+  const imageUrl = hasPhoto ? photo.image_url : fallbackImage;
+  const isInactive = hasPhoto && !photo.ativo;
+  const objectFit = hasPhoto ? photo.object_fit || 'cover' : 'cover';
+  const objectPosition = hasPhoto ? photo.object_position || '50% 50%' : '50% 50%';
+
+  const handleClick = () => {
+    if (hasPhoto && photo) {
+      onEdit(photo);
+    } else {
+      onAddNew(index);
+    }
   };
 
   return (
-    <Card 
+    <div
       ref={setNodeRef}
       style={style}
-      className={`overflow-hidden transition-all ${!photo.ativo ? "opacity-50" : ""} ${isDragging ? "ring-2 ring-primary shadow-lg" : ""}`}
+      className={`
+        relative overflow-hidden rounded-xl border-2 
+        ${hasPhoto ? 'border-primary/50 bg-primary/5' : fallbackImage ? 'border-border bg-muted/50' : 'border-dashed border-border bg-muted/30'}
+        ${colSpan === 2 ? 'col-span-2' : 'col-span-1'}
+        group transition-all duration-300
+        ${isInactive ? 'opacity-50' : ''}
+        ${isDragging ? 'ring-2 ring-primary shadow-2xl scale-105' : ''}
+        ${hasPhoto ? 'cursor-grab active:cursor-grabbing' : 'cursor-pointer hover:border-primary'}
+      `}
     >
-      <div className="relative aspect-square">
-        <img
-          src={photo.image_url}
-          alt={photo.alt_text || "Foto da galeria"}
-          className="w-full h-full"
-          style={{ 
-            objectFit: photo.object_fit || 'cover',
-            objectPosition: photo.object_position || 'center'
-          }}
-        />
-        <Badge className="absolute top-1 left-1 text-xs">#{photo.ordem + 1}</Badge>
-        {!photo.ativo && (
-          <Badge variant="destructive" className="absolute top-1 right-1 text-xs">Inativo</Badge>
-        )}
-        
-        {/* Drag handle overlay */}
+      {imageUrl ? (
+        <>
+          <img
+            src={imageUrl}
+            alt={hasPhoto ? photo.alt_text || "Foto da galeria" : "Placeholder"}
+            className="w-full h-full group-hover:scale-105 transition-transform duration-500"
+            style={{ 
+              objectFit: objectFit,
+              objectPosition: objectPosition
+            }}
+          />
+          
+          {/* Drag handle overlay for photos */}
+          {hasPhoto && (
+            <div 
+              {...attributes} 
+              {...listeners}
+              className="absolute inset-0 flex items-center justify-center bg-black/0 hover:bg-black/30 transition-colors"
+            >
+              <GripVertical className="w-10 h-10 text-white opacity-0 group-hover:opacity-100 transition-opacity drop-shadow-lg" />
+            </div>
+          )}
+          
+          {/* Click overlay for placeholders */}
+          {!hasPhoto && (
+            <div 
+              onClick={handleClick}
+              className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-2"
+            >
+              <Button size="sm" variant="secondary" className="gap-2">
+                <Plus className="w-4 h-4" />
+                Adicionar Foto
+              </Button>
+            </div>
+          )}
+        </>
+      ) : (
         <div 
-          {...attributes} 
-          {...listeners}
-          className="absolute inset-0 flex items-center justify-center bg-black/0 hover:bg-black/30 transition-colors cursor-grab active:cursor-grabbing group"
+          onClick={handleClick}
+          className="w-full h-full flex flex-col items-center justify-center text-muted-foreground gap-2 p-4 cursor-pointer"
         >
-          <GripVertical className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity drop-shadow-lg" />
+          <Plus className="w-8 h-8" />
+          <span className="text-xs text-center">Adicionar foto</span>
         </div>
-      </div>
-      <CardContent className="p-2">
-        <div className="flex items-center justify-between">
-          <span className="text-xs text-muted-foreground truncate flex-1">
-            {photo.alt_text || "Sem descrição"}
-          </span>
-          <div className="flex gap-1">
-            <Button 
-              size="icon" 
-              variant="ghost" 
-              className="h-6 w-6" 
-              onClick={(e) => {
-                e.stopPropagation();
-                onEdit(photo);
-              }}
-            >
-              <Pencil className="w-3 h-3" />
-            </Button>
-            <Button 
-              size="icon" 
-              variant="ghost" 
-              className="h-6 w-6 text-destructive" 
-              onClick={(e) => {
-                e.stopPropagation();
-                onDelete(photo.id);
-              }}
-            >
-              <Trash2 className="w-3 h-3" />
-            </Button>
-          </div>
+      )}
+      
+      {/* Position badge */}
+      <Badge 
+        variant={hasPhoto ? "default" : "secondary"} 
+        className="absolute top-2 left-2 text-xs pointer-events-none"
+      >
+        #{index + 1} {hasPhoto ? '✓' : ''}
+      </Badge>
+      
+      {/* Status badges */}
+      {hasPhoto && (
+        <div className="absolute top-2 right-2 flex gap-1 pointer-events-none">
+          {isInactive && (
+            <Badge variant="destructive" className="text-xs">Inativo</Badge>
+          )}
         </div>
-      </CardContent>
-    </Card>
+      )}
+      
+      {!hasPhoto && fallbackImage && (
+        <Badge variant="outline" className="absolute top-2 right-2 text-xs bg-background/80 pointer-events-none">
+          Fallback
+        </Badge>
+      )}
+      
+      {/* Quick actions on hover */}
+      {hasPhoto && photo && (
+        <div className="absolute bottom-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity z-10">
+          <Button
+            size="icon"
+            variant="secondary"
+            className="h-8 w-8"
+            onClick={(e) => {
+              e.stopPropagation();
+              onEdit(photo);
+            }}
+          >
+            <Pencil className="w-4 h-4" />
+          </Button>
+          <Button
+            size="icon"
+            variant="secondary"
+            className="h-8 w-8"
+            onClick={(e) => {
+              e.stopPropagation();
+              onToggleActive(photo);
+            }}
+          >
+            <Switch checked={photo.ativo} className="pointer-events-none scale-75" />
+          </Button>
+          <Button
+            size="icon"
+            variant="destructive"
+            className="h-8 w-8"
+            onClick={(e) => {
+              e.stopPropagation();
+              onDelete(photo.id);
+            }}
+          >
+            <Trash2 className="w-4 h-4" />
+          </Button>
+        </div>
+      )}
+    </div>
   );
 };
 
@@ -298,161 +385,105 @@ const Gallery = () => {
               ))}
             </div>
           ) : (
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 auto-rows-[150px] md:auto-rows-[180px]">
-              {Array.from({ length: totalPositions }).map((_, index) => {
-                const photo = sortedPhotos.find(p => p.ordem === index);
-                const fallbackImage = staticGalleryPhotos[index];
-                const hasPhoto = photo !== undefined;
-                const imageUrl = hasPhoto ? photo.image_url : fallbackImage;
-                const isInactive = hasPhoto && !photo.ativo;
-                const objectFit = hasPhoto ? photo.object_fit || 'cover' : 'cover';
-                const objectPosition = hasPhoto ? photo.object_position || '50% 50%' : '50% 50%';
-                const rowSpan = hasPhoto ? photo.row_span || 1 : 1;
-                const colSpan = getColSpan(index);
-                
-                const handleClick = () => {
-                  if (hasPhoto && photo) {
-                    handleOpenDialogForEdit(photo);
-                  } else {
-                    handleOpenDialogForNew(index);
-                  }
-                };
-                
-                return (
-                  <div
-                    key={index}
-                    className={`
-                      relative overflow-hidden rounded-xl border-2 
-                      ${hasPhoto ? 'border-primary/50 bg-primary/5' : fallbackImage ? 'border-border bg-muted/50' : 'border-dashed border-border bg-muted/30'}
-                      ${colSpan === 2 ? 'col-span-2' : 'col-span-1'}
-                      group cursor-pointer hover:border-primary transition-all duration-300
-                      ${isInactive ? 'opacity-50' : ''}
-                    `}
-                    style={{ gridRow: `span ${rowSpan}` }}
-                    onClick={handleClick}
-                  >
-                    {imageUrl ? (
-                      <>
-                        <img
-                          src={imageUrl}
-                          alt={hasPhoto ? photo.alt_text || "Foto da galeria" : "Placeholder"}
-                          className="w-full h-full group-hover:scale-105 transition-transform duration-500"
-                          style={{ 
-                            objectFit: objectFit,
-                            objectPosition: objectPosition
-                          }}
-                        />
-                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-2">
-                          {hasPhoto ? (
-                            <Button size="sm" variant="secondary" className="gap-2">
-                              <Pencil className="w-4 h-4" />
-                              Editar Foto
-                            </Button>
-                          ) : (
-                            <Button size="sm" variant="secondary" className="gap-2">
-                              <Plus className="w-4 h-4" />
-                              Adicionar Foto
-                            </Button>
-                          )}
-                        </div>
-                      </>
-                    ) : (
-                      <div className="w-full h-full flex flex-col items-center justify-center text-muted-foreground gap-2 p-4">
-                        <Plus className="w-8 h-8" />
-                        <span className="text-xs text-center">Adicionar foto</span>
-                      </div>
-                    )}
+            <DndContext
+              sensors={sensors}
+              collisionDetection={closestCenter}
+              onDragEnd={handleDragEnd}
+            >
+              <SortableContext items={sortedPhotos.map(p => p.id)} strategy={rectSortingStrategy}>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 auto-rows-[150px] md:auto-rows-[180px]">
+                  {Array.from({ length: totalPositions }).map((_, index) => {
+                    const photo = sortedPhotos.find(p => p.ordem === index);
+                    const fallbackImage = staticGalleryPhotos[index];
+                    const colSpan = getColSpan(index);
                     
-                    {/* Position badge */}
-                    <Badge 
-                      variant={hasPhoto ? "default" : "secondary"} 
-                      className="absolute top-2 left-2 text-xs"
-                    >
-                      #{index + 1} {hasPhoto ? '✓' : ''}
-                    </Badge>
-                    
-                    {/* Status badges */}
-                    {hasPhoto && (
-                      <div className="absolute top-2 right-2 flex gap-1">
-                        {isInactive && (
-                          <Badge variant="destructive" className="text-xs">Inativo</Badge>
-                        )}
-                      </div>
-                    )}
-                    
-                    {!hasPhoto && fallbackImage && (
-                      <Badge variant="outline" className="absolute top-2 right-2 text-xs bg-background/80">
-                        Fallback
-                      </Badge>
-                    )}
-                    
-                    {/* Quick actions on hover */}
-                    {hasPhoto && photo && (
-                      <div className="absolute bottom-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <Button
-                          size="icon"
-                          variant="secondary"
-                          className="h-8 w-8"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleToggleActive(photo);
-                          }}
-                        >
-                          <Switch checked={photo.ativo} className="pointer-events-none scale-75" />
-                        </Button>
-                        <Button
-                          size="icon"
-                          variant="destructive"
-                          className="h-8 w-8"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleDelete(photo.id);
-                          }}
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </Button>
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
+                    return (
+                      <SortablePreviewItem
+                        key={photo?.id || `placeholder-${index}`}
+                        photo={photo}
+                        index={index}
+                        colSpan={colSpan}
+                        fallbackImage={fallbackImage}
+                        onEdit={handleOpenDialogForEdit}
+                        onDelete={handleDelete}
+                        onToggleActive={handleToggleActive}
+                        onAddNew={handleOpenDialogForNew}
+                      />
+                    );
+                  })}
+                </div>
+              </SortableContext>
+            </DndContext>
           )}
         </Card>
         
         <p className="text-sm text-muted-foreground">
-          💡 Clique em qualquer posição para adicionar ou editar. Posições 1, 6, 7 e 10 ocupam 2 colunas. Você pode adicionar mais de 10 fotos!
+          💡 <strong>Arraste</strong> as fotos para reordenar. Clique para editar ou adicionar. Posições 1, 6, 7 e 10 ocupam 2 colunas.
         </p>
       </div>
 
-      {/* All Photos List with Drag & Drop */}
+      {/* All Photos List - Simple view */}
       {photos && photos.length > 0 && (
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <div>
-              <h2 className="text-lg font-semibold">Todas as Fotos ({photos.length})</h2>
-              <p className="text-sm text-muted-foreground">Arraste para reordenar as fotos</p>
-            </div>
+            <h2 className="text-lg font-semibold">Todas as Fotos ({photos.length})</h2>
           </div>
-          <DndContext
-            sensors={sensors}
-            collisionDetection={closestCenter}
-            onDragEnd={handleDragEnd}
-          >
-            <SortableContext items={sortedPhotos.map(p => p.id)} strategy={rectSortingStrategy}>
-              <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
-                {sortedPhotos.map((photo) => (
-                  <SortablePhotoItem
-                    key={photo.id}
-                    photo={photo}
-                    onEdit={handleOpenDialogForEdit}
-                    onDelete={handleDelete}
-                    onToggleActive={handleToggleActive}
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
+            {sortedPhotos.map((photo) => (
+              <Card 
+                key={photo.id} 
+                className={`overflow-hidden cursor-pointer hover:ring-2 hover:ring-primary transition-all ${!photo.ativo ? "opacity-50" : ""}`}
+                onClick={() => handleOpenDialogForEdit(photo)}
+              >
+                <div className="relative aspect-square">
+                  <img
+                    src={photo.image_url}
+                    alt={photo.alt_text || "Foto da galeria"}
+                    className="w-full h-full"
+                    style={{ 
+                      objectFit: photo.object_fit || 'cover',
+                      objectPosition: photo.object_position || 'center'
+                    }}
                   />
-                ))}
-              </div>
-            </SortableContext>
-          </DndContext>
+                  <Badge className="absolute top-1 left-1 text-xs">#{photo.ordem + 1}</Badge>
+                  {!photo.ativo && (
+                    <Badge variant="destructive" className="absolute top-1 right-1 text-xs">Inativo</Badge>
+                  )}
+                </div>
+                <CardContent className="p-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs text-muted-foreground truncate flex-1">
+                      {photo.alt_text || "Sem descrição"}
+                    </span>
+                    <div className="flex gap-1">
+                      <Button 
+                        size="icon" 
+                        variant="ghost" 
+                        className="h-6 w-6" 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleOpenDialogForEdit(photo);
+                        }}
+                      >
+                        <Pencil className="w-3 h-3" />
+                      </Button>
+                      <Button 
+                        size="icon" 
+                        variant="ghost" 
+                        className="h-6 w-6 text-destructive" 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleDelete(photo.id);
+                        }}
+                      >
+                        <Trash2 className="w-3 h-3" />
+                      </Button>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
         </div>
       )}
 
