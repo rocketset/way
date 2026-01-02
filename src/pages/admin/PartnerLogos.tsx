@@ -249,6 +249,9 @@ const PartnerLogos = () => {
               accept="image/*"
               currentUrl={newLogo.logo_url}
               folder="partner-logos"
+              maxLogoWidth={400}
+              maxLogoHeight={150}
+              helperText="📐 Tamanho ideal: 400×150px (horizontal). Formato PNG com fundo transparente. Logos maiores ou menores serão redimensionadas automaticamente."
             />
             <div className="flex gap-2">
               <Button onClick={handleAdd} disabled={!newLogo.nome || !newLogo.logo_url}>
@@ -295,6 +298,9 @@ const PartnerLogos = () => {
               accept="image/*"
               currentUrl={editData.logo_url}
               folder="partner-logos"
+              maxLogoWidth={400}
+              maxLogoHeight={150}
+              helperText="📐 Tamanho ideal: 400×150px (horizontal). Formato PNG com fundo transparente. Logos maiores ou menores serão redimensionadas automaticamente."
             />
             <div className="flex gap-2">
               <Button onClick={() => handleUpdate(editingId)}>
