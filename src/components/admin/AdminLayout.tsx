@@ -152,6 +152,7 @@ const menuItems = [
     roles: ['administrador'],
     subItems: [
       { label: 'Site Way', path: '/admin/site-settings' },
+      { label: 'SEO', path: '/admin/seo' },
       { label: 'Galeria de Fotos', path: '/admin/gallery' },
       { label: 'Logos Clientes', path: '/admin/client-logos' },
       { label: 'Logos Parceiros', path: '/admin/partner-logos' },

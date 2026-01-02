@@ -78,6 +78,7 @@ import SiteSettings from "./pages/admin/SiteSettings";
 import Gallery from "./pages/admin/Gallery";
 import ClientLogos from "./pages/admin/ClientLogos";
 import PartnerLogos from "./pages/admin/PartnerLogos";
+import SEO from "./pages/admin/SEO";
 
 // Configuração do React Query
 const queryClient = new QueryClient();
@@ -191,6 +192,9 @@ const App = () => (
             <Route path="gallery" element={<Gallery />} />
             <Route path="client-logos" element={<ClientLogos />} />
             <Route path="partner-logos" element={<PartnerLogos />} />
+            
+            {/* SEO */}
+            <Route path="seo" element={<SEO />} />
           </Route>
           
           {/* Rota 404 - deve ser sempre a última */}

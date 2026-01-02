@@ -666,6 +666,45 @@ export type Database = {
         }
         Relationships: []
       }
+      global_seo_settings: {
+        Row: {
+          atualizado_em: string
+          bing_site_verification: string | null
+          criado_em: string
+          default_og_image: string | null
+          google_site_verification: string | null
+          id: string
+          robots_txt: string | null
+          site_name: string | null
+          site_title_suffix: string | null
+          twitter_site: string | null
+        }
+        Insert: {
+          atualizado_em?: string
+          bing_site_verification?: string | null
+          criado_em?: string
+          default_og_image?: string | null
+          google_site_verification?: string | null
+          id?: string
+          robots_txt?: string | null
+          site_name?: string | null
+          site_title_suffix?: string | null
+          twitter_site?: string | null
+        }
+        Update: {
+          atualizado_em?: string
+          bing_site_verification?: string | null
+          criado_em?: string
+          default_og_image?: string | null
+          google_site_verification?: string | null
+          id?: string
+          robots_txt?: string | null
+          site_name?: string | null
+          site_title_suffix?: string | null
+          twitter_site?: string | null
+        }
+        Relationships: []
+      }
       google_integrations: {
         Row: {
           analytics_id: string | null
@@ -1006,6 +1045,75 @@ export type Database = {
           type?: string
           updated_at?: string | null
           user_id?: string | null
+        }
+        Relationships: []
+      }
+      page_seo: {
+        Row: {
+          ativo: boolean | null
+          atualizado_em: string
+          canonical_url: string | null
+          criado_em: string
+          id: string
+          meta_description: string | null
+          meta_keywords: string | null
+          meta_title: string | null
+          nofollow: boolean | null
+          noindex: boolean | null
+          og_description: string | null
+          og_image: string | null
+          og_title: string | null
+          page_key: string
+          page_name: string
+          schema_markup: Json | null
+          twitter_description: string | null
+          twitter_image: string | null
+          twitter_site: string | null
+          twitter_title: string | null
+        }
+        Insert: {
+          ativo?: boolean | null
+          atualizado_em?: string
+          canonical_url?: string | null
+          criado_em?: string
+          id?: string
+          meta_description?: string | null
+          meta_keywords?: string | null
+          meta_title?: string | null
+          nofollow?: boolean | null
+          noindex?: boolean | null
+          og_description?: string | null
+          og_image?: string | null
+          og_title?: string | null
+          page_key: string
+          page_name: string
+          schema_markup?: Json | null
+          twitter_description?: string | null
+          twitter_image?: string | null
+          twitter_site?: string | null
+          twitter_title?: string | null
+        }
+        Update: {
+          ativo?: boolean | null
+          atualizado_em?: string
+          canonical_url?: string | null
+          criado_em?: string
+          id?: string
+          meta_description?: string | null
+          meta_keywords?: string | null
+          meta_title?: string | null
+          nofollow?: boolean | null
+          noindex?: boolean | null
+          og_description?: string | null
+          og_image?: string | null
+          og_title?: string | null
+          page_key?: string
+          page_name?: string
+          schema_markup?: Json | null
+          twitter_description?: string | null
+          twitter_image?: string | null
+          twitter_site?: string | null
+          twitter_title?: string | null
         }
         Relationships: []
       }
