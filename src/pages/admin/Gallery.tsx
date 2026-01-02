@@ -9,6 +9,7 @@ import { Plus, Pencil, Trash2, Image as ImageIcon, Eye } from "lucide-react";
 import { useGalleryPhotos, useCreateGalleryPhoto, useUpdateGalleryPhoto, useDeleteGalleryPhoto, GalleryPhoto } from "@/hooks/useGalleryPhotos";
 import { Skeleton } from "@/components/ui/skeleton";
 import FileUpload from "@/components/admin/FileUpload";
+import ImagePositionPicker from "@/components/admin/ImagePositionPicker";
 import { Badge } from "@/components/ui/badge";
 
 // Fallback static images for preview
@@ -39,7 +40,7 @@ const Gallery = () => {
     ordem: 0,
     ativo: true,
     object_fit: "cover" as 'cover' | 'contain' | 'fill',
-    object_position: "center" as 'top' | 'center' | 'bottom',
+    object_position: "50% 50%",
     row_span: 1,
   });
 
@@ -63,7 +64,7 @@ const Gallery = () => {
       ordem: photos?.length ?? 0,
       ativo: true,
       object_fit: "cover",
-      object_position: "center",
+      object_position: "50% 50%",
       row_span: 1,
     });
     setEditingPhoto(null);
@@ -77,7 +78,7 @@ const Gallery = () => {
       ordem: position ?? photos?.length ?? 0,
       ativo: true,
       object_fit: "cover",
-      object_position: "center",
+      object_position: "50% 50%",
       row_span: 1,
     });
     setIsDialogOpen(true);
@@ -91,7 +92,7 @@ const Gallery = () => {
       ordem: photo.ordem,
       ativo: photo.ativo,
       object_fit: photo.object_fit || "cover",
-      object_position: photo.object_position || "center",
+      object_position: photo.object_position || "50% 50%",
       row_span: photo.row_span || 1,
     });
     setIsDialogOpen(true);
@@ -168,7 +169,7 @@ const Gallery = () => {
                 const imageUrl = hasPhoto ? photo.image_url : fallbackImage;
                 const isInactive = hasPhoto && !photo.ativo;
                 const objectFit = hasPhoto ? photo.object_fit || 'cover' : 'cover';
-                const objectPosition = hasPhoto ? photo.object_position || 'center' : 'center';
+                const objectPosition = hasPhoto ? photo.object_position || '50% 50%' : '50% 50%';
                 const rowSpan = hasPhoto ? photo.row_span || 1 : 1;
                 const colSpan = getColSpan(index);
                 
@@ -201,7 +202,7 @@ const Gallery = () => {
                           className="w-full h-full group-hover:scale-105 transition-transform duration-500"
                           style={{ 
                             objectFit: objectFit,
-                            objectPosition: objectPosition === 'top' ? 'top' : objectPosition === 'bottom' ? 'bottom' : 'center'
+                            objectPosition: objectPosition
                           }}
                         />
                         <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-2">
@@ -410,35 +411,32 @@ const Gallery = () => {
             <div className="space-y-4 p-4 bg-muted/50 rounded-lg">
               <h4 className="font-medium text-sm">Ajustes de Exibição</h4>
               
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="object_fit">Modo de Corte</Label>
-                  <select
-                    id="object_fit"
-                    value={formData.object_fit}
-                    onChange={(e) => setFormData({ ...formData, object_fit: e.target.value as 'cover' | 'contain' | 'fill' })}
-                    className="w-full h-10 px-3 rounded-md border border-input bg-background text-sm"
-                  >
-                    <option value="cover">Preencher (corta)</option>
-                    <option value="contain">Encaixar (não corta)</option>
-                    <option value="fill">Esticar</option>
-                  </select>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="object_position">Posição do Corte</Label>
-                  <select
-                    id="object_position"
-                    value={formData.object_position}
-                    onChange={(e) => setFormData({ ...formData, object_position: e.target.value as 'top' | 'center' | 'bottom' })}
-                    className="w-full h-10 px-3 rounded-md border border-input bg-background text-sm"
-                  >
-                    <option value="top">Topo</option>
-                    <option value="center">Centro</option>
-                    <option value="bottom">Base</option>
-                  </select>
-                </div>
+              <div className="space-y-2">
+                <Label htmlFor="object_fit">Modo de Corte</Label>
+                <select
+                  id="object_fit"
+                  value={formData.object_fit}
+                  onChange={(e) => setFormData({ ...formData, object_fit: e.target.value as 'cover' | 'contain' | 'fill' })}
+                  className="w-full h-10 px-3 rounded-md border border-input bg-background text-sm"
+                >
+                  <option value="cover">Preencher (corta)</option>
+                  <option value="contain">Encaixar (não corta)</option>
+                  <option value="fill">Esticar</option>
+                </select>
               </div>
+
+              {/* Interactive Position Picker */}
+              {formData.image_url && formData.object_fit === 'cover' && (
+                <ImagePositionPicker
+                  imageUrl={formData.image_url}
+                  position={{
+                    x: parseFloat(formData.object_position.split(' ')[0]) || 50,
+                    y: parseFloat(formData.object_position.split(' ')[1] || formData.object_position.split(' ')[0]) || 50,
+                  }}
+                  onChange={({ x, y }) => setFormData({ ...formData, object_position: `${x}% ${y}%` })}
+                  objectFit={formData.object_fit}
+                />
+              )}
 
               <div className="space-y-2">
                 <Label htmlFor="row_span">Altura do Quadro</Label>

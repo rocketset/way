@@ -9,7 +9,7 @@ export interface GalleryPhoto {
   ordem: number;
   ativo: boolean;
   object_fit: 'cover' | 'contain' | 'fill';
-  object_position: 'top' | 'center' | 'bottom';
+  object_position: string;
   row_span: number;
   criado_em: string;
   atualizado_em: string;
