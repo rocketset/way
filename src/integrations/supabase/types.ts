@@ -463,6 +463,7 @@ export type Database = {
           atualizado_em: string
           case_id: string | null
           criado_em: string
+          exibir_em: string
           id: string
           logo_url: string
           nome: string
@@ -473,6 +474,7 @@ export type Database = {
           atualizado_em?: string
           case_id?: string | null
           criado_em?: string
+          exibir_em?: string
           id?: string
           logo_url: string
           nome: string
@@ -483,6 +485,7 @@ export type Database = {
           atualizado_em?: string
           case_id?: string | null
           criado_em?: string
+          exibir_em?: string
           id?: string
           logo_url?: string
           nome?: string
