@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Plus, Trash2, Edit2, X, Check, Award, GripVertical, Eye } from "lucide-react";
+import { Plus, Trash2, Edit2, X, Check, Award, GripVertical, Eye, Globe } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import FileUpload from "@/components/admin/FileUpload";
 import {
@@ -73,6 +73,12 @@ const SortableLogoItem = ({
             <p className="font-medium text-sm truncate flex-1">{logo.nome}</p>
             <Badge variant="secondary" className="text-xs ml-2">#{(logo.ordem ?? 0) + 1}</Badge>
           </div>
+          {logo.site_url && (
+            <div className="flex items-center gap-1 text-xs text-muted-foreground">
+              <Globe className="w-3 h-3" />
+              <span className="truncate">{logo.site_url.replace(/^https?:\/\//, '')}</span>
+            </div>
+          )}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Switch
@@ -109,8 +115,8 @@ const PartnerLogos = () => {
 
   const [isAdding, setIsAdding] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
-  const [newLogo, setNewLogo] = useState({ nome: "", logo_url: "", ordem: 0 });
-  const [editData, setEditData] = useState({ nome: "", logo_url: "", ordem: 0 });
+  const [newLogo, setNewLogo] = useState({ nome: "", logo_url: "", site_url: "", ordem: 0 });
+  const [editData, setEditData] = useState({ nome: "", logo_url: "", site_url: "", ordem: 0 });
 
   // DnD sensors
   const sensors = useSensors(
@@ -132,10 +138,11 @@ const PartnerLogos = () => {
     await createLogo.mutateAsync({
       nome: newLogo.nome,
       logo_url: newLogo.logo_url,
+      site_url: newLogo.site_url || null,
       ordem: sortedLogos.length,
       ativo: true,
     });
-    setNewLogo({ nome: "", logo_url: "", ordem: 0 });
+    setNewLogo({ nome: "", logo_url: "", site_url: "", ordem: 0 });
     setIsAdding(false);
   };
 
@@ -144,6 +151,7 @@ const PartnerLogos = () => {
       id,
       nome: editData.nome,
       logo_url: editData.logo_url,
+      site_url: editData.site_url || null,
       ordem: editData.ordem,
     });
     setEditingId(null);
@@ -164,6 +172,7 @@ const PartnerLogos = () => {
     setEditData({
       nome: logo.nome,
       logo_url: logo.logo_url,
+      site_url: logo.site_url || "",
       ordem: logo.ordem || 0,
     });
   };
@@ -216,13 +225,23 @@ const PartnerLogos = () => {
             <CardTitle>Nova Logo de Parceiro</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <Label>Nome do Parceiro</Label>
-              <Input
-                value={newLogo.nome}
-                onChange={(e) => setNewLogo({ ...newLogo, nome: e.target.value })}
-                placeholder="Nome do parceiro"
-              />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label>Nome do Parceiro</Label>
+                <Input
+                  value={newLogo.nome}
+                  onChange={(e) => setNewLogo({ ...newLogo, nome: e.target.value })}
+                  placeholder="Nome do parceiro"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label>Site do Parceiro (opcional)</Label>
+                <Input
+                  value={newLogo.site_url}
+                  onChange={(e) => setNewLogo({ ...newLogo, site_url: e.target.value })}
+                  placeholder="https://exemplo.com"
+                />
+              </div>
             </div>
             <FileUpload
               label="Logo"
@@ -252,13 +271,23 @@ const PartnerLogos = () => {
             <CardTitle>Editar Logo</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <Label>Nome do Parceiro</Label>
-              <Input
-                value={editData.nome}
-                onChange={(e) => setEditData({ ...editData, nome: e.target.value })}
-                placeholder="Nome"
-              />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label>Nome do Parceiro</Label>
+                <Input
+                  value={editData.nome}
+                  onChange={(e) => setEditData({ ...editData, nome: e.target.value })}
+                  placeholder="Nome"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label>Site do Parceiro (opcional)</Label>
+                <Input
+                  value={editData.site_url}
+                  onChange={(e) => setEditData({ ...editData, site_url: e.target.value })}
+                  placeholder="https://exemplo.com"
+                />
+              </div>
             </div>
             <FileUpload
               label="Logo"

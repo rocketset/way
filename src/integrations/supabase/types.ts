@@ -1018,6 +1018,7 @@ export type Database = {
           logo_url: string
           nome: string
           ordem: number | null
+          site_url: string | null
         }
         Insert: {
           ativo?: boolean | null
@@ -1027,6 +1028,7 @@ export type Database = {
           logo_url: string
           nome: string
           ordem?: number | null
+          site_url?: string | null
         }
         Update: {
           ativo?: boolean | null
@@ -1036,6 +1038,7 @@ export type Database = {
           logo_url?: string
           nome?: string
           ordem?: number | null
+          site_url?: string | null
         }
         Relationships: []
       }
