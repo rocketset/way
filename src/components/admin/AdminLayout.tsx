@@ -114,6 +114,21 @@ const menuItems = [
       { label: 'Colunistas', path: '/admin/blog/columnists', roles: ['administrador', 'gestor_conteudo'] },
     ]
   },
+  { 
+    icon: Settings, 
+    label: 'Site Way', 
+    path: '/admin/site-settings',
+    roles: ['administrador'],
+    subItems: [
+      { label: 'Configurações Gerais', path: '/admin/site-settings' },
+      { label: 'SEO', path: '/admin/seo' },
+      { label: 'Galeria de Fotos', path: '/admin/gallery' },
+      { label: 'Logos Clientes', path: '/admin/client-logos' },
+      { label: 'Logos Parceiros', path: '/admin/partner-logos' },
+      { label: 'Avaliações Google', path: '/admin/google-reviews' },
+      { label: 'Mídia', path: '/admin/media' },
+    ]
+  },
 
   // Separador 2 — Plataforma
   { 
@@ -147,18 +162,11 @@ const menuItems = [
   { icon: ClipboardList, label: 'Briefings Comerciais', path: '/admin/briefings', roles: ['administrador'] },
   { 
     icon: Settings, 
-    label: 'Configurações', 
-    path: '/admin/google-reviews',
+    label: 'Sistema', 
+    path: '/admin/google-integrations',
     roles: ['administrador'],
     subItems: [
-      { label: 'Site Way', path: '/admin/site-settings' },
-      { label: 'SEO', path: '/admin/seo' },
-      { label: 'Galeria de Fotos', path: '/admin/gallery' },
-      { label: 'Logos Clientes', path: '/admin/client-logos' },
-      { label: 'Logos Parceiros', path: '/admin/partner-logos' },
       { label: 'Integrações Google', path: '/admin/google-integrations' },
-      { label: 'Avaliações Google', path: '/admin/google-reviews' },
-      { label: 'Mídia', path: '/admin/media' },
       { label: 'Permissões', path: '/admin/permissions' },
       { label: 'Usuários', path: '/admin/users' },
     ]
