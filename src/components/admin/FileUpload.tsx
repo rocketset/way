@@ -58,6 +58,7 @@ export default function FileUpload({
         .upload(fileName, file, {
           cacheControl: '3600',
           upsert: false,
+          contentType: file.type || 'image/jpeg',
         });
 
       if (error) throw error;
