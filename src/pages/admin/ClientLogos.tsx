@@ -272,14 +272,14 @@ const ClientLogos = () => {
               <div className="space-y-2">
                 <Label>Case Vinculado (opcional)</Label>
                 <Select
-                  value={newLogo.case_id}
-                  onValueChange={(value) => setNewLogo({ ...newLogo, case_id: value })}
+                  value={newLogo.case_id || "__none__"}
+                  onValueChange={(value) => setNewLogo({ ...newLogo, case_id: value === "__none__" ? "" : value })}
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Selecione um case" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">Nenhum</SelectItem>
+                    <SelectItem value="__none__">Nenhum</SelectItem>
                     {allCases.map((c) => (
                       <SelectItem key={c.id} value={c.id}>
                         {c.titulo}
@@ -352,14 +352,14 @@ const ClientLogos = () => {
               <div className="space-y-2">
                 <Label>Case Vinculado</Label>
                 <Select
-                  value={editData.case_id}
-                  onValueChange={(value) => setEditData({ ...editData, case_id: value })}
+                  value={editData.case_id || "__none__"}
+                  onValueChange={(value) => setEditData({ ...editData, case_id: value === "__none__" ? "" : value })}
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Case vinculado" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">Nenhum</SelectItem>
+                    <SelectItem value="__none__">Nenhum</SelectItem>
                     {allCases.map((c) => (
                       <SelectItem key={c.id} value={c.id}>
                         {c.titulo}
