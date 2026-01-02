@@ -632,7 +632,10 @@ export type Database = {
           criado_em: string
           id: string
           image_url: string
+          object_fit: string | null
+          object_position: string | null
           ordem: number | null
+          row_span: number | null
         }
         Insert: {
           alt_text?: string | null
@@ -641,7 +644,10 @@ export type Database = {
           criado_em?: string
           id?: string
           image_url: string
+          object_fit?: string | null
+          object_position?: string | null
           ordem?: number | null
+          row_span?: number | null
         }
         Update: {
           alt_text?: string | null
@@ -650,7 +656,10 @@ export type Database = {
           criado_em?: string
           id?: string
           image_url?: string
+          object_fit?: string | null
+          object_position?: string | null
           ordem?: number | null
+          row_span?: number | null
         }
         Relationships: []
       }

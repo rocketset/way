@@ -44,8 +44,19 @@ const WhyWay = () => {
   
   // Use dynamic photos from DB if available, otherwise fallback to static
   const galleryPhotos = dynamicPhotos && dynamicPhotos.length > 0 
-    ? dynamicPhotos.map(p => p.image_url) 
-    : staticGalleryPhotos;
+    ? dynamicPhotos 
+    : staticGalleryPhotos.map((url, i) => ({ 
+        image_url: url, 
+        alt_text: `Galeria ${i + 1}`,
+        object_fit: 'cover' as const,
+        object_position: 'center' as const,
+        row_span: 1,
+        ordem: i,
+        ativo: true,
+        id: `static-${i}`,
+        criado_em: '',
+        atualizado_em: ''
+      }));
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
@@ -62,8 +73,6 @@ const WhyWay = () => {
     };
   }, []);
 
-  // Duplicate photos for seamless infinite scroll
-  const allPhotos = [...galleryPhotos, ...galleryPhotos];
   const stats = [{
     number: "190",
     label: "Lojas implantadas"
@@ -166,89 +175,38 @@ const WhyWay = () => {
         <div className="container mx-auto">
           <div className="max-w-7xl mx-auto">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 auto-rows-[200px] md:auto-rows-[250px]">
-              {/* Row 1 */}
-              <div className="col-span-1 md:col-span-2 row-span-1 group relative overflow-hidden rounded-xl border border-border hover:border-primary/50 transition-all duration-500">
-                <img 
-                  src={galleryPhotos[0]} 
-                  alt="Galeria 1" 
-                  className="w-full h-full object-cover object-[center_30%] group-hover:scale-110 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              </div>
-
-              <div className="col-span-1 row-span-1 group relative overflow-hidden rounded-xl border border-border hover:border-primary/50 transition-all duration-500">
-                <img 
-                  src={galleryPhotos[1]} 
-                  alt="Galeria 2" 
-                  className="w-full h-full object-cover object-[center_30%] group-hover:scale-110 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              </div>
-
-              <div className="col-span-1 row-span-1 group relative overflow-hidden rounded-xl border border-border hover:border-primary/50 transition-all duration-500">
-                <img 
-                  src={galleryPhotos[2]} 
-                  alt="Galeria 3" 
-                  className="w-full h-full object-cover object-[center_30%] group-hover:scale-110 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              </div>
-
-              {/* Row 2 */}
-              <div className="col-span-1 row-span-1 group relative overflow-hidden rounded-xl border border-border hover:border-primary/50 transition-all duration-500">
-                <img 
-                  src={galleryPhotos[3]} 
-                  alt="Galeria 4" 
-                  className="w-full h-full object-cover object-[center_30%] group-hover:scale-110 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              </div>
-
-              <div className="col-span-1 row-span-1 group relative overflow-hidden rounded-xl border border-border hover:border-primary/50 transition-all duration-500">
-                <img 
-                  src={galleryPhotos[4]} 
-                  alt="Galeria 5" 
-                  className="w-full h-full object-cover object-[center_30%] group-hover:scale-110 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              </div>
-
-              <div className="col-span-1 md:col-span-2 row-span-1 group relative overflow-hidden rounded-xl border border-border hover:border-primary/50 transition-all duration-500">
-                <img 
-                  src={galleryPhotos[5]} 
-                  alt="Galeria 6" 
-                  className="w-full h-full object-cover object-[center_30%] group-hover:scale-110 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              </div>
-
-              {/* Row 3 */}
-              <div className="col-span-1 md:col-span-2 row-span-1 group relative overflow-hidden rounded-xl border border-border hover:border-primary/50 transition-all duration-500">
-                <img 
-                  src={galleryPhotos[6]} 
-                  alt="Galeria 7" 
-                  className="w-full h-full object-cover object-[center_30%] group-hover:scale-110 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              </div>
-
-              <div className="col-span-1 row-span-1 group relative overflow-hidden rounded-xl border border-border hover:border-primary/50 transition-all duration-500">
-                <img 
-                  src={galleryPhotos[7]} 
-                  alt="Galeria 8" 
-                  className="w-full h-full object-cover object-[center_30%] group-hover:scale-110 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              </div>
-
-              <div className="col-span-1 row-span-1 group relative overflow-hidden rounded-xl border border-border hover:border-primary/50 transition-all duration-500">
-                <img 
-                  src={galleryPhotos[8]} 
-                  alt="Galeria 9" 
-                  className="w-full h-full object-cover object-[center_30%] group-hover:scale-110 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              </div>
+              {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((index) => {
+                const photo = galleryPhotos.find(p => p.ordem === index) || galleryPhotos[index];
+                if (!photo) return null;
+                
+                const isWide = [0, 5, 6, 9].includes(index);
+                const imageUrl = typeof photo === 'string' ? photo : photo.image_url;
+                const altText = typeof photo === 'string' ? `Galeria ${index + 1}` : (photo.alt_text || `Galeria ${index + 1}`);
+                const objectFit = typeof photo === 'string' ? 'cover' : (photo.object_fit || 'cover');
+                const objectPosition = typeof photo === 'string' ? 'center' : (photo.object_position || 'center');
+                const rowSpan = typeof photo === 'string' ? 1 : (photo.row_span || 1);
+                
+                return (
+                  <div 
+                    key={index}
+                    className={`group relative overflow-hidden rounded-xl border border-border hover:border-primary/50 transition-all duration-500
+                      ${isWide ? 'col-span-1 md:col-span-2' : 'col-span-1'}
+                    `}
+                    style={{ gridRow: `span ${rowSpan}` }}
+                  >
+                    <img 
+                      src={imageUrl} 
+                      alt={altText}
+                      className="w-full h-full group-hover:scale-110 transition-transform duration-700"
+                      style={{ 
+                        objectFit: objectFit,
+                        objectPosition: objectPosition === 'top' ? 'top' : objectPosition === 'bottom' ? 'bottom' : 'center 30%'
+                      }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-primary/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
