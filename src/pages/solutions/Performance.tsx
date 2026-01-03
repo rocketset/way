@@ -84,7 +84,10 @@ const Performance = () => {
           <div className="container mx-auto md:px-12 relative z-10 py-[11px] px-[30px]">
             <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
               <div className="space-y-6 md:space-y-8 animate-fade-in">
-                
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 hover:bg-primary/20 hover:scale-105 transition-all duration-300 cursor-pointer">
+                  <Plus className="w-4 h-4 text-primary plus-rotate" />
+                  <span className="text-sm font-medium text-primary">Way.Digital</span>
+                </div>
                 
                 <div className="flex items-start gap-4">
                   <Activity className="w-10 h-10 md:w-12 md:h-12 text-primary flex-shrink-0 mt-1" />
