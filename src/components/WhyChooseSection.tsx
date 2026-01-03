@@ -64,7 +64,7 @@ const WhyChooseSection = ({
                 </div>)}
             </div>
 
-            <p className="text-base max-w-4xl mx-auto leading-relaxed mt-12 text-gray-200 md:text-xl">Com origem no Nordeste e atuação nacional, a Way E-commerce é uma aceleradora de operações digitais especializada em estruturar e escalar negócios no online. Atuamos em toda a jornada da implantação à evolução contínua. Unindo estratégia, tecnologia e performance para gerar crescimento previsível e sustentável.</p>
+            <p className="text-base max-w-4xl mx-auto leading-relaxed mt-12 text-gray-200 md:text-xl">Implantamos, estruturamos e aceleramos operações de e-commerce para indústrias, redes de lojas e varejistas. Atuamos da decisão à execução, conectando estratégia, tecnologia e performance para sustentar a escala.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
