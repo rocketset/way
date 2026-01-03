@@ -16,19 +16,17 @@ const HomeBannerSlider = () => {
         <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 lg:pt-20 lg:pb-10 my-0 py-[48px]">
           <div className="max-w-4xl mx-auto text-center space-y-8 my-[91px]">
             {/* Main Title */}
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-normal text-white leading-[1.2] tracking-tight flex flex-col items-center">
-              <span>E-commerce com método.</span>
-              <span>Escala com performance.</span>
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-normal text-white leading-[1.2] tracking-tight">
+              Estruturamos e aceleramos e-commerces com método e performance.
             </h1>
 
             {/* Subtitle/Description */}
-            <div className="space-y-2">
-              <p className="text-lg sm:text-xl lg:text-2xl font-light leading-relaxed max-w-3xl mx-auto">
-                <span className="text-primary font-semibold">Na Way E-commerce</span>
-                <span className="text-white/90">, Atendemos do pequeno ao enterprise, da implantação à expansão, com estrutura e previsibilidade.</span>
+            <div className="space-y-4">
+              <p className="text-lg sm:text-xl lg:text-2xl font-light leading-relaxed max-w-3xl mx-auto text-white/90">
+                Do pequeno ao enterprise, atuamos da implantação à escala, com tecnologia, decisões estratégicas e foco em crescimento sustentável.
               </p>
-              <p className="text-lg sm:text-xl lg:text-2xl text-primary font-semibold leading-relaxed max-w-3xl mx-auto">
-                Com mais de 190 projetos no Brasil.
+              <p className="text-base sm:text-lg lg:text-xl text-primary font-semibold leading-relaxed max-w-3xl mx-auto border-l-4 border-primary pl-4 italic">
+                Tecnologia não é escolha estética. É decisão estratégica.
               </p>
             </div>
 

@@ -2,7 +2,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CtaResultsSection from "@/components/CtaResultsSection";
 import { Button } from "@/components/ui/button";
-import { Target, TrendingUp, Store, Brain, Network, ArrowRight, Check, Smile, Plus } from "lucide-react";
+import { Target, TrendingUp, Store, Brain, Network, ArrowRight, Check, Plus } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import consultingHero from "@/assets/consulting-hero.png";
@@ -10,46 +10,28 @@ const Consulting = () => {
   const [hoveredService, setHoveredService] = useState<number | null>(null);
   const servicesList = [{
     icon: Target,
-    label: "Estratégia Digital"
-  }, {
-    icon: TrendingUp,
-    label: "Otimização de Conversão"
+    label: "Diagnóstico e Direcionamento Estratégico"
   }, {
     icon: Store,
-    label: "Marketplaces"
-  }, {
-    icon: Brain,
-    label: "Análise de Mercado"
-  }, {
-    icon: Network,
-    label: "Omnichannel"
-  }];
-  const services = [{
-    icon: Target,
-    title: "Estratégia Digital",
-    subtitle: "Planejamento completo para posicionar sua marca no mercado digital",
-    description: "Desenvolvemos estratégias personalizadas que alinham objetivos de negócio com as melhores práticas do mercado digital. Analisamos seu posicionamento atual, identificamos oportunidades e criamos um roadmap detalhado para alcançar seus objetivos de crescimento e consolidação no ambiente online."
+    label: "Plataforma, Integrações e Arquitetura"
   }, {
     icon: TrendingUp,
-    title: "Otimização de Conversão",
-    subtitle: "Análise e melhorias para aumentar as vendas e reduzir o abandono de carrinho",
-    description: "Através de análises detalhadas do comportamento do usuário, testes A/B e otimizações contínuas, aumentamos suas taxas de conversão. Identificamos pontos de fricção na jornada de compra e implementamos melhorias que transformam visitantes em clientes fiéis, maximizando o retorno sobre o investimento."
-  }, {
-    icon: Store,
-    title: "Marketplaces",
-    subtitle: "Estratégias completas para vender nos principais marketplaces do Brasil",
-    description: "Desenvolvemos estratégias especializadas para posicionar e vender seus produtos nos principais marketplaces brasileiros como Mercado Livre, Amazon, Shopee e Magazine Luiza. Otimizamos catálogos, criamos campanhas eficientes, gerenciamos reputação e implementamos processos que maximizam vendas e rentabilidade em cada canal."
+    label: "Performance e Crescimento"
   }, {
     icon: Brain,
-    title: "Análise de Mercado",
-    subtitle: "Inteligência competitiva e insights estratégicos para tomada de decisão",
-    description: "Realizamos estudos aprofundados do seu mercado, concorrência e público-alvo. Utilizamos ferramentas avançadas de business intelligence para fornecer insights acionáveis que orientam decisões estratégicas, identificam tendências e revelam oportunidades de crescimento antes da concorrência."
+    label: "Marketplaces e Expansão de Canais"
   }, {
     icon: Network,
-    title: "Omnichannel",
-    subtitle: "Integração perfeita entre todos os canais de venda e comunicação",
-    description: "Desenvolvemos estratégias omnichannel que conectam todos os pontos de contato com seus clientes de forma integrada e fluida. Sincronizamos lojas físicas, e-commerce, marketplaces, redes sociais e aplicativos para criar uma experiência unificada, permitindo que seus clientes comprem quando, onde e como preferirem, aumentando vendas e satisfação."
+    label: "Estratégia Omnichannel"
   }];
+  const howWeWork = [
+    "Diagnóstico completo da operação, tecnologia, canais e processos",
+    "Definição da plataforma de e-commerce e integrações ideais",
+    "Construção de roadmap estratégico alinhado a metas reais",
+    "Apoio em decisões críticas (tecnologia, parceiros, canais e estrutura)",
+    "Estruturação de processos, times e fluxos operacionais",
+    "Acompanhamento contínuo para ajuste de rota e evolução da operação"
+  ];
   return <div className="min-h-screen bg-background overflow-hidden">
       <Header />
       
@@ -75,8 +57,8 @@ const Consulting = () => {
                 
                 <div className="flex items-start gap-4">
                   <Target className="w-10 h-10 md:w-12 md:h-12 text-primary flex-shrink-0 mt-1" />
-                  <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-primary leading-tight">
-                    Mentoria <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">e Consultoria</span>
+                  <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground leading-tight">
+                    Estratégia, estrutura e decisões certas para <span className="text-primary">escalar o e-commerce.</span>
                   </h1>
                 </div>
                 
@@ -115,30 +97,28 @@ const Consulting = () => {
           
           <div className="container mx-auto px-4 md:px-12 relative z-10">
             <div className="grid lg:grid-cols-2 gap-8 md:gap-12 mb-8 md:mb-12">
-              <div className="space-y-4 md:space-y-6 animate-fade-in">
+              <div className="space-y-4 md:space-y-6 animate-fade-in lg:col-span-2">
                 <div className="flex items-start gap-3">
                   <Plus className="w-6 h-6 md:w-8 md:h-8 text-primary flex-shrink-0 mt-1" />
-                  <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold leading-tight">
-                    Orientação estratégica para impulsionar o crescimento sustentável do seu e-commerce.
-                  </h2>
+                  <div className="space-y-4">
+                    <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold leading-tight">
+                      Como atuamos na prática
+                    </h2>
+                    <p className="text-lg leading-relaxed text-muted-foreground max-w-4xl">
+                      Atuamos lado a lado com empresas para estruturar, organizar e acelerar operações de e-commerce. Apoiamos diretamente na definição da melhor plataforma, integrações e parceiros, sempre alinhados à realidade da operação, aos objetivos do negócio e à capacidade de execução. Mais do que orientar, ajudamos a tomar decisões críticas, estruturar a operação e sustentar a execução com método e acompanhamento contínuo.
+                    </p>
+                  </div>
                 </div>
-              </div>
-              <div className="flex items-center animate-fade-in" style={{
-              animationDelay: '0.2s'
-            }}>
-                <p className="text-lg leading-relaxed text-muted-foreground">
-                  Nossos consultores especializados analisam profundamente seu negócio, identificam oportunidades de crescimento e desenvolvem estratégias personalizadas. Combinamos expertise técnica com visão de mercado para entregar soluções que geram resultados mensuráveis e transformam seu e-commerce em uma máquina de vendas.
-                </p>
               </div>
             </div>
             
-            <div className="flex flex-wrap justify-center gap-3 mb-12">
-              {servicesList.map((service, index) => <div key={index} className="flex items-center gap-2 bg-card border border-border hover:border-primary/50 px-5 py-3 rounded-full hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 hover:scale-110 cursor-pointer group relative overflow-hidden animate-fade-in" style={{
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-12">
+              {howWeWork.map((item, index) => <div key={index} className="flex items-start gap-3 bg-card border border-border hover:border-primary/50 px-5 py-4 rounded-xl hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 cursor-pointer group relative overflow-hidden animate-fade-in" style={{
               animationDelay: `${index * 0.05}s`
             }}>
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500"></div>
-                  <service.icon className="w-4 h-4 text-primary group-hover:rotate-[360deg] transition-transform duration-500 relative z-10" />
-                  <span className="text-sm font-medium relative z-10">{service.label}</span>
+                  <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5 relative z-10" />
+                  <span className="text-sm font-medium relative z-10 text-foreground">{item}</span>
                 </div>)}
             </div>
 
@@ -155,7 +135,7 @@ const Consulting = () => {
           </div>
         </section>
 
-        {/* Services Details */}
+        {/* Services Highlights */}
         <section className="relative py-20 bg-gradient-to-b from-[#1a1a1a] to-[#0a0a0a] overflow-hidden">
           {/* Plus icons animados de fundo */}
           <div className="absolute top-10 left-10 text-foreground/5 text-6xl animate-float" style={{
@@ -172,25 +152,23 @@ const Consulting = () => {
         }}>+</div>
           
           <div className="container mx-auto px-4 md:px-12 relative z-10">
-            <div className="max-w-5xl mx-auto space-y-6 md:space-y-8">
-              {services.map((service, index) => <div key={index} className="group flex flex-col md:flex-row gap-4 md:gap-8 items-start py-6 md:py-8 border-b border-border/30 last:border-b-0 transition-all duration-500 md:hover:translate-x-4 animate-fade-in relative" style={{
+            <div className="text-center mb-12">
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4">Áreas de atuação</h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto">Nossos pilares de consultoria para estruturar e escalar sua operação</p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+              {servicesList.map((service, index) => <div key={index} className="group flex flex-col gap-4 p-6 bg-card border border-border rounded-2xl hover:border-primary/50 transition-all duration-500 hover:shadow-xl hover:shadow-primary/10 animate-fade-in relative overflow-hidden" style={{
               animationDelay: `${index * 0.1}s`
             }} onMouseEnter={() => setHoveredService(index)} onMouseLeave={() => setHoveredService(null)}>
-                  <div className="absolute inset-0 bg-gradient-to-r from-foreground/0 via-foreground/5 to-foreground/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl -mx-4"></div>
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                   
-                  <div className="flex-1 pt-1 relative z-10">
-                    <div className="flex items-start gap-3 mb-3 md:mb-4">
-                      <service.icon className="w-6 h-6 md:w-7 md:h-7 text-primary flex-shrink-0 mt-1 group-hover:scale-110 transition-transform duration-300" />
-                      <h3 className="text-2xl md:text-3xl font-bold text-white group-hover:text-primary transition-all duration-500 md:group-hover:translate-x-2">
-                        {service.title}
-                      </h3>
+                  <div className="relative z-10">
+                    <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 group-hover:scale-110 transition-all duration-300">
+                      <service.icon className="w-6 h-6 text-primary" />
                     </div>
-                    <p className="text-primary font-semibold mb-3 md:mb-4 text-base md:text-lg leading-relaxed">
-                      {service.subtitle}
-                    </p>
-                    <p className="text-muted-foreground leading-relaxed text-sm md:text-base">
-                      {service.description}
-                    </p>
+                    <h3 className="text-lg font-bold text-foreground group-hover:text-primary transition-colors duration-300">
+                      {service.label}
+                    </h3>
                   </div>
                 </div>)}
             </div>
