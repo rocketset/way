@@ -26,6 +26,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { useVagas, Vaga } from "@/hooks/useVagas";
 import { useCreateCandidatura, uploadCurriculo } from "@/hooks/useCandidaturas";
+import { Checkbox } from "@/components/ui/checkbox";
 import { 
   Briefcase, 
   MapPin, 
@@ -38,7 +39,8 @@ import {
   Users,
   Sparkles,
   FileText,
-  Loader2
+  Loader2,
+  Heart
 } from "lucide-react";
 
 const candidaturaSchema = z.object({
@@ -48,8 +50,8 @@ const candidaturaSchema = z.object({
   linkedin_url: z.string().url("URL inválida").optional().or(z.literal("")),
   portfolio_url: z.string().url("URL inválida").optional().or(z.literal("")),
   nivel_experiencia: z.string().min(1, "Selecione o nível de experiência"),
-  pretensao_salarial: z.string().optional(),
   mensagem: z.string().min(10, "Conte um pouco mais sobre você"),
+  lgpd_consent: z.boolean().refine(val => val === true, "Você deve autorizar o uso dos seus dados"),
 });
 
 type CandidaturaForm = z.infer<typeof candidaturaSchema>;
@@ -119,7 +121,6 @@ export default function Carreiras() {
         curriculo_url,
         linkedin_url: data.linkedin_url || null,
         portfolio_url: data.portfolio_url || null,
-        pretensao_salarial: data.pretensao_salarial || null,
       });
 
       setIsFormOpen(false);
@@ -191,9 +192,10 @@ export default function Carreiras() {
               <div className="flex justify-center py-12">
                 <Loader2 className="w-8 h-8 animate-spin text-primary" />
               </div>
-            ) : vagas && vagas.length > 0 ? (
+            ) : (
               <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                {vagas.map((vaga) => (
+                {/* Vagas ativas */}
+                {vagas && vagas.map((vaga) => (
                   <Card 
                     key={vaga.id} 
                     className="group hover:shadow-lg transition-all duration-300 hover:border-primary/50 cursor-pointer"
@@ -241,50 +243,48 @@ export default function Carreiras() {
                     </CardContent>
                   </Card>
                 ))}
-              </div>
-            ) : (
-              <Card className="max-w-lg mx-auto text-center py-12">
-                <CardContent>
-                  <Briefcase className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold mb-2">Nenhuma vaga no momento</h3>
-                  <p className="text-muted-foreground mb-6">
-                    Não temos vagas abertas no momento, mas você pode enviar seu currículo para nosso banco de talentos.
-                  </p>
-                  <Button onClick={() => openForm(null)}>
-                    <FileText className="w-4 h-4 mr-2" />
-                    Enviar currículo | Cadastro reserva
-                  </Button>
-                </CardContent>
-              </Card>
-            )}
 
-            {/* CTA Candidatura Espontânea */}
-            {vagas && vagas.length > 0 && (
-              <div className="mt-12 text-center">
-                <p className="text-muted-foreground mb-4">
-                  Não encontrou a vaga ideal? Envie seu currículo para nosso banco de talentos!
-                </p>
-                <Button variant="outline" size="lg" onClick={() => openForm(null)}>
-                  <FileText className="w-4 h-4 mr-2" />
-                  Candidatura espontânea
-                </Button>
+                {/* Card fixo - Banco de Talentos (sempre visível) */}
+                <Card 
+                  className="group hover:shadow-lg transition-all duration-300 hover:border-primary/50 cursor-pointer border-dashed border-2 bg-gradient-to-br from-primary/5 to-secondary/5"
+                  onClick={() => openForm(null)}
+                >
+                  <CardHeader>
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                        <Heart className="w-5 h-5 text-primary" />
+                      </div>
+                    </div>
+                    <CardTitle className="group-hover:text-primary transition-colors">
+                      Banco de Talentos – Way
+                    </CardTitle>
+                    <CardDescription className="line-clamp-3">
+                      Mesmo quando não houver vagas abertas no momento, você pode enviar seu currículo para o nosso banco de talentos. Estamos sempre em busca de pessoas que queiram crescer e evoluir com a Way.
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <Button className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                      <FileText className="w-4 h-4 mr-2" />
+                      Enviar currículo
+                      <ChevronRight className="w-4 h-4 ml-2" />
+                    </Button>
+                  </CardContent>
+                </Card>
               </div>
             )}
           </div>
         </section>
       </main>
 
-      {/* Modal de Candidatura */}
       <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
         <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="text-2xl">
-              {selectedVaga ? (
-                <>Candidatar-se para: {selectedVaga.titulo}</>
-              ) : (
-                <>Candidatura Espontânea</>
-              )}
+              Faça parte do time Way
             </DialogTitle>
+            <p className="text-muted-foreground mt-2">
+              Estamos sempre em busca de pessoas que queiram crescer, aprender e construir operações digitais de alto nível com a gente.
+            </p>
           </DialogHeader>
 
           {selectedVaga && (
@@ -396,16 +396,7 @@ export default function Carreiras() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="pretensao_salarial">Pretensão salarial (opcional)</Label>
-              <Input
-                id="pretensao_salarial"
-                placeholder="Ex: R$ 5.000 - R$ 7.000"
-                {...register("pretensao_salarial")}
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="curriculo">Currículo (PDF)</Label>
+              <Label htmlFor="curriculo">Currículo * (PDF, DOC ou DOCX – máx. 10MB)</Label>
               <div className="flex items-center gap-4">
                 <Input
                   id="curriculo"
@@ -423,16 +414,34 @@ export default function Carreiras() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="mensagem">Por que quer trabalhar conosco? *</Label>
+              <Label htmlFor="mensagem">Por que quer fazer parte da Way? *</Label>
               <Textarea
                 id="mensagem"
-                placeholder="Conte um pouco sobre você, sua experiência e por que gostaria de fazer parte do nosso time..."
+                placeholder="Conte um pouco sobre você, sua experiência, seus objetivos profissionais e por que acredita que faz sentido crescer junto com a Way."
                 rows={4}
                 {...register("mensagem")}
               />
               {errors.mensagem && (
                 <p className="text-sm text-destructive">{errors.mensagem.message}</p>
               )}
+            </div>
+
+            <div className="flex items-start space-x-3 p-4 bg-muted/50 rounded-lg">
+              <Checkbox
+                id="lgpd_consent"
+                onCheckedChange={(checked) => setValue("lgpd_consent", checked === true)}
+              />
+              <div className="space-y-1">
+                <label 
+                  htmlFor="lgpd_consent" 
+                  className="text-sm leading-relaxed cursor-pointer"
+                >
+                  Autorizo o uso dos meus dados pessoais pela Way, exclusivamente para fins de contato e processos de recrutamento e seleção, conforme a LGPD (Lei nº 13.709/2018).
+                </label>
+                {errors.lgpd_consent && (
+                  <p className="text-sm text-destructive">{errors.lgpd_consent.message}</p>
+                )}
+              </div>
             </div>
 
             <Button 
