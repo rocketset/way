@@ -39,12 +39,6 @@ const HomeBannerSlider = () => {
               </Button>
             </div>
 
-            {/* Social Proof Text */}
-            <div className="pt-8">
-              <p className="text-sm sm:text-base text-primary font-bold tracking-wider">
-                + DE 700 EMPRESAS ATENDIDAS POR TODO O BRASIL
-              </p>
-            </div>
 
             {/* Clients Carousel */}
             <div className="pt-6 my-0">
