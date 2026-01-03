@@ -69,7 +69,7 @@ const Performance = () => {
   return <div className="min-h-screen bg-background overflow-hidden">
       <Header />
       
-      <main className="pt-20 pb-0">
+      <main className="pt-28 pb-0">
         {/* Hero Section */}
         <section className="mb-8 relative">
           {/* Animated Decorative Plus Icons with floating effect */}
