@@ -176,7 +176,7 @@ const Consulting = () => {
               <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4">Áreas de atuação</h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">Nossos pilares de consultoria para estruturar e escalar sua operação</p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
               {areasAtuacao.map((area, index) => <div key={index} className="group flex flex-col gap-4 p-6 bg-card border border-border rounded-2xl hover:border-primary/50 transition-all duration-500 hover:shadow-xl hover:shadow-primary/10 animate-fade-in relative overflow-hidden" style={{
               animationDelay: `${index * 0.1}s`
             }} onMouseEnter={() => setHoveredService(index)} onMouseLeave={() => setHoveredService(null)}>
