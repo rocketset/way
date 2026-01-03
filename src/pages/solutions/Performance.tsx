@@ -69,9 +69,9 @@ const Performance = () => {
   return <div className="min-h-screen bg-background overflow-hidden">
       <Header />
       
-      <main className="pt-24 pb-0 py-[102px]">
+      <main className="pt-20 pb-0">
         {/* Hero Section */}
-        <section className="mb-16 relative">
+        <section className="mb-8 relative">
           {/* Animated Decorative Plus Icons with floating effect */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-10">
             <Plus className="absolute top-10 left-10 w-20 h-20 text-primary animate-[spin_20s_linear_infinite]" />
@@ -127,7 +127,7 @@ const Performance = () => {
         </section>
 
         {/* Content Banner Section */}
-        <section className="py-16 mb-16 relative">
+        <section className="py-8 mb-8 relative">
           <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-transparent"></div>
           
           <div className="container mx-auto px-4 md:px-12 relative z-10">
