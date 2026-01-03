@@ -300,7 +300,7 @@ const Implementation = () => {
                   <a href="https://api.whatsapp.com/message/5AGVY5WZR56KA1?autoload=1&app_absent=0" className="relative z-10 flex items-center gap-2">
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
                     <Plus className="w-5 h-5 group-hover:rotate-[360deg] transition-transform duration-500" />
-                    Fale com um especialista
+                    Fale agora com um consultor
                     <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
                   </a>
                 </Button>
