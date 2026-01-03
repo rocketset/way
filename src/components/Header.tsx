@@ -86,7 +86,7 @@ const Header = () => {
     isClient: false
   }, {
     label: "Way Academy",
-    path: "/admin/auth",
+    path: "/auth/login",
     isExternal: false,
     isClient: true
   }, {
