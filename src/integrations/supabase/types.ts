@@ -1193,6 +1193,51 @@ export type Database = {
         }
         Relationships: []
       }
+      menu_visibility: {
+        Row: {
+          ativo: boolean
+          atualizado_em: string
+          criado_em: string
+          id: string
+          is_separator: boolean
+          menu_icon: string | null
+          menu_key: string
+          menu_label: string
+          menu_path: string | null
+          ordem: number
+          parent_key: string | null
+          roles: string[]
+        }
+        Insert: {
+          ativo?: boolean
+          atualizado_em?: string
+          criado_em?: string
+          id?: string
+          is_separator?: boolean
+          menu_icon?: string | null
+          menu_key: string
+          menu_label: string
+          menu_path?: string | null
+          ordem?: number
+          parent_key?: string | null
+          roles?: string[]
+        }
+        Update: {
+          ativo?: boolean
+          atualizado_em?: string
+          criado_em?: string
+          id?: string
+          is_separator?: boolean
+          menu_icon?: string | null
+          menu_key?: string
+          menu_label?: string
+          menu_path?: string | null
+          ordem?: number
+          parent_key?: string | null
+          roles?: string[]
+        }
+        Relationships: []
+      }
       notifications: {
         Row: {
           avatar_url: string | null
