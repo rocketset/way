@@ -133,6 +133,7 @@ const menuItems = [
       { label: 'Integrações Google', path: '/admin/google-integrations' },
       { label: 'Permissões', path: '/admin/permissions' },
       { label: 'Usuários', path: '/admin/users' },
+      { label: 'Visibilidade Menu', path: '/admin/menu-visibility' },
     ]
   },
   { icon: CheckSquare, label: 'Curadoria', path: '/admin/curation', roles: ['administrador', 'gestor_conteudo'] },

@@ -91,6 +91,7 @@ import PopupsList from "./pages/admin/popups/List";
 import PopupEditor from "./pages/admin/popups/Editor";
 import PopupLeads from "./pages/admin/popups/Leads";
 import LeadsKanban from "./pages/admin/LeadsKanban";
+import MenuVisibility from "./pages/admin/MenuVisibility";
 import { PopupDisplay } from "./components/PopupDisplay";
 
 // Configuração do React Query
@@ -218,6 +219,9 @@ const App = () => (
             
             {/* SEO */}
             <Route path="seo" element={<SEO />} />
+            
+            {/* Visibilidade do Menu */}
+            <Route path="menu-visibility" element={<MenuVisibility />} />
             
             {/* Popups */}
             <Route path="popups" element={<PopupsList />} />
