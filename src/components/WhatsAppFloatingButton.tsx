@@ -5,7 +5,7 @@ const WhatsAppFloatingButton = () => {
 
   return (
     <a
-      href="https://wa.me/message/5AGVY5WZR56KA1"
+      href="https://api.whatsapp.com/message/5AGVY5WZR56KA1?autoload=1&app_absent=0"
       target="_blank"
       rel="noopener noreferrer"
       className="fixed bottom-6 right-6 z-50 group"
