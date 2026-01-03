@@ -30,9 +30,9 @@ const SolutionsSection = () => {
   }, {
     icon: ShoppingCart,
     badge: "Way.Tech",
-    title: "Implantação e Desenvolvimento",
-    subtitle: "Do planejamento estratégico à integração com marketplaces",
-    description: "Estruturamos, migramos e desenvolvemos soluções personalizadas para que seu e-commerce nasça forte e já pronto para escalar. Conectamos todos os seus canais de venda para impulsionar o crescimento do seu negócio.",
+    title: "Implantação, Desenvolvimento e Migração",
+    subtitle: "Arquitetura e execução para escalar o e-commerce",
+    description: "Implantamos, desenvolvemos e migramos operações digitais completas, estruturando integrações, automações e canais de venda para sustentar crescimento contínuo.",
     services: [{
       icon: ShoppingCart,
       label: "E-commerce"
@@ -40,14 +40,17 @@ const SolutionsSection = () => {
       icon: Globe,
       label: "Desenvolvimento Web"
     }, {
-      icon: MessageCircle,
-      label: "Automações de Whatsapp"
-    }, {
-      icon: Bot,
-      label: "CRM e automações com I.A"
+      icon: Plug,
+      label: "Migração de Plataformas"
     }, {
       icon: Plug,
       label: "Integrações"
+    }, {
+      icon: MessageCircle,
+      label: "Automações de WhatsApp"
+    }, {
+      icon: Bot,
+      label: "CRM e Automações com IA"
     }, {
       icon: Store,
       label: "Marketplaces"
@@ -118,14 +121,23 @@ const SolutionsSection = () => {
           <h2 className="text-4xl md:text-5xl font-bold mb-4 animate-fade-in" style={{
           animationDelay: '0.1s'
         }}>
-            <span className="text-foreground">Quer resultados de verdade?</span>
+            <span className="text-foreground">Soluções para estruturar</span>
             <br />
-            <span className="gradient-text">Da implantação à performance.</span>
+            <span className="gradient-text">a operação digital como um todo.</span>
           </h2>
           
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto animate-fade-in" style={{
+          <p className="text-lg text-muted-foreground max-w-3xl mx-auto animate-fade-in" style={{
           animationDelay: '0.2s'
-        }}>Temos 3 hubs integrados para transformar seu e-commerce em uma operação de alta performance.</p>
+        }}>A Way executa projetos que vão além do site. Implantamos, desenvolvemos e evoluímos operações de e-commerce, conectando plataforma, integrações, automações, CRM e marketplaces em uma estrutura única, sólida e preparada para escalar.</p>
+          
+          {/* Frase de autoridade */}
+          <div className="mt-6 animate-fade-in" style={{
+          animationDelay: '0.25s'
+        }}>
+            <p className="text-xl md:text-2xl font-bold text-primary italic">
+              "Tecnologia não é escolha estética. É decisão estratégica."
+            </p>
+          </div>
           
           <div className="mt-8 animate-fade-in" style={{
           animationDelay: '0.3s'
