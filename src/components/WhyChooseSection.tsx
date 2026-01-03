@@ -8,7 +8,7 @@ const WhyChooseSection = ({
   className = ""
 }: WhyChooseSectionProps) => {
   const stats = [{
-    number: "190",
+    number: "+190",
     label: "Lojas implantadas"
   }, {
     number: "1 ano",
