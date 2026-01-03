@@ -84,12 +84,15 @@ const Header = () => {
     path: "/carreiras",
     isExternal: false,
     isClient: false
-  }, {
-    label: "Way Academy",
-    path: "/auth/login",
-    isExternal: false,
-    isClient: true
-  }, {
+  }, 
+  // Way Academy temporariamente desativado
+  // {
+  //   label: "Way Academy",
+  //   path: "/auth/login",
+  //   isExternal: false,
+  //   isClient: true
+  // }, 
+  {
     label: "Relatórios e Guias",
     path: "/clientes/relatorios-guias",
     isExternal: false,
