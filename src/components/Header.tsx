@@ -240,7 +240,7 @@ const Header = () => {
               
             <Button onClick={() => handleNavClick(navItems.find(item => item.id === "contato")!)} className="relative bg-primary text-background font-medium px-5 py-2.5 hover:bg-primary/90 transition-all duration-300 rounded-lg group">
               <span className="flex items-center gap-2">
-                VAMOS CONVERSAR!
+                Entrar em contato   
                 <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
               </span>
             </Button>
