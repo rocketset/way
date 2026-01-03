@@ -1,11 +1,20 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Switch } from '@/components/ui/switch';
 import { Badge } from '@/components/ui/badge';
-import { Loader2, Shield, Lock, Eye, Edit, Trash2, Plus } from 'lucide-react';
-import { useRolePermissions } from '@/hooks/useRolePermissions';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Loader2, Shield, Lock, Eye, Edit, Trash2, Plus, UserPlus, RefreshCw } from 'lucide-react';
+import { useRolePermissions, ALL_MODULES, ALL_PERMISSIONS } from '@/hooks/useRolePermissions';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { toast } from 'sonner';
+import { supabase } from '@/integrations/supabase/client';
+import { Database } from '@/integrations/supabase/types';
+
+type AppRole = Database["public"]["Enums"]["app_role"];
 
 const roleLabels: Record<string, string> = {
   administrador: 'Administrador',
@@ -19,6 +28,12 @@ const moduloLabels: Record<string, string> = {
   blog: 'Blog',
   cases: 'Cases',
   academy: 'Academy',
+  landing_pages: 'Landing Pages',
+  popups: 'Popups',
+  briefings: 'Briefings',
+  carreiras: 'Carreiras',
+  configuracoes: 'Configurações',
+  media: 'Mídia',
 };
 
 const permissaoIcons: Record<string, any> = {
@@ -35,28 +50,92 @@ const permissaoLabels: Record<string, string> = {
   excluir: 'Excluir',
 };
 
+// Roles disponíveis no sistema (do enum do banco)
+const AVAILABLE_ROLES: AppRole[] = ['administrador', 'gestor_conteudo', 'colunista', 'cliente'];
+
 export default function Permissions() {
-  const { permissions, isLoading, updatePermission } = useRolePermissions();
-  const [activeRole, setActiveRole] = useState<string>('administrador');
+  const { permissions, isLoading, updatePermission, createPermission, ensureAllPermissionsExist } = useRolePermissions();
+  const [activeRole, setActiveRole] = useState<AppRole>('administrador');
+  const [isInitializing, setIsInitializing] = useState(false);
+  const [newRoleDialog, setNewRoleDialog] = useState(false);
 
-  // Agrupar permissões por role
-  const permissionsByRole = permissions.reduce((acc, perm) => {
-    if (!acc[perm.role]) {
-      acc[perm.role] = [];
-    }
-    acc[perm.role].push(perm);
-    return acc;
-  }, {} as Record<string, typeof permissions>);
+  // Gerar matriz completa de permissões para cada role
+  const generateFullPermissionMatrix = (role: AppRole) => {
+    const existingPerms = permissions.filter(p => p.role === role);
+    const permissionMap = new Map(
+      existingPerms.map(p => [`${p.modulo}-${p.permissao}`, p])
+    );
 
-  // Agrupar por módulo dentro da role
-  const groupByModule = (perms: typeof permissions) => {
-    return perms.reduce((acc, perm) => {
-      if (!acc[perm.modulo]) {
-        acc[perm.modulo] = [];
+    const matrix: Record<string, Array<{
+      id: string | null;
+      modulo: string;
+      permissao: string;
+      ativo: boolean;
+      exists: boolean;
+    }>> = {};
+
+    for (const modulo of ALL_MODULES) {
+      matrix[modulo] = [];
+      for (const permissao of ALL_PERMISSIONS) {
+        const key = `${modulo}-${permissao}`;
+        const existing = permissionMap.get(key);
+        
+        matrix[modulo].push({
+          id: existing?.id || null,
+          modulo,
+          permissao,
+          ativo: existing?.ativo || false,
+          exists: !!existing,
+        });
       }
-      acc[perm.modulo].push(perm);
-      return acc;
-    }, {} as Record<string, typeof permissions>);
+    }
+
+    return matrix;
+  };
+
+  // Inicializar permissões faltantes para o role ativo
+  const handleInitializePermissions = async () => {
+    setIsInitializing(true);
+    try {
+      await ensureAllPermissionsExist(activeRole);
+      toast.success(`Permissões inicializadas para ${roleLabels[activeRole]}`);
+    } catch (error) {
+      console.error(error);
+      toast.error('Erro ao inicializar permissões');
+    } finally {
+      setIsInitializing(false);
+    }
+  };
+
+  // Inicializar todas as permissões para todos os roles
+  const handleInitializeAllRoles = async () => {
+    setIsInitializing(true);
+    try {
+      for (const role of AVAILABLE_ROLES) {
+        await ensureAllPermissionsExist(role);
+      }
+      toast.success('Permissões inicializadas para todos os perfis');
+    } catch (error) {
+      console.error(error);
+      toast.error('Erro ao inicializar permissões');
+    } finally {
+      setIsInitializing(false);
+    }
+  };
+
+  // Toggle de permissão (cria se não existir)
+  const handleTogglePermission = async (
+    id: string | null,
+    modulo: string,
+    permissao: string,
+    currentValue: boolean,
+    exists: boolean
+  ) => {
+    if (exists && id) {
+      updatePermission({ id, ativo: !currentValue });
+    } else {
+      createPermission({ role: activeRole, modulo, permissao, ativo: true });
+    }
   };
 
   if (isLoading) {
@@ -76,49 +155,134 @@ export default function Permissions() {
             Configure as permissões de cada nível de acesso do sistema
           </p>
         </div>
-        <Shield className="h-8 w-8 text-primary" />
+        <div className="flex items-center gap-2">
+          <Button
+            variant="outline"
+            onClick={handleInitializeAllRoles}
+            disabled={isInitializing}
+          >
+            {isInitializing ? (
+              <Loader2 className="h-4 w-4 animate-spin mr-2" />
+            ) : (
+              <RefreshCw className="h-4 w-4 mr-2" />
+            )}
+            Inicializar Todos
+          </Button>
+          <Dialog open={newRoleDialog} onOpenChange={setNewRoleDialog}>
+            <DialogTrigger asChild>
+              <Button>
+                <UserPlus className="h-4 w-4 mr-2" />
+                Novo Perfil
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Criar Novo Perfil de Usuário</DialogTitle>
+                <DialogDescription>
+                  Os perfis de usuário são definidos no banco de dados como um enum.
+                  Para adicionar um novo perfil, é necessário uma migração no banco.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="py-4 space-y-4">
+                <div className="bg-muted p-4 rounded-lg">
+                  <p className="text-sm font-medium mb-2">Perfis Atuais:</p>
+                  <div className="flex flex-wrap gap-2">
+                    {AVAILABLE_ROLES.map((role) => (
+                      <Badge key={role} variant="outline">
+                        {roleLabels[role] || role}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+                <div className="bg-amber-50 dark:bg-amber-950 border border-amber-200 dark:border-amber-800 p-4 rounded-lg">
+                  <p className="text-sm text-amber-800 dark:text-amber-200">
+                    <strong>Nota:</strong> Para adicionar um novo perfil (role), é necessário:
+                  </p>
+                  <ol className="list-decimal list-inside mt-2 text-sm text-amber-700 dark:text-amber-300 space-y-1">
+                    <li>Executar uma migração SQL para adicionar o novo valor ao enum</li>
+                    <li>Atualizar o código para incluir o novo perfil</li>
+                    <li>Configurar as permissões do novo perfil</li>
+                  </ol>
+                </div>
+              </div>
+              <DialogFooter>
+                <Button variant="outline" onClick={() => setNewRoleDialog(false)}>
+                  Entendi
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+          <Shield className="h-8 w-8 text-primary" />
+        </div>
       </div>
 
       <Card>
         <CardHeader>
           <CardTitle>Matriz de Permissões</CardTitle>
           <CardDescription>
-            Ative ou desative funcionalidades específicas para cada perfil de usuário
+            Ative ou desative funcionalidades específicas para cada perfil de usuário.
+            Todas as seções são exibidas para todos os perfis.
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Tabs value={activeRole} onValueChange={setActiveRole}>
+          <Tabs value={activeRole} onValueChange={(v) => setActiveRole(v as AppRole)}>
             <TabsList className="grid w-full grid-cols-4">
-              {Object.keys(permissionsByRole).map((role) => (
+              {AVAILABLE_ROLES.map((role) => (
                 <TabsTrigger key={role} value={role}>
                   {roleLabels[role] || role}
                 </TabsTrigger>
               ))}
             </TabsList>
 
-            {Object.entries(permissionsByRole).map(([role, perms]) => {
-              const moduleGroups = groupByModule(perms);
+            {AVAILABLE_ROLES.map((role) => {
+              const permissionMatrix = generateFullPermissionMatrix(role);
+              const allPermsForRole = Object.values(permissionMatrix).flat();
+              const activeCount = allPermsForRole.filter(p => p.ativo).length;
+              const totalCount = allPermsForRole.length;
+              const missingCount = allPermsForRole.filter(p => !p.exists).length;
               
               return (
                 <TabsContent key={role} value={role} className="space-y-6">
-                  <div className="flex items-center gap-2 mb-4">
-                    <Badge variant="outline" className="text-sm">
-                      {roleLabels[role] || role}
-                    </Badge>
-                    <span className="text-sm text-muted-foreground">
-                      {perms.filter(p => p.ativo).length} de {perms.length} permissões ativas
-                    </span>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2">
+                      <Badge variant="outline" className="text-sm">
+                        {roleLabels[role] || role}
+                      </Badge>
+                      <span className="text-sm text-muted-foreground">
+                        {activeCount} de {totalCount} permissões ativas
+                      </span>
+                      {missingCount > 0 && (
+                        <Badge variant="secondary" className="text-xs">
+                          {missingCount} não configuradas
+                        </Badge>
+                      )}
+                    </div>
+                    {missingCount > 0 && (
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={handleInitializePermissions}
+                        disabled={isInitializing}
+                      >
+                        {isInitializing ? (
+                          <Loader2 className="h-3 w-3 animate-spin mr-1" />
+                        ) : (
+                          <Plus className="h-3 w-3 mr-1" />
+                        )}
+                        Criar Permissões Faltantes
+                      </Button>
+                    )}
                   </div>
 
-                  {Object.entries(moduleGroups).map(([modulo, modulePerms]) => (
+                  {Object.entries(permissionMatrix).map(([modulo, modulePerms]) => (
                     <Card key={modulo}>
-                      <CardHeader>
+                      <CardHeader className="py-4">
                         <CardTitle className="text-lg flex items-center gap-2">
                           <Lock className="h-4 w-4" />
                           {moduloLabels[modulo] || modulo}
                         </CardTitle>
                       </CardHeader>
-                      <CardContent>
+                      <CardContent className="pt-0">
                         <Table>
                           <TableHeader>
                             <TableRow>
@@ -132,10 +296,15 @@ export default function Permissions() {
                               const Icon = permissaoIcons[perm.permissao] || Shield;
                               
                               return (
-                                <TableRow key={perm.id}>
+                                <TableRow key={`${modulo}-${perm.permissao}`} className={!perm.exists ? 'opacity-60' : ''}>
                                   <TableCell className="flex items-center gap-2">
                                     <Icon className="h-4 w-4 text-muted-foreground" />
                                     {permissaoLabels[perm.permissao] || perm.permissao}
+                                    {!perm.exists && (
+                                      <Badge variant="outline" className="text-xs ml-2">
+                                        Não configurada
+                                      </Badge>
+                                    )}
                                   </TableCell>
                                   <TableCell>
                                     <Badge variant={perm.ativo ? 'default' : 'secondary'}>
@@ -145,8 +314,14 @@ export default function Permissions() {
                                   <TableCell className="text-right">
                                     <Switch
                                       checked={perm.ativo}
-                                      onCheckedChange={(checked) => 
-                                        updatePermission({ id: perm.id, ativo: checked })
+                                      onCheckedChange={() => 
+                                        handleTogglePermission(
+                                          perm.id,
+                                          perm.modulo,
+                                          perm.permissao,
+                                          perm.ativo,
+                                          perm.exists
+                                        )
                                       }
                                     />
                                   </TableCell>
