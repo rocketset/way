@@ -163,6 +163,16 @@ const menuItems = [
   { icon: Mail, label: 'Solicitações', path: '/admin/contacts', roles: ['administrador'] },
   { icon: ClipboardList, label: 'Briefings Comerciais', path: '/admin/briefings', roles: ['administrador'] },
   { 
+    icon: Users, 
+    label: 'Carreiras', 
+    path: '/admin/carreiras/vagas',
+    roles: ['administrador', 'gestor_conteudo'],
+    subItems: [
+      { label: 'Vagas', path: '/admin/carreiras/vagas' },
+      { label: 'Candidatos', path: '/admin/carreiras/candidatos' },
+    ]
+  },
+  { 
     icon: Settings, 
     label: 'Sistema', 
     path: '/admin/google-integrations',

@@ -26,6 +26,7 @@ import Privacy from "./pages/Privacy";
 import NotFound from "./pages/NotFound";
 import ClientReports from "./pages/ClientReports";
 import ClientHelp from "./pages/ClientHelp";
+import Carreiras from "./pages/Carreiras";
 
 // Páginas de Soluções
 import Implementation from "./pages/solutions/Implementation";
@@ -84,6 +85,8 @@ import PartnerLogos from "./pages/admin/PartnerLogos";
 import SEO from "./pages/admin/SEO";
 import FormSubjects from "./pages/admin/FormSubjects";
 import FormBuilder from "./pages/admin/FormBuilder";
+import AdminVagas from "./pages/admin/carreiras/Vagas";
+import AdminCandidatos from "./pages/admin/carreiras/Candidatos";
 
 // Configuração do React Query
 const queryClient = new QueryClient();
@@ -140,6 +143,9 @@ const App = () => (
           
           {/* Rota pública de Briefing */}
           <Route path="/briefing" element={<Briefing />} />
+          
+          {/* Rota pública de Carreiras */}
+          <Route path="/carreiras" element={<Carreiras />} />
           
           {/* Rotas administrativas protegidas */}
           <Route path="/admin" element={<AdminLayout />}>
@@ -211,6 +217,10 @@ const App = () => (
             
             {/* Construtor de Formulários */}
             <Route path="form-builder" element={<FormBuilder />} />
+            
+            {/* Carreiras */}
+            <Route path="carreiras/vagas" element={<AdminVagas />} />
+            <Route path="carreiras/candidatos" element={<AdminCandidatos />} />
           </Route>
           
           {/* Rota 404 - deve ser sempre a última */}

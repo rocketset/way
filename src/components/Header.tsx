@@ -80,6 +80,11 @@ const Header = () => {
     isExternal: false,
     isClient: false
   }, {
+    label: "Carreiras",
+    path: "/carreiras",
+    isExternal: false,
+    isClient: false
+  }, {
     label: "Relatórios e Guias",
     path: "/clientes/relatorios-guias",
     isExternal: false,
