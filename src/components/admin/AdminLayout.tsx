@@ -1,10 +1,11 @@
 // Layout principal do painel administrativo
 // Inclui sidebar de navegação com hover para expandir e submenus colapsáveis
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { useNavigate, Outlet, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
+import { useDynamicMenu, DynamicMenuItem } from '@/hooks/useDynamicMenu';
 import {
   LayoutDashboard,
   FileText,
@@ -30,6 +31,7 @@ import {
   FolderOpen,
   Settings,
   ClipboardList,
+  type LucideIcon,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -57,119 +59,53 @@ import logoWayLight from '@/assets/logo-way-light.png';
 import logoWayDark from '@/assets/logo-way-dark.png';
 import { ThemeSelector } from './ThemeSelector';
 
-// Definição dos itens do menu lateral com permissões
-const menuItems = [
-  // Menu Principal
-  { 
-    icon: LayoutDashboard, 
-    label: 'Dashboard', 
-    path: '/admin/member-dashboard',
-    roles: ['membro', 'cliente'],
-  },
-  { 
-    icon: LayoutDashboard, 
-    label: 'Dashboard', 
-    path: '/admin',
-    roles: ['administrador', 'gestor_conteudo', 'colunista']
-  },
+// Menu fallback (usado quando o banco não está disponível)
+const FALLBACK_MENU: DynamicMenuItem[] = [
+  { icon: LayoutDashboard, label: 'Dashboard', path: '/admin/member-dashboard', roles: ['membro', 'cliente'] },
+  { icon: LayoutDashboard, label: 'Dashboard', path: '/admin', roles: ['administrador', 'gestor_conteudo', 'colunista'] },
   { icon: Mail, label: 'Leads', path: '/admin/leads', roles: ['administrador', 'gestor_conteudo'] },
-  { 
-    icon: FileText, 
-    label: 'Blog Way', 
-    path: '/admin/blog-way',
-    roles: ['colunista', 'cliente'],
-  },
-  { 
-    icon: Heart, 
-    label: 'Guia de Boas Práticas', 
-    path: '/admin/conduct-guide',
-    roles: ['administrador', 'gestor_conteudo', 'colunista', 'membro', 'cliente'],
-  },
-  
-  // Separador 1 — Site Way
-  { 
-    separator: true,
-    label: 'Site Way',
-    roles: ['administrador', 'gestor_conteudo', 'colunista']
-  },
-  { 
-    icon: Briefcase, 
-    label: 'Gerenciar Cases', 
-    path: '/admin/cases/list',
-    roles: ['administrador', 'gestor_conteudo'],
-    subItems: [
-      { label: 'Lista', path: '/admin/cases/list' },
-      { label: 'Categorias', path: '/admin/cases/categories' },
-      { label: 'Tags', path: '/admin/cases/tags' },
-    ]
-  },
-  { 
-    icon: FileText, 
-    label: 'Gerenciar Blog', 
-    path: '/admin/blog/posts',
-    roles: ['administrador', 'gestor_conteudo', 'colunista'],
-    subItems: [
-      { label: 'Posts', path: '/admin/blog/posts' },
-      { label: 'Categorias', path: '/admin/blog/categories', roles: ['administrador', 'gestor_conteudo'] },
-      { label: 'Tags', path: '/admin/blog/tags', roles: ['administrador', 'gestor_conteudo'] },
-      { label: 'Colunistas', path: '/admin/blog/columnists', roles: ['administrador', 'gestor_conteudo'] },
-    ]
-  },
-  { 
-    icon: Settings, 
-    label: 'Configurações', 
-    path: '/admin/site-settings',
-    roles: ['administrador'],
-    subItems: [
-      { label: 'Configurações Gerais', path: '/admin/site-settings' },
-      { label: 'SEO', path: '/admin/seo' },
-      { label: 'Construtor de Formulários', path: '/admin/form-builder' },
-      { label: 'Popups', path: '/admin/popups' },
-      { label: 'Galeria de Fotos', path: '/admin/gallery' },
-      { label: 'Logos Clientes', path: '/admin/client-logos' },
-      { label: 'Logos Parceiros', path: '/admin/partner-logos' },
-      { label: 'Avaliações Google', path: '/admin/google-reviews' },
-      { label: 'Mídia', path: '/admin/media' },
-      { label: 'Integrações Google', path: '/admin/google-integrations' },
-      { label: 'Permissões', path: '/admin/permissions' },
-      { label: 'Usuários', path: '/admin/users' },
-      { label: 'Visibilidade Menu', path: '/admin/menu-visibility' },
-    ]
-  },
+  { icon: FileText, label: 'Blog Way', path: '/admin/blog-way', roles: ['colunista', 'cliente'] },
+  { icon: Heart, label: 'Guia de Boas Práticas', path: '/admin/conduct-guide', roles: ['administrador', 'gestor_conteudo', 'colunista', 'membro', 'cliente'] },
+  { separator: true, label: 'Site Way', path: '', roles: ['administrador', 'gestor_conteudo', 'colunista'] },
+  { icon: Briefcase, label: 'Gerenciar Cases', path: '/admin/cases/list', roles: ['administrador', 'gestor_conteudo'], subItems: [
+    { label: 'Lista', path: '/admin/cases/list' },
+    { label: 'Categorias', path: '/admin/cases/categories' },
+    { label: 'Tags', path: '/admin/cases/tags' },
+  ]},
+  { icon: FileText, label: 'Gerenciar Blog', path: '/admin/blog/posts', roles: ['administrador', 'gestor_conteudo', 'colunista'], subItems: [
+    { label: 'Posts', path: '/admin/blog/posts' },
+    { label: 'Categorias', path: '/admin/blog/categories', roles: ['administrador', 'gestor_conteudo'] },
+    { label: 'Tags', path: '/admin/blog/tags', roles: ['administrador', 'gestor_conteudo'] },
+    { label: 'Colunistas', path: '/admin/blog/columnists', roles: ['administrador', 'gestor_conteudo'] },
+  ]},
+  { icon: Settings, label: 'Configurações', path: '/admin/site-settings', roles: ['administrador'], subItems: [
+    { label: 'Configurações Gerais', path: '/admin/site-settings' },
+    { label: 'SEO', path: '/admin/seo' },
+    { label: 'Construtor de Formulários', path: '/admin/form-builder' },
+    { label: 'Popups', path: '/admin/popups' },
+    { label: 'Galeria de Fotos', path: '/admin/gallery' },
+    { label: 'Logos Clientes', path: '/admin/client-logos' },
+    { label: 'Logos Parceiros', path: '/admin/partner-logos' },
+    { label: 'Avaliações Google', path: '/admin/google-reviews' },
+    { label: 'Mídia', path: '/admin/media' },
+    { label: 'Integrações Google', path: '/admin/google-integrations' },
+    { label: 'Permissões', path: '/admin/permissions' },
+    { label: 'Usuários', path: '/admin/users' },
+    { label: 'Visibilidade Menu', path: '/admin/menu-visibility' },
+  ]},
   { icon: CheckSquare, label: 'Curadoria', path: '/admin/curation', roles: ['administrador', 'gestor_conteudo'] },
-  { 
-    icon: Users, 
-    label: 'Carreiras', 
-    path: '/admin/carreiras/vagas',
-    roles: ['administrador', 'gestor_conteudo'],
-    subItems: [
-      { label: 'Vagas', path: '/admin/carreiras/vagas' },
-      { label: 'Candidatos', path: '/admin/carreiras/candidatos' },
-    ]
-  },
-
-  // Separador 2 — Plataforma
-  { 
-    separator: true,
-    label: 'Plataforma',
-    roles: ['administrador', 'gestor_conteudo', 'membro', 'cliente']
-  },
-  { 
-    icon: GraduationCap, 
-    label: 'Way Academy', 
-    path: '/admin/academy',
-    roles: ['administrador', 'gestor_conteudo', 'membro', 'cliente'],
-    hasCategories: true,
-    subItems: [
-      { label: 'Conteúdos', path: '/admin/academy' },
-      { label: 'Lista de Fornecedores', path: '/admin/academy/suppliers', badge: 'Em construção' },
-      { label: 'Gerenciar Conteúdos', path: '/admin/academy/manage', roles: ['administrador', 'gestor_conteudo'] },
-      { label: 'Gerenciar Categorias', path: '/admin/academy/categories', roles: ['administrador'] },
-      { label: 'Configurações', path: '/admin/academy/settings', roles: ['administrador'] },
-    ]
-  },
-
-  // Item final sem separador
+  { icon: Users, label: 'Carreiras', path: '/admin/carreiras/vagas', roles: ['administrador', 'gestor_conteudo'], subItems: [
+    { label: 'Vagas', path: '/admin/carreiras/vagas' },
+    { label: 'Candidatos', path: '/admin/carreiras/candidatos' },
+  ]},
+  { separator: true, label: 'Plataforma', path: '', roles: ['administrador', 'gestor_conteudo', 'membro', 'cliente'] },
+  { icon: GraduationCap, label: 'Way Academy', path: '/admin/academy', roles: ['administrador', 'gestor_conteudo', 'membro', 'cliente'], hasCategories: true, subItems: [
+    { label: 'Conteúdos', path: '/admin/academy' },
+    { label: 'Lista de Fornecedores', path: '/admin/academy/suppliers', badge: 'Em construção' },
+    { label: 'Gerenciar Conteúdos', path: '/admin/academy/manage', roles: ['administrador', 'gestor_conteudo'] },
+    { label: 'Gerenciar Categorias', path: '/admin/academy/categories', roles: ['administrador'] },
+    { label: 'Configurações', path: '/admin/academy/settings', roles: ['administrador'] },
+  ]},
   { icon: HeadphonesIcon, label: 'Atendimento', path: '/admin/support', roles: ['administrador', 'gestor_conteudo', 'colunista', 'membro', 'cliente'] },
 ];
 
@@ -183,6 +119,17 @@ function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
   const [isRoleSelectOpen, setIsRoleSelectOpen] = useState(false);
   const [academyCategories, setAcademyCategories] = useState<Array<{ id: string; nome: string; contentCount?: number }>>([]);
   const [isCategorySelectOpen, setIsCategorySelectOpen] = useState(false);
+  
+  // Carrega menu dinâmico do banco de dados
+  const { menuItems: dynamicMenu, isLoading: menuLoading } = useDynamicMenu();
+  
+  // Usa menu dinâmico se disponível, senão fallback
+  const menuItems = useMemo(() => {
+    if (dynamicMenu && dynamicMenu.length > 0) {
+      return dynamicMenu;
+    }
+    return FALLBACK_MENU;
+  }, [dynamicMenu]);
 
   // Busca categorias da Academy
   useEffect(() => {
@@ -283,7 +230,7 @@ function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
   };
 
   // Verifica se item está ativo
-  const isItemActive = (item: typeof menuItems[0]) => {
+  const isItemActive = (item: DynamicMenuItem) => {
     if (item.separator) return false;
     if (item.subItems) {
       return item.subItems.some(sub => location.pathname === sub.path);
@@ -569,6 +516,17 @@ function MobileSidebar() {
   const [isRoleSelectOpen, setIsRoleSelectOpen] = useState(false);
   const [academyCategories, setAcademyCategories] = useState<Array<{ id: string; nome: string; contentCount?: number }>>([]);
   const [isCategorySelectOpen, setIsCategorySelectOpen] = useState(false);
+  
+  // Carrega menu dinâmico do banco de dados
+  const { menuItems: dynamicMenu } = useDynamicMenu();
+  
+  // Usa menu dinâmico se disponível, senão fallback
+  const menuItems = useMemo(() => {
+    if (dynamicMenu && dynamicMenu.length > 0) {
+      return dynamicMenu;
+    }
+    return FALLBACK_MENU;
+  }, [dynamicMenu]);
 
   // Busca categorias da Academy
   useEffect(() => {
@@ -667,7 +625,8 @@ function MobileSidebar() {
     );
   };
 
-  const isItemActive = (item: typeof menuItems[0]) => {
+  const isItemActive = (item: DynamicMenuItem) => {
+    if (item.separator) return false;
     if (item.subItems) {
       return item.subItems.some(sub => location.pathname === sub.path);
     }
