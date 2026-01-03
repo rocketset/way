@@ -20,8 +20,8 @@ const HomeBannerSlider = () => {
 Escala com performance.</h1>
 
             {/* Subtitle/Description */}
-            <p className="text-lg sm:text-xl lg:text-2xl text-white/90 font-light leading-relaxed max-w-3xl mx-auto">Na Way E-commerce, Atendemos do pequeno ao enterprise, da implantação à expansão, com estrutura e previsibilidade.
-            <span className="text-primary font-semibold">Na Way E-commerce</span>, atuamos da implantação à escala, com um método próprio e validado, aplicado em <span className="text-primary font-semibold">mais de 190 projetos no Brasil</span> focado em estrutura, expansão e crescimento sustentável.
+            <p className="text-lg sm:text-xl lg:text-2xl text-white/90 font-light leading-relaxed max-w-3xl mx-auto">
+              Atuamos da implantação à escala, com um método próprio e validado, aplicado em mais de 190 projetos no Brasil, focado em estrutura, expansão e crescimento sustentável.
             </p>
 
             {/* CTA Button */}
