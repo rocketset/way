@@ -63,6 +63,13 @@ import { ThemeSelector } from './ThemeSelector';
 const FALLBACK_MENU: DynamicMenuItem[] = [
   { icon: LayoutDashboard, label: 'Dashboard', path: '/admin/member-dashboard', roles: ['membro', 'cliente'] },
   { icon: LayoutDashboard, label: 'Dashboard', path: '/admin', roles: ['administrador', 'gestor_conteudo', 'colunista'] },
+  { icon: GraduationCap, label: 'Way Academy', path: '/admin/academy', roles: ['administrador', 'gestor_conteudo', 'membro', 'cliente'], hasCategories: true, subItems: [
+    { label: 'Conteúdos', path: '/admin/academy' },
+    { label: 'Lista de Fornecedores', path: '/admin/academy/suppliers' },
+    { label: 'Gerenciar Conteúdos', path: '/admin/academy/manage', roles: ['administrador', 'gestor_conteudo'] },
+    { label: 'Gerenciar Categorias', path: '/admin/academy/categories', roles: ['administrador'] },
+    { label: 'Configurações', path: '/admin/academy/settings', roles: ['administrador'] },
+  ]},
   { icon: Mail, label: 'Leads', path: '/admin/leads', roles: ['administrador', 'gestor_conteudo'] },
   { icon: FileText, label: 'Blog Way', path: '/admin/blog-way', roles: ['colunista', 'cliente'] },
   { icon: Heart, label: 'Guia de Boas Práticas', path: '/admin/conduct-guide', roles: ['administrador', 'gestor_conteudo', 'colunista', 'membro', 'cliente'] },
@@ -98,15 +105,6 @@ const FALLBACK_MENU: DynamicMenuItem[] = [
     { label: 'Vagas', path: '/admin/carreiras/vagas' },
     { label: 'Candidatos', path: '/admin/carreiras/candidatos' },
   ]},
-  { separator: true, label: 'Plataforma', path: '', roles: ['administrador', 'gestor_conteudo', 'membro', 'cliente'] },
-  { icon: GraduationCap, label: 'Way Academy', path: '/admin/academy', roles: ['administrador', 'gestor_conteudo', 'membro', 'cliente'], hasCategories: true, subItems: [
-    { label: 'Conteúdos', path: '/admin/academy' },
-    { label: 'Lista de Fornecedores', path: '/admin/academy/suppliers', badge: 'Em construção' },
-    { label: 'Gerenciar Conteúdos', path: '/admin/academy/manage', roles: ['administrador', 'gestor_conteudo'] },
-    { label: 'Gerenciar Categorias', path: '/admin/academy/categories', roles: ['administrador'] },
-    { label: 'Configurações', path: '/admin/academy/settings', roles: ['administrador'] },
-  ]},
-  { icon: HeadphonesIcon, label: 'Atendimento', path: '/admin/support', roles: ['administrador', 'gestor_conteudo', 'colunista', 'membro', 'cliente'] },
 ];
 
 // Roles que devem aparecer no "Visualizar como" do Admin
@@ -489,10 +487,33 @@ function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
         </nav>
       </ScrollArea>
 
-      {/* Informações do usuário */}
-      <div className="p-3 border-t">
+      {/* Footer com Atendimento e informações do usuário */}
+      <div className="border-t">
+        {/* Link de Atendimento */}
+        <Link
+          to="/admin/support"
+          onClick={onNavigate}
+          className={cn(
+            'flex items-center gap-3 px-3 py-3 text-sm transition-all hover:bg-accent group relative',
+            location.pathname === '/admin/support' && 'bg-accent text-accent-foreground font-medium'
+          )}
+        >
+          <HeadphonesIcon className="h-5 w-5 flex-shrink-0" />
+          {isExpanded && (
+            <span className="whitespace-nowrap overflow-hidden">
+              Atendimento
+            </span>
+          )}
+          {!isExpanded && (
+            <div className="absolute left-full ml-2 px-2 py-1 bg-popover text-popover-foreground rounded-md shadow-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
+              Atendimento
+            </div>
+          )}
+        </Link>
+        
+        {/* Email do usuário */}
         {isExpanded && (
-          <div className="px-3 py-2 text-xs text-muted-foreground truncate">
+          <div className="px-6 py-2 text-xs text-muted-foreground truncate border-t">
             {user?.email}
           </div>
         )}

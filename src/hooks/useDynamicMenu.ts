@@ -64,7 +64,6 @@ export interface DynamicMenuItem {
 // Itens especiais que precisam de configurações extras
 const SPECIAL_ITEMS: Record<string, Partial<DynamicMenuItem>> = {
   way_academy: { hasCategories: true },
-  academy_fornecedores: { subItems: [{ label: '', path: '', badge: 'Em construção' }] },
 };
 
 export function useDynamicMenu() {
