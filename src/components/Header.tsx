@@ -77,15 +77,18 @@ const Header = () => {
   const novidadesItems = [{
     label: "Blog",
     path: "/blog",
-    isExternal: false
+    isExternal: false,
+    isClient: false
   }, {
-    label: "Relatórios e Guias (Clientes)",
+    label: "Relatórios e Guias",
     path: "/clientes/relatorios-guias",
-    isExternal: false
+    isExternal: false,
+    isClient: true
   }, {
-    label: "Central de ajuda (Clientes)",
+    label: "Central de ajuda",
     path: "/clientes/central-ajuda",
-    isExternal: false
+    isExternal: false,
+    isClient: true
   }];
   const solutionItems = [{
     label: "Implantação e Desenvolvimento",
@@ -251,10 +254,15 @@ const Header = () => {
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="center" className="w-72 bg-background/95 backdrop-blur-xl border-border/50 shadow-xl">
                     {novidadesItems.map(item => <DropdownMenuItem key={item.label} asChild>
-                        <Link to={item.path} className="flex items-center gap-3 px-4 py-3 cursor-pointer hover:bg-primary/10 transition-all duration-300 rounded-lg group">
+                        <Link to={item.path} className="flex items-center justify-between gap-3 px-4 py-3 cursor-pointer hover:bg-primary/10 transition-all duration-300 rounded-lg group">
                           <span className="font-medium group-hover:text-gray-900 transition-colors duration-300">
                             {item.label}
                           </span>
+                          {item.isClient && (
+                            <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-primary/20 text-primary border border-primary/30">
+                              Clientes
+                            </span>
+                          )}
                         </Link>
                       </DropdownMenuItem>)}
                   </DropdownMenuContent>
@@ -386,8 +394,13 @@ const Header = () => {
                 
                 <div className={`overflow-hidden transition-all duration-300 ${isNovidadesMenuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"}`}>
                   <div className="flex flex-col gap-2 pl-4">
-                    {novidadesItems.map(item => <Link key={item.label} to={item.path} className="flex items-center gap-3 px-6 py-3 text-left font-medium rounded-xl transition-all duration-300 bg-background/30 text-foreground hover:bg-primary/5">
+                    {novidadesItems.map(item => <Link key={item.label} to={item.path} className="flex items-center justify-between gap-3 px-6 py-3 text-left font-medium rounded-xl transition-all duration-300 bg-background/30 text-foreground hover:bg-primary/5">
                         <span>{item.label}</span>
+                        {item.isClient && (
+                          <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-primary/20 text-primary border border-primary/30">
+                            Clientes
+                          </span>
+                        )}
                       </Link>)}
                   </div>
                 </div>
