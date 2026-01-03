@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLocation, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, ChevronRight, ChevronDown, Rocket } from "lucide-react";
+import { Menu, X, ChevronRight, ChevronDown, Rocket, User } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import logoWay from "@/assets/logo-way.png";
 import iconNuvemshop from "@/assets/icon-nuvemshop.svg";
@@ -77,11 +77,6 @@ const Header = () => {
   const novidadesItems = [{
     label: "Blog",
     path: "/blog",
-    isExternal: false,
-    isClient: false
-  }, {
-    label: "Carreiras",
-    path: "/carreiras",
     isExternal: false,
     isClient: false
   }, 
@@ -281,6 +276,13 @@ const Header = () => {
                   </DropdownMenuContent>
                 </DropdownMenu>
 
+                {/* Carreiras button */}
+                <Link to="/carreiras" className="relative px-4 py-2 text-sm font-medium transition-all duration-300 rounded-full group text-foreground/70 hover:text-foreground">
+                  <div className="absolute inset-0 bg-primary/5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <span className="relative z-10">Carreiras</span>
+                  <div className="absolute bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
+                </Link>
+
                 {/* CONTATO button */}
                 <button onClick={() => handleNavClick(navItems.find(item => item.id === "contato")!)} className={`relative px-4 py-2 text-sm font-medium transition-all duration-300 rounded-full group ${activeSection === "contato" ? "text-primary" : "text-foreground/70 hover:text-foreground"}`}>
                     {activeSection === "contato" && <>
@@ -296,8 +298,11 @@ const Header = () => {
 
             {/* CTA Buttons */}
             <div className="hidden lg:flex items-center gap-3">
-            <Button variant="outline" className="font-medium px-5 py-2.5 border border-primary/30 text-primary hover:border-primary hover:bg-primary/5 hover:text-white backdrop-blur-sm transition-all duration-300 rounded-lg" asChild>
-              <Link to="/admin">Fazer login  </Link>
+            <Button className="font-medium px-5 py-2.5 bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 rounded-lg" asChild>
+              <Link to="/admin" className="flex items-center gap-2">
+                <User className="w-4 h-4" />
+                Área do Cliente
+              </Link>
             </Button>
               
             <Button onClick={() => handleNavClick(navItems.find(item => item.id === "contato")!)} className="relative bg-primary text-background font-medium px-5 py-2.5 hover:bg-primary/90 transition-all duration-300 rounded-lg group">
@@ -419,6 +424,12 @@ const Header = () => {
                 </div>
               </div>
 
+              {/* Carreiras button */}
+              <Link to="/carreiras" className="flex items-center justify-between px-6 py-4 text-left font-medium rounded-xl transition-all duration-300 transform hover:scale-105 bg-background/50 text-foreground hover:bg-primary/5">
+                <span>Carreiras</span>
+                <ChevronRight className="w-5 h-5 transition-transform duration-300" />
+              </Link>
+
               {/* Contato button */}
               <button onClick={() => handleNavClick(navItems.find(item => item.id === "contato")!)} className={`flex items-center justify-between px-6 py-4 text-left font-medium rounded-xl transition-all duration-300 transform hover:scale-105 ${activeSection === "contato" ? "bg-primary/10 text-primary shadow-lg" : "bg-background/50 text-foreground hover:bg-primary/5"}`}>
                 <span>Contato</span>
@@ -426,8 +437,11 @@ const Header = () => {
               </button>
               
               <div className="mt-4 flex flex-col gap-3">
-              <Button variant="outline" className="w-full font-medium py-4 rounded-lg border border-primary/30 text-primary hover:border-primary hover:bg-primary/5 backdrop-blur-sm transition-all duration-300" asChild>
-                <Link to="/admin">Entrar</Link>
+              <Button className="w-full font-medium py-4 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300" asChild>
+                <Link to="/admin" className="flex items-center justify-center gap-2">
+                  <User className="w-4 h-4" />
+                  Área do Cliente
+                </Link>
               </Button>
                 
               <Button onClick={() => handleNavClick(navItems.find(item => item.id === "contato")!)} className="w-full bg-primary text-background font-medium py-4 hover:bg-primary/90 transition-all duration-300 rounded-lg group">
