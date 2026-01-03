@@ -17,8 +17,10 @@ const HomeBannerSlider = () => {
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-5xl mx-auto text-center space-y-10">
               {/* Main Title */}
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-normal text-white leading-[1.15] tracking-tight">Estruturamos e aceleramos 
-e-commerces com método e performance.</h1>
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-normal text-white leading-[1.15] tracking-tight">
+                Estruturamos e aceleramos<br />
+                e-commerces com método e performance.
+              </h1>
 
               {/* Subtitle/Description */}
               <div className="space-y-6">
