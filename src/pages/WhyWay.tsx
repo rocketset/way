@@ -403,7 +403,7 @@ Hoje, com presen√ßa nacional e foco em resultados reais, a Way transforma opera√
             
             <div className="flex flex-wrap gap-4 justify-center">
               <Button size="lg" className="group bg-gradient-to-r from-primary to-primary/80 hover:shadow-2xl transition-all duration-300 text-lg px-8 py-6" onClick={() => navigate('/contact')}>
-                Fale com a gente
+                Fale agora com um consultor
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Button>
             </div>
