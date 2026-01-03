@@ -104,12 +104,12 @@ const Header = () => {
     isClient: true
   }];
   const solutionItems = [{
-    label: "Implantação e Desenvolvimento",
-    path: "/solucoes/implantacao-desenvolvimento",
-    isExternal: false
-  }, {
     label: "Mentoria e Consultoria",
     path: "/solucoes/consultoria",
+    isExternal: false
+  }, {
+    label: "Implantação e Desenvolvimento",
+    path: "/solucoes/implantacao-desenvolvimento",
     isExternal: false
   }, {
     label: "Performance e Marketing",
