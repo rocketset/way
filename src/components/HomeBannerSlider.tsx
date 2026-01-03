@@ -2,18 +2,21 @@ import { Button } from "@/components/ui/button";
 import cleanHeroBg from "@/assets/clean-hero-bg.jpg";
 import ClientsCarousel from "@/components/ClientsCarousel";
 const HomeBannerSlider = () => {
-  return <section id="inicio" className="relative w-full overflow-hidden bg-background">
+  return (
+    <section id="inicio" className="relative w-full overflow-hidden bg-background">
       {/* Background image */}
-      <div className="relative w-full min-h-[85vh] flex items-start justify-center">
+      <div className="relative w-full pt-28 pb-16 md:pt-32 md:pb-20">
         {/* Background image with overlay */}
-        <div style={{
-        backgroundImage: `url(${cleanHeroBg})`
-      }} className="absolute inset-0 bg-cover bg-center bg-no-repeat">
+        <div
+          style={{
+            backgroundImage: `url(${cleanHeroBg})`,
+          }}
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        >
           <div className="absolute inset-0 bg-black/60" />
         </div>
-
-        {/* Content container - Centralized */}
-        <div className="relative z-10 container mx-auto sm:px-6 lg:px-8 lg:pt-28 lg:pb-16 px-[31px] py-[180px] pb-0 pt-[200px]">
+        {/* Content container */}
+        <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto text-center space-y-8">
             {/* Main Title */}
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-normal text-white leading-[1.2] tracking-tight">
@@ -39,12 +42,13 @@ const HomeBannerSlider = () => {
 
 
             {/* Clients Carousel */}
-            <div className="pt-6 my-0">
+            <div className="mt-8">
               <ClientsCarousel />
             </div>
           </div>
         </div>
       </div>
-    </section>;
+    </section>
+  );
 };
 export default HomeBannerSlider;
