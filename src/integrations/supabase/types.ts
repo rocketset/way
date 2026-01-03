@@ -303,6 +303,71 @@ export type Database = {
         }
         Relationships: []
       }
+      candidaturas: {
+        Row: {
+          atualizado_em: string
+          criado_em: string
+          curriculo_url: string | null
+          email: string
+          id: string
+          lido: boolean | null
+          linkedin_url: string | null
+          mensagem: string | null
+          nivel_experiencia: string | null
+          nome: string
+          notas_internas: string | null
+          portfolio_url: string | null
+          pretensao_salarial: string | null
+          status: string
+          telefone: string | null
+          vaga_id: string | null
+        }
+        Insert: {
+          atualizado_em?: string
+          criado_em?: string
+          curriculo_url?: string | null
+          email: string
+          id?: string
+          lido?: boolean | null
+          linkedin_url?: string | null
+          mensagem?: string | null
+          nivel_experiencia?: string | null
+          nome: string
+          notas_internas?: string | null
+          portfolio_url?: string | null
+          pretensao_salarial?: string | null
+          status?: string
+          telefone?: string | null
+          vaga_id?: string | null
+        }
+        Update: {
+          atualizado_em?: string
+          criado_em?: string
+          curriculo_url?: string | null
+          email?: string
+          id?: string
+          lido?: boolean | null
+          linkedin_url?: string | null
+          mensagem?: string | null
+          nivel_experiencia?: string | null
+          nome?: string
+          notas_internas?: string | null
+          portfolio_url?: string | null
+          pretensao_salarial?: string | null
+          status?: string
+          telefone?: string | null
+          vaga_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "candidaturas_vaga_id_fkey"
+            columns: ["vaga_id"]
+            isOneToOne: false
+            referencedRelation: "vagas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       case_content_blocks: {
         Row: {
           atualizado_em: string
@@ -1883,6 +1948,60 @@ export type Database = {
           id?: string
           role?: Database["public"]["Enums"]["app_role"]
           user_id?: string
+        }
+        Relationships: []
+      }
+      vagas: {
+        Row: {
+          area: string | null
+          ativo: boolean | null
+          atualizado_em: string
+          beneficios: string | null
+          criado_em: string
+          descricao: string
+          faixa_salarial: string | null
+          id: string
+          modalidade: string
+          nivel: string | null
+          ordem: number | null
+          requisitos: string | null
+          salario_visivel: boolean | null
+          tipo_contratacao: string
+          titulo: string
+        }
+        Insert: {
+          area?: string | null
+          ativo?: boolean | null
+          atualizado_em?: string
+          beneficios?: string | null
+          criado_em?: string
+          descricao: string
+          faixa_salarial?: string | null
+          id?: string
+          modalidade?: string
+          nivel?: string | null
+          ordem?: number | null
+          requisitos?: string | null
+          salario_visivel?: boolean | null
+          tipo_contratacao?: string
+          titulo: string
+        }
+        Update: {
+          area?: string | null
+          ativo?: boolean | null
+          atualizado_em?: string
+          beneficios?: string | null
+          criado_em?: string
+          descricao?: string
+          faixa_salarial?: string | null
+          id?: string
+          modalidade?: string
+          nivel?: string | null
+          ordem?: number | null
+          requisitos?: string | null
+          salario_visivel?: boolean | null
+          tipo_contratacao?: string
+          titulo?: string
         }
         Relationships: []
       }
