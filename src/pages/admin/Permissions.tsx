@@ -12,6 +12,7 @@ import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
 import { Database } from '@/integrations/supabase/types';
 import { useConfiguredRoles, ALL_ENUM_ROLES, getRoleLabel } from '@/hooks/useConfiguredRoles';
+import { useQueryClient } from '@tanstack/react-query';
 
 type AppRole = Database["public"]["Enums"]["app_role"];
 
@@ -43,6 +44,7 @@ const permissaoLabels: Record<string, string> = {
 };
 
 export default function Permissions() {
+  const queryClient = useQueryClient();
   const { permissions, isLoading, updatePermission, createPermission, deletePermission, ensureAllPermissionsExist } = useRolePermissions();
   const { data: configuredRoles = [], refetch: refetchRoles } = useConfiguredRoles();
   const [activeRole, setActiveRole] = useState<AppRole>('administrador');
@@ -51,6 +53,14 @@ export default function Permissions() {
   const [deleteRoleDialog, setDeleteRoleDialog] = useState(false);
   const [roleToDelete, setRoleToDelete] = useState<AppRole | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isCreatingRole, setIsCreatingRole] = useState<string | null>(null);
+
+  // Função para invalidar todos os caches relacionados
+  const invalidateAllCaches = async () => {
+    await queryClient.invalidateQueries({ queryKey: ['role-permissions'] });
+    await queryClient.invalidateQueries({ queryKey: ['configured-roles'] });
+    await refetchRoles();
+  };
 
   // Roles configurados (com permissões)
   const activeRoles = configuredRoles.map(r => r.id);
@@ -78,13 +88,28 @@ export default function Permissions() {
       toast.success(`Todas as permissões de ${getRoleLabel(role)} foram excluídas`);
       setDeleteRoleDialog(false);
       setRoleToDelete(null);
-      refetchRoles();
-      window.location.reload();
+      await invalidateAllCaches();
     } catch (error) {
       console.error(error);
       toast.error('Erro ao excluir permissões');
     } finally {
       setIsDeleting(false);
+    }
+  };
+
+  // Criar permissões para um perfil
+  const handleCreateRolePermissions = async (role: AppRole) => {
+    setIsCreatingRole(role);
+    try {
+      await ensureAllPermissionsExist(role);
+      toast.success(`Permissões criadas para ${getRoleLabel(role)}`);
+      await invalidateAllCaches();
+      setActiveRole(role);
+    } catch (error) {
+      console.error(error);
+      toast.error('Erro ao criar permissões');
+    } finally {
+      setIsCreatingRole(null);
     }
   };
 
@@ -128,7 +153,7 @@ export default function Permissions() {
     try {
       await ensureAllPermissionsExist(activeRole);
       toast.success(`Permissões inicializadas para ${getRoleLabel(activeRole)}`);
-      refetchRoles();
+      await invalidateAllCaches();
     } catch (error) {
       console.error(error);
       toast.error('Erro ao inicializar permissões');
@@ -145,7 +170,7 @@ export default function Permissions() {
         await ensureAllPermissionsExist(role);
       }
       toast.success('Permissões inicializadas para todos os perfis');
-      refetchRoles();
+      await invalidateAllCaches();
     } catch (error) {
       console.error(error);
       toast.error('Erro ao inicializar permissões');
@@ -257,14 +282,14 @@ export default function Permissions() {
                               <Button
                                 variant="outline"
                                 size="sm"
-                                onClick={async () => {
-                                  await ensureAllPermissionsExist(role);
-                                  toast.success(`Permissões criadas para ${getRoleLabel(role)}`);
-                                  refetchRoles();
-                                  window.location.reload();
-                                }}
+                                onClick={() => handleCreateRolePermissions(role)}
+                                disabled={isCreatingRole === role}
                               >
-                                <Plus className="h-3 w-3 mr-1" />
+                                {isCreatingRole === role ? (
+                                  <Loader2 className="h-3 w-3 animate-spin mr-1" />
+                                ) : (
+                                  <Plus className="h-3 w-3 mr-1" />
+                                )}
                                 Criar
                               </Button>
                             )}
