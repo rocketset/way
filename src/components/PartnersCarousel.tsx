@@ -48,7 +48,7 @@ const PartnersCarousel = () => {
             <div
               key={partner.name}
               title={partner.name}
-              className="flex items-center justify-center h-32 md:h-36 p-6 rounded-lg bg-card/50 border border-border/50 hover:border-border hover:bg-card transition-all duration-300 group"
+              className="flex items-center justify-center h-24 md:h-36 p-2 md:p-6 rounded-lg bg-card/50 border border-border/50 hover:border-border hover:bg-card transition-all duration-300 group"
             >
               <img
                 src={partner.logo}
