@@ -90,6 +90,7 @@ import AdminCandidatos from "./pages/admin/carreiras/Candidatos";
 import PopupsList from "./pages/admin/popups/List";
 import PopupEditor from "./pages/admin/popups/Editor";
 import PopupLeads from "./pages/admin/popups/Leads";
+import LeadsKanban from "./pages/admin/LeadsKanban";
 import { PopupDisplay } from "./components/PopupDisplay";
 
 // Configuração do React Query
@@ -183,6 +184,7 @@ const App = () => (
             
             {/* Outras rotas admin */}
             <Route path="contacts" element={<Contacts />} />
+            <Route path="leads" element={<LeadsKanban />} />
             <Route path="users" element={<Users />} />
             <Route path="permissions" element={<Permissions />} />
             

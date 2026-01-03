@@ -666,6 +666,7 @@ export type Database = {
           lido: boolean | null
           mensagem: string
           nome: string
+          status_lead: string
           telefone: string | null
         }
         Insert: {
@@ -677,6 +678,7 @@ export type Database = {
           lido?: boolean | null
           mensagem: string
           nome: string
+          status_lead?: string
           telefone?: string | null
         }
         Update: {
@@ -688,6 +690,7 @@ export type Database = {
           lido?: boolean | null
           mensagem?: string
           nome?: string
+          status_lead?: string
           telefone?: string | null
         }
         Relationships: []
@@ -1427,6 +1430,7 @@ export type Database = {
           id: string
           nome: string | null
           popup_id: string
+          status_lead: string
           telefone: string | null
         }
         Insert: {
@@ -1436,6 +1440,7 @@ export type Database = {
           id?: string
           nome?: string | null
           popup_id: string
+          status_lead?: string
           telefone?: string | null
         }
         Update: {
@@ -1445,6 +1450,7 @@ export type Database = {
           id?: string
           nome?: string | null
           popup_id?: string
+          status_lead?: string
           telefone?: string | null
         }
         Relationships: [
