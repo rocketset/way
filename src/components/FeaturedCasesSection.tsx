@@ -158,7 +158,7 @@ const FeaturedCasesSection = () => {
                   className={`max-h-12 w-auto object-contain transition-all duration-300 ${
                     selectedIndex === index
                       ? "grayscale-0 opacity-100"
-                      : "grayscale opacity-60 hover:opacity-80"
+                      : "grayscale-0 opacity-100 hover:grayscale hover:opacity-70"
                   }`}
                 />
               ) : (
