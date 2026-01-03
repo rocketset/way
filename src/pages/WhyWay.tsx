@@ -400,9 +400,11 @@ const WhyWay = () => {
             <h2 className="text-4xl md:text-6xl font-bold mb-6">A Way está preparada e equipada para te receber.</h2>
             
             <div className="flex flex-wrap gap-4 justify-center">
-              <Button size="lg" className="group bg-gradient-to-r from-primary to-primary/80 hover:shadow-2xl transition-all duration-300 text-lg px-8 py-6" onClick={() => navigate('/contact')}>
-                Fale agora com um consultor
-                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              <Button asChild size="lg" className="group bg-gradient-to-r from-primary to-primary/80 hover:shadow-2xl transition-all duration-300 text-lg px-8 py-6">
+                <a href="https://api.whatsapp.com/message/5AGVY5WZR56KA1?autoload=1&app_absent=0">
+                  Fale agora com um consultor
+                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </a>
               </Button>
             </div>
           </div>
