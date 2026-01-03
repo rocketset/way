@@ -9,7 +9,7 @@ const WhyChooseSection = ({
 }: WhyChooseSectionProps) => {
   const stats = [{
     number: "+190",
-    label: "Lojas implantadas"
+    label: "Projetos B2B, B2C e B2B2C."
   }, {
     number: "1 ano",
     label: "com soluções de ponta a ponta"
