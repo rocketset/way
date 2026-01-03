@@ -145,7 +145,7 @@ const FeaturedCasesSection = () => {
             <button
               key={caseItem.id}
               onClick={() => setSelectedIndex(index)}
-              className={`flex items-center justify-center h-14 md:h-16 px-2 md:px-4 rounded-md transition-all duration-300 border ${
+              className={`flex items-center justify-center h-14 px-2 rounded-md transition-all duration-300 border ${
                 selectedIndex === index
                   ? "border-primary bg-background shadow-md"
                   : "border-transparent bg-muted/30 hover:bg-muted/50"
@@ -155,7 +155,7 @@ const FeaturedCasesSection = () => {
                 <img
                   src={caseItem.logo_url}
                   alt={caseItem.titulo}
-                  className={`max-h-10 md:max-h-8 w-auto object-contain transition-all duration-300 ${
+                  className={`max-h-10 w-auto object-contain transition-all duration-300 ${
                     selectedIndex === index
                       ? "grayscale-0 opacity-100"
                       : "grayscale opacity-60 hover:opacity-80"
