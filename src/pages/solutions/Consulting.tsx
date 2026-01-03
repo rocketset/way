@@ -55,7 +55,7 @@ const Consulting = () => {
   return <div className="min-h-screen bg-background overflow-hidden">
       <Header />
       
-      <main className="pt-32 pb-0">
+      <main className="pt-40 pb-0">
         {/* Hero Section */}
         <section className="mb-16 relative">
           {/* Animated Decorative Plus Icons */}
