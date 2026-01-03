@@ -116,19 +116,33 @@ const menuItems = [
   },
   { 
     icon: Settings, 
-    label: 'Site Way', 
+    label: 'Configurações', 
     path: '/admin/site-settings',
     roles: ['administrador'],
     subItems: [
       { label: 'Configurações Gerais', path: '/admin/site-settings' },
       { label: 'SEO', path: '/admin/seo' },
       { label: 'Construtor de Formulários', path: '/admin/form-builder' },
-      { label: 'Assuntos Formulários', path: '/admin/form-subjects' },
+      { label: 'Popups', path: '/admin/popups' },
       { label: 'Galeria de Fotos', path: '/admin/gallery' },
       { label: 'Logos Clientes', path: '/admin/client-logos' },
       { label: 'Logos Parceiros', path: '/admin/partner-logos' },
       { label: 'Avaliações Google', path: '/admin/google-reviews' },
       { label: 'Mídia', path: '/admin/media' },
+      { label: 'Integrações Google', path: '/admin/google-integrations' },
+      { label: 'Permissões', path: '/admin/permissions' },
+      { label: 'Usuários', path: '/admin/users' },
+    ]
+  },
+  { icon: CheckSquare, label: 'Curadoria', path: '/admin/curation', roles: ['administrador', 'gestor_conteudo'] },
+  { 
+    icon: Users, 
+    label: 'Carreiras', 
+    path: '/admin/carreiras/vagas',
+    roles: ['administrador', 'gestor_conteudo'],
+    subItems: [
+      { label: 'Vagas', path: '/admin/carreiras/vagas' },
+      { label: 'Candidatos', path: '/admin/carreiras/candidatos' },
     ]
   },
 
@@ -146,53 +160,13 @@ const menuItems = [
     hasCategories: true,
     subItems: [
       { label: 'Conteúdos', path: '/admin/academy' },
-      { label: 'Lista de Fornecedores', path: '/admin/academy/suppliers' },
-      { label: 'Recursos', path: '/admin/academy/recursos', roles: ['administrador', 'gestor_conteudo', 'membro', 'cliente'] },
+      { label: 'Lista de Fornecedores', path: '/admin/academy/suppliers', badge: 'Em construção' },
       { label: 'Gerenciar Conteúdos', path: '/admin/academy/manage', roles: ['administrador', 'gestor_conteudo'] },
       { label: 'Gerenciar Categorias', path: '/admin/academy/categories', roles: ['administrador'] },
       { label: 'Configurações', path: '/admin/academy/settings', roles: ['administrador'] },
     ]
   },
-  { icon: CheckSquare, label: 'Curadoria', path: '/admin/curation', roles: ['administrador', 'gestor_conteudo'] },
-  { 
-    icon: FileText, 
-    label: 'Landing Pages', 
-    path: '/admin/landing',
-    roles: ['administrador', 'gestor_conteudo'],
-  },
-  { icon: Mail, label: 'Solicitações', path: '/admin/contacts', roles: ['administrador'] },
-  { icon: ClipboardList, label: 'Briefings Comerciais', path: '/admin/briefings', roles: ['administrador'] },
-  { 
-    icon: Users, 
-    label: 'Carreiras', 
-    path: '/admin/carreiras/vagas',
-    roles: ['administrador', 'gestor_conteudo'],
-    subItems: [
-      { label: 'Vagas', path: '/admin/carreiras/vagas' },
-      { label: 'Candidatos', path: '/admin/carreiras/candidatos' },
-    ]
-  },
-  { 
-    icon: Eye, 
-    label: 'Popups', 
-    path: '/admin/popups',
-    roles: ['administrador', 'gestor_conteudo'],
-    subItems: [
-      { label: 'Gerenciar', path: '/admin/popups' },
-      { label: 'Leads', path: '/admin/popups/leads' },
-    ]
-  },
-  { 
-    icon: Settings, 
-    label: 'Sistema', 
-    path: '/admin/google-integrations',
-    roles: ['administrador'],
-    subItems: [
-      { label: 'Integrações Google', path: '/admin/google-integrations' },
-      { label: 'Permissões', path: '/admin/permissions' },
-      { label: 'Usuários', path: '/admin/users' },
-    ]
-  },
+  { icon: Mail, label: 'Leads', path: '/admin/leads', roles: ['administrador'] },
 
   // Item final sem separador
   { icon: HeadphonesIcon, label: 'Atendimento', path: '/admin/support', roles: ['administrador', 'gestor_conteudo', 'colunista', 'membro', 'cliente'] },
@@ -517,7 +491,12 @@ function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
                                 )}
                               >
                                 <div className="w-1.5 h-1.5 rounded-full bg-current" />
-                                {subItem.label}
+                                <span className="flex-1">{subItem.label}</span>
+                                {'badge' in subItem && typeof subItem.badge === 'string' && (
+                                  <Badge variant="secondary" className="text-[10px] px-1.5 py-0 bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200">
+                                    {subItem.badge}
+                                  </Badge>
+                                )}
                               </Link>
                             );
                           })}
@@ -846,7 +825,12 @@ function MobileSidebar() {
                                     )}
                                   >
                                     <div className="w-1.5 h-1.5 rounded-full bg-current" />
-                                    {subItem.label}
+                                    <span className="flex-1">{subItem.label}</span>
+                                    {'badge' in subItem && typeof subItem.badge === 'string' && (
+                                      <Badge variant="secondary" className="text-[10px] px-1.5 py-0 bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200">
+                                        {subItem.badge}
+                                      </Badge>
+                                    )}
                                   </Link>
                                 );
                               })}
