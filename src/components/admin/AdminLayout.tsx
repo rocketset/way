@@ -72,11 +72,12 @@ const menuItems = [
     path: '/admin',
     roles: ['administrador', 'gestor_conteudo', 'colunista']
   },
+  { icon: Mail, label: 'Leads', path: '/admin/leads', roles: ['administrador', 'gestor_conteudo'] },
   { 
     icon: FileText, 
     label: 'Blog Way', 
     path: '/admin/blog-way',
-    roles: ['administrador', 'gestor_conteudo', 'colunista', 'membro', 'cliente'],
+    roles: ['colunista', 'cliente'],
   },
   { 
     icon: Heart, 
@@ -166,7 +167,6 @@ const menuItems = [
       { label: 'Configurações', path: '/admin/academy/settings', roles: ['administrador'] },
     ]
   },
-  { icon: Mail, label: 'Leads', path: '/admin/leads', roles: ['administrador'] },
 
   // Item final sem separador
   { icon: HeadphonesIcon, label: 'Atendimento', path: '/admin/support', roles: ['administrador', 'gestor_conteudo', 'colunista', 'membro', 'cliente'] },
