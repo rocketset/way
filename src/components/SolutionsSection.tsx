@@ -5,6 +5,29 @@ import { Button } from "@/components/ui/button";
 const SolutionsSection = () => {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const solutions = [{
+    icon: Target,
+    badge: "Way.Consulting",
+    title: "Mentoria e Consultoria",
+    subtitle: "Estratégia, estrutura e decisões certas para escalar o e-commerce",
+    description: "Atuamos lado a lado com empresas para estruturar, organizar e acelerar operações de e-commerce. Apoiamos na definição da melhor plataforma, integrações e parceiros, sempre alinhados à realidade da operação e aos objetivos do negócio.",
+    services: [{
+      icon: Target,
+      label: "Diagnóstico e Direcionamento"
+    }, {
+      icon: Plug,
+      label: "Plataforma e Integrações"
+    }, {
+      icon: TrendingUp,
+      label: "Performance e Crescimento"
+    }, {
+      icon: Store,
+      label: "Marketplaces e Canais"
+    }, {
+      icon: Network,
+      label: "Estratégia Omnichannel"
+    }],
+    link: "/solucoes/consultoria"
+  }, {
     icon: ShoppingCart,
     badge: "Way.Tech",
     title: "Implantação e Desenvolvimento",
@@ -30,29 +53,6 @@ const SolutionsSection = () => {
       label: "Marketplaces"
     }],
     link: "/solucoes/implantacao-desenvolvimento"
-  }, {
-    icon: Target,
-    badge: "Way.Consulting",
-    title: "Mentoria e Consultoria",
-    subtitle: "Orientação estratégica e visão de mercado especializada",
-    description: "Orientação estratégica para impulsionar o crescimento sustentável do seu e-commerce. Nossos consultores especializados analisam profundamente seu negócio, identificam oportunidades e desenvolvem estratégias personalizadas que geram resultados mensuráveis.",
-    services: [{
-      icon: Target,
-      label: "Estratégia Digital"
-    }, {
-      icon: TrendingUp,
-      label: "Otimização de Conversão"
-    }, {
-      icon: Store,
-      label: "Marketplaces"
-    }, {
-      icon: Brain,
-      label: "Análise de Mercado"
-    }, {
-      icon: Network,
-      label: "Omnichannel"
-    }],
-    link: "/solucoes/consultoria"
   }, {
     icon: BarChart3,
     badge: "Way.Digital",
