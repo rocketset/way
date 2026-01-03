@@ -1,13 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Switch } from '@/components/ui/switch';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Loader2, Shield, Lock, Eye, Edit, Trash2, Plus, UserPlus, RefreshCw } from 'lucide-react';
+import { Loader2, Shield, Lock, Eye, Edit, Trash2, Plus, UserPlus, RefreshCw, ToggleLeft, ToggleRight } from 'lucide-react';
 import { useRolePermissions, ALL_MODULES, ALL_PERMISSIONS } from '@/hooks/useRolePermissions';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from 'sonner';
@@ -135,6 +133,27 @@ export default function Permissions() {
       updatePermission({ id, ativo: !currentValue });
     } else {
       createPermission({ role: activeRole, modulo, permissao, ativo: true });
+    }
+  };
+
+  // Toggle todas as permissões de um módulo
+  const handleToggleModule = async (modulo: string, modulePerms: Array<{ id: string | null; modulo: string; permissao: string; ativo: boolean; exists: boolean }>, activate: boolean) => {
+    try {
+      for (const perm of modulePerms) {
+        if (perm.exists && perm.id) {
+          if (perm.ativo !== activate) {
+            await supabase.from('role_permissions').update({ ativo: activate }).eq('id', perm.id);
+          }
+        } else if (activate) {
+          await supabase.from('role_permissions').insert({ role: activeRole, modulo: perm.modulo, permissao: perm.permissao, ativo: true });
+        }
+      }
+      toast.success(`Todas as permissões de ${moduloLabels[modulo]} foram ${activate ? 'ativadas' : 'desativadas'}`);
+      // Invalidar cache
+      window.location.reload();
+    } catch (error) {
+      console.error(error);
+      toast.error('Erro ao atualizar permissões');
     }
   };
 
@@ -274,13 +293,41 @@ export default function Permissions() {
                     )}
                   </div>
 
-                  {Object.entries(permissionMatrix).map(([modulo, modulePerms]) => (
+                  {Object.entries(permissionMatrix).map(([modulo, modulePerms]) => {
+                    const allActive = modulePerms.every(p => p.ativo);
+                    const someActive = modulePerms.some(p => p.ativo);
+                    
+                    return (
                     <Card key={modulo}>
                       <CardHeader className="py-4">
-                        <CardTitle className="text-lg flex items-center gap-2">
-                          <Lock className="h-4 w-4" />
-                          {moduloLabels[modulo] || modulo}
-                        </CardTitle>
+                        <div className="flex items-center justify-between">
+                          <CardTitle className="text-lg flex items-center gap-2">
+                            <Lock className="h-4 w-4" />
+                            {moduloLabels[modulo] || modulo}
+                          </CardTitle>
+                          <div className="flex items-center gap-2">
+                            <span className="text-xs text-muted-foreground">
+                              {allActive ? 'Todas ativas' : someActive ? 'Parcial' : 'Todas inativas'}
+                            </span>
+                            <Button
+                              variant={allActive ? "default" : "outline"}
+                              size="sm"
+                              onClick={() => handleToggleModule(modulo, modulePerms, !allActive)}
+                            >
+                              {allActive ? (
+                                <>
+                                  <ToggleRight className="h-4 w-4 mr-1" />
+                                  Desativar Todas
+                                </>
+                              ) : (
+                                <>
+                                  <ToggleLeft className="h-4 w-4 mr-1" />
+                                  Ativar Todas
+                                </>
+                              )}
+                            </Button>
+                          </div>
+                        </div>
                       </CardHeader>
                       <CardContent className="pt-0">
                         <Table>
@@ -332,7 +379,8 @@ export default function Permissions() {
                         </Table>
                       </CardContent>
                     </Card>
-                  ))}
+                    );
+                  })}
                 </TabsContent>
               );
             })}
