@@ -25,54 +25,52 @@ import galleryTeam7 from "@/assets/gallery/team-7.png";
 import galleryTeam8 from "@/assets/gallery/team-8.png";
 import galleryTeam9 from "@/assets/gallery/team-9.png";
 import galleryTeam10 from "@/assets/gallery/team-10.png";
-
 const staticGalleryPhotos = [galleryTeam1, galleryTeam2, galleryTeam3, galleryTeam4, galleryTeam5, galleryTeam6, galleryTeam7, galleryTeam8, galleryTeam9, galleryTeam10];
-
 const WhyWay = () => {
   const navigate = useNavigate();
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [mousePosition, setMousePosition] = useState({
+    x: 0,
+    y: 0
+  });
   const [scrollY, setScrollY] = useState(0);
   const heroRef = useRef<HTMLDivElement>(null);
-  
   const {
     data: casesData,
     isLoading: casesLoading
   } = useCases("", "Todos");
-  
-  const { data: dynamicPhotos } = useGalleryPhotos(true);
-  
-  // Use dynamic photos from DB if available, otherwise fallback to static
-  const galleryPhotos = dynamicPhotos && dynamicPhotos.length > 0 
-    ? dynamicPhotos 
-    : staticGalleryPhotos.map((url, i) => ({ 
-        image_url: url, 
-        alt_text: `Galeria ${i + 1}`,
-        object_fit: 'cover' as const,
-        object_position: 'center' as const,
-        row_span: 1,
-        ordem: i,
-        ativo: true,
-        id: `static-${i}`,
-        criado_em: '',
-        atualizado_em: ''
-      }));
+  const {
+    data: dynamicPhotos
+  } = useGalleryPhotos(true);
 
+  // Use dynamic photos from DB if available, otherwise fallback to static
+  const galleryPhotos = dynamicPhotos && dynamicPhotos.length > 0 ? dynamicPhotos : staticGalleryPhotos.map((url, i) => ({
+    image_url: url,
+    alt_text: `Galeria ${i + 1}`,
+    object_fit: 'cover' as const,
+    object_position: 'center' as const,
+    row_span: 1,
+    ordem: i,
+    ativo: true,
+    id: `static-${i}`,
+    criado_em: '',
+    atualizado_em: ''
+  }));
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
     const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
+      setMousePosition({
+        x: e.clientX,
+        y: e.clientY
+      });
     };
-    
     window.addEventListener('scroll', handleScroll);
     window.addEventListener('mousemove', handleMouseMove);
-    
     return () => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('mousemove', handleMouseMove);
     };
   }, []);
-
   const stats = [{
     number: "190",
     label: "Lojas implantadas"
@@ -91,52 +89,35 @@ const WhyWay = () => {
   const regularCases = casesData?.regular || [];
   const allCases = [...featuredCases, ...regularCases].slice(0, 6);
   return <div className="min-h-screen bg-background">
-      <SEO
-        title="Por Que Way"
-        description="Conheça a Way E-commerce: especialistas em transformação digital com metodologia própria, equipe qualificada e resultados comprovados. Descubra por que somos referência em e-commerce."
-        canonical="https://wayecommerce.com.br/por-que-way"
-        keywords="por que way, sobre a way, equipe way, metodologia way, transformação digital"
-      />
+      <SEO title="Por Que Way" description="Conheça a Way E-commerce: especialistas em transformação digital com metodologia própria, equipe qualificada e resultados comprovados. Descubra por que somos referência em e-commerce." canonical="https://wayecommerce.com.br/por-que-way" keywords="por que way, sobre a way, equipe way, metodologia way, transformação digital" />
       <Header />
       
       {/* Hero Section - Somos para quem pensa grande */}
       <section ref={heroRef} className="relative pt-24 pb-16 px-4 overflow-hidden bg-background">
         {/* Floating Plus Symbols */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          {[...Array(15)].map((_, i) => (
-            <Plus 
-              key={i}
-              className="absolute text-primary/10 animate-float-delayed"
-              style={{
-                left: `${(i * 13 + 7) % 90}%`,
-                top: `${(i * 17 + 11) % 90}%`,
-                width: `${20 + (i % 3) * 15}px`,
-                height: `${20 + (i % 3) * 15}px`,
-                animationDelay: `${i * 0.5}s`,
-                transform: `translateY(${scrollY * 0.1 * (i % 3)}px) rotate(${scrollY * 0.05 * (i % 2 ? 1 : -1)}deg)`
-              }}
-            />
-          ))}
+          {[...Array(15)].map((_, i) => <Plus key={i} className="absolute text-primary/10 animate-float-delayed" style={{
+          left: `${(i * 13 + 7) % 90}%`,
+          top: `${(i * 17 + 11) % 90}%`,
+          width: `${20 + i % 3 * 15}px`,
+          height: `${20 + i % 3 * 15}px`,
+          animationDelay: `${i * 0.5}s`,
+          transform: `translateY(${scrollY * 0.1 * (i % 3)}px) rotate(${scrollY * 0.05 * (i % 2 ? 1 : -1)}deg)`
+        }} />)}
         </div>
 
         {/* Gradient Orbs */}
         <div className="absolute inset-0 pointer-events-none">
-          <div 
-            className="absolute w-96 h-96 bg-primary/20 rounded-full blur-3xl"
-            style={{
-              left: `${20 + mousePosition.x * 0.02}px`,
-              top: `${-100 + mousePosition.y * 0.02}px`,
-              transition: 'all 0.3s ease-out'
-            }}
-          />
-          <div 
-            className="absolute w-96 h-96 bg-primary/10 rounded-full blur-3xl"
-            style={{
-              right: `${-50 - mousePosition.x * 0.015}px`,
-              bottom: `${-50 - mousePosition.y * 0.015}px`,
-              transition: 'all 0.3s ease-out'
-            }}
-          />
+          <div className="absolute w-96 h-96 bg-primary/20 rounded-full blur-3xl" style={{
+          left: `${20 + mousePosition.x * 0.02}px`,
+          top: `${-100 + mousePosition.y * 0.02}px`,
+          transition: 'all 0.3s ease-out'
+        }} />
+          <div className="absolute w-96 h-96 bg-primary/10 rounded-full blur-3xl" style={{
+          right: `${-50 - mousePosition.x * 0.015}px`,
+          bottom: `${-50 - mousePosition.y * 0.015}px`,
+          transition: 'all 0.3s ease-out'
+        }} />
         </div>
 
         <div className="container mx-auto relative z-10">
@@ -144,16 +125,15 @@ const WhyWay = () => {
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               {/* Texto */}
               <div className="animate-fade-in">
-                <h1 className="text-3xl md:text-4xl font-bold mb-6 leading-tight">
-                  Somos para <span className="text-primary">quem pensa grande</span> e quer ir além.
+                <h1 className="text-3xl md:text-4xl font-bold mb-6 leading-tight">Somos para quem pensa grande. ​
                 </h1>
                 
                 <div className="space-y-3 text-sm md:text-base text-muted-foreground leading-relaxed">
                   <p>
-                    Ao longo da nossa trajetória, já aceleramos indústrias, redes de lojas e varejistas de diversos segmentos, sempre com foco em performance e crescimento sustentável.
+                    Implantamos, estruturamos e aceleramos operações de e-commerce para indústrias, redes de lojas e varejistas, com foco em performance, escala e crescimento sustentável.
                   </p>
-                  <p>Com integrações robustas em tecnologias como TOTVS Modas, Whithor, Linx, Shopify, VTEX, Tray, WBuy, Magento 2 e Chianca, adquirimos um profundo entendimento do mercado e das particularidades de cada operação.</p>
-                  <p>Nossa atuação também contempla a abertura e gestão de marketplaces, além da integração com hubs de marketplaces e centros de logística, conectando todo o ecossistema digital de forma inteligente e eficiente.</p>
+                  <p>​Atuamos da implantação à maturidade da operação, incluindo estruturação de departamentos, integrações tecnológicas, automações de vendas e relacionamento, além de treinamento de times para sustentar a escala.</p>
+                  
                 </div>
               </div>
 
@@ -175,38 +155,27 @@ const WhyWay = () => {
         <div className="container mx-auto">
           <div className="max-w-7xl mx-auto">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 auto-rows-[200px] md:auto-rows-[250px]">
-              {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((index) => {
-                const photo = galleryPhotos.find(p => p.ordem === index) || galleryPhotos[index];
-                if (!photo) return null;
-                
-                const isWide = [0, 5, 6, 9].includes(index);
-                const imageUrl = typeof photo === 'string' ? photo : photo.image_url;
-                const altText = typeof photo === 'string' ? `Galeria ${index + 1}` : (photo.alt_text || `Galeria ${index + 1}`);
-                const objectFit = typeof photo === 'string' ? 'cover' : (photo.object_fit || 'cover');
-                const objectPosition = typeof photo === 'string' ? 'center' : (photo.object_position || 'center');
-                const rowSpan = typeof photo === 'string' ? 1 : (photo.row_span || 1);
-                
-                return (
-                  <div 
-                    key={index}
-                    className={`group relative overflow-hidden rounded-xl border border-border hover:border-primary/50 transition-all duration-500
+              {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(index => {
+              const photo = galleryPhotos.find(p => p.ordem === index) || galleryPhotos[index];
+              if (!photo) return null;
+              const isWide = [0, 5, 6, 9].includes(index);
+              const imageUrl = typeof photo === 'string' ? photo : photo.image_url;
+              const altText = typeof photo === 'string' ? `Galeria ${index + 1}` : photo.alt_text || `Galeria ${index + 1}`;
+              const objectFit = typeof photo === 'string' ? 'cover' : photo.object_fit || 'cover';
+              const objectPosition = typeof photo === 'string' ? 'center' : photo.object_position || 'center';
+              const rowSpan = typeof photo === 'string' ? 1 : photo.row_span || 1;
+              return <div key={index} className={`group relative overflow-hidden rounded-xl border border-border hover:border-primary/50 transition-all duration-500
                       ${isWide ? 'col-span-1 md:col-span-2' : 'col-span-1'}
-                    `}
-                    style={{ gridRow: `span ${rowSpan}` }}
-                  >
-                    <img 
-                      src={imageUrl} 
-                      alt={altText}
-                      className="w-full h-full group-hover:scale-110 transition-transform duration-700"
-                      style={{ 
-                        objectFit: objectFit,
-                        objectPosition: objectPosition === 'top' ? 'top' : objectPosition === 'bottom' ? 'bottom' : 'center 30%'
-                      }}
-                    />
+                    `} style={{
+                gridRow: `span ${rowSpan}`
+              }}>
+                    <img src={imageUrl} alt={altText} className="w-full h-full group-hover:scale-110 transition-transform duration-700" style={{
+                  objectFit: objectFit,
+                  objectPosition: objectPosition === 'top' ? 'top' : objectPosition === 'bottom' ? 'bottom' : 'center 30%'
+                }} />
                     <div className="absolute inset-0 bg-gradient-to-t from-primary/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  </div>
-                );
-              })}
+                  </div>;
+            })}
             </div>
           </div>
         </div>
@@ -215,20 +184,14 @@ const WhyWay = () => {
       {/* Nascemos para revolucionar */}
       <section className="relative py-16 px-4 overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">
-          {[...Array(8)].map((_, i) => (
-            <div
-              key={i}
-              className="absolute rounded-full bg-primary/5 animate-pulse-slow"
-              style={{
-                left: `${i * 15}%`,
-                top: `${(i * 23) % 100}%`,
-                width: `${100 + i * 30}px`,
-                height: `${100 + i * 30}px`,
-                animationDelay: `${i * 0.7}s`,
-                transform: `translateY(${scrollY * 0.05 * (i % 2 ? 1 : -1)}px)`
-              }}
-            />
-          ))}
+          {[...Array(8)].map((_, i) => <div key={i} className="absolute rounded-full bg-primary/5 animate-pulse-slow" style={{
+          left: `${i * 15}%`,
+          top: `${i * 23 % 100}%`,
+          width: `${100 + i * 30}px`,
+          height: `${100 + i * 30}px`,
+          animationDelay: `${i * 0.7}s`,
+          transform: `translateY(${scrollY * 0.05 * (i % 2 ? 1 : -1)}px)`
+        }} />)}
         </div>
         
         <div className="container mx-auto relative z-10">
@@ -237,15 +200,15 @@ const WhyWay = () => {
               <Sparkles className="w-5 h-5 text-primary animate-pulse" />
               <span className="text-primary font-semibold">Nossa Missão</span>
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 hover:scale-105 transition-transform duration-300">
-              Nascemos para revolucionar
-              <br />
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 hover:scale-105 transition-transform duration-300">Existimos para estruturar e escalar operações de 
+e-commerce
+com método, clareza e performance.<br />
               <span className="bg-gradient-to-r from-primary via-primary/80 to-primary bg-clip-text text-transparent inline-flex items-center gap-3">
                 o e-commerce
-                <Plus className="inline-block w-10 h-10 text-primary animate-spin-slow" />
+                
               </span>
             </h2>
-            <p className="text-base text-muted-foreground max-w-2xl mx-auto leading-relaxed">Hoje, a Way E-commerce representa uma nova geração de consultorias digitais: uma empresa que une estratégia, dados e performance, guiada por uma filosofia simples — "Crescer com estrutura, consistência e propósito."</p>
+            
           </div>
         </div>
       </section>
