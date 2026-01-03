@@ -259,7 +259,7 @@ const Header = () => {
                             {item.label}
                           </span>
                           {item.isClient && (
-                            <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-primary/20 text-primary border border-primary/30">
+                            <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-primary/20 text-primary border border-primary/30 group-hover:bg-gray-900 group-hover:text-white group-hover:border-gray-900 transition-all duration-300">
                               Clientes
                             </span>
                           )}
@@ -397,7 +397,7 @@ const Header = () => {
                     {novidadesItems.map(item => <Link key={item.label} to={item.path} className="flex items-center justify-between gap-3 px-6 py-3 text-left font-medium rounded-xl transition-all duration-300 bg-background/30 text-foreground hover:bg-primary/5">
                         <span>{item.label}</span>
                         {item.isClient && (
-                          <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-primary/20 text-primary border border-primary/30">
+                          <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-primary/20 text-primary border border-primary/30 group-hover:bg-gray-900 group-hover:text-white group-hover:border-gray-900 transition-all duration-300">
                             Clientes
                           </span>
                         )}
