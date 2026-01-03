@@ -276,10 +276,10 @@ const Header = () => {
                   </DropdownMenuContent>
                 </DropdownMenu>
 
-                {/* Carreiras button */}
+                {/* Trabalhe conosco button */}
                 <Link to="/carreiras" className="relative px-4 py-2 text-sm font-medium transition-all duration-300 rounded-full group text-foreground/70 hover:text-foreground">
                   <div className="absolute inset-0 bg-primary/5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <span className="relative z-10">Carreiras</span>
+                  <span className="relative z-10">Trabalhe conosco</span>
                   <div className="absolute bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
                 </Link>
 
@@ -424,9 +424,9 @@ const Header = () => {
                 </div>
               </div>
 
-              {/* Carreiras button */}
+              {/* Trabalhe conosco button */}
               <Link to="/carreiras" className="flex items-center justify-between px-6 py-4 text-left font-medium rounded-xl transition-all duration-300 transform hover:scale-105 bg-background/50 text-foreground hover:bg-primary/5">
-                <span>Carreiras</span>
+                <span>Trabalhe conosco</span>
                 <ChevronRight className="w-5 h-5 transition-transform duration-300" />
               </Link>
 
