@@ -357,7 +357,7 @@ const DynamicContactForm = ({ formSlug, className = "" }: DynamicContactFormProp
 
             {formConfig.mostrar_whatsapp && (
               <a
-                href="https://wa.me/message/5AGVY5WZR56KA1"
+                href="https://api.whatsapp.com/message/5AGVY5WZR56KA1?autoload=1&app_absent=0"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex-1 flex items-center justify-center gap-3 h-14 bg-gradient-to-r from-[#43E460] via-[#3ACC54] to-[#43E460] hover:from-[#3ACC54] hover:via-[#32B849] hover:to-[#3ACC54] text-white rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 group text-lg font-medium"
