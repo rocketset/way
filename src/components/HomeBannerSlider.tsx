@@ -34,7 +34,7 @@ const HomeBannerSlider = () => {
 
               {/* CTA Button */}
               <div className="pt-8">
-                <Button size="lg" className="text-lg sm:text-xl px-12 py-6 h-auto font-medium shadow-2xl hover:shadow-primary/30 transition-all duration-300 hover:scale-105" asChild>
+                <Button size="lg" className="text-base sm:text-lg lg:text-xl px-8 sm:px-10 lg:px-12 py-4 sm:py-5 lg:py-6 h-auto font-medium shadow-2xl hover:shadow-primary/30 transition-all duration-300 hover:scale-105" asChild>
                   <a href="https://api.whatsapp.com/message/5AGVY5WZR56KA1?autoload=1&app_absent=0">Fale agora com um consultor</a>
                 </Button>
               </div>
