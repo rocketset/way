@@ -15,11 +15,11 @@ const HomeBannerSlider = () => {
         {/* Spacer to push content down from header */}
         <div className="flex-1 flex items-center justify-center pt-20">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="max-w-5xl mx-auto text-center space-y-10">
+            <div className="max-w-6xl mx-auto text-center space-y-10">
               {/* Main Title */}
               <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-normal text-white leading-[1.15] tracking-tight">
-                <span className="block">Estruturamos e aceleramos</span>
-                <span className="block">e-commerces com método e performance.</span>
+                <span className="block whitespace-nowrap">Estruturamos e aceleramos</span>
+                <span className="block whitespace-nowrap">e-commerces com método e performance.</span>
               </h1>
 
               {/* Subtitle/Description */}
