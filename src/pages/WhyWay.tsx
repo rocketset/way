@@ -173,7 +173,7 @@ const WhyWay = () => {
                   objectFit: objectFit,
                   objectPosition: objectPosition === 'top' ? 'top' : objectPosition === 'bottom' ? 'bottom' : 'center 30%'
                 }} />
-                    <div className="absolute inset-0 bg-gradient-to-t from-primary/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    
                   </div>;
             })}
             </div>
