@@ -24,6 +24,8 @@ import CaseDetail from "./pages/CaseDetail";
 import Contact from "./pages/Contact";
 import Privacy from "./pages/Privacy";
 import NotFound from "./pages/NotFound";
+import ClientReports from "./pages/ClientReports";
+import ClientHelp from "./pages/ClientHelp";
 
 // Páginas de Soluções
 import Implementation from "./pages/solutions/Implementation";
@@ -111,6 +113,10 @@ const App = () => (
           <Route path="/cases/:id" element={<CaseDetail />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/privacy" element={<Privacy />} />
+          
+          {/* Rotas de área do cliente */}
+          <Route path="/clientes/relatorios-guias" element={<ClientReports />} />
+          <Route path="/clientes/central-ajuda" element={<ClientHelp />} />
           
           {/* Rotas de Soluções */}
           <Route path="/solucoes/implantacao-desenvolvimento" element={<Implementation />} />

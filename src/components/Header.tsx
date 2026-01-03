@@ -80,11 +80,11 @@ const Header = () => {
     isExternal: false
   }, {
     label: "Relatórios e Guias (Clientes)",
-    path: "/admin",
+    path: "/clientes/relatorios-guias",
     isExternal: false
   }, {
     label: "Central de ajuda (Clientes)",
-    path: "/admin",
+    path: "/clientes/central-ajuda",
     isExternal: false
   }];
   const solutionItems = [{
