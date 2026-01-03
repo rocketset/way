@@ -25,21 +25,32 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { Settings, ChevronRight, Eye, EyeOff, RefreshCw, Shield, PenTool, User, UserCog, Briefcase } from 'lucide-react';
+import { Settings, ChevronRight, Eye, EyeOff, RefreshCw, Shield, PenTool, User, UserCog, Briefcase, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
+import { useConfiguredRoles, getRoleLabel } from '@/hooks/useConfiguredRoles';
 
-// Roles disponíveis
-const AVAILABLE_ROLES = [
-  { id: 'administrador', label: 'Administrador', icon: Shield, color: 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200' },
-  { id: 'gestor_conteudo', label: 'Gestor', icon: UserCog, color: 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' },
-  { id: 'colunista', label: 'Colunista', icon: PenTool, color: 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200' },
-  { id: 'membro', label: 'Membro', icon: User, color: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' },
-  { id: 'cliente', label: 'Cliente', icon: Briefcase, color: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200' },
-];
+// Mapa de ícones para roles
+const roleIcons: Record<string, any> = {
+  administrador: Shield,
+  gestor_conteudo: UserCog,
+  colunista: PenTool,
+  membro: User,
+  cliente: Briefcase,
+};
+
+// Mapa de cores para roles
+const roleColors: Record<string, string> = {
+  administrador: 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200',
+  gestor_conteudo: 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200',
+  colunista: 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200',
+  membro: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
+  cliente: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200',
+};
 
 export default function MenuVisibility() {
   const { data: menuItems, isLoading, refetch } = useAllMenuVisibility();
+  const { data: configuredRoles = [], isLoading: isLoadingRoles } = useConfiguredRoles();
   const updateMutation = useUpdateMenuVisibility();
   const toggleActiveMutation = useToggleMenuActive();
   
@@ -113,14 +124,21 @@ export default function MenuVisibility() {
           <CardTitle className="text-lg">Legenda de Roles</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="flex flex-wrap gap-2">
-            {AVAILABLE_ROLES.map(role => (
-              <Badge key={role.id} variant="secondary" className={cn('flex items-center gap-1', role.color)}>
-                <role.icon className="h-3 w-3" />
-                {role.label}
-              </Badge>
-            ))}
-          </div>
+          {isLoadingRoles ? (
+            <Loader2 className="h-4 w-4 animate-spin" />
+          ) : (
+            <div className="flex flex-wrap gap-2">
+              {configuredRoles.map(role => {
+                const Icon = roleIcons[role.id] || User;
+                return (
+                  <Badge key={role.id} variant="secondary" className={cn('flex items-center gap-1', roleColors[role.id] || '')}>
+                    <Icon className="h-3 w-3" />
+                    {role.label}
+                  </Badge>
+                );
+              })}
+            </div>
+          )}
         </CardContent>
       </Card>
 
@@ -178,10 +196,10 @@ export default function MenuVisibility() {
                       <TableCell>
                         <div className="flex flex-wrap gap-1">
                           {item.roles?.map(roleId => {
-                            const role = AVAILABLE_ROLES.find(r => r.id === roleId);
-                            return role ? (
-                              <Badge key={roleId} variant="secondary" className={cn('text-xs', role.color)}>
-                                {role.label.substring(0, 3)}
+                            const roleConfig = configuredRoles.find(r => r.id === roleId);
+                            return roleConfig ? (
+                              <Badge key={roleId} variant="secondary" className={cn('text-xs', roleColors[roleId] || '')}>
+                                {roleConfig.label.substring(0, 3)}
                               </Badge>
                             ) : null;
                           })}
@@ -224,14 +242,14 @@ export default function MenuVisibility() {
                         </TableCell>
                         <TableCell>
                           <div className="flex flex-wrap gap-1">
-                            {subItem.roles?.map(roleId => {
-                              const role = AVAILABLE_ROLES.find(r => r.id === roleId);
-                              return role ? (
-                                <Badge key={roleId} variant="secondary" className={cn('text-xs', role.color)}>
-                                  {role.label.substring(0, 3)}
-                                </Badge>
-                              ) : null;
-                            })}
+                              {subItem.roles?.map(roleId => {
+                                const roleConfig = configuredRoles.find(r => r.id === roleId);
+                                return roleConfig ? (
+                                  <Badge key={roleId} variant="secondary" className={cn('text-xs', roleColors[roleId] || '')}>
+                                    {roleConfig.label.substring(0, 3)}
+                                  </Badge>
+                                ) : null;
+                              })}
                           </div>
                         </TableCell>
                         <TableCell className="text-right">
@@ -269,30 +287,33 @@ export default function MenuVisibility() {
             </p>
             
             <div className="space-y-3">
-              {AVAILABLE_ROLES.map(role => (
-                <div
-                  key={role.id}
-                  className={cn(
-                    'flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition-colors',
-                    selectedRoles.includes(role.id)
-                      ? 'border-primary bg-primary/5'
-                      : 'border-border hover:bg-muted/50'
-                  )}
-                  onClick={() => toggleRole(role.id)}
-                >
-                  <Checkbox
-                    checked={selectedRoles.includes(role.id)}
-                    onCheckedChange={() => toggleRole(role.id)}
-                  />
-                  <role.icon className="h-4 w-4" />
-                  <span className="flex-1 font-medium">{role.label}</span>
-                  {selectedRoles.includes(role.id) ? (
-                    <Eye className="h-4 w-4 text-green-600" />
-                  ) : (
-                    <EyeOff className="h-4 w-4 text-muted-foreground" />
-                  )}
-                </div>
-              ))}
+              {configuredRoles.map(role => {
+                const Icon = roleIcons[role.id] || User;
+                return (
+                  <div
+                    key={role.id}
+                    className={cn(
+                      'flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition-colors',
+                      selectedRoles.includes(role.id)
+                        ? 'border-primary bg-primary/5'
+                        : 'border-border hover:bg-muted/50'
+                    )}
+                    onClick={() => toggleRole(role.id)}
+                  >
+                    <Checkbox
+                      checked={selectedRoles.includes(role.id)}
+                      onCheckedChange={() => toggleRole(role.id)}
+                    />
+                    <Icon className="h-4 w-4" />
+                    <span className="flex-1 font-medium">{role.label}</span>
+                    {selectedRoles.includes(role.id) ? (
+                      <Eye className="h-4 w-4 text-green-600" />
+                    ) : (
+                      <EyeOff className="h-4 w-4 text-muted-foreground" />
+                    )}
+                  </div>
+                );
+              })}
             </div>
           </div>
 
