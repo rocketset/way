@@ -69,7 +69,7 @@ const Performance = () => {
   return <div className="min-h-screen bg-background overflow-hidden">
       <Header />
       
-      <main className="pt-24 pb-0">
+      <main className="pt-24 pb-0 py-[102px]">
         {/* Hero Section */}
         <section className="mb-16 relative">
           {/* Animated Decorative Plus Icons with floating effect */}
@@ -81,13 +81,10 @@ const Performance = () => {
             <Plus className="absolute top-1/4 left-1/2 w-12 h-12 text-primary animate-[spin_18s_linear_infinite]" />
           </div>
           
-          <div className="container mx-auto px-4 md:px-12 relative z-10">
+          <div className="container mx-auto md:px-12 relative z-10 py-[11px] px-[30px]">
             <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
               <div className="space-y-6 md:space-y-8 animate-fade-in">
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 hover:bg-primary/20 hover:scale-105 transition-all duration-300 cursor-pointer group">
-                  <Plus className="w-4 h-4 text-primary group-hover:rotate-90 transition-transform duration-300" />
-                  <span className="text-sm font-medium text-primary">Way.digital</span>
-                </div>
+                
                 
                 <div className="flex items-start gap-4">
                   <Activity className="w-10 h-10 md:w-12 md:h-12 text-primary flex-shrink-0 mt-1" />
@@ -149,15 +146,7 @@ const Performance = () => {
               </div>
             </div>
             
-            <div className="flex flex-wrap justify-center gap-3 mb-12">
-              {servicesList.map((service, index) => <div key={index} className="flex items-center gap-2 bg-card border border-border hover:border-primary/50 px-5 py-3 rounded-full hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 hover:scale-110 cursor-pointer group relative overflow-hidden animate-fade-in" style={{
-              animationDelay: `${index * 0.05}s`
-            }}>
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500"></div>
-                  <service.icon className="w-4 h-4 text-primary group-hover:rotate-[360deg] transition-transform duration-500 relative z-10" />
-                  <span className="text-sm font-medium relative z-10">{service.label}</span>
-                </div>)}
-            </div>
+            
 
             <div className="text-center px-4">
               <Button asChild size="lg" className="group shadow-lg hover:shadow-2xl hover:shadow-primary/30 transition-all hover:scale-105 relative overflow-hidden w-full sm:w-auto">
@@ -173,7 +162,7 @@ const Performance = () => {
         </section>
 
         {/* Services Details */}
-        <section className="relative py-20 bg-gradient-to-b from-[#1a1a1a] to-[#0a0a0a] overflow-hidden">
+        <section className="relative bg-gradient-to-b from-[#1a1a1a] to-[#0a0a0a] overflow-hidden py-[61px]">
           {/* Plus icons animados de fundo */}
           <div className="absolute top-10 left-10 text-foreground/5 text-6xl animate-float" style={{
           animationDelay: '0s'
