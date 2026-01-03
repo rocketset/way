@@ -16,12 +16,12 @@ const HomeBannerSlider = () => {
         <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 lg:pt-20 lg:pb-10 my-0 py-[48px]">
           <div className="max-w-4xl mx-auto text-center space-y-8 my-[91px]">
             {/* Main Title */}
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-normal text-white leading-[1.2] tracking-tight">E-commerce com método. 
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-normal text-white leading-[1.2] tracking-tight">E-commerce com método.  
 Escala com performance.</h1>
 
             {/* Subtitle/Description */}
-            <p className="text-lg sm:text-xl lg:text-2xl text-white/90 font-light leading-relaxed max-w-3xl mx-auto">
-              Atuamos da implantação à escala, com um método próprio e validado, aplicado em mais de 190 projetos no Brasil, focado em estrutura, expansão e crescimento sustentável.
+            <p className="text-lg sm:text-xl lg:text-2xl text-white/90 font-light leading-relaxed max-w-3xl mx-auto">Na Way E-commerce, Atendemos do pequeno ao enterprise, da implantação à expansão, com estrutura e previsibilidade.
+            <span className="text-primary font-semibold">Na Way E-commerce</span>, atuamos da implantação à escala, com um método próprio e validado, aplicado em <span className="text-primary font-semibold">mais de 190 projetos no Brasil</span> focado em estrutura, expansão e crescimento sustentável.
             </p>
 
             {/* CTA Button */}
