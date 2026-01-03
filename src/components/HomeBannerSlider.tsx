@@ -3,9 +3,9 @@ import cleanHeroBg from "@/assets/clean-hero-bg.jpg";
 import ClientsCarousel from "@/components/ClientsCarousel";
 const HomeBannerSlider = () => {
   return (
-    <section id="inicio" className="relative w-full overflow-hidden bg-background">
+    <section id="inicio" className="relative w-full min-h-screen overflow-hidden bg-background">
       {/* Background image */}
-      <div className="relative w-full pt-28 pb-16 md:pt-32 md:pb-20">
+      <div className="relative w-full min-h-screen flex flex-col justify-center">
         {/* Background image with overlay */}
         <div
           style={{
@@ -16,7 +16,7 @@ const HomeBannerSlider = () => {
           <div className="absolute inset-0 bg-black/60" />
         </div>
         {/* Content container */}
-        <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-12">
           <div className="max-w-4xl mx-auto text-center space-y-8">
             {/* Main Title */}
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-normal text-white leading-[1.2] tracking-tight">
