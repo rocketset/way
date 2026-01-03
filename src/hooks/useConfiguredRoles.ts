@@ -65,7 +65,7 @@ export const useConfiguredRoles = () => {
   });
 };
 
-// Todos os roles do enum (para mostrar no dialog de gerenciamento)
-export const ALL_ENUM_ROLES: AppRole[] = ['administrador', 'gestor_conteudo', 'colunista', 'cliente', 'membro'];
+// Todos os roles do enum disponíveis para configuração
+export const ALL_ENUM_ROLES: AppRole[] = ['administrador', 'gestor_conteudo', 'cliente'];
 
 export const getRoleLabel = (role: string): string => roleLabels[role] || role;
