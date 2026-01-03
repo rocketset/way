@@ -23,9 +23,9 @@ const HomeBannerSlider = () => {
 
             {/* Subtitle/Description */}
             <div className="space-y-2">
-              <p className="text-lg sm:text-xl lg:text-2xl font-light leading-relaxed max-w-3xl mx-auto">
-                <span className="text-primary font-semibold">Na Way E-commerce</span>
-                <span className="text-white/90">, Atendemos do pequeno ao enterprise, da implantação à expansão, com estrutura e previsibilidade.</span>
+              <p className="text-lg sm:text-xl lg:text-2xl font-light leading-relaxed max-w-3xl mx-auto flex flex-col items-center">
+                <span className="text-white/90">Na Way</span>
+                <span><span className="text-primary font-semibold">E-commerce</span><span className="text-white/90">, Atendemos do pequeno ao enterprise, da implantação à expansão, com estrutura e previsibilidade.</span></span>
               </p>
               <p className="text-lg sm:text-xl lg:text-2xl text-primary font-semibold leading-relaxed max-w-3xl mx-auto">
                 Com mais de 190 projetos no Brasil.
