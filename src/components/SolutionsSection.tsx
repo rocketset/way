@@ -208,7 +208,7 @@ const SolutionsSection = () => {
                     
                     {/* CTA Button - only for Performance e Marketing */}
                     {index === 2 && (
-                      <div className="mt-6 pt-4 border-t border-border/30">
+                      <div className="mt-6 pt-4 border-t border-border/30 flex justify-center">
                         <Button asChild size="lg" className="bg-primary text-background hover:bg-primary/90 font-medium px-8 py-4 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 group/btn" onClick={(e) => e.stopPropagation()}>
                           <a className="flex items-center gap-2" href="https://api.whatsapp.com/message/5AGVY5WZR56KA1?autoload=1&app_absent=0" onClick={(e) => e.stopPropagation()}>
                             Fale agora com um consultor
