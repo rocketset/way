@@ -2,15 +2,11 @@ import { Button } from "@/components/ui/button";
 import cleanHeroBg from "@/assets/clean-hero-bg.jpg";
 import ClientsCarousel from "@/components/ClientsCarousel";
 const HomeBannerSlider = () => {
-  return (
-    <section id="inicio" className="relative w-full min-h-screen overflow-hidden bg-background">
+  return <section id="inicio" className="relative w-full min-h-screen overflow-hidden bg-background">
       {/* Background image with overlay */}
-      <div
-        style={{
-          backgroundImage: `url(${cleanHeroBg})`,
-        }}
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-      >
+      <div style={{
+      backgroundImage: `url(${cleanHeroBg})`
+    }} className="absolute inset-0 bg-cover bg-center bg-no-repeat">
         <div className="absolute inset-0 bg-black/60" />
       </div>
 
@@ -21,9 +17,8 @@ const HomeBannerSlider = () => {
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-5xl mx-auto text-center space-y-10">
               {/* Main Title */}
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-normal text-white leading-[1.15] tracking-tight">
-                Estruturamos e aceleramos e-commerces com método e performance.
-              </h1>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-normal text-white leading-[1.15] tracking-tight">Estruturamos e aceleramos 
+e-commerces com método e performance.</h1>
 
               {/* Subtitle/Description */}
               <div className="space-y-6">
@@ -50,7 +45,6 @@ const HomeBannerSlider = () => {
           <ClientsCarousel />
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
 export default HomeBannerSlider;
