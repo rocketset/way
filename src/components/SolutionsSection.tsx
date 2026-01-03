@@ -131,8 +131,8 @@ const SolutionsSection = () => {
           animationDelay: '0.3s'
         }}>
             <Button asChild size="lg" className="bg-primary text-background hover:bg-primary/90 font-medium px-8 py-6 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 group">
-              <a href="https://wayecommerce.com.br/contact" className="flex items-center gap-2">
-                Fale com um especialista
+              <a className="flex items-center gap-2" href="https://wa.me/message/5AGVY5WZR56KA1">
+                Fale agora com um consultor   
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </a>
             </Button>
