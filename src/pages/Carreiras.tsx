@@ -30,9 +30,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { 
   Briefcase, 
   MapPin, 
-  Clock, 
   DollarSign, 
-  Upload, 
   Send, 
   ChevronRight,
   Building2,
@@ -40,7 +38,9 @@ import {
   Sparkles,
   FileText,
   Loader2,
-  Heart
+  Heart,
+  Award,
+  TrendingUp
 } from "lucide-react";
 
 const candidaturaSchema = z.object({
@@ -143,35 +143,83 @@ export default function Carreiras() {
       
       <main className="min-h-screen bg-background">
         {/* Hero Section */}
-        <section className="relative py-20 lg:py-32 bg-gradient-to-br from-primary/10 via-background to-secondary/10 overflow-hidden">
-          <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-5" />
-          <div className="container mx-auto px-4 relative z-10">
-            <div className="max-w-3xl mx-auto text-center">
-              <Badge className="mb-4 bg-primary/10 text-primary border-primary/20">
-                <Sparkles className="w-3 h-3 mr-1" />
-                Venha fazer parte do nosso time
-              </Badge>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
-                Carreiras na Way
-              </h1>
-              <p className="text-lg md:text-xl text-muted-foreground mb-8">
-                A Way é para quem gosta de desafio, responsabilidade e resultado.
-                Trabalhamos com método, ritmo forte e foco total em performance.
-                <br /><br />
-                Aqui não existe espaço para acomodação, existe espaço para quem quer crescer, aprender e entregar.
-              </p>
-              <div className="flex flex-wrap gap-4 justify-center">
-                <div className="flex items-center gap-2 text-muted-foreground">
-                  <Building2 className="w-5 h-5 text-primary" />
-                  <span>Ambiente colaborativo</span>
+        <section className="relative py-16 lg:py-24 bg-background overflow-hidden">
+          <div className="container mx-auto px-4">
+            <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+              {/* Left Column - Content */}
+              <div className="order-2 lg:order-1">
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-foreground leading-tight">
+                  Faça parte do time Way
+                </h1>
+                <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
+                  A Way é para quem gosta de desafio, responsabilidade e resultado.
+                  <br />
+                  Trabalhamos com método, ritmo forte e foco total em performance.
+                  <br />
+                  Aqui valorizamos pessoas que querem crescer, aprender e entregar com consistência.
+                </p>
+                <Button 
+                  size="lg" 
+                  className="mb-10"
+                  onClick={() => openForm(null)}
+                >
+                  Bora crescer juntos? Envie seu currículo!
+                </Button>
+
+                {/* Stats / Pillars */}
+                <div className="flex flex-wrap gap-8 pt-8 border-t border-border">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                      <Building2 className="w-5 h-5 text-primary" />
+                    </div>
+                    <span className="text-sm font-medium text-foreground">Ambiente colaborativo</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                      <Users className="w-5 h-5 text-primary" />
+                    </div>
+                    <span className="text-sm font-medium text-foreground">Time de alta performance</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                      <TrendingUp className="w-5 h-5 text-primary" />
+                    </div>
+                    <span className="text-sm font-medium text-foreground">Crescimento contínuo</span>
+                  </div>
                 </div>
-                <div className="flex items-center gap-2 text-muted-foreground">
-                  <Users className="w-5 h-5 text-primary" />
-                  <span>Time de alta performance</span>
+              </div>
+
+              {/* Right Column - Image with Floating Badges */}
+              <div className="order-1 lg:order-2 relative">
+                {/* Main Image Container */}
+                <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+                  <img 
+                    src="/lovable-uploads/be62bf36-4078-4afb-ab3c-273c92ed91d0.jpg" 
+                    alt="Time Way E-commerce em evento" 
+                    className="w-full h-auto object-cover aspect-[4/3]"
+                  />
                 </div>
-                <div className="flex items-center gap-2 text-muted-foreground">
-                  <Sparkles className="w-5 h-5 text-primary" />
-                  <span>Crescimento contínuo</span>
+
+                {/* Floating Badge - Top Right */}
+                <div className="absolute -top-4 right-4 lg:-right-6 bg-background rounded-xl shadow-lg border border-border px-4 py-3 flex items-center gap-3 animate-fade-in z-10">
+                  <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center flex-shrink-0">
+                    <Users className="w-5 h-5 text-primary-foreground" />
+                  </div>
+                  <div>
+                    <p className="font-semibold text-foreground text-sm">Equipe de alta performance</p>
+                    <p className="text-xs text-muted-foreground">Colaboração diária e foco em resultados</p>
+                  </div>
+                </div>
+
+                {/* Floating Badge - Bottom Right */}
+                <div className="absolute -bottom-4 right-4 lg:-right-6 bg-background rounded-xl shadow-lg border border-border px-4 py-3 flex items-center gap-3 animate-fade-in z-10" style={{ animationDelay: '0.2s' }}>
+                  <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center flex-shrink-0">
+                    <Award className="w-5 h-5 text-primary-foreground" />
+                  </div>
+                  <div>
+                    <p className="font-semibold text-foreground text-sm">Cultura forte e reconhecida</p>
+                    <p className="text-xs text-muted-foreground">Método, crescimento e consistência</p>
+                  </div>
                 </div>
               </div>
             </div>
