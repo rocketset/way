@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Switch } from '@/components/ui/switch';
@@ -11,15 +11,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
 import { Database } from '@/integrations/supabase/types';
+import { useConfiguredRoles, ALL_ENUM_ROLES, getRoleLabel } from '@/hooks/useConfiguredRoles';
 
 type AppRole = Database["public"]["Enums"]["app_role"];
-
-const roleLabels: Record<string, string> = {
-  administrador: 'Administrador',
-  gestor_conteudo: 'Gestor de Conteúdo',
-  colunista: 'Colunista',
-  cliente: 'Cliente',
-};
 
 const moduloLabels: Record<string, string> = {
   usuarios: 'Usuários',
@@ -48,17 +42,25 @@ const permissaoLabels: Record<string, string> = {
   excluir: 'Excluir',
 };
 
-// Roles disponíveis no sistema (do enum do banco)
-const AVAILABLE_ROLES: AppRole[] = ['administrador', 'gestor_conteudo', 'colunista', 'cliente'];
-
 export default function Permissions() {
   const { permissions, isLoading, updatePermission, createPermission, deletePermission, ensureAllPermissionsExist } = useRolePermissions();
+  const { data: configuredRoles = [], refetch: refetchRoles } = useConfiguredRoles();
   const [activeRole, setActiveRole] = useState<AppRole>('administrador');
   const [isInitializing, setIsInitializing] = useState(false);
   const [newRoleDialog, setNewRoleDialog] = useState(false);
   const [deleteRoleDialog, setDeleteRoleDialog] = useState(false);
   const [roleToDelete, setRoleToDelete] = useState<AppRole | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
+
+  // Roles configurados (com permissões)
+  const activeRoles = configuredRoles.map(r => r.id);
+
+  // Atualiza activeRole se o role atual não tem mais permissões
+  useEffect(() => {
+    if (activeRoles.length > 0 && !activeRoles.includes(activeRole)) {
+      setActiveRole(activeRoles[0]);
+    }
+  }, [activeRoles, activeRole]);
 
   // Excluir todas as permissões de um perfil
   const handleDeleteRolePermissions = async (role: AppRole) => {
@@ -73,9 +75,10 @@ export default function Permissions() {
       for (const perm of rolePerms) {
         await supabase.from('role_permissions').delete().eq('id', perm.id);
       }
-      toast.success(`Todas as permissões de ${roleLabels[role]} foram excluídas`);
+      toast.success(`Todas as permissões de ${getRoleLabel(role)} foram excluídas`);
       setDeleteRoleDialog(false);
       setRoleToDelete(null);
+      refetchRoles();
       window.location.reload();
     } catch (error) {
       console.error(error);
@@ -124,7 +127,8 @@ export default function Permissions() {
     setIsInitializing(true);
     try {
       await ensureAllPermissionsExist(activeRole);
-      toast.success(`Permissões inicializadas para ${roleLabels[activeRole]}`);
+      toast.success(`Permissões inicializadas para ${getRoleLabel(activeRole)}`);
+      refetchRoles();
     } catch (error) {
       console.error(error);
       toast.error('Erro ao inicializar permissões');
@@ -133,14 +137,15 @@ export default function Permissions() {
     }
   };
 
-  // Inicializar todas as permissões para todos os roles
+  // Inicializar todas as permissões para todos os roles configurados
   const handleInitializeAllRoles = async () => {
     setIsInitializing(true);
     try {
-      for (const role of AVAILABLE_ROLES) {
+      for (const role of activeRoles) {
         await ensureAllPermissionsExist(role);
       }
       toast.success('Permissões inicializadas para todos os perfis');
+      refetchRoles();
     } catch (error) {
       console.error(error);
       toast.error('Erro ao inicializar permissões');
@@ -233,38 +238,55 @@ export default function Permissions() {
                 <div className="bg-muted p-4 rounded-lg">
                   <p className="text-sm font-medium mb-2">Perfis Atuais:</p>
                   <div className="space-y-2">
-                    {AVAILABLE_ROLES.map((role) => {
+                    {ALL_ENUM_ROLES.map((role) => {
                       const rolePermsCount = permissions.filter(p => p.role === role).length;
                       const isAdmin = role === 'administrador';
                       
                       return (
                         <div key={role} className="flex items-center justify-between p-2 border rounded-lg">
                           <div className="flex items-center gap-2">
-                            <Badge variant="outline">
-                              {roleLabels[role] || role}
+                            <Badge variant={rolePermsCount > 0 ? "outline" : "secondary"}>
+                              {getRoleLabel(role)}
                             </Badge>
                             <span className="text-xs text-muted-foreground">
-                              {rolePermsCount} permissões
+                              {rolePermsCount > 0 ? `${rolePermsCount} permissões` : 'Não configurado'}
                             </span>
                           </div>
-                          {!isAdmin && rolePermsCount > 0 && (
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              className="text-destructive hover:text-destructive hover:bg-destructive/10"
-                              onClick={() => {
-                                setRoleToDelete(role);
-                                setDeleteRoleDialog(true);
-                              }}
-                            >
-                              <Trash2 className="h-4 w-4" />
-                            </Button>
-                          )}
-                          {isAdmin && (
-                            <Badge variant="secondary" className="text-xs">
-                              Protegido
-                            </Badge>
-                          )}
+                          <div className="flex items-center gap-2">
+                            {rolePermsCount === 0 && !isAdmin && (
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={async () => {
+                                  await ensureAllPermissionsExist(role);
+                                  toast.success(`Permissões criadas para ${getRoleLabel(role)}`);
+                                  refetchRoles();
+                                  window.location.reload();
+                                }}
+                              >
+                                <Plus className="h-3 w-3 mr-1" />
+                                Criar
+                              </Button>
+                            )}
+                            {!isAdmin && rolePermsCount > 0 && (
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="text-destructive hover:text-destructive hover:bg-destructive/10"
+                                onClick={() => {
+                                  setRoleToDelete(role);
+                                  setDeleteRoleDialog(true);
+                                }}
+                              >
+                                <Trash2 className="h-4 w-4" />
+                              </Button>
+                            )}
+                            {isAdmin && (
+                              <Badge variant="secondary" className="text-xs">
+                                Protegido
+                              </Badge>
+                            )}
+                          </div>
                         </div>
                       );
                     })}
@@ -295,7 +317,7 @@ export default function Permissions() {
               <DialogHeader>
                 <DialogTitle>Excluir Permissões do Perfil</DialogTitle>
                 <DialogDescription>
-                  Tem certeza que deseja excluir todas as permissões de <strong>{roleToDelete && roleLabels[roleToDelete]}</strong>?
+                  Tem certeza que deseja excluir todas as permissões de <strong>{roleToDelete && getRoleLabel(roleToDelete)}</strong>?
                   Esta ação não pode ser desfeita.
                 </DialogDescription>
               </DialogHeader>
@@ -346,15 +368,15 @@ export default function Permissions() {
         </CardHeader>
         <CardContent>
           <Tabs value={activeRole} onValueChange={(v) => setActiveRole(v as AppRole)}>
-            <TabsList className="grid w-full grid-cols-4">
-              {AVAILABLE_ROLES.map((role) => (
+            <TabsList className={`grid w-full`} style={{ gridTemplateColumns: `repeat(${activeRoles.length}, 1fr)` }}>
+              {activeRoles.map((role) => (
                 <TabsTrigger key={role} value={role}>
-                  {roleLabels[role] || role}
+                  {getRoleLabel(role)}
                 </TabsTrigger>
               ))}
             </TabsList>
 
-            {AVAILABLE_ROLES.map((role) => {
+            {activeRoles.map((role) => {
               const permissionMatrix = generateFullPermissionMatrix(role);
               const allPermsForRole = Object.values(permissionMatrix).flat();
               const activeCount = allPermsForRole.filter(p => p.ativo).length;
@@ -366,7 +388,7 @@ export default function Permissions() {
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-2">
                       <Badge variant="outline" className="text-sm">
-                        {roleLabels[role] || role}
+                        {getRoleLabel(role)}
                       </Badge>
                       <span className="text-sm text-muted-foreground">
                         {activeCount} de {totalCount} permissões ativas

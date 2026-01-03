@@ -29,11 +29,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Plus, Pencil, Trash2, User, Image as ImageIcon } from 'lucide-react';
+import { Plus, Pencil, Trash2, User, Image as ImageIcon, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { MediaSelector } from '@/components/editor/MediaSelector';
+import { useConfiguredRoles, getRoleLabel } from '@/hooks/useConfiguredRoles';
+import { Database } from '@/integrations/supabase/types';
 
-type UserRole = 'administrador' | 'colunista' | 'membro' | 'gestor_conteudo' | 'cliente';
+type UserRole = Database["public"]["Enums"]["app_role"];
 
 interface Profile {
   id: string;
@@ -55,6 +57,7 @@ export default function Users() {
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingUser, setEditingUser] = useState<Profile | null>(null);
+  const { data: configuredRoles = [], isLoading: isLoadingRoles } = useConfiguredRoles();
   
   // Estados do formulário
   const [formData, setFormData] = useState({
@@ -67,10 +70,17 @@ export default function Users() {
     empresa: '',
     site_empresa: '',
     intencao_cadastro: '',
-    role: 'membro' as UserRole,
+    role: 'administrador' as UserRole,
   });
   const [mediaSelectorOpen, setMediaSelectorOpen] = useState(false);
   const [roleSelectOpen, setRoleSelectOpen] = useState(false);
+
+  // Define role padrão quando roles carregam
+  useEffect(() => {
+    if (configuredRoles.length > 0 && !editingUser) {
+      setFormData(prev => ({ ...prev, role: configuredRoles[0].id }));
+    }
+  }, [configuredRoles, editingUser]);
 
   // Carrega usuários ao montar o componente
   useEffect(() => {
@@ -134,7 +144,7 @@ export default function Users() {
       empresa: '',
       site_empresa: '',
       intencao_cadastro: '',
-      role: 'membro',
+      role: configuredRoles.length > 0 ? configuredRoles[0].id : 'administrador',
     });
     setDialogOpen(true);
   };
@@ -309,20 +319,20 @@ export default function Users() {
       return <span className="inline-flex px-2 py-1 rounded-full text-xs bg-gray-100 text-gray-800">Sem papel</span>;
     }
     
-    switch (user.role) {
-      case 'administrador':
-        return <span className="inline-flex px-2 py-1 rounded-full text-xs bg-purple-100 text-purple-800">Administrador</span>;
-      case 'colunista':
-        return <span className="inline-flex px-2 py-1 rounded-full text-xs bg-blue-100 text-blue-800">Colunista</span>;
-      case 'membro':
-        return <span className="inline-flex px-2 py-1 rounded-full text-xs bg-green-100 text-green-800">Membro</span>;
-      case 'gestor_conteudo':
-        return <span className="inline-flex px-2 py-1 rounded-full text-xs bg-orange-100 text-orange-800">Gestor de Conteúdo</span>;
-      case 'cliente':
-        return <span className="inline-flex px-2 py-1 rounded-full text-xs bg-teal-100 text-teal-800">Cliente</span>;
-      default:
-        return <span className="inline-flex px-2 py-1 rounded-full text-xs bg-gray-100 text-gray-800">{user.role}</span>;
-    }
+    const roleColorMap: Record<string, string> = {
+      administrador: 'bg-purple-100 text-purple-800',
+      colunista: 'bg-blue-100 text-blue-800',
+      membro: 'bg-green-100 text-green-800',
+      gestor_conteudo: 'bg-orange-100 text-orange-800',
+      cliente: 'bg-teal-100 text-teal-800',
+    };
+    
+    const colorClass = roleColorMap[user.role] || 'bg-gray-100 text-gray-800';
+    return (
+      <span className={`inline-flex px-2 py-1 rounded-full text-xs ${colorClass}`}>
+        {getRoleLabel(user.role)}
+      </span>
+    );
   };
 
   if (loading) {
@@ -580,22 +590,34 @@ export default function Users() {
             {/* Campo Tipo de Usuário */}
             <div className="space-y-2">
               <Label htmlFor="role">Tipo de Usuário *</Label>
-              <Select
-                open={roleSelectOpen}
-                onOpenChange={setRoleSelectOpen}
-                value={formData.role}
-                onValueChange={(value: UserRole) => setFormData({ ...formData, role: value })}
-              >
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent className="bg-popover border shadow-md z-[100] pointer-events-auto">
-                  <SelectItem value="administrador">Administrador</SelectItem>
-                  <SelectItem value="gestor_conteudo">Gestor de Conteúdo</SelectItem>
-                  <SelectItem value="colunista">Colunista</SelectItem>
-                  <SelectItem value="cliente">Cliente</SelectItem>
-                </SelectContent>
-              </Select>
+              {isLoadingRoles ? (
+                <div className="flex items-center gap-2 text-muted-foreground">
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  Carregando roles...
+                </div>
+              ) : configuredRoles.length === 0 ? (
+                <p className="text-sm text-amber-600">
+                  Nenhum perfil configurado. Configure permissões primeiro.
+                </p>
+              ) : (
+                <Select
+                  open={roleSelectOpen}
+                  onOpenChange={setRoleSelectOpen}
+                  value={formData.role}
+                  onValueChange={(value: UserRole) => setFormData({ ...formData, role: value })}
+                >
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className="bg-popover border shadow-md z-[100] pointer-events-auto">
+                    {configuredRoles.map(role => (
+                      <SelectItem key={role.id} value={role.id}>
+                        {role.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              )}
             </div>
           </div>
 
@@ -603,7 +625,7 @@ export default function Users() {
             <Button variant="outline" onClick={() => setDialogOpen(false)}>
               Cancelar
             </Button>
-            <Button onClick={handleSave}>
+            <Button onClick={handleSave} disabled={configuredRoles.length === 0}>
               {editingUser ? 'Atualizar' : 'Criar'}
             </Button>
           </DialogFooter>
