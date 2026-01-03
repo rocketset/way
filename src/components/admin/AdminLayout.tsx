@@ -109,6 +109,9 @@ const FALLBACK_MENU: DynamicMenuItem[] = [
   { icon: HeadphonesIcon, label: 'Atendimento', path: '/admin/support', roles: ['administrador', 'gestor_conteudo', 'colunista', 'membro', 'cliente'] },
 ];
 
+// Roles que devem aparecer no "Visualizar como" do Admin
+const ADMIN_VIEW_ROLES = ['gestor_conteudo', 'cliente'] as const;
+
 // Componente da Sidebar com hover expand
 function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
   const { signOut, user, isAdmin, viewMode, setViewMode, effectiveRole, userRole } = useAuth();
@@ -122,6 +125,13 @@ function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
   
   // Carrega menu dinâmico do banco de dados
   const { menuItems: dynamicMenu, isLoading: menuLoading } = useDynamicMenu();
+
+  // Sanitiza viewMode: apenas Gestor e Cliente são simuláveis
+  useEffect(() => {
+    if (viewMode && !ADMIN_VIEW_ROLES.includes(viewMode as any)) {
+      setViewMode(null);
+    }
+  }, [viewMode, setViewMode]);
   
   // Usa menu dinâmico se disponível, senão fallback
   const menuItems = useMemo(() => {
@@ -288,30 +298,15 @@ function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
                       <span>Visão Real (Admin)</span>
                     </div>
                   </SelectItem>
-                  <SelectItem value="colunista">
-                    <div className="flex items-center gap-2">
-                      {getRoleIcon('colunista')}
-                      <span>Colunista</span>
-                    </div>
-                  </SelectItem>
-                  <SelectItem value="membro">
-                    <div className="flex items-center gap-2">
-                      {getRoleIcon('membro')}
-                      <span>Membro</span>
-                    </div>
-                  </SelectItem>
-                  <SelectItem value="cliente">
-                    <div className="flex items-center gap-2">
-                      {getRoleIcon('cliente')}
-                      <span>Cliente</span>
-                    </div>
-                  </SelectItem>
-                  <SelectItem value="gestor_conteudo">
-                    <div className="flex items-center gap-2">
-                      {getRoleIcon('gestor_conteudo')}
-                      <span>Gestor de Conteúdo</span>
-                    </div>
-                  </SelectItem>
+
+                  {ADMIN_VIEW_ROLES.map((role) => (
+                    <SelectItem key={role} value={role}>
+                      <div className="flex items-center gap-2">
+                        {getRoleIcon(role)}
+                        <span>{getRoleLabel(role)}</span>
+                      </div>
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
               {viewMode && (
@@ -671,38 +666,23 @@ function MobileSidebar() {
                   <SelectTrigger className="w-full bg-background">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent className="bg-popover border shadow-md z-[100] pointer-events-auto">
-                    <SelectItem value="real">
-                      <div className="flex items-center gap-2">
-                        {getRoleIcon(null)}
-                        <span>Visão Real (Admin)</span>
-                      </div>
-                    </SelectItem>
-                    <SelectItem value="colunista">
-                      <div className="flex items-center gap-2">
-                        {getRoleIcon('colunista')}
-                        <span>Colunista</span>
-                      </div>
-                    </SelectItem>
-                    <SelectItem value="membro">
-                      <div className="flex items-center gap-2">
-                        {getRoleIcon('membro')}
-                        <span>Membro</span>
-                      </div>
-                    </SelectItem>
-                    <SelectItem value="cliente">
-                      <div className="flex items-center gap-2">
-                        {getRoleIcon('cliente')}
-                        <span>Cliente</span>
-                      </div>
-                    </SelectItem>
-                    <SelectItem value="gestor_conteudo">
-                      <div className="flex items-center gap-2">
-                        {getRoleIcon('gestor_conteudo')}
-                        <span>Gestor de Conteúdo</span>
-                      </div>
-                    </SelectItem>
-                  </SelectContent>
+                   <SelectContent className="bg-popover border shadow-md z-[100] pointer-events-auto">
+                     <SelectItem value="real">
+                       <div className="flex items-center gap-2">
+                         {getRoleIcon(null)}
+                         <span>Visão Real (Admin)</span>
+                       </div>
+                     </SelectItem>
+
+                     {ADMIN_VIEW_ROLES.map((role) => (
+                       <SelectItem key={role} value={role}>
+                         <div className="flex items-center gap-2">
+                           {getRoleIcon(role)}
+                           <span>{getRoleLabel(role)}</span>
+                         </div>
+                       </SelectItem>
+                     ))}
+                   </SelectContent>
                 </Select>
                 {viewMode && (
                   <p className="text-xs text-muted-foreground">
