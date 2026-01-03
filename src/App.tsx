@@ -87,6 +87,10 @@ import FormSubjects from "./pages/admin/FormSubjects";
 import FormBuilder from "./pages/admin/FormBuilder";
 import AdminVagas from "./pages/admin/carreiras/Vagas";
 import AdminCandidatos from "./pages/admin/carreiras/Candidatos";
+import PopupsList from "./pages/admin/popups/List";
+import PopupEditor from "./pages/admin/popups/Editor";
+import PopupLeads from "./pages/admin/popups/Leads";
+import { PopupDisplay } from "./components/PopupDisplay";
 
 // Configuração do React Query
 const queryClient = new QueryClient();
@@ -104,6 +108,7 @@ const App = () => (
             <ScrollToTop />
             <CookieConsent />
             <WhatsAppFloatingButton />
+            <PopupDisplay />
           <Routes>
           {/* Rotas públicas do site */}
           <Route path="/" element={<Index />} />
@@ -211,6 +216,12 @@ const App = () => (
             
             {/* SEO */}
             <Route path="seo" element={<SEO />} />
+            
+            {/* Popups */}
+            <Route path="popups" element={<PopupsList />} />
+            <Route path="popups/novo" element={<PopupEditor />} />
+            <Route path="popups/editar/:id" element={<PopupEditor />} />
+            <Route path="popups/leads" element={<PopupLeads />} />
             
             {/* Assuntos dos Formulários */}
             <Route path="form-subjects" element={<FormSubjects />} />

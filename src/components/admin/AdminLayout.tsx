@@ -173,6 +173,16 @@ const menuItems = [
     ]
   },
   { 
+    icon: Eye, 
+    label: 'Popups', 
+    path: '/admin/popups',
+    roles: ['administrador', 'gestor_conteudo'],
+    subItems: [
+      { label: 'Gerenciar', path: '/admin/popups' },
+      { label: 'Leads', path: '/admin/popups/leads' },
+    ]
+  },
+  { 
     icon: Settings, 
     label: 'Sistema', 
     path: '/admin/google-integrations',
