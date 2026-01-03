@@ -40,11 +40,10 @@ const Index = () => {
       <div className="fixed inset-0 bg-gradient-to-r from-black/60 via-transparent to-transparent pointer-events-none" />
 
       <Header />
-      {/* Espaçador para compensar o header fixo */}
-      <div aria-hidden className="h-20" />
       
       {/* Sections with stagger animation */}
       <div className="relative z-10">
+        <HomeBannerSlider />
         <div className="animate-fade-in" style={{
         animationDelay: '0.1s'
       }}>
