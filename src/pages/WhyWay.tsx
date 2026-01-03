@@ -297,11 +297,9 @@ const WhyWay = () => {
                   </span>
                 </h2>
                 <div className="space-y-4 text-lg text-muted-foreground">
-                  <p>Pablo Ramon Fabricio  – Especialista em E-commerce e Transformação Digital, com mais de 9 anos de experiência na implantação, evolução e escala de operações online em todo o Brasil. 
-Com uma trajetória marcada pela execução de mais de 180 projetos de e-commerce, Pablo já ajudou indústrias, redes de lojas e grandes varejistas a migrarem e estruturarem suas vendas digitais com consistência, previsibilidade e performance. </p>
+                  <p>Pablo Ramon Fabricio | Especialista em E-commerce e Transformação Digital, com mais de 9 anos de experiência na implantação, evolução e escala de operações online em todo o Brasil. Com uma trajetória marcada pela execução de mais de 180 projetos de e-commerce, Pablo já ajudou indústrias, redes de lojas e grandes varejistas a migrarem e estruturarem suas vendas digitais com consistência, previsibilidade e performance.</p>
                   <p>Fundador e CEO da Way E-commerce, lidera um time multidisciplinar que atua desde o planejamento estratégico e integração tecnológica até a gestão de performance e automação de marketing, conectando tecnologia, processos e pessoas em uma metodologia própria e validada.</p>
-                  <p>Além da atuação à frente da Way, Pablo é mentor de startups e consultor credenciado do Sebrae, apoiando empresas em jornadas de inovação, digitalização e crescimento sustentável.
-Hoje, com presença nacional e foco em resultados reais, a Way transforma operações físicas em negócios digitais sólidos e escalávei</p>
+                  <p>Além da atuação à frente da Way, Pablo é mentor de startups e consultor credenciado do Sebrae, apoiando empresas em jornadas de inovação, digitalização e crescimento sustentável. Hoje, com presença nacional e foco em resultados reais, a Way transforma operações físicas em negócios digitais sólidos e escalávei</p>
                 </div>
               </div>
 
