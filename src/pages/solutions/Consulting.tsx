@@ -2,28 +2,48 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CtaResultsSection from "@/components/CtaResultsSection";
 import { Button } from "@/components/ui/button";
-import { Target, TrendingUp, Store, Brain, Network, ArrowRight, Check, Plus } from "lucide-react";
+import { Target, TrendingUp, ArrowRight, Check, Plus, Brain, Compass, Settings, Users, BarChart3 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import consultingHero from "@/assets/consulting-hero.png";
 const Consulting = () => {
   const [hoveredService, setHoveredService] = useState<number | null>(null);
-  const servicesList = [{
-    icon: Target,
-    label: "Diagnóstico e Direcionamento Estratégico"
-  }, {
-    icon: Store,
-    label: "Plataforma, Integrações e Arquitetura"
-  }, {
-    icon: TrendingUp,
-    label: "Performance e Crescimento"
-  }, {
-    icon: Brain,
-    label: "Marketplaces e Expansão de Canais"
-  }, {
-    icon: Network,
-    label: "Estratégia Omnichannel"
-  }];
+  
+  const servicesListHero = [
+    { icon: Brain, label: "Diagnóstico Estratégico" },
+    { icon: Compass, label: "Direcionamento e Roadmap" },
+    { icon: Settings, label: "Decisão de Plataforma e Arquitetura" },
+    { icon: Users, label: "Estruturação de Operação e Times" },
+    { icon: BarChart3, label: "Análise de Performance e Crescimento" },
+  ];
+
+  const areasAtuacao = [
+    {
+      icon: Brain,
+      label: "Diagnóstico Estratégico",
+      description: "Análise profunda da operação digital, tecnologia, canais e processos para identificar gargalos e oportunidades."
+    },
+    {
+      icon: Compass,
+      label: "Direcionamento e Roadmap",
+      description: "Definição de prioridades, etapas e caminhos claros para a evolução do e-commerce."
+    },
+    {
+      icon: Settings,
+      label: "Decisão de Plataforma e Arquitetura",
+      description: "Apoio na escolha da plataforma, integrações e arquitetura mais adequadas ao modelo de negócio e ao momento da operação."
+    },
+    {
+      icon: Users,
+      label: "Estruturação de Operação e Times",
+      description: "Orientação para organização de processos, papéis e estrutura interna do e-commerce."
+    },
+    {
+      icon: BarChart3,
+      label: "Análise de Performance e Crescimento",
+      description: "Leitura estratégica de dados e indicadores para apoiar decisões e evolução contínua da operação."
+    },
+  ];
   const howWeWork = [
     "Diagnóstico completo da operação, tecnologia, canais e processos",
     "Definição da plataforma de e-commerce e integrações ideais",
@@ -63,7 +83,7 @@ const Consulting = () => {
                 </div>
                 
                 <div className="grid grid-cols-1 gap-4">
-                  {servicesList.map((service, index) => <div key={index} className="group flex items-center gap-3 p-3 rounded-xl bg-card border border-border hover:border-primary/50 transition-all duration-300 hover:shadow-xl hover:shadow-primary/10 hover:scale-105 cursor-pointer animate-fade-in relative overflow-hidden" style={{
+                  {servicesListHero.map((service, index) => <div key={index} className="group flex items-center gap-3 p-3 rounded-xl bg-card border border-border hover:border-primary/50 transition-all duration-300 hover:shadow-xl hover:shadow-primary/10 hover:scale-105 cursor-pointer animate-fade-in relative overflow-hidden" style={{
                   animationDelay: `${index * 0.1}s`
                 }}>
                       <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/5 to-primary/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
@@ -157,18 +177,21 @@ const Consulting = () => {
               <p className="text-muted-foreground max-w-2xl mx-auto">Nossos pilares de consultoria para estruturar e escalar sua operação</p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
-              {servicesList.map((service, index) => <div key={index} className="group flex flex-col gap-4 p-6 bg-card border border-border rounded-2xl hover:border-primary/50 transition-all duration-500 hover:shadow-xl hover:shadow-primary/10 animate-fade-in relative overflow-hidden" style={{
+              {areasAtuacao.map((area, index) => <div key={index} className="group flex flex-col gap-4 p-6 bg-card border border-border rounded-2xl hover:border-primary/50 transition-all duration-500 hover:shadow-xl hover:shadow-primary/10 animate-fade-in relative overflow-hidden" style={{
               animationDelay: `${index * 0.1}s`
             }} onMouseEnter={() => setHoveredService(index)} onMouseLeave={() => setHoveredService(null)}>
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                   
                   <div className="relative z-10">
                     <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 group-hover:scale-110 transition-all duration-300">
-                      <service.icon className="w-6 h-6 text-primary" />
+                      <area.icon className="w-6 h-6 text-primary" />
                     </div>
-                    <h3 className="text-lg font-bold text-foreground group-hover:text-primary transition-colors duration-300">
-                      {service.label}
+                    <h3 className="text-lg font-bold text-foreground group-hover:text-primary transition-colors duration-300 mb-2">
+                      {area.label}
                     </h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      {area.description}
+                    </p>
                   </div>
                 </div>)}
             </div>
