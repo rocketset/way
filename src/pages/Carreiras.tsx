@@ -252,7 +252,7 @@ export default function Carreiras() {
                   </p>
                   <Button onClick={() => openForm(null)}>
                     <FileText className="w-4 h-4 mr-2" />
-                    Enviar currículo espontâneo
+                    Enviar currículo | Cadastro reserva
                   </Button>
                 </CardContent>
               </Card>
