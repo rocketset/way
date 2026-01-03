@@ -1,19 +1,14 @@
 import { Button } from "@/components/ui/button";
 import cleanHeroBg from "@/assets/clean-hero-bg.jpg";
 import ClientsCarousel from "@/components/ClientsCarousel";
-
 const HomeBannerSlider = () => {
-  return (
-    <section id="inicio" className="relative w-full overflow-hidden bg-background">
+  return <section id="inicio" className="relative w-full overflow-hidden bg-background">
       {/* Background image */}
       <div className="relative w-full min-h-[85vh] flex items-center justify-center">
         {/* Background image with overlay */}
-        <div
-          style={{
-            backgroundImage: `url(${cleanHeroBg})`,
-          }}
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat my-[50px]"
-        >
+        <div style={{
+        backgroundImage: `url(${cleanHeroBg})`
+      }} className="absolute inset-0 bg-cover bg-center bg-no-repeat my-[50px]">
           <div className="absolute inset-0 bg-black/60 py-0 my-0"></div>
         </div>
 
@@ -32,12 +27,8 @@ const HomeBannerSlider = () => {
 
             {/* CTA Button */}
             <div className="pt-6">
-              <Button
-                size="lg"
-                className="text-base sm:text-lg px-10 font-normal shadow-2xl hover:shadow-primary/30 transition-all duration-300 hover:scale-105"
-                asChild
-              >
-                <a href="/contact">Quero acelerar meu negócio</a>
+              <Button size="lg" className="text-base sm:text-lg px-10 font-normal shadow-2xl hover:shadow-primary/30 transition-all duration-300 hover:scale-105" asChild>
+                <a href="https://wa.me/message/5AGVY5WZR56KA1">Fale agora com um consultor         </a>
               </Button>
             </div>
 
@@ -55,8 +46,6 @@ const HomeBannerSlider = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default HomeBannerSlider;
