@@ -63,12 +63,11 @@ import { ThemeSelector } from './ThemeSelector';
 const FALLBACK_MENU: DynamicMenuItem[] = [
   { icon: LayoutDashboard, label: 'Dashboard', path: '/admin/member-dashboard', roles: ['membro', 'cliente'] },
   { icon: LayoutDashboard, label: 'Dashboard', path: '/admin', roles: ['administrador', 'gestor_conteudo', 'colunista'] },
-  { icon: GraduationCap, label: 'Way Academy', path: '/admin/academy', roles: ['administrador', 'gestor_conteudo', 'membro', 'cliente'], hasCategories: true, subItems: [
+  { icon: GraduationCap, label: 'Way Academy', path: '/admin/academy', roles: ['administrador', 'gestor_conteudo', 'membro', 'cliente'], subItems: [
     { label: 'Conteúdos', path: '/admin/academy' },
-    { label: 'Lista de Fornecedores', path: '/admin/academy/suppliers' },
+    { label: 'Guias e Materiais', path: '/admin/academy/materials' },
     { label: 'Gerenciar Conteúdos', path: '/admin/academy/manage', roles: ['administrador', 'gestor_conteudo'] },
     { label: 'Gerenciar Categorias', path: '/admin/academy/categories', roles: ['administrador'] },
-    { label: 'Configurações', path: '/admin/academy/settings', roles: ['administrador'] },
   ]},
   { icon: Mail, label: 'Leads', path: '/admin/leads', roles: ['administrador', 'gestor_conteudo'] },
   { icon: FileText, label: 'Blog Way', path: '/admin/blog-way', roles: ['colunista', 'cliente'] },
