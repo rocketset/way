@@ -61,6 +61,7 @@ import AcademyManage from "./pages/admin/academy/Manage";
 import AcademyCategories from "./pages/admin/academy/Categories";
 import AcademySettings from "./pages/admin/academy/Settings";
 import AcademySuppliers from "./pages/admin/academy/Suppliers";
+import AcademyMaterials from "./pages/admin/academy/Materials";
 import AcademyContent from "./pages/admin/AcademyContent";
 import BlogWay from "./pages/admin/BlogWay";
 import Account from "./pages/admin/Account";
@@ -191,6 +192,7 @@ const App = () => (
             
             {/* Novas seções */}
             <Route path="academy" element={<Academy />} />
+            <Route path="academy/materials" element={<AcademyMaterials />} />
             <Route path="academy/suppliers" element={<AcademySuppliers />} />
             <Route path="academy/manage" element={<AcademyManage />} />
             <Route path="academy/categories" element={<AcademyCategories />} />
