@@ -1419,6 +1419,169 @@ export type Database = {
           },
         ]
       }
+      popup_leads: {
+        Row: {
+          criado_em: string
+          dados_extras: Json | null
+          email: string | null
+          id: string
+          nome: string | null
+          popup_id: string
+          telefone: string | null
+        }
+        Insert: {
+          criado_em?: string
+          dados_extras?: Json | null
+          email?: string | null
+          id?: string
+          nome?: string | null
+          popup_id: string
+          telefone?: string | null
+        }
+        Update: {
+          criado_em?: string
+          dados_extras?: Json | null
+          email?: string | null
+          id?: string
+          nome?: string | null
+          popup_id?: string
+          telefone?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "popup_leads_popup_id_fkey"
+            columns: ["popup_id"]
+            isOneToOne: false
+            referencedRelation: "popups"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      popup_views: {
+        Row: {
+          criado_em: string
+          id: string
+          popup_id: string
+          user_id: string | null
+          visitor_id: string
+        }
+        Insert: {
+          criado_em?: string
+          id?: string
+          popup_id: string
+          user_id?: string | null
+          visitor_id: string
+        }
+        Update: {
+          criado_em?: string
+          id?: string
+          popup_id?: string
+          user_id?: string | null
+          visitor_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "popup_views_popup_id_fkey"
+            columns: ["popup_id"]
+            isOneToOne: false
+            referencedRelation: "popups"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      popups: {
+        Row: {
+          abrir_nova_aba: boolean | null
+          ativo: boolean
+          atualizado_em: string
+          campos_formulario: Json | null
+          cor_botao: string | null
+          cor_fundo: string | null
+          cor_texto: string | null
+          cor_texto_botao: string | null
+          criado_em: string
+          data_fim: string | null
+          data_inicio: string | null
+          delay_segundos: number | null
+          descricao: string | null
+          exibir_para_logados: boolean | null
+          exibir_para_visitantes: boolean | null
+          exibir_uma_vez: boolean | null
+          gatilho: string
+          id: string
+          imagem_url: string | null
+          link_botao: string | null
+          nome: string
+          paginas_alvo: Json | null
+          prioridade: number | null
+          subtitulo: string | null
+          texto_botao: string | null
+          texto_sucesso: string | null
+          tipo: string
+          titulo: string | null
+        }
+        Insert: {
+          abrir_nova_aba?: boolean | null
+          ativo?: boolean
+          atualizado_em?: string
+          campos_formulario?: Json | null
+          cor_botao?: string | null
+          cor_fundo?: string | null
+          cor_texto?: string | null
+          cor_texto_botao?: string | null
+          criado_em?: string
+          data_fim?: string | null
+          data_inicio?: string | null
+          delay_segundos?: number | null
+          descricao?: string | null
+          exibir_para_logados?: boolean | null
+          exibir_para_visitantes?: boolean | null
+          exibir_uma_vez?: boolean | null
+          gatilho?: string
+          id?: string
+          imagem_url?: string | null
+          link_botao?: string | null
+          nome: string
+          paginas_alvo?: Json | null
+          prioridade?: number | null
+          subtitulo?: string | null
+          texto_botao?: string | null
+          texto_sucesso?: string | null
+          tipo?: string
+          titulo?: string | null
+        }
+        Update: {
+          abrir_nova_aba?: boolean | null
+          ativo?: boolean
+          atualizado_em?: string
+          campos_formulario?: Json | null
+          cor_botao?: string | null
+          cor_fundo?: string | null
+          cor_texto?: string | null
+          cor_texto_botao?: string | null
+          criado_em?: string
+          data_fim?: string | null
+          data_inicio?: string | null
+          delay_segundos?: number | null
+          descricao?: string | null
+          exibir_para_logados?: boolean | null
+          exibir_para_visitantes?: boolean | null
+          exibir_uma_vez?: boolean | null
+          gatilho?: string
+          id?: string
+          imagem_url?: string | null
+          link_botao?: string | null
+          nome?: string
+          paginas_alvo?: Json | null
+          prioridade?: number | null
+          subtitulo?: string | null
+          texto_botao?: string | null
+          texto_sucesso?: string | null
+          tipo?: string
+          titulo?: string | null
+        }
+        Relationships: []
+      }
       post_categories: {
         Row: {
           category_id: string
