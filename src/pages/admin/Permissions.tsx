@@ -52,10 +52,38 @@ const permissaoLabels: Record<string, string> = {
 const AVAILABLE_ROLES: AppRole[] = ['administrador', 'gestor_conteudo', 'colunista', 'cliente'];
 
 export default function Permissions() {
-  const { permissions, isLoading, updatePermission, createPermission, ensureAllPermissionsExist } = useRolePermissions();
+  const { permissions, isLoading, updatePermission, createPermission, deletePermission, ensureAllPermissionsExist } = useRolePermissions();
   const [activeRole, setActiveRole] = useState<AppRole>('administrador');
   const [isInitializing, setIsInitializing] = useState(false);
   const [newRoleDialog, setNewRoleDialog] = useState(false);
+  const [deleteRoleDialog, setDeleteRoleDialog] = useState(false);
+  const [roleToDelete, setRoleToDelete] = useState<AppRole | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  // Excluir todas as permissões de um perfil
+  const handleDeleteRolePermissions = async (role: AppRole) => {
+    if (role === 'administrador') {
+      toast.error('Não é possível excluir as permissões do Administrador');
+      return;
+    }
+    
+    setIsDeleting(true);
+    try {
+      const rolePerms = permissions.filter(p => p.role === role);
+      for (const perm of rolePerms) {
+        await supabase.from('role_permissions').delete().eq('id', perm.id);
+      }
+      toast.success(`Todas as permissões de ${roleLabels[role]} foram excluídas`);
+      setDeleteRoleDialog(false);
+      setRoleToDelete(null);
+      window.location.reload();
+    } catch (error) {
+      console.error(error);
+      toast.error('Erro ao excluir permissões');
+    } finally {
+      setIsDeleting(false);
+    }
+  };
 
   // Gerar matriz completa de permissões para cada role
   const generateFullPermissionMatrix = (role: AppRole) => {
@@ -196,21 +224,50 @@ export default function Permissions() {
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
-                <DialogTitle>Criar Novo Perfil de Usuário</DialogTitle>
+                <DialogTitle>Gerenciar Perfis de Usuário</DialogTitle>
                 <DialogDescription>
                   Os perfis de usuário são definidos no banco de dados como um enum.
-                  Para adicionar um novo perfil, é necessário uma migração no banco.
                 </DialogDescription>
               </DialogHeader>
               <div className="py-4 space-y-4">
                 <div className="bg-muted p-4 rounded-lg">
                   <p className="text-sm font-medium mb-2">Perfis Atuais:</p>
-                  <div className="flex flex-wrap gap-2">
-                    {AVAILABLE_ROLES.map((role) => (
-                      <Badge key={role} variant="outline">
-                        {roleLabels[role] || role}
-                      </Badge>
-                    ))}
+                  <div className="space-y-2">
+                    {AVAILABLE_ROLES.map((role) => {
+                      const rolePermsCount = permissions.filter(p => p.role === role).length;
+                      const isAdmin = role === 'administrador';
+                      
+                      return (
+                        <div key={role} className="flex items-center justify-between p-2 border rounded-lg">
+                          <div className="flex items-center gap-2">
+                            <Badge variant="outline">
+                              {roleLabels[role] || role}
+                            </Badge>
+                            <span className="text-xs text-muted-foreground">
+                              {rolePermsCount} permissões
+                            </span>
+                          </div>
+                          {!isAdmin && rolePermsCount > 0 && (
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="text-destructive hover:text-destructive hover:bg-destructive/10"
+                              onClick={() => {
+                                setRoleToDelete(role);
+                                setDeleteRoleDialog(true);
+                              }}
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          )}
+                          {isAdmin && (
+                            <Badge variant="secondary" className="text-xs">
+                              Protegido
+                            </Badge>
+                          )}
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
                 <div className="bg-amber-50 dark:bg-amber-950 border border-amber-200 dark:border-amber-800 p-4 rounded-lg">
@@ -226,11 +283,55 @@ export default function Permissions() {
               </div>
               <DialogFooter>
                 <Button variant="outline" onClick={() => setNewRoleDialog(false)}>
-                  Entendi
+                  Fechar
                 </Button>
               </DialogFooter>
             </DialogContent>
           </Dialog>
+
+          {/* Dialog de confirmação de exclusão */}
+          <Dialog open={deleteRoleDialog} onOpenChange={setDeleteRoleDialog}>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Excluir Permissões do Perfil</DialogTitle>
+                <DialogDescription>
+                  Tem certeza que deseja excluir todas as permissões de <strong>{roleToDelete && roleLabels[roleToDelete]}</strong>?
+                  Esta ação não pode ser desfeita.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="py-4">
+                <div className="bg-destructive/10 border border-destructive/20 p-4 rounded-lg">
+                  <p className="text-sm text-destructive">
+                    Ao excluir as permissões, usuários com este perfil perderão todos os acessos configurados.
+                    Você poderá recriar as permissões depois clicando em "Criar Permissões Faltantes".
+                  </p>
+                </div>
+              </div>
+              <DialogFooter className="gap-2">
+                <Button variant="outline" onClick={() => setDeleteRoleDialog(false)} disabled={isDeleting}>
+                  Cancelar
+                </Button>
+                <Button 
+                  variant="destructive" 
+                  onClick={() => roleToDelete && handleDeleteRolePermissions(roleToDelete)}
+                  disabled={isDeleting}
+                >
+                  {isDeleting ? (
+                    <>
+                      <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                      Excluindo...
+                    </>
+                  ) : (
+                    <>
+                      <Trash2 className="h-4 w-4 mr-2" />
+                      Excluir Permissões
+                    </>
+                  )}
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+
           <Shield className="h-8 w-8 text-primary" />
         </div>
       </div>
