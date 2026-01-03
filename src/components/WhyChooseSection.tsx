@@ -12,7 +12,7 @@ const WhyChooseSection = ({
     label: "Projetos B2B, B2C e B2B2C"
   }, {
     number: "1 ano",
-    label: "com soluções de ponta a ponta"
+    label: "Com soluções de ponta a ponta"
   }, {
     number: "flag",
     label: "Atendemos todo o Brasil",
