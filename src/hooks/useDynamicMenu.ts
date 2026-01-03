@@ -79,8 +79,8 @@ export function useDynamicMenu() {
       if (error) throw error;
       return data as DbMenuItem[];
     },
-    staleTime: 1000 * 60 * 5, // Cache por 5 minutos
-    gcTime: 1000 * 60 * 10,
+    staleTime: 1000 * 30, // Cache por 30 segundos
+    gcTime: 1000 * 60,
   });
 
   const menuItems = useMemo(() => {
