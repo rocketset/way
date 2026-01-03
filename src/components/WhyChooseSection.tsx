@@ -43,7 +43,7 @@ const WhyChooseSection = ({
               <span className="text-primary text-3xl plus-rotate inline-block">+</span>
             </div>
             {/* Stats Section */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16 mt-12">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8 mt-8">
               {stats.map((stat, index) => <div key={index} className="group relative bg-card border border-border rounded-2xl p-8 text-center hover:border-primary/50 transition-all duration-500 hover-lift cursor-pointer" style={{
               animationDelay: `${index * 0.1}s`
             }}>
@@ -64,10 +64,10 @@ const WhyChooseSection = ({
                 </div>)}
             </div>
 
-            <p className="text-base max-w-4xl mx-auto leading-relaxed mt-12 text-gray-200 md:text-xl">Implantamos, estruturamos e aceleramos operações de e-commerce para indústrias, redes de lojas e varejistas. Atuamos da decisão à execução, conectando estratégia, tecnologia e performance para sustentar a escala.</p>
+            <p className="text-base max-w-4xl mx-auto leading-relaxed mt-6 text-gray-200 md:text-xl">Implantamos, estruturamos e aceleramos operações de e-commerce para indústrias, redes de lojas e varejistas. Atuamos da decisão à execução, conectando estratégia, tecnologia e performance para sustentar a escala.</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
             {/* Card 1 - Soluções Modulares */}
             <div className="relative bg-card border border-border rounded-2xl p-8 hover:border-primary transition-all duration-500 hover-lift group overflow-hidden cursor-pointer">
               <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
