@@ -154,8 +154,10 @@ export default function Carreiras() {
                 Carreiras na Way
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground mb-8">
-                Buscamos pessoas apaixonadas por e-commerce e inovação. 
-                Se você quer crescer junto com a gente, confira nossas oportunidades!
+                A Way é para quem gosta de desafio, responsabilidade e resultado.
+                Trabalhamos com método, ritmo forte e foco total em performance.
+                <br /><br />
+                Aqui não existe espaço para acomodação, existe espaço para quem quer crescer, aprender e entregar.
               </p>
               <div className="flex flex-wrap gap-4 justify-center">
                 <div className="flex items-center gap-2 text-muted-foreground">
