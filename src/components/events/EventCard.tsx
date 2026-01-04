@@ -9,6 +9,7 @@ export interface EventData {
   resumo?: string;
   imagem: string;
   data: string;
+  dataFim?: string; // data fim do evento
   local: string;
   modalidade: 'Presencial' | 'Online' | 'Híbrido';
   modalidades?: ('Presencial' | 'Online' | 'Híbrido')[];
