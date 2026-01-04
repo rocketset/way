@@ -89,11 +89,18 @@ const StrategicPillarsSection = () => {
         <div className="text-center animate-fade-in" style={{
         animationDelay: '0.4s'
       }}>
-          <p className="text-lg md:text-xl text-primary font-semibold italic max-w-3xl mx-auto">
+          <p className="text-lg md:text-xl text-primary font-semibold italic max-w-3xl mx-auto mb-8">
             Estrutura, método e performance atuando juntos
             <br />
             para sustentar decisões estratégicas no e-commerce.
           </p>
+          
+          <a 
+            href="/contato" 
+            className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-lg font-bold text-lg hover:bg-primary/90 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-primary/30"
+          >
+            Solicite um diagnóstico — é gratuito
+          </a>
         </div>
       </div>
     </section>;
