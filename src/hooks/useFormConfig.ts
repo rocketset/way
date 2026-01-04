@@ -62,14 +62,15 @@ export const useFormConfig = (slug: string) => {
     queryKey: ['form-config', slug],
     queryFn: async () => {
       // Buscar configuração do formulário
-      const { data: config, error: configError } = await supabase
-        .from('form_configs')
-        .select('*')
-        .eq('slug', slug)
-        .eq('ativo', true)
-        .single();
+       const { data: config, error: configError } = await supabase
+         .from('form_configs')
+         .select('*')
+         .eq('slug', slug)
+         .eq('ativo', true)
+         .maybeSingle();
 
-      if (configError) throw configError;
+       if (configError) throw configError;
+       if (!config) return null;
 
       // Buscar campos do formulário
       const { data: fields, error: fieldsError } = await supabase
