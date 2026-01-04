@@ -768,9 +768,110 @@ export default function PostEditor() {
             {/* SEO */}
             <div className="border rounded-lg p-4 bg-card space-y-4">
               <h3 className="font-semibold">SEO</h3>
-              <p className="text-sm text-muted-foreground">
-                Painel de SEO completo será implementado aqui
-              </p>
+              
+              <div className="space-y-4">
+                {/* Meta Title */}
+                <div className="space-y-2">
+                  <Label htmlFor="meta-title">Meta Título</Label>
+                  <Input
+                    id="meta-title"
+                    value={formData.seoMeta?.meta_title || ''}
+                    onChange={(e) => setFormData(prev => ({
+                      ...prev,
+                      seoMeta: { ...prev.seoMeta, meta_title: e.target.value }
+                    }))}
+                    placeholder={formData.titulo || 'Título da página'}
+                    maxLength={60}
+                  />
+                  <p className="text-xs text-muted-foreground">
+                    {(formData.seoMeta?.meta_title || formData.titulo || '').length}/60 caracteres
+                  </p>
+                </div>
+
+                {/* Meta Description */}
+                <div className="space-y-2">
+                  <Label htmlFor="meta-description">Meta Descrição</Label>
+                  <Textarea
+                    id="meta-description"
+                    value={formData.seoMeta?.meta_description || ''}
+                    onChange={(e) => setFormData(prev => ({
+                      ...prev,
+                      seoMeta: { ...prev.seoMeta, meta_description: e.target.value }
+                    }))}
+                    placeholder={formData.excerpt || 'Descrição para mecanismos de busca'}
+                    maxLength={160}
+                    rows={3}
+                  />
+                  <p className="text-xs text-muted-foreground">
+                    {(formData.seoMeta?.meta_description || formData.excerpt || '').length}/160 caracteres
+                  </p>
+                </div>
+
+                {/* OG Title */}
+                <div className="space-y-2">
+                  <Label htmlFor="og-title">Título para Redes Sociais (OG)</Label>
+                  <Input
+                    id="og-title"
+                    value={formData.seoMeta?.og_title || ''}
+                    onChange={(e) => setFormData(prev => ({
+                      ...prev,
+                      seoMeta: { ...prev.seoMeta, og_title: e.target.value }
+                    }))}
+                    placeholder="Usa o meta título se vazio"
+                  />
+                </div>
+
+                {/* OG Description */}
+                <div className="space-y-2">
+                  <Label htmlFor="og-description">Descrição para Redes Sociais</Label>
+                  <Textarea
+                    id="og-description"
+                    value={formData.seoMeta?.og_description || ''}
+                    onChange={(e) => setFormData(prev => ({
+                      ...prev,
+                      seoMeta: { ...prev.seoMeta, og_description: e.target.value }
+                    }))}
+                    placeholder="Usa a meta descrição se vazio"
+                    rows={2}
+                  />
+                </div>
+
+                {/* Canonical URL */}
+                <div className="space-y-2">
+                  <Label htmlFor="canonical-url">URL Canônica</Label>
+                  <Input
+                    id="canonical-url"
+                    value={formData.seoMeta?.canonical_url || ''}
+                    onChange={(e) => setFormData(prev => ({
+                      ...prev,
+                      seoMeta: { ...prev.seoMeta, canonical_url: e.target.value }
+                    }))}
+                    placeholder="https://..."
+                    type="url"
+                  />
+                  <p className="text-xs text-muted-foreground">
+                    Deixe vazio para usar a URL padrão do post
+                  </p>
+                </div>
+
+                {/* Noindex */}
+                <div className="flex items-center justify-between">
+                  <div className="space-y-0.5">
+                    <Label htmlFor="noindex">Não indexar (noindex)</Label>
+                    <p className="text-xs text-muted-foreground">
+                      Impede que mecanismos de busca indexem esta página
+                    </p>
+                  </div>
+                  <Switch
+                    id="noindex"
+                    checked={formData.seoMeta?.noindex || false}
+                    onCheckedChange={(checked) => setFormData(prev => ({
+                      ...prev,
+                      seoMeta: { ...prev.seoMeta, noindex: checked }
+                    }))}
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
