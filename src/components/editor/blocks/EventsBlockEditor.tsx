@@ -1,9 +1,8 @@
 import { useState } from 'react';
-import { EventsBlock } from '@/types/editor';
+import { EventsBlock, EventCategory } from '@/types/editor';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { 
@@ -13,14 +12,25 @@ import {
   SelectTrigger, 
   SelectValue 
 } from '@/components/ui/select';
-import { Plus, Trash2, GripVertical, Image as ImageIcon } from 'lucide-react';
+import { Plus, Trash2, GripVertical, Image as ImageIcon, AlertCircle } from 'lucide-react';
 import { v4 as uuid } from 'uuid';
 import { MediaSelector } from '../MediaSelector';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 
 interface EventsBlockEditorProps {
   block: EventsBlock;
   onChange: (block: EventsBlock) => void;
 }
+
+const EVENT_CATEGORIES: EventCategory[] = [
+  'Ecommerce',
+  'Marketplace',
+  'ERP',
+  'Logística',
+  'Varejo',
+  'Tecnologia',
+  'Inovação',
+];
 
 export const EventsBlockEditor = ({ block, onChange }: EventsBlockEditorProps) => {
   const [isMediaOpen, setIsMediaOpen] = useState(false);
@@ -38,6 +48,7 @@ export const EventsBlockEditor = ({ block, onChange }: EventsBlockEditorProps) =
       data: 'A definir',
       local: 'A definir',
       modalidade: 'Presencial' as const,
+      categoria: undefined as EventCategory | undefined,
       publicoAlvo: '',
       valor: 'A confirmar' as const,
       participacaoSebrae: '',
@@ -73,10 +84,18 @@ export const EventsBlockEditor = ({ block, onChange }: EventsBlockEditorProps) =
         <h3 className="text-lg font-semibold">Vitrine de Eventos</h3>
       </div>
 
+      {/* Dica sobre hierarquia de título */}
+      <Alert>
+        <AlertCircle className="h-4 w-4" />
+        <AlertDescription>
+          O H1 da página é o título do post. O título da seção aqui é opcional e, quando visível, será renderizado como H2 para manter a hierarquia correta.
+        </AlertDescription>
+      </Alert>
+
       {/* Configurações gerais */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="space-y-2">
-          <Label>Título da Seção</Label>
+          <Label>Título da Seção (H2)</Label>
           <Input
             value={block.title || ''}
             onChange={(e) => updateBlock({ title: e.target.value })}
@@ -93,12 +112,42 @@ export const EventsBlockEditor = ({ block, onChange }: EventsBlockEditorProps) =
         </div>
       </div>
 
-      <div className="flex items-center gap-2">
-        <Switch
-          checked={block.showFilters ?? true}
-          onCheckedChange={(checked) => updateBlock({ showFilters: checked })}
-        />
-        <Label>Mostrar filtros de busca</Label>
+      {/* Toggles de configuração */}
+      <div className="space-y-3 p-4 bg-background rounded-lg border">
+        <h4 className="text-sm font-medium mb-3">Opções de exibição</h4>
+        
+        <div className="flex items-center justify-between">
+          <div className="space-y-0.5">
+            <Label>Exibir título da seção</Label>
+            <p className="text-xs text-muted-foreground">Quando desativado, apenas o subtítulo será exibido</p>
+          </div>
+          <Switch
+            checked={block.showTitle ?? false}
+            onCheckedChange={(checked) => updateBlock({ showTitle: checked })}
+          />
+        </div>
+
+        <div className="flex items-center justify-between">
+          <div className="space-y-0.5">
+            <Label>Mostrar calendário</Label>
+            <p className="text-xs text-muted-foreground">Calendário interativo para filtrar eventos por data</p>
+          </div>
+          <Switch
+            checked={block.showCalendar ?? true}
+            onCheckedChange={(checked) => updateBlock({ showCalendar: checked })}
+          />
+        </div>
+
+        <div className="flex items-center justify-between">
+          <div className="space-y-0.5">
+            <Label>Mostrar filtros de busca</Label>
+            <p className="text-xs text-muted-foreground">Busca, categoria, modalidade e valor</p>
+          </div>
+          <Switch
+            checked={block.showFilters ?? true}
+            onCheckedChange={(checked) => updateBlock({ showFilters: checked })}
+          />
+        </div>
       </div>
 
       {/* Lista de Eventos */}
@@ -175,6 +224,7 @@ export const EventsBlockEditor = ({ block, onChange }: EventsBlockEditorProps) =
                     onChange={(e) => updateEvent(index, { data: e.target.value })}
                     placeholder="Ex: 20 a 23 de março de 2026"
                   />
+                  <p className="text-xs text-muted-foreground">Formatos: DD/MM/AAAA ou texto descritivo</p>
                 </div>
               </div>
 
@@ -206,15 +256,23 @@ export const EventsBlockEditor = ({ block, onChange }: EventsBlockEditorProps) =
                 </div>
               </div>
 
-              {/* Público e Valor */}
+              {/* Categoria e Valor */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label>Público-alvo</Label>
-                  <Input
-                    value={event.publicoAlvo || ''}
-                    onChange={(e) => updateEvent(index, { publicoAlvo: e.target.value })}
-                    placeholder="Ex: Empreendedores, startups"
-                  />
+                  <Label>Categoria do Evento</Label>
+                  <Select
+                    value={event.categoria || ''}
+                    onValueChange={(value) => updateEvent(index, { categoria: value as EventCategory })}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Selecione uma categoria" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {EVENT_CATEGORIES.map((cat) => (
+                        <SelectItem key={cat} value={cat}>{cat}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </div>
                 <div className="space-y-2">
                   <Label>Valor</Label>
@@ -234,7 +292,17 @@ export const EventsBlockEditor = ({ block, onChange }: EventsBlockEditorProps) =
                 </div>
               </div>
 
-              {/* Participação e Descrição */}
+              {/* Para quem é */}
+              <div className="space-y-2">
+                <Label>Para quem é (Público-alvo)</Label>
+                <Input
+                  value={event.publicoAlvo || ''}
+                  onChange={(e) => updateEvent(index, { publicoAlvo: e.target.value })}
+                  placeholder="Ex: Empreendedores, lojistas, startups"
+                />
+              </div>
+
+              {/* Participação e Organização */}
               <div className="space-y-2">
                 <Label>Participação/Organização</Label>
                 <Input
@@ -256,7 +324,7 @@ export const EventsBlockEditor = ({ block, onChange }: EventsBlockEditorProps) =
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label>Link - Inscrição</Label>
+                  <Label>Link - Inscrição (opcional)</Label>
                   <Input
                     value={event.linkInscricao || ''}
                     onChange={(e) => updateEvent(index, { linkInscricao: e.target.value })}

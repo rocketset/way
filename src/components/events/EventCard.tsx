@@ -1,6 +1,7 @@
-import { Calendar, MapPin, Users, ExternalLink, Info } from 'lucide-react';
+import { Calendar, MapPin, Users, ExternalLink, Info, Tag } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { EventCategory } from '@/types/editor';
 
 export interface EventData {
   id: string;
@@ -9,9 +10,10 @@ export interface EventData {
   data: string;
   local: string;
   modalidade: 'Presencial' | 'Online' | 'Híbrido';
+  categoria?: EventCategory;
   publicoAlvo?: string;
   valor?: 'Gratuito' | 'Pago' | 'A confirmar';
-  participacaoSebrae?: 'Organizador' | 'Patrocinador' | 'Parceiro' | string;
+  participacaoSebrae?: string;
   descricao?: string;
   linkMaisInfo?: string;
   linkInscricao?: string;
@@ -34,9 +36,19 @@ export const EventCard = ({ event }: EventCardProps) => {
     'A confirmar': 'bg-gray-100 text-gray-600',
   };
 
+  const categoriaColor = {
+    'Ecommerce': 'bg-indigo-100 text-indigo-800',
+    'Marketplace': 'bg-cyan-100 text-cyan-800',
+    'ERP': 'bg-orange-100 text-orange-800',
+    'Logística': 'bg-teal-100 text-teal-800',
+    'Varejo': 'bg-pink-100 text-pink-800',
+    'Tecnologia': 'bg-violet-100 text-violet-800',
+    'Inovação': 'bg-rose-100 text-rose-800',
+  };
+
   return (
     <div className="bg-card rounded-xl border border-border overflow-hidden hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 flex flex-col h-full">
-      {/* Imagem do Evento - Obrigatória */}
+      {/* 1. Imagem do Evento - Obrigatória */}
       <div className="relative aspect-video overflow-hidden bg-muted">
         <img
           src={event.imagem}
@@ -51,26 +63,26 @@ export const EventCard = ({ event }: EventCardProps) => {
 
       {/* Conteúdo */}
       <div className="p-5 flex-1 flex flex-col">
-        {/* Nome do Evento */}
+        {/* 2. Nome do Evento */}
         <h3 className="text-lg font-bold text-foreground line-clamp-2 mb-3">
           {event.nome}
         </h3>
 
-        {/* Informações */}
+        {/* Informações ordenadas */}
         <div className="space-y-2 text-sm text-muted-foreground mb-4 flex-1">
-          {/* Data */}
+          {/* 3. Data */}
           <div className="flex items-center gap-2">
             <Calendar className="w-4 h-4 text-primary shrink-0" />
             <span>{event.data}</span>
           </div>
 
-          {/* Local */}
+          {/* 4. Local */}
           <div className="flex items-center gap-2">
             <MapPin className="w-4 h-4 text-primary shrink-0" />
             <span className="line-clamp-1">{event.local}</span>
           </div>
 
-          {/* Público-alvo */}
+          {/* 5. Para quem é (Público-alvo) */}
           {event.publicoAlvo && (
             <div className="flex items-start gap-2">
               <Users className="w-4 h-4 text-primary shrink-0 mt-0.5" />
@@ -79,8 +91,14 @@ export const EventCard = ({ event }: EventCardProps) => {
           )}
         </div>
 
-        {/* Tags de Valor e Participação */}
+        {/* 6. Badges (Categoria, Modalidade em texto, Valor) */}
         <div className="flex flex-wrap gap-2 mb-4">
+          {event.categoria && (
+            <Badge variant="secondary" className={categoriaColor[event.categoria]}>
+              <Tag className="w-3 h-3 mr-1" />
+              {event.categoria}
+            </Badge>
+          )}
           {event.valor && (
             <Badge variant="secondary" className={valorColor[event.valor]}>
               {event.valor}
@@ -93,7 +111,7 @@ export const EventCard = ({ event }: EventCardProps) => {
           )}
         </div>
 
-        {/* Botões de Ação */}
+        {/* 7. Botões de Ação */}
         <div className="flex gap-2 mt-auto">
           {event.linkMaisInfo && (
             <Button

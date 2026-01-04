@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
@@ -10,6 +10,8 @@ interface EventDate {
 interface EventsCalendarProps {
   events: EventDate[];
   className?: string;
+  onDateSelect?: (date: Date | null) => void;
+  selectedDate?: Date | null;
 }
 
 const MONTHS = [
@@ -34,10 +36,26 @@ const parseEventDate = (dateStr: string): Date | null => {
     return new Date(parseInt(isoMatch[1]), parseInt(isoMatch[2]) - 1, parseInt(isoMatch[3]));
   }
   
+  // Try to parse natural date formats like "20 de março de 2026"
+  const months: Record<string, number> = {
+    'janeiro': 0, 'fevereiro': 1, 'março': 2, 'abril': 3, 'maio': 4, 'junho': 5,
+    'julho': 6, 'agosto': 7, 'setembro': 8, 'outubro': 9, 'novembro': 10, 'dezembro': 11
+  };
+  
+  const naturalMatch = dateStr.toLowerCase().match(/(\d{1,2})\s*(?:a\s*\d{1,2}\s*)?(?:de\s+)?(\w+)\s*(?:de\s+)?(\d{4})/);
+  if (naturalMatch) {
+    const day = parseInt(naturalMatch[1]);
+    const month = months[naturalMatch[2]];
+    const year = parseInt(naturalMatch[3]);
+    if (month !== undefined && !isNaN(day) && !isNaN(year)) {
+      return new Date(year, month, day);
+    }
+  }
+  
   return null;
 };
 
-export const EventsCalendar = ({ events, className }: EventsCalendarProps) => {
+export const EventsCalendar = ({ events, className, onDateSelect, selectedDate }: EventsCalendarProps) => {
   const currentYear = new Date().getFullYear();
   const currentMonth = new Date().getMonth();
   
@@ -50,7 +68,6 @@ export const EventsCalendar = ({ events, className }: EventsCalendarProps) => {
     events.forEach(event => {
       const parsed = parseEventDate(event.date);
       if (parsed) {
-        // Store as YYYY-MM-DD for easy comparison
         const key = `${parsed.getFullYear()}-${String(parsed.getMonth() + 1).padStart(2, '0')}-${String(parsed.getDate()).padStart(2, '0')}`;
         dates.add(key);
       }
@@ -72,6 +89,22 @@ export const EventsCalendar = ({ events, className }: EventsCalendarProps) => {
   const hasEvent = (day: number) => {
     const key = `${selectedYear}-${String(selectedMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
     return eventDates.has(key);
+  };
+
+  // Check if a day is selected
+  const isSelected = (day: number) => {
+    if (!selectedDate) return false;
+    return selectedDate.getDate() === day && 
+           selectedDate.getMonth() === selectedMonth && 
+           selectedDate.getFullYear() === selectedYear;
+  };
+
+  // Handle day click
+  const handleDayClick = (day: number) => {
+    if (onDateSelect) {
+      const clickedDate = new Date(selectedYear, selectedMonth, day);
+      onDateSelect(clickedDate);
+    }
   };
 
   // Navigate months
@@ -113,22 +146,29 @@ export const EventsCalendar = ({ events, className }: EventsCalendarProps) => {
   for (let day = 1; day <= daysInMonth; day++) {
     const dayHasEvent = hasEvent(day);
     const dayIsToday = isToday(day);
+    const dayIsSelected = isSelected(day);
     
     calendarDays.push(
-      <div
+      <button
         key={day}
+        onClick={() => handleDayClick(day)}
         className={cn(
-          "relative h-8 md:h-10 flex items-center justify-center text-sm rounded-lg transition-colors",
-          dayIsToday && "bg-primary/10 text-primary font-semibold",
-          dayHasEvent && !dayIsToday && "bg-accent/50",
-          !dayHasEvent && !dayIsToday && "text-muted-foreground"
+          "relative h-8 md:h-10 flex items-center justify-center text-sm rounded-lg transition-all cursor-pointer",
+          "hover:bg-primary/20 hover:text-primary",
+          dayIsSelected && "bg-primary text-primary-foreground font-semibold",
+          dayIsToday && !dayIsSelected && "bg-primary/10 text-primary font-semibold ring-1 ring-primary/30",
+          dayHasEvent && !dayIsToday && !dayIsSelected && "bg-accent/50",
+          !dayHasEvent && !dayIsToday && !dayIsSelected && "text-muted-foreground"
         )}
       >
         <span className="relative z-10">{day}</span>
         {dayHasEvent && (
-          <span className="absolute bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-primary" />
+          <span className={cn(
+            "absolute bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full",
+            dayIsSelected ? "bg-primary-foreground" : "bg-primary"
+          )} />
         )}
-      </div>
+      </button>
     );
   }
 
@@ -149,7 +189,7 @@ export const EventsCalendar = ({ events, className }: EventsCalendarProps) => {
           <h3 className="text-lg font-semibold text-foreground">Calendário de Eventos</h3>
           <p className="text-sm text-muted-foreground">
             {eventsInMonth > 0 
-              ? `${eventsInMonth} evento${eventsInMonth > 1 ? 's' : ''} em ${MONTHS[selectedMonth]}`
+              ? `${eventsInMonth} dia${eventsInMonth > 1 ? 's' : ''} com evento em ${MONTHS[selectedMonth]}`
               : `Nenhum evento em ${MONTHS[selectedMonth]}`
             }
           </p>
@@ -201,10 +241,19 @@ export const EventsCalendar = ({ events, className }: EventsCalendarProps) => {
           <span>Dia com evento</span>
         </div>
         <div className="flex items-center gap-1.5">
-          <span className="w-4 h-4 rounded bg-primary/10" />
+          <span className="w-4 h-4 rounded bg-primary/10 ring-1 ring-primary/30" />
           <span>Hoje</span>
         </div>
+        <div className="flex items-center gap-1.5">
+          <span className="w-4 h-4 rounded bg-primary" />
+          <span>Selecionado</span>
+        </div>
       </div>
+
+      {/* Instruction */}
+      <p className="text-xs text-muted-foreground mt-3 text-center">
+        Clique em um dia para filtrar os eventos
+      </p>
     </div>
   );
 };

@@ -135,12 +135,24 @@ export interface PollBlock extends BaseBlock {
   showResultsAfterVote: boolean; // Mostrar resultados após votar
 }
 
+// Categorias de eventos disponíveis
+export type EventCategory = 
+  | 'Ecommerce' 
+  | 'Marketplace' 
+  | 'ERP' 
+  | 'Logística' 
+  | 'Varejo' 
+  | 'Tecnologia' 
+  | 'Inovação';
+
 // Bloco de vitrine de eventos
 export interface EventsBlock extends BaseBlock {
   type: 'events';
   title?: string; // Título da seção
   subtitle?: string; // Subtítulo da seção
+  showTitle?: boolean; // Toggle para exibir/ocultar título (padrão: false)
   showFilters?: boolean; // Mostrar filtros de busca
+  showCalendar?: boolean; // Mostrar calendário
   events: {
     id: string;
     nome: string;
@@ -148,7 +160,8 @@ export interface EventsBlock extends BaseBlock {
     data: string;
     local: string;
     modalidade: 'Presencial' | 'Online' | 'Híbrido';
-    publicoAlvo?: string;
+    categoria?: EventCategory; // Categoria do evento
+    publicoAlvo?: string; // "Para quem é"
     valor?: 'Gratuito' | 'Pago' | 'A confirmar';
     participacaoSebrae?: string;
     descricao?: string;
