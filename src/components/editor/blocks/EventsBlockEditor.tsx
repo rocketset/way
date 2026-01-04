@@ -16,11 +16,20 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from '@/components/ui/collapsible';
-import { Plus, Trash2, GripVertical, Image as ImageIcon, AlertCircle, ChevronDown, ChevronRight, Check } from 'lucide-react';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
+import { Calendar } from '@/components/ui/calendar';
+import { Plus, Trash2, GripVertical, Image as ImageIcon, AlertCircle, ChevronDown, ChevronRight, Check, CalendarIcon } from 'lucide-react';
 import { v4 as uuid } from 'uuid';
 import { MediaSelector } from '../MediaSelector';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
+import { format, parse, isValid } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
+import { cn } from '@/lib/utils';
 
 interface EventsBlockEditorProps {
   block: EventsBlock;
@@ -36,6 +45,165 @@ const EVENT_CATEGORIES: EventCategory[] = [
   'Tecnologia',
   'Inovação',
 ];
+
+// Helper para parsear datas do formato DD/MM/YYYY
+const parseDate = (dateStr: string): Date | null => {
+  if (!dateStr) return null;
+  
+  // Try DD/MM/YYYY format
+  const match = dateStr.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+  if (match) {
+    const date = new Date(parseInt(match[3]), parseInt(match[2]) - 1, parseInt(match[1]));
+    return isValid(date) ? date : null;
+  }
+  
+  return null;
+};
+
+// Componente de Date Picker com suporte a período
+interface EventDatePickerProps {
+  value: string;
+  onChange: (value: string) => void;
+}
+
+const EventDatePicker = ({ value, onChange }: EventDatePickerProps) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [isRange, setIsRange] = useState(() => value?.includes(' a ') || value?.includes(' - '));
+  const [startDate, setStartDate] = useState<Date | undefined>(() => {
+    if (!value || value === 'A definir') return undefined;
+    if (value.includes(' a ') || value.includes(' - ')) {
+      const parts = value.split(/ a | - /);
+      return parseDate(parts[0].trim()) || undefined;
+    }
+    return parseDate(value) || undefined;
+  });
+  const [endDate, setEndDate] = useState<Date | undefined>(() => {
+    if (!value || value === 'A definir') return undefined;
+    if (value.includes(' a ') || value.includes(' - ')) {
+      const parts = value.split(/ a | - /);
+      if (parts[1]) {
+        return parseDate(parts[1].trim()) || undefined;
+      }
+    }
+    return undefined;
+  });
+
+  const formatDateStr = (date: Date) => format(date, 'dd/MM/yyyy');
+
+  const handleSelectDate = (date: Date | undefined) => {
+    if (!date) return;
+    
+    if (isRange) {
+      if (!startDate || (startDate && endDate)) {
+        setStartDate(date);
+        setEndDate(undefined);
+      } else if (date < startDate) {
+        setStartDate(date);
+      } else {
+        setEndDate(date);
+        const result = `${formatDateStr(startDate)} a ${formatDateStr(date)}`;
+        onChange(result);
+        setIsOpen(false);
+      }
+    } else {
+      setStartDate(date);
+      setEndDate(undefined);
+      onChange(formatDateStr(date));
+      setIsOpen(false);
+    }
+  };
+
+  const handleToggleRange = (checked: boolean) => {
+    setIsRange(checked);
+    setEndDate(undefined);
+    if (!checked && startDate) {
+      onChange(formatDateStr(startDate));
+    }
+  };
+
+  const displayValue = () => {
+    if (!value || value === 'A definir') {
+      return <span className="text-muted-foreground">Selecione a data</span>;
+    }
+    return value;
+  };
+
+  const selectedDates = startDate && endDate && isRange
+    ? [startDate, endDate]
+    : startDate
+    ? [startDate]
+    : [];
+
+  return (
+    <div className="space-y-2">
+      <Label>Data *</Label>
+      <Popover open={isOpen} onOpenChange={setIsOpen}>
+        <PopoverTrigger asChild>
+          <Button
+            variant="outline"
+            className={cn(
+              "w-full justify-start text-left font-normal",
+              !value && "text-muted-foreground"
+            )}
+          >
+            <CalendarIcon className="mr-2 h-4 w-4" />
+            {displayValue()}
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-auto p-0" align="start">
+          <div className="p-3 border-b space-y-2">
+            <div className="flex items-center justify-between">
+              <Label className="text-sm">Evento com período?</Label>
+              <Switch
+                checked={isRange}
+                onCheckedChange={handleToggleRange}
+              />
+            </div>
+            {isRange && startDate && !endDate && (
+              <p className="text-xs text-muted-foreground">
+                Selecione a data final
+              </p>
+            )}
+            {isRange && startDate && endDate && (
+              <p className="text-xs text-primary font-medium">
+                {formatDateStr(startDate)} a {formatDateStr(endDate)}
+              </p>
+            )}
+          </div>
+          <Calendar
+            mode="single"
+            selected={startDate}
+            onSelect={handleSelectDate}
+            className="p-3 pointer-events-auto"
+            locale={ptBR}
+            modifiers={{
+              inRange: (day) => {
+                if (!isRange || !startDate || !endDate) return false;
+                return day > startDate && day < endDate;
+              },
+              rangeStart: (day) => {
+                if (!startDate) return false;
+                return day.getTime() === startDate.getTime();
+              },
+              rangeEnd: (day) => {
+                if (!isRange || !endDate) return false;
+                return day.getTime() === endDate.getTime();
+              },
+            }}
+            modifiersStyles={{
+              inRange: { backgroundColor: 'hsl(var(--primary) / 0.1)' },
+              rangeStart: { backgroundColor: 'hsl(var(--primary))', color: 'hsl(var(--primary-foreground))' },
+              rangeEnd: { backgroundColor: 'hsl(var(--primary))', color: 'hsl(var(--primary-foreground))' },
+            }}
+          />
+        </PopoverContent>
+      </Popover>
+      <p className="text-xs text-muted-foreground">
+        {isRange ? 'Selecione a data inicial e depois a data final' : 'Formato: DD/MM/AAAA'}
+      </p>
+    </div>
+  );
+};
 
 export const EventsBlockEditor = ({ block, onChange }: EventsBlockEditorProps) => {
   const [isMediaOpen, setIsMediaOpen] = useState(false);
@@ -349,15 +517,10 @@ export const EventsBlockEditor = ({ block, onChange }: EventsBlockEditorProps) =
                             placeholder="Nome do evento"
                           />
                         </div>
-                        <div className="space-y-2">
-                          <Label>Data *</Label>
-                          <Input
-                            value={event.data}
-                            onChange={(e) => updateEvent(index, { data: e.target.value })}
-                            placeholder="Ex: 20 a 23 de março de 2026"
-                          />
-                          <p className="text-xs text-muted-foreground">Formatos: DD/MM/AAAA ou texto descritivo</p>
-                        </div>
+                        <EventDatePicker
+                          value={event.data}
+                          onChange={(date) => updateEvent(index, { data: date })}
+                        />
                       </div>
 
                       {/* Resumo */}
