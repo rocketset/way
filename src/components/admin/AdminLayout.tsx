@@ -367,7 +367,8 @@ function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
                       isActive && 'bg-accent text-accent-foreground font-medium'
                     )}
                   >
-                    <Icon className="h-5 w-5 flex-shrink-0" />
+                    {Icon && <Icon className="h-5 w-5 flex-shrink-0" />}
+                    {!Icon && <div className="h-5 w-5 flex-shrink-0" />}
                     {isExpanded && (
                       <span className="whitespace-nowrap overflow-hidden">
                         {item.label}
@@ -393,7 +394,8 @@ function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
                         isActive && 'bg-accent text-accent-foreground font-medium'
                       )}
                     >
-                      <Icon className="h-5 w-5 flex-shrink-0" />
+                      {Icon && <Icon className="h-5 w-5 flex-shrink-0" />}
+                      {!Icon && <div className="h-5 w-5 flex-shrink-0" />}
                       {isExpanded && (
                         <>
                           <span className="whitespace-nowrap overflow-hidden flex-1 text-left">
