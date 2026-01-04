@@ -146,6 +146,16 @@ export function createEmptyBlock(
         showResultsAfterVote: true,
       };
 
+    case 'events':
+      return {
+        ...baseBlock,
+        type: 'events',
+        title: 'Vitrine de Eventos',
+        subtitle: 'Mapeamos os principais eventos, feiras e capacitações do setor para você acompanhar',
+        showFilters: true,
+        events: [],
+      };
+
     default:
       // Fallback para parágrafo se tipo desconhecido
       return createEmptyBlock('paragraph');

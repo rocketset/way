@@ -30,6 +30,7 @@ import {
   Link2,
   FileCode,
   BarChart3,
+  Calendar,
 } from 'lucide-react';
 
 interface BlockToolbarProps {
@@ -70,6 +71,7 @@ export function BlockToolbar({ onInsert, position = 'bottom' }: BlockToolbarProp
   const advancedBlocks = [
     { type: 'html' as const, icon: FileCode, label: 'HTML', description: 'Código HTML bruto' },
     { type: 'poll' as const, icon: BarChart3, label: 'Enquete', description: 'Votação interativa' },
+    { type: 'events' as const, icon: Calendar, label: 'Vitrine de Eventos', description: 'Grid de eventos' },
   ];
 
   return (
