@@ -72,7 +72,8 @@ const DynamicContactForm = ({ formSlug, className = "" }: DynamicContactFormProp
       // Tornar opcional se não for obrigatório
       if (!field.obrigatorio) {
         fieldSchema = fieldSchema.optional().or(z.literal(''));
-      } else if (field.tipo_campo !== 'checkbox') {
+      } else if (field.tipo_campo === 'text' || field.tipo_campo === 'email' || field.tipo_campo === 'textarea' || field.tipo_campo === 'url') {
+        // Só aplicar .min() em tipos string
         fieldSchema = (fieldSchema as z.ZodString).min(1, { message: `${field.label} é obrigatório` });
       }
 
