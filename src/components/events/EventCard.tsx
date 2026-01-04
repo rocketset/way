@@ -11,7 +11,9 @@ export interface EventData {
   data: string;
   local: string;
   modalidade: 'Presencial' | 'Online' | 'Híbrido';
+  modalidades?: ('Presencial' | 'Online' | 'Híbrido')[];
   categoria?: EventCategory;
+  categorias?: EventCategory[];
   publicoAlvo?: string;
   valor?: 'Gratuito' | 'Pago' | 'A confirmar';
   participacaoSebrae?: string;
@@ -47,6 +49,11 @@ export const EventCard = ({ event }: EventCardProps) => {
     'Inovação': 'bg-rose-100 text-rose-800',
   };
 
+  // Get all modalidades (support both single and multiple)
+  const modalidades = event.modalidades || [event.modalidade];
+  // Get all categorias (support both single and multiple)
+  const categorias = event.categorias || (event.categoria ? [event.categoria] : []);
+
   return (
     <div className="bg-card rounded-xl border border-border overflow-hidden hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 flex flex-col h-full">
       {/* 1. Imagem do Evento - Obrigatória */}
@@ -56,10 +63,14 @@ export const EventCard = ({ event }: EventCardProps) => {
           alt={event.nome}
           className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
         />
-        {/* Badge de Modalidade */}
-        <Badge className={`absolute top-3 right-3 ${modalidadeColor[event.modalidade]}`}>
-          {event.modalidade}
-        </Badge>
+        {/* Badges de Modalidade */}
+        <div className="absolute top-3 right-3 flex flex-wrap gap-1 justify-end max-w-[70%]">
+          {modalidades.map((mod) => (
+            <Badge key={mod} className={modalidadeColor[mod]}>
+              {mod}
+            </Badge>
+          ))}
+        </div>
       </div>
 
       {/* Conteúdo */}
@@ -99,14 +110,14 @@ export const EventCard = ({ event }: EventCardProps) => {
           )}
         </div>
 
-        {/* 6. Badges (Categoria, Modalidade em texto, Valor) */}
+        {/* 6. Badges (Categorias, Valor) */}
         <div className="flex flex-wrap gap-2 mb-4">
-          {event.categoria && (
-            <Badge variant="secondary" className={categoriaColor[event.categoria]}>
+          {categorias.map((cat) => (
+            <Badge key={cat} variant="secondary" className={categoriaColor[cat]}>
               <Tag className="w-3 h-3 mr-1" />
-              {event.categoria}
+              {cat}
             </Badge>
-          )}
+          ))}
           {event.valor && (
             <Badge variant="secondary" className={valorColor[event.valor]}>
               {event.valor}
