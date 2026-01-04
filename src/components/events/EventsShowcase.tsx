@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { EventCard, EventData } from './EventCard';
+import { EventsCalendar } from './EventsCalendar';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Search, Filter } from 'lucide-react';
@@ -16,6 +17,7 @@ interface EventsShowcaseProps {
   title?: string;
   subtitle?: string;
   showFilters?: boolean;
+  showCalendar?: boolean;
 }
 
 export const EventsShowcase = ({
@@ -23,6 +25,7 @@ export const EventsShowcase = ({
   title = "Vitrine de Eventos",
   subtitle = "Mapeamos os principais eventos, feiras e capacitações do setor para você acompanhar",
   showFilters = true,
+  showCalendar = true,
 }: EventsShowcaseProps) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [modalidadeFilter, setModalidadeFilter] = useState<string>('todos');
@@ -40,6 +43,9 @@ export const EventsShowcase = ({
     return matchesSearch && matchesModalidade && matchesValor;
   });
 
+  // Prepare events for calendar (extract dates)
+  const calendarEvents = events.map(event => ({ date: event.data }));
+
   return (
     <div className="w-full">
       {/* Header */}
@@ -56,6 +62,11 @@ export const EventsShowcase = ({
             </p>
           )}
         </div>
+      )}
+
+      {/* Calendário Visual */}
+      {showCalendar && events.length > 0 && (
+        <EventsCalendar events={calendarEvents} className="mb-8" />
       )}
 
       {/* Filtros */}
