@@ -149,20 +149,25 @@ export const EventsShowcase = ({
   // Filter events
   const filteredEvents = useMemo(() => {
     return sortedEvents.filter((event) => {
+      // Get all categorias for this event (support both single and multiple)
+      const eventCategorias = event.categorias || (event.categoria ? [event.categoria] : []);
+      // Get all modalidades for this event (support both single and multiple)
+      const eventModalidades = event.modalidades || [event.modalidade];
+
       // Text search
       const matchesSearch = event.nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
         event.local.toLowerCase().includes(searchTerm.toLowerCase()) ||
         (event.publicoAlvo?.toLowerCase().includes(searchTerm.toLowerCase())) ||
-        (event.categoria?.toLowerCase().includes(searchTerm.toLowerCase()));
+        eventCategorias.some(cat => cat.toLowerCase().includes(searchTerm.toLowerCase()));
       
       // Modalidade filter
-      const matchesModalidade = modalidadeFilter === 'todos' || event.modalidade === modalidadeFilter;
+      const matchesModalidade = modalidadeFilter === 'todos' || eventModalidades.includes(modalidadeFilter as any);
       
       // Valor filter
       const matchesValor = valorFilter === 'todos' || event.valor === valorFilter;
       
       // Categoria filter
-      const matchesCategoria = categoriaFilter === 'todos' || event.categoria === categoriaFilter;
+      const matchesCategoria = categoriaFilter === 'todos' || eventCategorias.includes(categoriaFilter as any);
 
       // Date filter
       let matchesDate = true;

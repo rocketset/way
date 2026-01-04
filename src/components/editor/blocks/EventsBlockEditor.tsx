@@ -459,7 +459,7 @@ export const EventsBlockEditor = ({ block, onChange }: EventsBlockEditorProps) =
                             )}
                           </div>
                           <p className="text-xs text-muted-foreground truncate">
-                            {event.data} • {event.local} • {event.modalidade}
+                            {event.data} • {event.local} • {(event.modalidades || [event.modalidade]).join(', ')}
                           </p>
                         </div>
                       </div>
@@ -544,40 +544,70 @@ export const EventsBlockEditor = ({ block, onChange }: EventsBlockEditorProps) =
                           />
                         </div>
                         <div className="space-y-2">
-                          <Label>Modalidade *</Label>
-                          <Select
-                            value={event.modalidade}
-                            onValueChange={(value) => updateEvent(index, { modalidade: value as any })}
-                          >
-                            <SelectTrigger>
-                              <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value="Presencial">Presencial</SelectItem>
-                              <SelectItem value="Online">Online</SelectItem>
-                              <SelectItem value="Híbrido">Híbrido</SelectItem>
-                            </SelectContent>
-                          </Select>
+                          <Label>Modalidades *</Label>
+                          <div className="flex flex-wrap gap-2">
+                            {(['Presencial', 'Online', 'Híbrido'] as const).map((mod) => {
+                              const modalidades = event.modalidades || (event.modalidade ? [event.modalidade] : []);
+                              const isSelected = modalidades.includes(mod);
+                              return (
+                                <Button
+                                  key={mod}
+                                  type="button"
+                                  variant={isSelected ? 'default' : 'outline'}
+                                  size="sm"
+                                  onClick={() => {
+                                    const current = event.modalidades || (event.modalidade ? [event.modalidade] : []);
+                                    const newModalidades = isSelected
+                                      ? current.filter(m => m !== mod)
+                                      : [...current, mod];
+                                    updateEvent(index, { 
+                                      modalidades: newModalidades,
+                                      modalidade: newModalidades[0] || 'Presencial'
+                                    });
+                                  }}
+                                >
+                                  {isSelected && <Check className="w-3 h-3 mr-1" />}
+                                  {mod}
+                                </Button>
+                              );
+                            })}
+                          </div>
+                          <p className="text-xs text-muted-foreground">Selecione uma ou mais modalidades</p>
                         </div>
                       </div>
 
                       {/* Categoria e Valor */}
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="space-y-2">
-                          <Label>Categoria do Evento</Label>
-                          <Select
-                            value={event.categoria || ''}
-                            onValueChange={(value) => updateEvent(index, { categoria: value as EventCategory })}
-                          >
-                            <SelectTrigger>
-                              <SelectValue placeholder="Selecione uma categoria" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              {EVENT_CATEGORIES.map((cat) => (
-                                <SelectItem key={cat} value={cat}>{cat}</SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
+                          <Label>Categorias do Evento</Label>
+                          <div className="flex flex-wrap gap-2">
+                            {EVENT_CATEGORIES.map((cat) => {
+                              const categorias = event.categorias || (event.categoria ? [event.categoria] : []);
+                              const isSelected = categorias.includes(cat);
+                              return (
+                                <Button
+                                  key={cat}
+                                  type="button"
+                                  variant={isSelected ? 'default' : 'outline'}
+                                  size="sm"
+                                  onClick={() => {
+                                    const current = event.categorias || (event.categoria ? [event.categoria] : []);
+                                    const newCategorias = isSelected
+                                      ? current.filter(c => c !== cat)
+                                      : [...current, cat];
+                                    updateEvent(index, { 
+                                      categorias: newCategorias,
+                                      categoria: newCategorias[0]
+                                    });
+                                  }}
+                                >
+                                  {isSelected && <Check className="w-3 h-3 mr-1" />}
+                                  {cat}
+                                </Button>
+                              );
+                            })}
+                          </div>
+                          <p className="text-xs text-muted-foreground">Selecione uma ou mais categorias</p>
                         </div>
                         <div className="space-y-2">
                           <Label>Valor</Label>

@@ -167,7 +167,9 @@ export interface EventsBlock extends BaseBlock {
     data: string;
     local: string;
     modalidade: 'Presencial' | 'Online' | 'Híbrido';
-    categoria?: EventCategory; // Categoria do evento
+    modalidades?: ('Presencial' | 'Online' | 'Híbrido')[]; // Múltiplas modalidades
+    categoria?: EventCategory; // Categoria única (legado)
+    categorias?: EventCategory[]; // Múltiplas categorias
     publicoAlvo?: string; // "Para quem é"
     valor?: 'Gratuito' | 'Pago' | 'A confirmar';
     participacaoSebrae?: string;
