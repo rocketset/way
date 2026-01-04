@@ -75,6 +75,11 @@ const Header = () => {
     path: "/contact"
   }];
   const novidadesItems = [{
+    label: "Agenda de Eventos do Setor 2026",
+    path: "/blog/agenda-de-eventos-do-setor-2026",
+    isExternal: false,
+    isClient: false
+  }, {
     label: "Blog",
     path: "/blog",
     isExternal: false,
