@@ -238,57 +238,69 @@ export const EventsShowcase = ({
       {/* Filtros */}
       {showFilters && (
         <div className="space-y-3 mb-6">
-          <div className="flex flex-col sm:flex-row gap-3">
+          <div className="flex flex-col sm:flex-row gap-3 items-end">
             {/* Busca */}
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-              <Input
-                type="text"
-                placeholder="Buscar eventos..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10"
-              />
+            <div className="relative flex-1 space-y-1.5">
+              <label className="text-xs font-medium text-muted-foreground">Buscar</label>
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                <Input
+                  type="text"
+                  placeholder="Buscar eventos..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="pl-10"
+                />
+              </div>
             </div>
 
             {/* Filtro Categoria */}
-            <Select value={categoriaFilter} onValueChange={setCategoriaFilter}>
-              <SelectTrigger className="w-full sm:w-[150px]">
-                <SelectValue placeholder="Categoria" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="todos">Todas categorias</SelectItem>
-                {EVENT_CATEGORIES.map((cat) => (
-                  <SelectItem key={cat} value={cat}>{cat}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <div className="w-full sm:w-[150px] space-y-1.5">
+              <label className="text-xs font-medium text-muted-foreground">Categoria</label>
+              <Select value={categoriaFilter} onValueChange={setCategoriaFilter}>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Categoria" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="todos">Todas categorias</SelectItem>
+                  {EVENT_CATEGORIES.map((cat) => (
+                    <SelectItem key={cat} value={cat}>{cat}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
 
             {/* Filtro Modalidade */}
-            <Select value={modalidadeFilter} onValueChange={setModalidadeFilter}>
-              <SelectTrigger className="w-full sm:w-[150px]">
-                <SelectValue placeholder="Modalidade" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="todos">Todas</SelectItem>
-                <SelectItem value="Presencial">Presencial</SelectItem>
-                <SelectItem value="Online">Online</SelectItem>
-                <SelectItem value="Híbrido">Híbrido</SelectItem>
-              </SelectContent>
-            </Select>
+            <div className="w-full sm:w-[150px] space-y-1.5">
+              <label className="text-xs font-medium text-muted-foreground">Modalidade</label>
+              <Select value={modalidadeFilter} onValueChange={setModalidadeFilter}>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Modalidade" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="todos">Todas</SelectItem>
+                  <SelectItem value="Presencial">Presencial</SelectItem>
+                  <SelectItem value="Online">Online</SelectItem>
+                  <SelectItem value="Híbrido">Híbrido</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
 
             {/* Filtro Valor */}
-            <Select value={valorFilter} onValueChange={setValorFilter}>
-              <SelectTrigger className="w-full sm:w-[150px]">
-                <SelectValue placeholder="Valor" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="todos">Todos</SelectItem>
-                <SelectItem value="Gratuito">Gratuito</SelectItem>
-                <SelectItem value="Pago">Pago</SelectItem>
-                <SelectItem value="A confirmar">A confirmar</SelectItem>
-              </SelectContent>
-            </Select>
+            <div className="w-full sm:w-[150px] space-y-1.5">
+              <label className="text-xs font-medium text-muted-foreground">Valor</label>
+              <Select value={valorFilter} onValueChange={setValorFilter}>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Valor" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="todos">Todos</SelectItem>
+                  <SelectItem value="Gratuito">Gratuito</SelectItem>
+                  <SelectItem value="Pago">Pago</SelectItem>
+                  <SelectItem value="A confirmar">A confirmar</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
 
           {/* Active filters indicator */}
