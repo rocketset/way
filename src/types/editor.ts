@@ -135,6 +135,28 @@ export interface PollBlock extends BaseBlock {
   showResultsAfterVote: boolean; // Mostrar resultados após votar
 }
 
+// Bloco de vitrine de eventos
+export interface EventsBlock extends BaseBlock {
+  type: 'events';
+  title?: string; // Título da seção
+  subtitle?: string; // Subtítulo da seção
+  showFilters?: boolean; // Mostrar filtros de busca
+  events: {
+    id: string;
+    nome: string;
+    imagem: string;
+    data: string;
+    local: string;
+    modalidade: 'Presencial' | 'Online' | 'Híbrido';
+    publicoAlvo?: string;
+    valor?: 'Gratuito' | 'Pago' | 'A confirmar';
+    participacaoSebrae?: string;
+    descricao?: string;
+    linkMaisInfo?: string;
+    linkInscricao?: string;
+  }[];
+}
+
 // União de todos os tipos de blocos
 export type EditorBlock =
   | ParagraphBlock
@@ -150,7 +172,8 @@ export type EditorBlock =
   | ColumnsBlock
   | ButtonBlock
   | HTMLBlock
-  | PollBlock;
+  | PollBlock
+  | EventsBlock;
 
 // ============================================
 // TIPOS DE POST
