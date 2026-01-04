@@ -21,6 +21,10 @@ interface EventsShowcaseProps {
   showTitle?: boolean;
   showFilters?: boolean;
   showCalendar?: boolean;
+  calendarIntroTitle?: string;
+  calendarIntroText?: string;
+  eventsIntroTitle?: string;
+  eventsIntroText?: string;
 }
 
 const EVENT_CATEGORIES: EventCategory[] = [
@@ -98,6 +102,10 @@ export const EventsShowcase = ({
   showTitle = false,
   showFilters = true,
   showCalendar = true,
+  calendarIntroTitle,
+  calendarIntroText,
+  eventsIntroTitle,
+  eventsIntroText,
 }: EventsShowcaseProps) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [modalidadeFilter, setModalidadeFilter] = useState<string>('todos');
@@ -193,6 +201,18 @@ export const EventsShowcase = ({
           <h2 className="text-xl md:text-2xl font-semibold text-foreground mb-2">
             {title}
           </h2>
+        </div>
+      )}
+
+      {/* Texto introdutório do calendário */}
+      {showCalendar && (calendarIntroTitle || calendarIntroText) && (
+        <div className="text-center mb-4">
+          {calendarIntroTitle && (
+            <h3 className="text-lg font-semibold text-foreground mb-1">{calendarIntroTitle}</h3>
+          )}
+          {calendarIntroText && (
+            <p className="text-sm text-muted-foreground">{calendarIntroText}</p>
+          )}
         </div>
       )}
 
@@ -344,6 +364,18 @@ export const EventsShowcase = ({
       {showFilters && (
         <div className="text-sm text-muted-foreground mb-4">
           Exibindo <strong>{filteredEvents.length}</strong> de <strong>{events.length}</strong> eventos
+        </div>
+      )}
+
+      {/* Texto introdutório da listagem de eventos */}
+      {(eventsIntroTitle || eventsIntroText) && (
+        <div className="text-center mb-6">
+          {eventsIntroTitle && (
+            <h3 className="text-lg font-semibold text-foreground mb-1">{eventsIntroTitle}</h3>
+          )}
+          {eventsIntroText && (
+            <p className="text-sm text-muted-foreground">{eventsIntroText}</p>
+          )}
         </div>
       )}
 

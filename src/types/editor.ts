@@ -153,6 +153,12 @@ export interface EventsBlock extends BaseBlock {
   showTitle?: boolean; // Toggle para exibir/ocultar título (padrão: false)
   showFilters?: boolean; // Mostrar filtros de busca
   showCalendar?: boolean; // Mostrar calendário
+  // Texto antes do calendário
+  calendarIntroTitle?: string;
+  calendarIntroText?: string;
+  // Texto antes da listagem de eventos
+  eventsIntroTitle?: string;
+  eventsIntroText?: string;
   events: {
     id: string;
     nome: string;
