@@ -38,6 +38,7 @@ import { ColumnsBlockEditor } from './blocks/ColumnsBlockEditor';
 import { ButtonBlockEditor } from './blocks/ButtonBlockEditor';
 import { HTMLBlockEditor } from './blocks/HTMLBlockEditor';
 import { PollBlockEditor } from './blocks/PollBlockEditor';
+import { EventsBlockEditor } from './blocks/EventsBlockEditor';
 import { Button } from '@/components/ui/button';
 import { Plus } from 'lucide-react';
 
@@ -247,6 +248,9 @@ export function BlockEditor({ blocks, onChange, placeholder }: BlockEditorProps)
       
       case 'poll':
         return <PollBlockEditor block={block} {...commonProps} />;
+      
+      case 'events':
+        return <EventsBlockEditor block={block} {...commonProps} />;
       
       default:
         return (
