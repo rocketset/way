@@ -118,26 +118,13 @@ const SolutionsSection = () => {
             <Plus className="w-5 h-5 text-primary plus-rotate" />
           </div>
           
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 animate-fade-in" style={{
+          <h2 className="text-4xl md:text-5xl font-bold animate-fade-in" style={{
           animationDelay: '0.1s'
         }}>
             <span className="text-foreground">Soluções para estruturar</span>
             <br />
             <span className="gradient-text">a operação digital como um todo.</span>
           </h2>
-          
-          <p className="text-lg text-muted-foreground max-w-3xl mx-auto animate-fade-in" style={{
-          animationDelay: '0.2s'
-        }}>A Way executa projetos que vão além do site. Implantamos, desenvolvemos e evoluímos operações de e-commerce, conectando plataforma, integrações, automações, CRM e marketplaces em uma estrutura única, sólida e preparada para escalar.</p>
-          
-          {/* Frase de autoridade */}
-          <div className="mt-6 animate-fade-in" style={{
-          animationDelay: '0.25s'
-        }}>
-            <p className="text-xl md:text-2xl font-bold text-primary italic">
-              "Tecnologia não é escolha estética. É decisão estratégica."
-            </p>
-          </div>
           
         </div>
 
