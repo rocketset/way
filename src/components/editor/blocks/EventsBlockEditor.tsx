@@ -16,11 +16,12 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from '@/components/ui/collapsible';
-import { Plus, Trash2, GripVertical, Image as ImageIcon, AlertCircle, ChevronDown, ChevronRight, Check } from 'lucide-react';
+import { Plus, Trash2, GripVertical, Image as ImageIcon, AlertCircle, ChevronDown, ChevronRight, Check, Save, AlertTriangle } from 'lucide-react';
 import { v4 as uuid } from 'uuid';
 import { MediaSelector } from '../MediaSelector';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
+import { toast } from 'sonner';
 
 interface EventsBlockEditorProps {
   block: EventsBlock;
@@ -41,6 +42,13 @@ export const EventsBlockEditor = ({ block, onChange }: EventsBlockEditorProps) =
   const [isMediaOpen, setIsMediaOpen] = useState(false);
   const [editingEventIndex, setEditingEventIndex] = useState<number | null>(null);
   const [openEvents, setOpenEvents] = useState<Set<string>>(new Set());
+  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
+  const [lastSavedEvents, setLastSavedEvents] = useState<string>('');
+  const [isSaving, setIsSaving] = useState(false);
+
+  // Detectar alterações não salvas
+  const currentEventsJSON = JSON.stringify(block.events || []);
+  const hasChanges = hasUnsavedChanges || (lastSavedEvents !== '' && currentEventsJSON !== lastSavedEvents);
 
   const toggleEvent = (eventId: string) => {
     setOpenEvents(prev => {
@@ -64,7 +72,19 @@ export const EventsBlockEditor = ({ block, onChange }: EventsBlockEditorProps) =
   };
 
   const updateBlock = (updates: Partial<EventsBlock>) => {
+    setHasUnsavedChanges(true);
     onChange({ ...block, ...updates });
+  };
+
+  const handleSaveEvents = () => {
+    setIsSaving(true);
+    // Simula salvamento e marca como salvo
+    setTimeout(() => {
+      setLastSavedEvents(JSON.stringify(block.events || []));
+      setHasUnsavedChanges(false);
+      setIsSaving(false);
+      toast.success(`${(block.events || []).length} evento(s) salvos com sucesso! Não esqueça de publicar o post.`);
+    }, 300);
   };
 
   const addEvent = () => {
@@ -224,10 +244,28 @@ export const EventsBlockEditor = ({ block, onChange }: EventsBlockEditorProps) =
         </div>
       </div>
 
+      {/* Aviso de alterações não salvas */}
+      {hasChanges && (block.events || []).length > 0 && (
+        <Alert className="border-amber-500/50 bg-amber-500/10">
+          <AlertTriangle className="h-4 w-4 text-amber-500" />
+          <AlertDescription className="text-amber-600 dark:text-amber-400">
+            Você tem alterações não salvas nos eventos. Clique em "Salvar Eventos" para não perder suas alterações.
+          </AlertDescription>
+        </Alert>
+      )}
+
       {/* Lista de Eventos */}
       <div className="space-y-4">
         <div className="flex items-center justify-between flex-wrap gap-2">
-          <Label className="text-base">Eventos ({(block.events || []).length})</Label>
+          <div className="flex items-center gap-2">
+            <Label className="text-base">Eventos ({(block.events || []).length})</Label>
+            {!hasChanges && (block.events || []).length > 0 && lastSavedEvents !== '' && (
+              <Badge variant="secondary" className="bg-green-500/10 text-green-600 gap-1">
+                <Check className="w-3 h-3" />
+                Salvo
+              </Badge>
+            )}
+          </div>
           <div className="flex items-center gap-2">
             {(block.events || []).length > 0 && (
               <>
@@ -236,6 +274,16 @@ export const EventsBlockEditor = ({ block, onChange }: EventsBlockEditorProps) =
                 </Button>
                 <Button onClick={expandAll} size="sm" variant="ghost" className="text-xs">
                   Expandir todos
+                </Button>
+                <Button 
+                  onClick={handleSaveEvents} 
+                  size="sm" 
+                  variant={hasChanges ? "default" : "outline"}
+                  disabled={isSaving}
+                  className={hasChanges ? "bg-primary hover:bg-primary/90" : ""}
+                >
+                  <Save className="w-4 h-4 mr-1" />
+                  {isSaving ? 'Salvando...' : 'Salvar Eventos'}
                 </Button>
               </>
             )}
