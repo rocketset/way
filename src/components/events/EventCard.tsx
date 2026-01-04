@@ -6,6 +6,7 @@ import { EventCategory } from '@/types/editor';
 export interface EventData {
   id: string;
   nome: string;
+  resumo?: string;
   imagem: string;
   data: string;
   local: string;
@@ -64,9 +65,16 @@ export const EventCard = ({ event }: EventCardProps) => {
       {/* Conteúdo */}
       <div className="p-5 flex-1 flex flex-col">
         {/* 2. Nome do Evento */}
-        <h3 className="text-lg font-bold text-foreground line-clamp-2 mb-3">
+        <h3 className="text-lg font-bold text-foreground line-clamp-2 mb-1">
           {event.nome}
         </h3>
+
+        {/* 2.1 Resumo do Evento */}
+        {event.resumo && (
+          <p className="text-sm text-muted-foreground line-clamp-2 mb-3">
+            {event.resumo}
+          </p>
+        )}
 
         {/* Informações ordenadas */}
         <div className="space-y-2 text-sm text-muted-foreground mb-4 flex-1">

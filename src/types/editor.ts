@@ -156,6 +156,7 @@ export interface EventsBlock extends BaseBlock {
   events: {
     id: string;
     nome: string;
+    resumo?: string;
     imagem: string;
     data: string;
     local: string;

@@ -44,6 +44,7 @@ export const EventsBlockEditor = ({ block, onChange }: EventsBlockEditorProps) =
     const newEvent = {
       id: uuid(),
       nome: 'Novo Evento',
+      resumo: '',
       imagem: '/placeholder.svg',
       data: 'A definir',
       local: 'A definir',
@@ -226,6 +227,16 @@ export const EventsBlockEditor = ({ block, onChange }: EventsBlockEditorProps) =
                   />
                   <p className="text-xs text-muted-foreground">Formatos: DD/MM/AAAA ou texto descritivo</p>
                 </div>
+              </div>
+
+              {/* Resumo */}
+              <div className="space-y-2">
+                <Label>Resumo do Evento</Label>
+                <Input
+                  value={event.resumo || ''}
+                  onChange={(e) => updateEvent(index, { resumo: e.target.value })}
+                  placeholder="Breve descrição do evento (exibido abaixo do nome)"
+                />
               </div>
 
               {/* Local e Modalidade */}
