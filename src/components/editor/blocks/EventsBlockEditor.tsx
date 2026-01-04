@@ -113,6 +113,52 @@ export const EventsBlockEditor = ({ block, onChange }: EventsBlockEditorProps) =
         </div>
       </div>
 
+      {/* Texto introdutório do calendário */}
+      <div className="space-y-4 p-4 bg-background rounded-lg border">
+        <h4 className="text-sm font-medium">Texto antes do calendário</h4>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <Label>Título</Label>
+            <Input
+              value={block.calendarIntroTitle || ''}
+              onChange={(e) => updateBlock({ calendarIntroTitle: e.target.value })}
+              placeholder="Ex: Calendário de Eventos"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label>Texto explicativo</Label>
+            <Input
+              value={block.calendarIntroText || ''}
+              onChange={(e) => updateBlock({ calendarIntroText: e.target.value })}
+              placeholder="Ex: Clique em uma data para filtrar os eventos"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Texto introdutório da listagem */}
+      <div className="space-y-4 p-4 bg-background rounded-lg border">
+        <h4 className="text-sm font-medium">Texto antes da listagem de eventos</h4>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <Label>Título</Label>
+            <Input
+              value={block.eventsIntroTitle || ''}
+              onChange={(e) => updateBlock({ eventsIntroTitle: e.target.value })}
+              placeholder="Ex: Todos os Eventos"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label>Texto explicativo</Label>
+            <Input
+              value={block.eventsIntroText || ''}
+              onChange={(e) => updateBlock({ eventsIntroText: e.target.value })}
+              placeholder="Ex: Confira todos os eventos do setor"
+            />
+          </div>
+        </div>
+      </div>
+
       {/* Toggles de configuração */}
       <div className="space-y-3 p-4 bg-background rounded-lg border">
         <h4 className="text-sm font-medium mb-3">Opções de exibição</h4>

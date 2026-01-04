@@ -310,6 +310,10 @@ export const renderEditorBlock = (block: EditorBlock, index: number, postId?: st
             showTitle={block.showTitle ?? false}
             showFilters={block.showFilters ?? true}
             showCalendar={block.showCalendar ?? true}
+            calendarIntroTitle={block.calendarIntroTitle}
+            calendarIntroText={block.calendarIntroText}
+            eventsIntroTitle={block.eventsIntroTitle}
+            eventsIntroText={block.eventsIntroText}
           />
         </div>
       );
