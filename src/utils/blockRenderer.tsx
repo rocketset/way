@@ -2,6 +2,7 @@ import { EditorBlock } from '@/types/editor';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Poll } from '@/components/Poll';
+import { EventsShowcase } from '@/components/events/EventsShowcase';
 import DOMPurify from 'dompurify';
 
 /**
@@ -296,6 +297,18 @@ export const renderEditorBlock = (block: EditorBlock, index: number, postId?: st
               )}
             </div>
           ))}
+      </div>
+    );
+
+    case 'events':
+      return (
+        <div key={key} className="my-8">
+          <EventsShowcase
+            events={block.events || []}
+            title={block.title}
+            subtitle={block.subtitle}
+            showFilters={block.showFilters ?? true}
+          />
         </div>
       );
 
