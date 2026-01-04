@@ -60,7 +60,7 @@ const ShareButtons = ({ title, url }: ShareButtonsProps) => {
         variant="outline"
         size="sm"
         onClick={handleCopyLink}
-        className="bg-card border-border text-foreground hover:bg-card/80 hover:border-primary transition-all"
+        className="bg-card border-border text-foreground hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all"
       >
         <LinkIcon className="w-4 h-4 mr-2" />
         Copiar Link
