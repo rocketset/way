@@ -126,8 +126,8 @@ const CtaResultsSection = () => {
             </div>
             
             <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
-              Estratégia, tecnologia e performance em um só{" "}
-              <span className="gradient-text">caminho</span>.
+              Agende um diagnóstico{" "}
+              <span className="text-primary">gratuito</span>
             </h2>
             
             <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
