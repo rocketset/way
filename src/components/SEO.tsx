@@ -21,7 +21,13 @@ export const SEO = ({
   noindex = false,
   schema
 }: SEOProps) => {
-  const fullTitle = `${title} | Way E-commerce`;
+  const brandName = "Way E-commerce";
+  const baseTitle = title.trim();
+  const suffix = `| ${brandName}`;
+  const normalize = (v: string) => v.replace(/\s+/g, " ").trim().toLowerCase();
+  const fullTitle = normalize(baseTitle).endsWith(normalize(suffix))
+    ? baseTitle
+    : `${baseTitle} ${suffix}`;
   const siteUrl = "https://wayecommerce.com.br";
   const fullCanonical = canonical || siteUrl;
 

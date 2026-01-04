@@ -155,6 +155,27 @@ const SEO = () => {
     return { status: "success", text: `${len}/160` };
   };
 
+  const normalizeTitlePart = (value: string) => value.replace(/\s+/g, " ").trim().toLowerCase();
+
+  const getDisplayTitle = (page: PageSeo) => {
+    const t = (page.meta_title || "").trim();
+    return t.length ? t : page.page_name;
+  };
+
+  const buildPreviewTitle = (page: PageSeo) => {
+    const base = getDisplayTitle(page);
+    const suffixRaw = globalForm.site_title_suffix || "";
+    const suffix = suffixRaw.trim();
+
+    if (!suffix) return base;
+
+    if (normalizeTitlePart(base).endsWith(normalizeTitlePart(suffix))) {
+      return base;
+    }
+
+    return `${base}${suffixRaw}`;
+  };
+
   if (pagesLoading || globalLoading) {
     return (
       <div className="space-y-6">
@@ -267,8 +288,10 @@ const SEO = () => {
                               : "hover:bg-muted border border-transparent"
                           }`}
                         >
-                          <div className="flex items-center justify-between">
-                            <span className="font-medium">{page.page_name}</span>
+                          <div className="flex items-center justify-between gap-3">
+                            <span className="font-medium line-clamp-2">
+                              {getDisplayTitle(page)}
+                            </span>
                             {hasIssues ? (
                               <AlertCircle className="w-4 h-4 text-yellow-500" />
                             ) : (
@@ -662,7 +685,7 @@ const SEO = () => {
                   {pages?.filter(p => p.ativo && !p.noindex).map((page) => (
                     <div key={page.id} className="flex items-center justify-between p-3">
                       <div>
-                        <p className="font-medium">{page.page_name}</p>
+                        <p className="font-medium">{getDisplayTitle(page)}</p>
                         <p className="text-sm text-muted-foreground">/{page.page_key}</p>
                       </div>
                       <CheckCircle2 className="w-5 h-5 text-green-500" />
@@ -691,7 +714,7 @@ const SEO = () => {
                       https://wayecommerce.com.br/{page.page_key === 'home' ? '' : page.page_key}
                     </p>
                     <p className="text-lg text-blue-600 hover:underline cursor-pointer font-medium">
-                      {page.meta_title || page.page_name}{globalForm.site_title_suffix}
+                      {buildPreviewTitle(page)}
                     </p>
                     <p className="text-sm text-muted-foreground line-clamp-2">
                       {page.meta_description || "Descrição não definida..."}
