@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils';
 
 interface EventDate {
   date: string; // formato: YYYY-MM-DD ou DD/MM/YYYY
+  dataFim?: string; // data fim opcional
 }
 
 interface EventsCalendarProps {
@@ -63,13 +64,23 @@ export const EventsCalendar = ({ events, className, onDateSelect, selectedDate }
   const [selectedYear, setSelectedYear] = useState(currentYear);
 
   // Parse all event dates and create a Set of date strings for quick lookup
+  // Now considers date ranges (startDate to endDate)
   const eventDates = useMemo(() => {
     const dates = new Set<string>();
     events.forEach(event => {
-      const parsed = parseEventDate(event.date);
-      if (parsed) {
-        const key = `${parsed.getFullYear()}-${String(parsed.getMonth() + 1).padStart(2, '0')}-${String(parsed.getDate()).padStart(2, '0')}`;
-        dates.add(key);
+      const startDate = parseEventDate(event.date);
+      const endDate = event.dataFim ? parseEventDate(event.dataFim) : startDate;
+      
+      if (startDate) {
+        const finalEndDate = endDate || startDate;
+        
+        // Add all days in the range
+        const currentDate = new Date(startDate);
+        while (currentDate <= finalEndDate) {
+          const key = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')}`;
+          dates.add(key);
+          currentDate.setDate(currentDate.getDate() + 1);
+        }
       }
     });
     return dates;

@@ -63,29 +63,20 @@ const parseDate = (dateStr: string): Date | null => {
 // Componente de Date Picker com suporte a período
 interface EventDatePickerProps {
   value: string;
-  onChange: (value: string) => void;
+  endDateValue?: string;
+  onChange: (startDate: string, endDate?: string) => void;
 }
 
-const EventDatePicker = ({ value, onChange }: EventDatePickerProps) => {
+const EventDatePicker = ({ value, endDateValue, onChange }: EventDatePickerProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isRange, setIsRange] = useState(() => value?.includes(' a ') || value?.includes(' - '));
+  const [isRange, setIsRange] = useState(() => !!endDateValue);
   const [startDate, setStartDate] = useState<Date | undefined>(() => {
     if (!value || value === 'A definir') return undefined;
-    if (value.includes(' a ') || value.includes(' - ')) {
-      const parts = value.split(/ a | - /);
-      return parseDate(parts[0].trim()) || undefined;
-    }
     return parseDate(value) || undefined;
   });
   const [endDate, setEndDate] = useState<Date | undefined>(() => {
-    if (!value || value === 'A definir') return undefined;
-    if (value.includes(' a ') || value.includes(' - ')) {
-      const parts = value.split(/ a | - /);
-      if (parts[1]) {
-        return parseDate(parts[1].trim()) || undefined;
-      }
-    }
-    return undefined;
+    if (!endDateValue) return undefined;
+    return parseDate(endDateValue) || undefined;
   });
 
   const formatDateStr = (date: Date) => format(date, 'dd/MM/yyyy');
@@ -101,14 +92,13 @@ const EventDatePicker = ({ value, onChange }: EventDatePickerProps) => {
         setStartDate(date);
       } else {
         setEndDate(date);
-        const result = `${formatDateStr(startDate)} a ${formatDateStr(date)}`;
-        onChange(result);
+        onChange(formatDateStr(startDate), formatDateStr(date));
         setIsOpen(false);
       }
     } else {
       setStartDate(date);
       setEndDate(undefined);
-      onChange(formatDateStr(date));
+      onChange(formatDateStr(date), undefined);
       setIsOpen(false);
     }
   };
@@ -117,13 +107,17 @@ const EventDatePicker = ({ value, onChange }: EventDatePickerProps) => {
     setIsRange(checked);
     setEndDate(undefined);
     if (!checked && startDate) {
-      onChange(formatDateStr(startDate));
+      onChange(formatDateStr(startDate), undefined);
     }
   };
 
+  // Display value showing both dates if range
   const displayValue = () => {
     if (!value || value === 'A definir') {
       return <span className="text-muted-foreground">Selecione a data</span>;
+    }
+    if (endDateValue) {
+      return `${value} a ${endDateValue}`;
     }
     return value;
   };
@@ -519,7 +513,8 @@ export const EventsBlockEditor = ({ block, onChange }: EventsBlockEditorProps) =
                         </div>
                         <EventDatePicker
                           value={event.data}
-                          onChange={(date) => updateEvent(index, { data: date })}
+                          endDateValue={event.dataFim}
+                          onChange={(startDate, endDate) => updateEvent(index, { data: startDate, dataFim: endDate })}
                         />
                       </div>
 

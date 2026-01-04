@@ -165,6 +165,7 @@ export interface EventsBlock extends BaseBlock {
     resumo?: string;
     imagem: string;
     data: string;
+    dataFim?: string; // Data fim do evento (para eventos de múltiplos dias)
     local: string;
     modalidade: 'Presencial' | 'Online' | 'Híbrido';
     modalidades?: ('Presencial' | 'Online' | 'Híbrido')[]; // Múltiplas modalidades

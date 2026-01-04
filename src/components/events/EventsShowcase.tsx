@@ -81,18 +81,27 @@ const formatDateForDisplay = (date: Date): string => {
   });
 };
 
-// Check if event is on a specific date
-const isEventOnDate = (eventDate: string, targetDate: Date): boolean => {
-  const parsed = parseEventDate(eventDate);
-  if (!parsed) return false;
-  return parsed.toDateString() === targetDate.toDateString();
+// Check if event is on a specific date (considering date range)
+const isEventOnDate = (startDateStr: string, endDateStr: string | undefined, targetDate: Date): boolean => {
+  const startDate = parseEventDate(startDateStr);
+  if (!startDate) return false;
+  
+  const endDate = endDateStr ? parseEventDate(endDateStr) : startDate;
+  const finalEndDate = endDate || startDate;
+  
+  return targetDate >= startDate && targetDate <= finalEndDate;
 };
 
-// Check if event is on or after a specific date
-const isEventOnOrAfterDate = (eventDate: string, targetDate: Date): boolean => {
-  const parsed = parseEventDate(eventDate);
-  if (!parsed) return false;
-  return parsed >= targetDate;
+// Check if event is on or after a specific date (considering date range)
+const isEventOnOrAfterDate = (startDateStr: string, endDateStr: string | undefined, targetDate: Date): boolean => {
+  const startDate = parseEventDate(startDateStr);
+  if (!startDate) return false;
+  
+  const endDate = endDateStr ? parseEventDate(endDateStr) : startDate;
+  const finalEndDate = endDate || startDate;
+  
+  // Event matches if target date is before or during the event
+  return finalEndDate >= targetDate;
 };
 
 export const EventsShowcase = ({
@@ -122,8 +131,8 @@ export const EventsShowcase = ({
       return;
     }
 
-    // Check if there are events on this exact date
-    const hasEventsOnDate = events.some(event => isEventOnDate(event.data, date));
+    // Check if there are events on this exact date (considering date ranges)
+    const hasEventsOnDate = events.some(event => isEventOnDate(event.data, event.dataFim, date));
     
     setSelectedDate(date);
     setDateFilterMode(hasEventsOnDate ? 'exact' : 'from');
@@ -169,13 +178,13 @@ export const EventsShowcase = ({
       // Categoria filter
       const matchesCategoria = categoriaFilter === 'todos' || eventCategorias.includes(categoriaFilter as any);
 
-      // Date filter
+      // Date filter (considering date ranges)
       let matchesDate = true;
       if (selectedDate && dateFilterMode) {
         if (dateFilterMode === 'exact') {
-          matchesDate = isEventOnDate(event.data, selectedDate);
+          matchesDate = isEventOnDate(event.data, event.dataFim, selectedDate);
         } else {
-          matchesDate = isEventOnOrAfterDate(event.data, selectedDate);
+          matchesDate = isEventOnOrAfterDate(event.data, event.dataFim, selectedDate);
         }
       }
 
@@ -183,8 +192,8 @@ export const EventsShowcase = ({
     });
   }, [sortedEvents, searchTerm, modalidadeFilter, valorFilter, categoriaFilter, selectedDate, dateFilterMode]);
 
-  // Prepare events for calendar (extract dates)
-  const calendarEvents = events.map(event => ({ date: event.data }));
+  // Prepare events for calendar (extract dates including dataFim)
+  const calendarEvents = events.map(event => ({ date: event.data, dataFim: event.dataFim }));
 
   // Check if any filters are active
   const hasActiveFilters = searchTerm || modalidadeFilter !== 'todos' || valorFilter !== 'todos' || categoriaFilter !== 'todos' || selectedDate;
