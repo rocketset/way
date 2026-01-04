@@ -1,4 +1,4 @@
-import { Facebook, Mail, MessageCircle, Link as LinkIcon, Send } from "lucide-react";
+import { MessageCircle, Link as LinkIcon, Linkedin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 
@@ -8,7 +8,7 @@ interface ShareButtonsProps {
   excerpt?: string;
 }
 
-const ShareButtons = ({ title, url, excerpt }: ShareButtonsProps) => {
+const ShareButtons = ({ title, url }: ShareButtonsProps) => {
   const { toast } = useToast();
 
   const handleCopyLink = async () => {
@@ -23,9 +23,9 @@ const ShareButtons = ({ title, url, excerpt }: ShareButtonsProps) => {
     }
   };
 
-  const handleShareFacebook = () => {
-    const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
-    window.open(facebookUrl, '_blank', 'width=600,height=400');
+  const handleShareLinkedIn = () => {
+    const linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
+    window.open(linkedinUrl, '_blank', 'width=600,height=400');
   };
 
   const handleShareWhatsApp = () => {
@@ -34,28 +34,16 @@ const ShareButtons = ({ title, url, excerpt }: ShareButtonsProps) => {
     window.open(whatsappUrl, '_blank');
   };
 
-  const handleShareTelegram = () => {
-    const text = title;
-    const telegramUrl = `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`;
-    window.open(telegramUrl, '_blank');
-  };
-
-  const handleShareEmail = () => {
-    const subject = encodeURIComponent(title);
-    const body = encodeURIComponent(`${excerpt || ''}\n\n${url}`);
-    window.location.href = `mailto:?subject=${subject}&body=${body}`;
-  };
-
   return (
     <div className="flex flex-wrap gap-2">
       <Button
         variant="outline"
         size="sm"
-        onClick={handleShareFacebook}
-        className="bg-card border-border text-foreground hover:bg-[#1877F2] hover:text-white hover:border-[#1877F2] transition-all"
+        onClick={handleShareLinkedIn}
+        className="bg-card border-border text-foreground hover:bg-[#0A66C2] hover:text-white hover:border-[#0A66C2] transition-all"
       >
-        <Facebook className="w-4 h-4 mr-2" />
-        Facebook
+        <Linkedin className="w-4 h-4 mr-2" />
+        LinkedIn
       </Button>
 
       <Button
@@ -66,26 +54,6 @@ const ShareButtons = ({ title, url, excerpt }: ShareButtonsProps) => {
       >
         <MessageCircle className="w-4 h-4 mr-2" />
         WhatsApp
-      </Button>
-
-      <Button
-        variant="outline"
-        size="sm"
-        onClick={handleShareTelegram}
-        className="bg-card border-border text-foreground hover:bg-[#0088cc] hover:text-white hover:border-[#0088cc] transition-all"
-      >
-        <Send className="w-4 h-4 mr-2" />
-        Telegram
-      </Button>
-
-      <Button
-        variant="outline"
-        size="sm"
-        onClick={handleShareEmail}
-        className="bg-card border-border text-foreground hover:bg-card/80 hover:border-primary transition-all"
-      >
-        <Mail className="w-4 h-4 mr-2" />
-        E-mail
       </Button>
 
       <Button

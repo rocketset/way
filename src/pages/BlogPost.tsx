@@ -118,32 +118,6 @@ const BlogPost = () => {
 
             <p className="text-xl text-muted-foreground">{post.excerpt}</p>
 
-            {/* Meta Info */}
-            <div className="flex flex-wrap items-center gap-6 pt-4 border-t border-border">
-              <AuthorCard
-                authorId={post.autor_id}
-                authorName={post.autor_nome}
-                authorAvatar={post.autor_avatar}
-                authorRole={post.autor_cargo}
-                showRole={true}
-              />
-              <span className="text-muted-foreground">•</span>
-              <div className="flex items-center gap-2 text-muted-foreground">
-                <Calendar className="w-4 h-4" />
-                <span>{formatDate(post.criado_em)}</span>
-              </div>
-              <span className="text-muted-foreground">•</span>
-              <div className="flex items-center gap-2 text-muted-foreground">
-                <Clock className="w-4 h-4" />
-                <span>{formatReadingTime(post.reading_time || 5)} de leitura</span>
-              </div>
-            </div>
-
-            {/* Share Buttons */}
-            <div className="pt-6 border-t border-border">
-              <h3 className="text-sm font-semibold text-foreground mb-3">Compartilhar:</h3>
-              <ShareButtons title={post.titulo} excerpt={post.excerpt} url={window.location.href} />
-            </div>
           </div>
         </div>
       </section>
@@ -169,6 +143,33 @@ const BlogPost = () => {
                 ) : (
                   <p>Conteúdo não disponível</p>
                 )}
+              </div>
+
+              {/* Meta Info - moved to end of content */}
+              <div className="flex flex-wrap items-center gap-6 pt-8 mt-8 border-t border-border">
+                <AuthorCard
+                  authorId={post.autor_id}
+                  authorName={post.autor_nome}
+                  authorAvatar={post.autor_avatar}
+                  authorRole={post.autor_cargo}
+                  showRole={true}
+                />
+                <span className="text-muted-foreground">•</span>
+                <div className="flex items-center gap-2 text-muted-foreground">
+                  <Calendar className="w-4 h-4" />
+                  <span>{formatDate(post.criado_em)}</span>
+                </div>
+                <span className="text-muted-foreground">•</span>
+                <div className="flex items-center gap-2 text-muted-foreground">
+                  <Clock className="w-4 h-4" />
+                  <span>{formatReadingTime(post.reading_time || 5)} de leitura</span>
+                </div>
+              </div>
+
+              {/* Share Buttons */}
+              <div className="pt-6">
+                <h3 className="text-sm font-semibold text-foreground mb-3">Compartilhar:</h3>
+                <ShareButtons title={post.titulo} url={window.location.href} />
               </div>
             </div>
           </div>
