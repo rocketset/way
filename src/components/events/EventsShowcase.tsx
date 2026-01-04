@@ -187,21 +187,14 @@ export const EventsShowcase = ({
 
   return (
     <div className="w-full">
-      {/* Header - respeitando showTitle */}
-      {(showTitle && title) || subtitle ? (
+      {/* Header - respeitando showTitle (subtitle removido pois já aparece no excerpt do post) */}
+      {showTitle && title && (
         <div className="text-center mb-8">
-          {showTitle && title && (
-            <h2 className="text-xl md:text-2xl font-semibold text-foreground mb-2">
-              {title}
-            </h2>
-          )}
-          {subtitle && (
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              {subtitle}
-            </p>
-          )}
+          <h2 className="text-xl md:text-2xl font-semibold text-foreground mb-2">
+            {title}
+          </h2>
         </div>
-      ) : null}
+      )}
 
       {/* Calendário Visual Interativo */}
       {showCalendar && events.length > 0 && (
