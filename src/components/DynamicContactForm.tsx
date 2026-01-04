@@ -36,45 +36,77 @@ const DynamicContactForm = ({ formSlug, className = "" }: DynamicContactFormProp
     formConfig.fields.forEach((field) => {
       let fieldSchema: z.ZodTypeAny;
 
+      const stringishTypes = new Set([
+        "text",
+        "email",
+        "tel",
+        "textarea",
+        "select",
+        "radio",
+        "url",
+        "date",
+        "cnpj",
+        "cpf",
+      ]);
+
       switch (field.tipo_campo) {
-        case 'email':
-          fieldSchema = z.string().email({ message: "E-mail inválido" });
+        case "email":
+          fieldSchema = z.string().trim().email({ message: "E-mail inválido" });
           break;
-        case 'tel':
-          fieldSchema = z.string().min(10, { message: "Telefone inválido" });
+        case "tel":
+          fieldSchema = z.string().trim().min(10, { message: "Telefone inválido" });
           break;
-        case 'number':
+        case "number":
           fieldSchema = z.coerce.number();
           break;
-        case 'url':
-          fieldSchema = z.string().url({ message: "URL inválida" }).or(z.literal(''));
+        case "url":
+          fieldSchema = z.string().trim().url({ message: "URL inválida" });
           break;
-        case 'checkbox':
+        case "date":
+          fieldSchema = z.string().trim();
+          break;
+        case "checkbox":
           fieldSchema = z.boolean();
           break;
-        case 'textarea':
-          fieldSchema = z.string().transform((val) => DOMPurify.sanitize(val, { ALLOWED_TAGS: [] }));
-          break;
         default:
-          fieldSchema = z.string();
+          fieldSchema = z.string().trim();
       }
 
       // Aplicar validações
       if (field.validacao) {
-        if (field.validacao.minLength && 'min' in fieldSchema) {
-          fieldSchema = (fieldSchema as z.ZodString).min(field.validacao.minLength);
+        const isStringField = stringishTypes.has(field.tipo_campo);
+        if (isStringField) {
+          if (field.validacao.minLength) {
+            fieldSchema = (fieldSchema as z.ZodString).min(field.validacao.minLength);
+          }
+          if (field.validacao.maxLength) {
+            fieldSchema = (fieldSchema as z.ZodString).max(field.validacao.maxLength);
+          }
         }
-        if (field.validacao.maxLength && 'max' in fieldSchema) {
-          fieldSchema = (fieldSchema as z.ZodString).max(field.validacao.maxLength);
+
+        if (field.tipo_campo === "number") {
+          if (typeof field.validacao.min === "number") {
+            fieldSchema = (fieldSchema as z.ZodNumber).min(field.validacao.min);
+          }
+          if (typeof field.validacao.max === "number") {
+            fieldSchema = (fieldSchema as z.ZodNumber).max(field.validacao.max);
+          }
         }
       }
 
-      // Tornar opcional se não for obrigatório
+      // Obrigatório / opcional
       if (!field.obrigatorio) {
-        fieldSchema = fieldSchema.optional().or(z.literal(''));
-      } else if (field.tipo_campo === 'text' || field.tipo_campo === 'email' || field.tipo_campo === 'textarea' || field.tipo_campo === 'url') {
-        // Só aplicar .min() em tipos string
-        fieldSchema = (fieldSchema as z.ZodString).min(1, { message: `${field.label} é obrigatório` });
+        if (field.tipo_campo === "checkbox") {
+          fieldSchema = fieldSchema.optional();
+        } else {
+          // Mantém compatibilidade com inputs vazios ("")
+          fieldSchema = fieldSchema.optional().or(z.literal(""));
+        }
+      } else {
+        // Só aplicar validação de "não vazio" para campos string
+        if (field.tipo_campo !== "checkbox" && field.tipo_campo !== "number") {
+          fieldSchema = (fieldSchema as z.ZodString).min(1, { message: `${field.label} é obrigatório` });
+        }
       }
 
       schemaFields[field.nome_campo] = fieldSchema;
@@ -105,15 +137,19 @@ const DynamicContactForm = ({ formSlug, className = "" }: DynamicContactFormProp
 
   const onSubmit = async (data: Record<string, any>) => {
     setIsSubmitting(true);
+
+    const sanitizeText = (value: unknown) =>
+      DOMPurify.sanitize(String(value ?? ""), { ALLOWED_TAGS: [] });
+
     try {
       // Mapear campos para o formato do banco
       const contactData = {
-        nome: String(data.nome || data.name || 'N/A'),
-        email: String(data.email || 'nao-informado@example.com'),
-        telefone: data.telefone || data.phone || null,
-        empresa: data.empresa || data.company || null,
-        assunto: data.assunto || data.subject || formSlug,
-        mensagem: String(data.mensagem || data.message || JSON.stringify(data)),
+        nome: sanitizeText(data.nome || data.name || "N/A"),
+        email: sanitizeText(data.email || "nao-informado@example.com"),
+        telefone: sanitizeText(data.telefone || data.phone || "") || null,
+        empresa: sanitizeText(data.empresa || data.company || "") || null,
+        assunto: sanitizeText(data.assunto || data.subject || formSlug),
+        mensagem: sanitizeText(data.mensagem || data.message || JSON.stringify(data)),
       };
 
       const { error } = await supabase.from("contacts").insert([contactData]);
