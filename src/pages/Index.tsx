@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import HomeBannerSlider from "@/components/HomeBannerSlider";
 import WhyChooseSection from "@/components/WhyChooseSection";
+import StrategicPillarsSection from "@/components/StrategicPillarsSection";
 import SolutionsSection from "@/components/SolutionsSection";
 import PartnersCarousel from "@/components/PartnersCarousel";
 import FeaturedCasesSection from "@/components/FeaturedCasesSection";
@@ -53,6 +54,11 @@ const Index = () => {
         animationDelay: '0.2s'
       }}>
           <PartnersCarousel />
+        </div>
+        <div className="animate-fade-in" style={{
+        animationDelay: '0.25s'
+      }}>
+          <StrategicPillarsSection />
         </div>
         <div className="animate-fade-in" style={{
         animationDelay: '0.3s'
