@@ -101,7 +101,7 @@ const Footer = () => {
 
               {/* Copyright */}
               <div className="pt-4 text-center">
-                <p className="text-xs text-white/50">2026 © Way E-commerce. Todos os direitos reservados.</p>
+                <p className="text-xs text-white/50">2026 © Way E-commerce. Todos os direitos reservados | Way Soluções, Treinamentos e Serviços em Tecnologia LTDA  - CNPJ: 27.195.145/0001-41      </p>
               </div>
             </div>
           </div>
