@@ -75,8 +75,8 @@ const Diagnosticos = () => {
         keywords="diagnóstico e-commerce, maturidade digital, avaliação loja virtual, ferramentas e-commerce"
       />
       
-      {/* Header completo */}
-      <Header />
+      {/* Header sem botões de CTA */}
+      <Header variant="landing" />
       
       {/* Conteúdo principal - com padding-top para o header fixo */}
       <main className="flex-1 pt-20">
