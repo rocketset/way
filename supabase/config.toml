@@ -3,6 +3,9 @@ project_id = "kmjasfuacnwqyershuxa"
 [functions.generate-sitemap]
 verify_jwt = false
 
+[functions.serve-sitemap]
+verify_jwt = false
+
 [functions.sync-google-reviews]
 verify_jwt = false
 
