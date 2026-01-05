@@ -11,6 +11,9 @@ export interface SitemapConfig {
   updated_at: string;
 }
 
+// URL da edge function do sitemap dinâmico
+export const SITEMAP_URL = "https://kmjasfuacnwqyershuxa.supabase.co/functions/v1/serve-sitemap";
+
 export const useSitemapConfig = () => {
   return useQuery({
     queryKey: ["sitemap-config"],
@@ -44,11 +47,40 @@ export const useGenerateSitemap = () => {
           .eq("id", config.id);
       }
 
-      // Chamar edge function para gerar sitemap
-      const { data, error } = await supabase.functions.invoke('generate-sitemap');
+      // Chamar edge function para testar e contar URLs
+      const response = await fetch(SITEMAP_URL);
+      
+      if (!response.ok) {
+        throw new Error('Failed to generate sitemap');
+      }
 
-      if (error) throw error;
-      return data;
+      const xml = await response.text();
+      
+      // Contar URLs no XML
+      const urlMatches = xml.match(/<url>/g);
+      const totalUrls = urlMatches ? urlMatches.length : 0;
+
+      // Atualizar configuração
+      if (config) {
+        await supabase
+          .from("sitemap_config")
+          .update({
+            last_generated_at: new Date().toISOString(),
+            total_urls: totalUrls,
+            status: 'success',
+          })
+          .eq("id", config.id);
+      } else {
+        await supabase
+          .from("sitemap_config")
+          .insert({
+            last_generated_at: new Date().toISOString(),
+            total_urls: totalUrls,
+            status: 'success',
+          });
+      }
+
+      return { totalUrls, xml };
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["sitemap-config"] });

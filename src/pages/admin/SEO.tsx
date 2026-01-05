@@ -24,7 +24,7 @@ import {
   useDeletePageSeo,
   PageSeo,
 } from "@/hooks/usePageSeo";
-import { useSitemapConfig } from "@/hooks/useSitemapConfig";
+import { useSitemapConfig, SITEMAP_URL } from "@/hooks/useSitemapConfig";
 
 type SitemapStatus = 'pending' | 'generating' | 'success' | 'error';
 
@@ -672,11 +672,14 @@ const SEO = () => {
 
               <div className="flex items-center gap-4">
                 <Button asChild variant="outline">
-                  <a href="/sitemap.xml" target="_blank" rel="noopener noreferrer">
+                  <a href={SITEMAP_URL} target="_blank" rel="noopener noreferrer">
                     <ExternalLink className="w-4 h-4 mr-2" />
                     Ver sitemap.xml
                   </a>
                 </Button>
+                <p className="text-sm text-muted-foreground">
+                  O sitemap é gerado dinamicamente a cada acesso
+                </p>
               </div>
 
               <div className="space-y-4">
