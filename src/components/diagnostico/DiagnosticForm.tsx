@@ -107,6 +107,7 @@ const challengingAreasOptions = [
 
 export const DiagnosticForm = ({ onSubmit, onBack }: DiagnosticFormProps) => {
   const [step, setStep] = useState(1);
+  const [segmentDropdownOpen, setSegmentDropdownOpen] = useState(false);
   const [formData, setFormData] = useState<DiagnosticFormData>({
     name: '',
     email: '',
@@ -327,48 +328,39 @@ export const DiagnosticForm = ({ onSubmit, onBack }: DiagnosticFormProps) => {
                 {/* Segmento */}
                 <div className="space-y-2">
                   <Label className="text-white">Em qual segmento você atua ou pretende atuar? *</Label>
-                  <div 
-                    className="relative"
-                    onClick={() => {
-                      const dropdown = document.getElementById('segment-dropdown');
-                      if (dropdown) dropdown.classList.toggle('hidden');
-                    }}
-                  >
-                    <div className="bg-gray-900 border border-gray-700 rounded-md p-3 cursor-pointer flex items-center justify-between min-h-[42px]">
-                      <span className={formData.segments.length > 0 ? 'text-white text-sm' : 'text-gray-500 text-sm'}>
+                  <div className="relative">
+                    <div 
+                      className="bg-gray-900 border border-gray-700 rounded-md p-3 cursor-pointer flex items-center justify-between min-h-[42px]"
+                      onClick={() => setSegmentDropdownOpen(!segmentDropdownOpen)}
+                    >
+                      <span className={formData.segments.length > 0 ? 'text-white text-sm truncate pr-2' : 'text-gray-500 text-sm'}>
                         {formData.segments.length > 0 
-                          ? formData.segments.join(', ') 
+                          ? formData.segments.slice(0, 3).join(', ') + (formData.segments.length > 3 ? ` +${formData.segments.length - 3}` : '')
                           : 'Selecione os segmentos'}
                       </span>
-                      <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className={`w-4 h-4 text-gray-400 transition-transform ${segmentDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                       </svg>
                     </div>
-                    <div 
-                      id="segment-dropdown" 
-                      className="hidden absolute z-50 w-full mt-1 bg-gray-900 border border-gray-700 rounded-md shadow-lg max-h-60 overflow-y-auto"
-                    >
-                      {segmentOptions.map((segment) => (
-                        <div 
-                          key={segment} 
-                          className="flex items-center space-x-2 px-3 py-2 hover:bg-gray-800 cursor-pointer"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleArrayToggle('segments', segment);
-                          }}
-                        >
-                          <Checkbox
-                            id={`segment-${segment}`}
-                            checked={formData.segments.includes(segment)}
-                            onCheckedChange={() => handleArrayToggle('segments', segment)}
-                            className="border-gray-600 data-[state=checked]:bg-primary data-[state=checked]:border-primary"
-                          />
-                          <label className="text-sm text-gray-300 cursor-pointer flex-1">
-                            {segment}
-                          </label>
-                        </div>
-                      ))}
-                    </div>
+                    {segmentDropdownOpen && (
+                      <div className="absolute z-50 w-full mt-1 bg-gray-900 border border-gray-700 rounded-md shadow-lg max-h-60 overflow-y-auto">
+                        {segmentOptions.map((segment) => (
+                          <div 
+                            key={segment} 
+                            className="flex items-center space-x-2 px-3 py-2 hover:bg-gray-800 cursor-pointer"
+                            onClick={() => handleArrayToggle('segments', segment)}
+                          >
+                            <Checkbox
+                              checked={formData.segments.includes(segment)}
+                              className="border-gray-600 data-[state=checked]:bg-primary data-[state=checked]:border-primary pointer-events-none"
+                            />
+                            <span className="text-sm text-white cursor-pointer flex-1">
+                              {segment}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 </div>
 
@@ -403,7 +395,7 @@ export const DiagnosticForm = ({ onSubmit, onBack }: DiagnosticFormProps) => {
                     </SelectTrigger>
                     <SelectContent className="bg-gray-900 border-gray-700 z-50 max-h-60">
                       {platformOptions.map((option) => (
-                        <SelectItem key={option} value={option} className="text-white hover:bg-gray-800 focus:bg-gray-800">
+                        <SelectItem key={option} value={option} className="text-white hover:bg-gray-800 focus:bg-gray-800 focus:text-white hover:text-white">
                           {option}
                         </SelectItem>
                       ))}
@@ -423,7 +415,7 @@ export const DiagnosticForm = ({ onSubmit, onBack }: DiagnosticFormProps) => {
                     </SelectTrigger>
                     <SelectContent className="bg-gray-900 border-gray-700 z-50">
                       {businessPhaseOptions.map((option) => (
-                        <SelectItem key={option} value={option} className="text-white hover:bg-gray-800 focus:bg-gray-800">
+                        <SelectItem key={option} value={option} className="text-white hover:bg-gray-800 focus:bg-gray-800 focus:text-white hover:text-white">
                           {option}
                         </SelectItem>
                       ))}
@@ -497,7 +489,7 @@ export const DiagnosticForm = ({ onSubmit, onBack }: DiagnosticFormProps) => {
                     </SelectTrigger>
                     <SelectContent className="bg-gray-900 border-gray-700 z-50">
                       {revenueOptions.map((option) => (
-                        <SelectItem key={option} value={option} className="text-white hover:bg-gray-800 focus:bg-gray-800">
+                        <SelectItem key={option} value={option} className="text-white hover:bg-gray-800 focus:bg-gray-800 focus:text-white hover:text-white">
                           {option}
                         </SelectItem>
                       ))}
