@@ -32,6 +32,7 @@ import {
   FolderOpen,
   Settings,
   ClipboardList,
+  FileCode,
   type LucideIcon,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -85,6 +86,7 @@ const FALLBACK_MENU: DynamicMenuItem[] = [
     { label: 'Tags', path: '/admin/blog/tags', roles: ['administrador', 'gestor_conteudo'] },
     { label: 'Colunistas', path: '/admin/blog/columnists', roles: ['administrador', 'gestor_conteudo'] },
   ]},
+  { icon: FileCode, label: 'Páginas', path: '/admin/pages', roles: ['administrador', 'gestor_conteudo'] },
   { icon: Settings, label: 'Configurações', path: '/admin/site-settings', roles: ['administrador'], subItems: [
     { label: 'Configurações Gerais', path: '/admin/site-settings' },
     { label: 'SEO', path: '/admin/seo' },
