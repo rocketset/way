@@ -695,6 +695,48 @@ export type Database = {
         }
         Relationships: []
       }
+      diagnostic_records: {
+        Row: {
+          answers: Json
+          created_at: string | null
+          email: string
+          id: string
+          instagram: string
+          lido: boolean | null
+          name: string
+          score: number
+          store_url: string
+          updated_at: string | null
+          whatsapp: string
+        }
+        Insert: {
+          answers?: Json
+          created_at?: string | null
+          email: string
+          id?: string
+          instagram: string
+          lido?: boolean | null
+          name: string
+          score?: number
+          store_url: string
+          updated_at?: string | null
+          whatsapp: string
+        }
+        Update: {
+          answers?: Json
+          created_at?: string | null
+          email?: string
+          id?: string
+          instagram?: string
+          lido?: boolean | null
+          name?: string
+          score?: number
+          store_url?: string
+          updated_at?: string | null
+          whatsapp?: string
+        }
+        Relationships: []
+      }
       form_configs: {
         Row: {
           ativo: boolean | null

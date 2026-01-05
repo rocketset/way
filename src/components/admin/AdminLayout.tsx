@@ -105,6 +105,7 @@ const FALLBACK_MENU: DynamicMenuItem[] = [
     { label: 'Vagas', path: '/admin/carreiras/vagas' },
     { label: 'Candidatos', path: '/admin/carreiras/candidatos' },
   ]},
+  { icon: ClipboardList, label: 'Diagnósticos', path: '/admin/diagnosticos', roles: ['administrador', 'gestor_conteudo'] },
 ];
 
 // Roles que devem aparecer no "Visualizar como" do Admin

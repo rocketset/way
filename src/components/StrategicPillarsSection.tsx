@@ -96,7 +96,7 @@ const StrategicPillarsSection = () => {
           </p>
           
           <a 
-            href="/contato" 
+            href="/diagnosticos" 
             className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-lg font-bold text-lg hover:bg-primary/90 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-primary/30"
           >
             Solicite um diagnóstico — é gratuito

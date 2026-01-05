@@ -1,5 +1,6 @@
-import { Plus } from "lucide-react";
-import DynamicContactForm from "@/components/DynamicContactForm";
+import { Plus, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 
 const CtaResultsSection = () => {
   return (
@@ -34,17 +35,21 @@ const CtaResultsSection = () => {
             </div>
             
             <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
-              Agende um diagnóstico{" "}
-              <span className="text-primary">gratuito</span>
+              Descubra o nível de maturidade do seu{" "}
+              <span className="text-primary">e-commerce</span>
             </h2>
             
             <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-              Fale com a Way e acelere seu crescimento digital.
+              Faça nosso diagnóstico gratuito em 5 minutos e receba recomendações personalizadas para escalar suas vendas.
             </p>
+            
+            <Button asChild size="lg" className="text-lg px-8 py-6">
+              <Link to="/diagnosticos">
+                Iniciar Diagnóstico Gratuito
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+            </Button>
           </div>
-
-          {/* Dynamic Contact Form */}
-          <DynamicContactForm formSlug="home" />
         </div>
       </div>
     </section>
