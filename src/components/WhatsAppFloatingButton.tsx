@@ -1,28 +1,35 @@
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 
 const WhatsAppFloatingButton = () => {
   const [isHovered, setIsHovered] = useState(false);
+  const location = useLocation();
+
+  // Não mostrar no painel admin
+  if (location.pathname.startsWith("/admin") || location.pathname.startsWith("/auth")) {
+    return null;
+  }
 
   return (
     <a
       href="https://api.whatsapp.com/message/5AGVY5WZR56KA1?autoload=1&app_absent=0"
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed bottom-6 right-6 z-50 group"
+      className="fixed bottom-6 left-6 z-50 group"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       aria-label="Contato via WhatsApp"
     >
       {/* Tooltip */}
       <div
-        className={`absolute right-full mr-3 top-1/2 -translate-y-1/2 bg-white text-gray-800 px-4 py-2 rounded-lg shadow-lg whitespace-nowrap font-medium text-sm transition-all duration-300 ${
-          isHovered ? "opacity-100 translate-x-0" : "opacity-0 translate-x-2 pointer-events-none"
+        className={`absolute left-full ml-3 top-1/2 -translate-y-1/2 bg-white text-gray-800 px-4 py-2 rounded-lg shadow-lg whitespace-nowrap font-medium text-sm transition-all duration-300 ${
+          isHovered ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-2 pointer-events-none"
         }`}
       >
         Fale conosco!
         {/* Arrow */}
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-full">
-          <div className="border-8 border-transparent border-l-white" />
+        <div className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-full">
+          <div className="border-8 border-transparent border-r-white" />
         </div>
       </div>
 
