@@ -27,6 +27,7 @@ import NotFound from "./pages/NotFound";
 import ClientReports from "./pages/ClientReports";
 import ClientHelp from "./pages/ClientHelp";
 import Carreiras from "./pages/Carreiras";
+import Diagnosticos from "./pages/Diagnosticos";
 
 // Páginas de Soluções
 import Implementation from "./pages/solutions/Implementation";
@@ -94,6 +95,7 @@ import PopupLeads from "./pages/admin/popups/Leads";
 import LeadsKanban from "./pages/admin/LeadsKanban";
 import MenuVisibility from "./pages/admin/MenuVisibility";
 import { PopupDisplay } from "./components/PopupDisplay";
+import DiagnosticsList from "./pages/admin/diagnosticos/List";
 
 // Configuração do React Query
 const queryClient = new QueryClient();
@@ -154,6 +156,9 @@ const App = () => (
           
           {/* Rota pública de Carreiras */}
           <Route path="/carreiras" element={<Carreiras />} />
+          
+          {/* Rota pública de Diagnósticos */}
+          <Route path="/diagnosticos" element={<Diagnosticos />} />
           
           {/* Rotas administrativas protegidas */}
           <Route path="/admin" element={<AdminLayout />}>
@@ -240,6 +245,9 @@ const App = () => (
             {/* Carreiras */}
             <Route path="carreiras/vagas" element={<AdminVagas />} />
             <Route path="carreiras/candidatos" element={<AdminCandidatos />} />
+            
+            {/* Diagnósticos */}
+            <Route path="diagnosticos" element={<DiagnosticsList />} />
           </Route>
           
           {/* Rota 404 - deve ser sempre a última */}
