@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "./useAuth";
@@ -5,7 +6,7 @@ import { toast } from "@/hooks/use-toast";
 
 export interface Notification {
   id: string;
-  type: 'comment' | 'post' | 'case' | 'user' | 'system';
+  type: 'comment' | 'post' | 'case' | 'user' | 'system' | 'informativo' | 'atualizacao';
   title: string;
   message: string;
   link?: string;
@@ -39,6 +40,32 @@ export const useNotifications = () => {
     },
     enabled: !!user,
   });
+
+  // Realtime subscription para atualizar notificações automaticamente
+  useEffect(() => {
+    if (!user) return;
+
+    const channel = supabase
+      .channel('notifications-realtime')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'notifications',
+          filter: `user_id=eq.${user.id}`
+        },
+        () => {
+          // Invalida a query para buscar dados atualizados
+          queryClient.invalidateQueries({ queryKey: ['notifications', user.id] });
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [user, queryClient]);
 
   const markAsReadMutation = useMutation({
     mutationFn: async (notificationId: string) => {

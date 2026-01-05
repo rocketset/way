@@ -1,7 +1,7 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
@@ -9,16 +9,18 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Bell, Check, FileText, Briefcase, User, MessageSquare, Plus } from 'lucide-react';
-import { formatDistanceToNow } from 'date-fns';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { Bell, Check, FileText, Briefcase, User, MessageSquare, Plus, ChevronDown, Circle, AlertTriangle } from 'lucide-react';
+import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
-import { useNotifications } from '@/hooks/useNotifications';
+import { useNotifications, Notification } from '@/hooks/useNotifications';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
 import { useQueryClient } from '@tanstack/react-query';
 
 export default function Notifications() {
+  const navigate = useNavigate();
   const { notifications, isLoading, unreadCount, markAsRead, markAllAsRead } = useNotifications();
   const { isAdmin, isGestorConteudo, user } = useAuth();
   const queryClient = useQueryClient();
@@ -63,7 +65,7 @@ export default function Notifications() {
       }
 
       // Cria notificações para todos os clientes
-      const notifications = clientRoles.map(role => ({
+      const notificationsToInsert = clientRoles.map(role => ({
         user_id: role.user_id,
         type: formData.type,
         title: formData.title,
@@ -75,7 +77,7 @@ export default function Notifications() {
 
       const { error: insertError } = await supabase
         .from('notifications')
-        .insert(notifications);
+        .insert(notificationsToInsert);
 
       if (insertError) throw insertError;
 
@@ -109,7 +111,8 @@ export default function Notifications() {
   };
 
   // Ícone baseado no tipo
-  const getIcon = (iconType?: string) => {
+  const getIcon = (notification: Notification) => {
+    const iconType = notification.icon;
     switch (iconType) {
       case 'message':
         return MessageSquare;
@@ -124,12 +127,31 @@ export default function Notifications() {
     }
   };
 
-  // Formata o tempo relativo
-  const getRelativeTime = (date: Date) => {
-    return formatDistanceToNow(date, { 
-      addSuffix: true, 
-      locale: ptBR 
-    });
+  // Ícone de status
+  const getStatusIcon = (notification: Notification) => {
+    if (!notification.read) {
+      // Não lida - círculo preenchido
+      return <Circle className="h-3 w-3 fill-primary text-primary" />;
+    }
+    if (notification.type === 'atualizacao') {
+      // Atualização - triângulo
+      return <AlertTriangle className="h-3 w-3 text-amber-500" />;
+    }
+    // Lida - círculo vazio
+    return <Circle className="h-3 w-3 text-muted-foreground" />;
+  };
+
+  // Formata a data completa
+  const formatDate = (date: Date) => {
+    return format(date, "d 'de' MMMM 'de' yyyy", { locale: ptBR });
+  };
+
+  // Determina a cor do card baseado no status
+  const getCardStyles = (notification: Notification) => {
+    if (!notification.read) {
+      return 'bg-primary/5 border-l-4 border-l-primary';
+    }
+    return 'bg-card border-l-4 border-l-transparent';
   };
 
   const canSendNotifications = isAdmin || isGestorConteudo;
@@ -254,92 +276,115 @@ export default function Notifications() {
       </div>
 
       {/* Lista de Notificações */}
-      <Card>
+      <Card className="overflow-hidden">
         <ScrollArea className="h-[calc(100vh-280px)]">
-          <div className="divide-y">
-            {isLoading ? (
-              <div className="p-4 space-y-4">
-                {[1, 2, 3, 4, 5].map((i) => (
-                  <div key={i} className="flex items-start gap-4">
-                    <Skeleton className="h-10 w-10 rounded-full" />
+          {isLoading ? (
+            <div className="p-4 space-y-4">
+              {[1, 2, 3, 4, 5].map((i) => (
+                <div key={i} className="p-4 border rounded-lg">
+                  <div className="flex items-start gap-4">
+                    <Skeleton className="h-5 w-5 rounded-full" />
                     <div className="flex-1 space-y-2">
-                      <Skeleton className="h-4 w-3/4" />
-                      <Skeleton className="h-3 w-1/2" />
+                      <Skeleton className="h-5 w-3/4" />
+                      <Skeleton className="h-4 w-1/3" />
                     </div>
                   </div>
-                ))}
-              </div>
-            ) : notifications.length === 0 ? (
-              <div className="p-12 text-center">
-                <Bell className="h-12 w-12 mx-auto text-muted-foreground opacity-50 mb-4" />
-                <p className="text-muted-foreground">Nenhuma notificação por enquanto</p>
-              </div>
-            ) : (
-              notifications.map((notification) => {
-                const IconComponent = getIcon(notification.icon);
+                </div>
+              ))}
+            </div>
+          ) : notifications.length === 0 ? (
+            <div className="p-12 text-center">
+              <Bell className="h-12 w-12 mx-auto text-muted-foreground opacity-50 mb-4" />
+              <p className="text-muted-foreground">Nenhuma notificação por enquanto</p>
+            </div>
+          ) : (
+            <Accordion type="single" collapsible className="w-full">
+              {notifications.map((notification) => {
+                const IconComponent = getIcon(notification);
                 
                 return (
-                  <div
-                    key={notification.id}
-                    className={`flex items-start gap-4 p-4 transition-colors hover:bg-muted/50 ${
-                      !notification.read ? 'bg-primary/5' : ''
-                    }`}
+                  <AccordionItem 
+                    key={notification.id} 
+                    value={notification.id}
+                    className={`border-b last:border-b-0 ${getCardStyles(notification)}`}
                   >
-                    {/* Avatar/Ícone */}
-                    <div className="flex-shrink-0">
-                      {notification.avatar_url ? (
-                        <Avatar>
-                          <AvatarImage src={notification.avatar_url} />
-                          <AvatarFallback>
-                            <IconComponent className="h-5 w-5" />
-                          </AvatarFallback>
-                        </Avatar>
-                      ) : (
-                        <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
-                          <IconComponent className="h-5 w-5 text-primary" />
+                    <AccordionTrigger 
+                      className="px-4 py-4 hover:no-underline hover:bg-muted/50 [&[data-state=open]>svg]:rotate-180"
+                      onClick={() => {
+                        if (!notification.read) {
+                          markAsRead(notification.id);
+                        }
+                      }}
+                    >
+                      <div className="flex items-start gap-3 text-left flex-1">
+                        {/* Status Icon */}
+                        <div className="mt-1">
+                          {getStatusIcon(notification)}
                         </div>
-                      )}
-                    </div>
-
-                    {/* Conteúdo */}
-                    <div className="flex-1 min-w-0">
-                      {notification.link ? (
-                        <a
-                          href={notification.link}
-                          className="text-sm hover:underline"
-                          onClick={() => markAsRead(notification.id)}
-                        >
-                          <span className={!notification.read ? 'font-medium text-foreground' : 'text-muted-foreground'}>
-                            {notification.message}
-                          </span>
-                        </a>
-                      ) : (
-                        <p className={`text-sm ${!notification.read ? 'font-medium text-foreground' : 'text-muted-foreground'}`}>
+                        
+                        {/* Content */}
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 flex-wrap">
+                            <span className={`font-semibold text-base ${!notification.read ? 'text-foreground' : 'text-muted-foreground'}`}>
+                              {notification.title}
+                            </span>
+                          </div>
+                          <p className="text-sm text-muted-foreground mt-1">
+                            {formatDate(notification.created_at)}
+                          </p>
+                        </div>
+                      </div>
+                    </AccordionTrigger>
+                    
+                    <AccordionContent className="px-4 pb-4">
+                      <div className="pl-6 space-y-4">
+                        {/* Message */}
+                        <p className="text-sm text-muted-foreground leading-relaxed">
                           {notification.message}
                         </p>
-                      )}
-                    </div>
-
-                    {/* Tempo e Status */}
-                    <div className="flex-shrink-0 flex items-center gap-2">
-                      <span className="text-xs text-muted-foreground whitespace-nowrap">
-                        {getRelativeTime(notification.created_at)}
-                      </span>
-                      {!notification.read && (
-                        <button
-                          onClick={() => markAsRead(notification.id)}
-                          className="h-2 w-2 rounded-full bg-primary"
-                          title="Marcar como lida"
-                        />
-                      )}
-                    </div>
-                  </div>
+                        
+                        {/* CTA Button */}
+                        {notification.link && (
+                          <Button
+                            variant="default"
+                            size="sm"
+                            onClick={() => navigate(notification.link!)}
+                          >
+                            {notification.type === 'system' && notification.link?.includes('academy') 
+                              ? 'Iniciar curso' 
+                              : notification.type === 'post' 
+                                ? 'Ler post'
+                                : notification.type === 'case'
+                                  ? 'Ver case'
+                                  : 'Ver detalhes'
+                            }
+                          </Button>
+                        )}
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
                 );
-              })
-            )}
-          </div>
+              })}
+            </Accordion>
+          )}
         </ScrollArea>
       </Card>
+
+      {/* Legenda */}
+      <div className="flex items-center gap-6 text-xs text-muted-foreground">
+        <div className="flex items-center gap-2">
+          <Circle className="h-3 w-3 fill-primary text-primary" />
+          <span>Não lida</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <Circle className="h-3 w-3 text-muted-foreground" />
+          <span>Lida</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <AlertTriangle className="h-3 w-3 text-amber-500" />
+          <span>Atualização</span>
+        </div>
+      </div>
     </div>
   );
 }

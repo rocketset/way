@@ -4,6 +4,7 @@
 import { useEffect, useState, useMemo } from 'react';
 import { useNavigate, Outlet, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
+import { useNotifications } from '@/hooks/useNotifications';
 import { supabase } from '@/integrations/supabase/client';
 import { useDynamicMenu, DynamicMenuItem } from '@/hooks/useDynamicMenu';
 import {
@@ -865,11 +866,11 @@ function MobileSidebar() {
 // Layout principal que envolve todas as páginas admin
 export default function AdminLayout() {
   const { user, loading, viewMode, setViewMode, signOut, isMembro, effectiveRole } = useAuth();
+  const { unreadCount } = useNotifications();
   const { actualTheme } = useTheme();
   const logoWay = actualTheme === 'dark' ? logoWayDark : logoWayLight;
   const navigate = useNavigate();
   const location = useLocation();
-  const [notificationCount, setNotificationCount] = useState(1);
   const [searchQuery, setSearchQuery] = useState('');
   const [profileData, setProfileData] = useState<{ nome: string; avatar_url: string } | null>(null);
 
@@ -983,12 +984,12 @@ export default function AdminLayout() {
               }}
             >
               <Bell className="h-4 w-4 md:h-5 md:w-5" />
-              {notificationCount > 0 && (
+              {unreadCount > 0 && (
                 <Badge 
                   variant="destructive" 
                   className="absolute -top-0.5 -right-0.5 md:-top-1 md:-right-1 h-4 w-4 md:h-5 md:w-5 flex items-center justify-center p-0 text-[10px] md:text-xs"
                 >
-                  {notificationCount}
+                  {unreadCount > 99 ? '99+' : unreadCount}
                 </Badge>
               )}
             </Button>
