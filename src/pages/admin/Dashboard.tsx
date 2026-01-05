@@ -4,9 +4,10 @@
 import { useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { supabase } from '@/integrations/supabase/client';
-import { FileText, Briefcase, Mail, Users, BookOpen, UserCheck, Activity, FolderOpen, TrendingUp } from 'lucide-react';
+import { FileText, Briefcase, Mail, Users, BookOpen, UserCheck, Activity, FolderOpen, TrendingUp, MapPin, Calendar, Globe } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { Badge } from '@/components/ui/badge';
+import { cn } from '@/lib/utils';
 
 interface CategoryStats {
   id: string;
@@ -32,6 +33,7 @@ export default function Dashboard() {
     posts: 0,
     cases: 0,
     contacts: 0,
+    unreadContacts: 0,
     users: 0,
     academyContents: 0,
     academyCategories: 0,
@@ -41,6 +43,11 @@ export default function Dashboard() {
     membroUsers: 0,
     clienteUsers: 0,
     totalActivities: 0,
+    sitemapUrls: 0,
+    eventsThisYear: 0,
+    candidaturas: 0,
+    unreadCandidaturas: 0,
+    vagas: 0,
   });
   
   // Estados específicos para colunista
@@ -184,6 +191,12 @@ export default function Dashboard() {
         .from('contacts')
         .select('*', { count: 'exact', head: true });
 
+      // Busca contagem de contatos não lidos
+      const { count: unreadContactsCount } = await supabase
+        .from('contacts')
+        .select('*', { count: 'exact', head: true })
+        .eq('lido', false);
+
       // Busca contagem de usuários
       const { count: usersCount } = await supabase
         .from('profiles')
@@ -231,11 +244,35 @@ export default function Dashboard() {
         .from('user_activity_logs')
         .select('*', { count: 'exact', head: true });
 
+      // Busca configuração do sitemap
+      const { data: sitemapConfig } = await supabase
+        .from('sitemap_config')
+        .select('total_urls')
+        .maybeSingle();
+
+      // Busca contagem de vagas ativas
+      const { count: vagasCount } = await supabase
+        .from('vagas')
+        .select('*', { count: 'exact', head: true })
+        .eq('ativo', true);
+
+      // Busca contagem de candidaturas
+      const { count: candidaturasCount } = await supabase
+        .from('candidaturas')
+        .select('*', { count: 'exact', head: true });
+
+      // Busca contagem de candidaturas não lidas
+      const { count: unreadCandidaturasCount } = await supabase
+        .from('candidaturas')
+        .select('*', { count: 'exact', head: true })
+        .eq('lido', false);
+
       // Atualiza o estado com as contagens
       setStats({
         posts: postsCount || 0,
         cases: casesCount || 0,
         contacts: contactsCount || 0,
+        unreadContacts: unreadContactsCount || 0,
         users: usersCount || 0,
         academyContents: academyCount || 0,
         academyCategories: categoriesCount || 0,
@@ -245,6 +282,11 @@ export default function Dashboard() {
         membroUsers: membroCount || 0,
         clienteUsers: clienteCount || 0,
         totalActivities: activitiesCount || 0,
+        sitemapUrls: sitemapConfig?.total_urls || 0,
+        eventsThisYear: 0, // Pode ser implementado depois se houver tabela de eventos
+        candidaturas: candidaturasCount || 0,
+        unreadCandidaturas: unreadCandidaturasCount || 0,
+        vagas: vagasCount || 0,
       });
     } catch (error) {
       console.error('Erro ao buscar estatísticas:', error);
@@ -260,42 +302,76 @@ export default function Dashboard() {
       value: stats.posts,
       icon: FileText,
       description: 'Total de posts publicados',
+      highlight: false,
     },
     {
       title: 'Cases',
       value: stats.cases,
       icon: Briefcase,
       description: 'Cases cadastrados',
+      highlight: false,
     },
     {
       title: 'Contatos',
       value: stats.contacts,
       icon: Mail,
-      description: 'Solicitações recebidas',
+      description: stats.unreadContacts > 0 
+        ? `${stats.unreadContacts} novo(s) não lido(s)` 
+        : 'Solicitações recebidas',
+      highlight: stats.unreadContacts > 0,
+      highlightColor: 'text-yellow-500',
+    },
+    {
+      title: 'Candidaturas',
+      value: stats.candidaturas,
+      icon: Users,
+      description: stats.unreadCandidaturas > 0 
+        ? `${stats.unreadCandidaturas} nova(s) não lida(s)` 
+        : 'Candidaturas recebidas',
+      highlight: stats.unreadCandidaturas > 0,
+      highlightColor: 'text-yellow-500',
+    },
+    {
+      title: 'Vagas Ativas',
+      value: stats.vagas,
+      icon: Briefcase,
+      description: 'Vagas abertas',
+      highlight: false,
     },
     {
       title: 'Usuários',
       value: stats.users,
       icon: Users,
       description: 'Usuários cadastrados',
+      highlight: false,
     },
     {
       title: 'Conteúdos Academy',
       value: stats.academyContents,
       icon: BookOpen,
       description: 'Materiais na Way Academy',
+      highlight: false,
     },
     {
       title: 'Listas/Categorias',
       value: stats.academyCategories,
       icon: BookOpen,
       description: 'Categorias ativas',
+      highlight: false,
+    },
+    {
+      title: 'URLs no Sitemap',
+      value: stats.sitemapUrls,
+      icon: Globe,
+      description: 'Páginas indexadas',
+      highlight: false,
     },
     {
       title: 'Total de Atividades',
       value: stats.totalActivities,
       icon: Activity,
       description: 'Acessos na plataforma',
+      highlight: false,
     },
   ];
 
@@ -508,20 +584,40 @@ export default function Dashboard() {
       </div>
 
       {/* Grid de Cards com Estatísticas Gerais */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {statCards.map((stat) => {
           const Icon = stat.icon;
           return (
-            <Card key={stat.title}>
+            <Card 
+              key={stat.title}
+              className={cn(
+                "transition-all",
+                stat.highlight && "ring-2 ring-yellow-500/50 bg-yellow-500/5"
+              )}
+            >
               <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-sm font-medium">
+                <CardTitle className={cn(
+                  "text-sm font-medium",
+                  stat.highlight && stat.highlightColor
+                )}>
                   {stat.title}
                 </CardTitle>
-                <Icon className="h-4 w-4 text-muted-foreground" />
+                <Icon className={cn(
+                  "h-4 w-4",
+                  stat.highlight ? stat.highlightColor : "text-muted-foreground"
+                )} />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">{stat.value}</div>
-                <p className="text-xs text-muted-foreground mt-1">
+                <div className={cn(
+                  "text-2xl font-bold",
+                  stat.highlight && stat.highlightColor
+                )}>
+                  {stat.value}
+                </div>
+                <p className={cn(
+                  "text-xs mt-1",
+                  stat.highlight ? stat.highlightColor : "text-muted-foreground"
+                )}>
                   {stat.description}
                 </p>
               </CardContent>
