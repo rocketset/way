@@ -4,7 +4,11 @@ import { Button } from "@/components/ui/button";
 import { Menu, X, ChevronRight, ChevronDown, Rocket, User } from "lucide-react";
 import logoWay from "@/assets/logo-way.png";
 
-const Header = () => {
+interface HeaderProps {
+  variant?: 'default' | 'landing';
+}
+
+const Header = ({ variant = 'default' }: HeaderProps) => {
   const location = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -315,22 +319,24 @@ const Header = () => {
             </div>
           </nav>
 
-          {/* CTA Buttons */}
-          <div className="hidden lg:flex items-center gap-3">
-            <Button className="font-medium px-5 py-2.5 bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 rounded-lg" asChild>
-              <Link to="/admin" className="flex items-center gap-2">
-                <User className="w-4 h-4" />
-                Área do Cliente
-              </Link>
-            </Button>
-              
-            <Button onClick={() => handleNavClick(navItems.find(item => item.id === "contato")!)} className="relative bg-primary text-background font-medium px-5 py-2.5 hover:bg-primary/90 transition-all duration-300 rounded-lg group">
-              <span className="flex items-center gap-2">
-                Entrar em contato   
-                <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
-              </span>
-            </Button>
-          </div>
+          {/* CTA Buttons - only show on default variant */}
+          {variant === 'default' && (
+            <div className="hidden lg:flex items-center gap-3">
+              <Button className="font-medium px-5 py-2.5 bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 rounded-lg" asChild>
+                <Link to="/admin" className="flex items-center gap-2">
+                  <User className="w-4 h-4" />
+                  Área do Cliente
+                </Link>
+              </Button>
+                
+              <Button onClick={() => handleNavClick(navItems.find(item => item.id === "contato")!)} className="relative bg-primary text-background font-medium px-5 py-2.5 hover:bg-primary/90 transition-all duration-300 rounded-lg group">
+                <span className="flex items-center gap-2">
+                  Entrar em contato   
+                  <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                </span>
+              </Button>
+            </div>
+          )}
 
           {/* Mobile menu button */}
           <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="lg:hidden p-2 rounded-lg hover:bg-primary/10 transition-colors duration-300">
