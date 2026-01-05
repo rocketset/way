@@ -23,8 +23,8 @@ const Header = () => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
 
-      // Only detect active section on homepage
-      if (location.pathname === '/') {
+      // Only detect active section on homepage when user has scrolled
+      if (location.pathname === '/' && window.scrollY > 50) {
         const sections = ["inicio", "por-que-way", "solucoes", "cases", "contato"];
         const current = sections.find(section => {
           const element = document.getElementById(section);
@@ -37,14 +37,18 @@ const Header = () => {
         if (current) setActiveSection(current);
       }
     };
-    handleScroll(); // Run once on mount
+    
+    // Only check scroll position on mount, don't run section detection
+    setIsScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [location.pathname]);
 
   // Set active section based on current route
   useEffect(() => {
-    if (location.pathname === '/why-way') {
+    if (location.pathname === '/') {
+      setActiveSection('inicio');
+    } else if (location.pathname === '/why-way') {
       setActiveSection('por-que-way');
     } else if (location.pathname === '/blog' || location.pathname.startsWith('/blog/')) {
       setActiveSection('blog');
@@ -52,7 +56,7 @@ const Header = () => {
       setActiveSection('cases');
     } else if (location.pathname === '/contact') {
       setActiveSection('contato');
-    } else if (location.pathname !== '/') {
+    } else {
       setActiveSection('');
     }
   }, [location.pathname]);
