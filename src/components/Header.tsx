@@ -99,7 +99,7 @@ const Header = () => {
     isClient: true
   }, {
     label: "Agenda de Eventos do Setor",
-    path: "/blog/agenda-de-eventos-do-setor-2026",
+    path: "/blog/agenda-de-eventos-do-setor-do-e-commerce-2026",
     isExternal: false,
     isClient: false
   }];
