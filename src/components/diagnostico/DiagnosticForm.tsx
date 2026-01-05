@@ -325,22 +325,50 @@ export const DiagnosticForm = ({ onSubmit, onBack }: DiagnosticFormProps) => {
             {step === 2 && (
               <>
                 {/* Segmento */}
-                <div className="space-y-3">
+                <div className="space-y-2">
                   <Label className="text-white">Em qual segmento você atua ou pretende atuar? *</Label>
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-2 max-h-48 overflow-y-auto p-2 bg-gray-900/50 rounded-lg">
-                    {segmentOptions.map((segment) => (
-                      <div key={segment} className="flex items-center space-x-2">
-                        <Checkbox
-                          id={`segment-${segment}`}
-                          checked={formData.segments.includes(segment)}
-                          onCheckedChange={() => handleArrayToggle('segments', segment)}
-                          className="border-gray-600 data-[state=checked]:bg-primary data-[state=checked]:border-primary"
-                        />
-                        <label htmlFor={`segment-${segment}`} className="text-xs text-gray-300 cursor-pointer hover:text-white">
-                          {segment}
-                        </label>
-                      </div>
-                    ))}
+                  <div 
+                    className="relative"
+                    onClick={() => {
+                      const dropdown = document.getElementById('segment-dropdown');
+                      if (dropdown) dropdown.classList.toggle('hidden');
+                    }}
+                  >
+                    <div className="bg-gray-900 border border-gray-700 rounded-md p-3 cursor-pointer flex items-center justify-between min-h-[42px]">
+                      <span className={formData.segments.length > 0 ? 'text-white text-sm' : 'text-gray-500 text-sm'}>
+                        {formData.segments.length > 0 
+                          ? formData.segments.join(', ') 
+                          : 'Selecione os segmentos'}
+                      </span>
+                      <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </div>
+                    <div 
+                      id="segment-dropdown" 
+                      className="hidden absolute z-50 w-full mt-1 bg-gray-900 border border-gray-700 rounded-md shadow-lg max-h-60 overflow-y-auto"
+                    >
+                      {segmentOptions.map((segment) => (
+                        <div 
+                          key={segment} 
+                          className="flex items-center space-x-2 px-3 py-2 hover:bg-gray-800 cursor-pointer"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleArrayToggle('segments', segment);
+                          }}
+                        >
+                          <Checkbox
+                            id={`segment-${segment}`}
+                            checked={formData.segments.includes(segment)}
+                            onCheckedChange={() => handleArrayToggle('segments', segment)}
+                            className="border-gray-600 data-[state=checked]:bg-primary data-[state=checked]:border-primary"
+                          />
+                          <label className="text-sm text-gray-300 cursor-pointer flex-1">
+                            {segment}
+                          </label>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
 
