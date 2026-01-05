@@ -118,11 +118,7 @@ const DiagnosticsList = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <div>
-          <h1 className="text-2xl font-bold text-foreground">Diagnósticos</h1>
-          <p className="text-muted-foreground">Gerencie todos os diagnósticos realizados</p>
-        </div>
+      <div className="flex justify-end">
         <Button onClick={handleExportCSV} disabled={filteredDiagnostics.length === 0}>
           <Download className="mr-2 h-4 w-4" />
           Exportar CSV

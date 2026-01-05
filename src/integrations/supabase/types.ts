@@ -764,6 +764,36 @@ export type Database = {
         }
         Relationships: []
       }
+      diagnostic_hubs: {
+        Row: {
+          ativo: boolean
+          atualizado_em: string
+          criado_em: string
+          icon: string
+          id: string
+          name: string
+          ordem: number
+        }
+        Insert: {
+          ativo?: boolean
+          atualizado_em?: string
+          criado_em?: string
+          icon?: string
+          id?: string
+          name: string
+          ordem?: number
+        }
+        Update: {
+          ativo?: boolean
+          atualizado_em?: string
+          criado_em?: string
+          icon?: string
+          id?: string
+          name?: string
+          ordem?: number
+        }
+        Relationships: []
+      }
       diagnostic_records: {
         Row: {
           answers: Json
@@ -805,6 +835,50 @@ export type Database = {
           whatsapp?: string
         }
         Relationships: []
+      }
+      diagnostic_tools: {
+        Row: {
+          ativo: boolean
+          atualizado_em: string
+          criado_em: string
+          description: string
+          hub_id: string
+          id: string
+          importance: string
+          name: string
+          ordem: number
+        }
+        Insert: {
+          ativo?: boolean
+          atualizado_em?: string
+          criado_em?: string
+          description: string
+          hub_id: string
+          id?: string
+          importance?: string
+          name: string
+          ordem?: number
+        }
+        Update: {
+          ativo?: boolean
+          atualizado_em?: string
+          criado_em?: string
+          description?: string
+          hub_id?: string
+          id?: string
+          importance?: string
+          name?: string
+          ordem?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "diagnostic_tools_hub_id_fkey"
+            columns: ["hub_id"]
+            isOneToOne: false
+            referencedRelation: "diagnostic_hubs"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       form_configs: {
         Row: {
