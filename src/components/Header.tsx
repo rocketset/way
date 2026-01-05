@@ -65,7 +65,7 @@ const Header = ({ variant = 'default' }: HeaderProps) => {
     }
   }, [location.pathname]);
 
-  const navItems = [{
+  const defaultNavItems = [{
     id: "inicio",
     label: "Início",
     type: "link",
@@ -86,6 +86,30 @@ const Header = ({ variant = 'default' }: HeaderProps) => {
     type: "link",
     path: "/contact"
   }];
+
+  const landingNavItems = [{
+    id: "inicio",
+    label: "Início",
+    type: "link",
+    path: "/"
+  }, {
+    id: "sobre",
+    label: "Sobre a Way",
+    type: "link",
+    path: "/why-way"
+  }, {
+    id: "cases",
+    label: "Cases",
+    type: "link",
+    path: "/cases"
+  }, {
+    id: "blog",
+    label: "Blog",
+    type: "link",
+    path: "/blog"
+  }];
+
+  const navItems = variant === 'landing' ? landingNavItems : defaultNavItems;
 
   const novidadesItems = [{
     label: "Blog",
@@ -176,146 +200,170 @@ const Header = ({ variant = 'default' }: HeaderProps) => {
           {/* Desktop Navigation - Centered */}
           <nav className="hidden lg:flex items-center justify-center flex-1 mx-8">
             <div className="flex items-center gap-1 bg-background/50 backdrop-blur-sm px-4 py-2 rounded-full border border-border/50">
-              {/* First 2 items: INÍCIO, SOBRE */}
-              {navItems.slice(0, 2).map((item) => (
-                <button 
-                  key={item.id} 
-                  onClick={() => handleNavClick(item)} 
-                  className={`relative px-4 py-2 text-sm font-medium transition-all duration-300 rounded-full group ${activeSection === item.id ? "text-primary" : "text-foreground/70 hover:text-foreground"}`}
-                >
-                  {activeSection === item.id && <>
-                    <div className="absolute inset-0 bg-primary/10 rounded-full animate-pulse" />
-                    <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 bg-primary rounded-full animate-ping" />
-                  </>}
-                  <div className="absolute inset-0 bg-primary/5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <span className="relative z-10">{item.label}</span>
-                  <div className={`absolute bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ${activeSection === item.id ? "scale-x-100" : ""}`} />
-                </button>
-              ))}
-              
-              {/* Soluções Dropdown with Hover */}
-              <div 
-                className="relative"
-                onMouseEnter={handleSolutionsEnter}
-                onMouseLeave={handleSolutionsLeave}
-              >
-                <button className="relative px-4 py-2 text-sm font-medium transition-all duration-300 rounded-full group text-foreground/70 hover:text-foreground">
-                  <div className="absolute inset-0 bg-primary/5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <span className="relative z-10 flex items-center gap-1">
-                    Soluções
-                    <ChevronDown className={`w-3 h-3 transition-transform duration-300 ${solutionsHovered ? "rotate-180" : ""}`} />
-                  </span>
-                  <div className="absolute bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
-                </button>
-                
-                {/* Dropdown Content */}
-                <div className={`absolute top-full left-1/2 -translate-x-1/2 pt-2 transition-all duration-200 ${solutionsHovered ? "opacity-100 visible translate-y-0" : "opacity-0 invisible -translate-y-2"}`}>
-                  <div className="w-72 bg-background/95 backdrop-blur-xl border border-border/50 shadow-xl rounded-lg p-2">
-                    {solutionItems.map(solution => (
-                      solution.isExternal ? (
-                        <a 
-                          key={solution.label} 
-                          href={solution.path} 
-                          className="flex items-center gap-3 px-4 py-3 cursor-pointer hover:bg-primary/10 transition-all duration-300 rounded-lg group"
-                        >
-                          <span className="font-medium group-hover:text-foreground transition-colors duration-300">
-                            {solution.label}
-                          </span>
-                          {solution.label === "Jornada Way" && <Rocket className="h-5 w-5 text-primary transition-colors duration-300" />}
-                        </a>
-                      ) : (
-                        <Link 
-                          key={solution.label} 
-                          to={solution.path} 
-                          className="flex items-center gap-3 px-4 py-3 cursor-pointer hover:bg-primary/10 transition-all duration-300 rounded-lg group"
-                        >
-                          <span className="font-medium group-hover:text-foreground transition-colors duration-300">
-                            {solution.label}
-                          </span>
-                          {solution.label === "Jornada Way" && <Rocket className="h-5 w-5 text-primary transition-colors duration-300" />}
-                        </Link>
-                      )
-                    ))}
+              {variant === 'landing' ? (
+                /* Landing page - Simple navigation */
+                <>
+                  {navItems.map((item) => (
+                    <button 
+                      key={item.id} 
+                      onClick={() => handleNavClick(item)} 
+                      className={`relative px-4 py-2 text-sm font-medium transition-all duration-300 rounded-full group ${activeSection === item.id ? "text-primary" : "text-foreground/70 hover:text-foreground"}`}
+                    >
+                      {activeSection === item.id && <>
+                        <div className="absolute inset-0 bg-primary/10 rounded-full animate-pulse" />
+                        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 bg-primary rounded-full animate-ping" />
+                      </>}
+                      <div className="absolute inset-0 bg-primary/5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      <span className="relative z-10">{item.label}</span>
+                      <div className={`absolute bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ${activeSection === item.id ? "scale-x-100" : ""}`} />
+                    </button>
+                  ))}
+                </>
+              ) : (
+                /* Default - Full navigation with dropdowns */
+                <>
+                  {/* First 2 items: INÍCIO, SOBRE */}
+                  {navItems.slice(0, 2).map((item) => (
+                    <button 
+                      key={item.id} 
+                      onClick={() => handleNavClick(item)} 
+                      className={`relative px-4 py-2 text-sm font-medium transition-all duration-300 rounded-full group ${activeSection === item.id ? "text-primary" : "text-foreground/70 hover:text-foreground"}`}
+                    >
+                      {activeSection === item.id && <>
+                        <div className="absolute inset-0 bg-primary/10 rounded-full animate-pulse" />
+                        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 bg-primary rounded-full animate-ping" />
+                      </>}
+                      <div className="absolute inset-0 bg-primary/5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      <span className="relative z-10">{item.label}</span>
+                      <div className={`absolute bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ${activeSection === item.id ? "scale-x-100" : ""}`} />
+                    </button>
+                  ))}
+                  
+                  {/* Soluções Dropdown with Hover */}
+                  <div 
+                    className="relative"
+                    onMouseEnter={handleSolutionsEnter}
+                    onMouseLeave={handleSolutionsLeave}
+                  >
+                    <button className="relative px-4 py-2 text-sm font-medium transition-all duration-300 rounded-full group text-foreground/70 hover:text-foreground">
+                      <div className="absolute inset-0 bg-primary/5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      <span className="relative z-10 flex items-center gap-1">
+                        Soluções
+                        <ChevronDown className={`w-3 h-3 transition-transform duration-300 ${solutionsHovered ? "rotate-180" : ""}`} />
+                      </span>
+                      <div className="absolute bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
+                    </button>
+                    
+                    {/* Dropdown Content */}
+                    <div className={`absolute top-full left-1/2 -translate-x-1/2 pt-2 transition-all duration-200 ${solutionsHovered ? "opacity-100 visible translate-y-0" : "opacity-0 invisible -translate-y-2"}`}>
+                      <div className="w-72 bg-background/95 backdrop-blur-xl border border-border/50 shadow-xl rounded-lg p-2">
+                        {solutionItems.map(solution => (
+                          solution.isExternal ? (
+                            <a 
+                              key={solution.label} 
+                              href={solution.path} 
+                              className="flex items-center gap-3 px-4 py-3 cursor-pointer hover:bg-primary/10 transition-all duration-300 rounded-lg group"
+                            >
+                              <span className="font-medium group-hover:text-foreground transition-colors duration-300">
+                                {solution.label}
+                              </span>
+                              {solution.label === "Jornada Way" && <Rocket className="h-5 w-5 text-primary transition-colors duration-300" />}
+                            </a>
+                          ) : (
+                            <Link 
+                              key={solution.label} 
+                              to={solution.path} 
+                              className="flex items-center gap-3 px-4 py-3 cursor-pointer hover:bg-primary/10 transition-all duration-300 rounded-lg group"
+                            >
+                              <span className="font-medium group-hover:text-foreground transition-colors duration-300">
+                                {solution.label}
+                              </span>
+                              {solution.label === "Jornada Way" && <Rocket className="h-5 w-5 text-primary transition-colors duration-300" />}
+                            </Link>
+                          )
+                        ))}
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
 
-              {/* CASES button */}
-              <button 
-                onClick={() => handleNavClick(navItems.find(item => item.id === "cases")!)} 
-                className={`relative px-4 py-2 text-sm font-medium transition-all duration-300 rounded-full group ${activeSection === "cases" ? "text-primary" : "text-foreground/70 hover:text-foreground"}`}
-              >
-                {activeSection === "cases" && <>
-                  <div className="absolute inset-0 bg-primary/10 rounded-full animate-pulse" />
-                  <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 bg-primary rounded-full animate-ping" />
-                </>}
-                <div className="absolute inset-0 bg-primary/5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <span className="relative z-10">Cases</span>
-                <div className={`absolute bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ${activeSection === "cases" ? "scale-x-100" : ""}`} />
-              </button>
+                  {/* CASES button */}
+                  <button 
+                    onClick={() => handleNavClick(navItems.find(item => item.id === "cases")!)} 
+                    className={`relative px-4 py-2 text-sm font-medium transition-all duration-300 rounded-full group ${activeSection === "cases" ? "text-primary" : "text-foreground/70 hover:text-foreground"}`}
+                  >
+                    {activeSection === "cases" && <>
+                      <div className="absolute inset-0 bg-primary/10 rounded-full animate-pulse" />
+                      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 bg-primary rounded-full animate-ping" />
+                    </>}
+                    <div className="absolute inset-0 bg-primary/5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <span className="relative z-10">Cases</span>
+                    <div className={`absolute bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ${activeSection === "cases" ? "scale-x-100" : ""}`} />
+                  </button>
 
-              {/* Novidades Dropdown with Hover */}
-              <div 
-                className="relative"
-                onMouseEnter={handleNovidadesEnter}
-                onMouseLeave={handleNovidadesLeave}
-              >
-                <button className={`relative px-4 py-2 text-sm font-medium transition-all duration-300 rounded-full group ${activeSection === "blog" ? "text-primary" : "text-foreground/70 hover:text-foreground"}`}>
-                  {activeSection === "blog" && <>
-                    <div className="absolute inset-0 bg-primary/10 rounded-full animate-pulse" />
-                    <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 bg-primary rounded-full animate-ping" />
-                  </>}
-                  <div className="absolute inset-0 bg-primary/5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <span className="relative z-10 flex items-center gap-1">
-                    Novidades
-                    <ChevronDown className={`w-3 h-3 transition-transform duration-300 ${novidadesHovered ? "rotate-180" : ""}`} />
-                  </span>
-                  <div className={`absolute bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ${activeSection === "blog" ? "scale-x-100" : ""}`} />
-                </button>
-                
-                {/* Dropdown Content */}
-                <div className={`absolute top-full left-1/2 -translate-x-1/2 pt-2 transition-all duration-200 ${novidadesHovered ? "opacity-100 visible translate-y-0" : "opacity-0 invisible -translate-y-2"}`}>
-                  <div className="w-72 bg-background/95 backdrop-blur-xl border border-border/50 shadow-xl rounded-lg p-2">
-                    {novidadesItems.map(item => (
-                      <Link 
-                        key={item.label} 
-                        to={item.path} 
-                        className="flex items-center justify-between gap-3 px-4 py-3 cursor-pointer hover:bg-primary/10 transition-all duration-300 rounded-lg group"
-                      >
-                        <span className="font-medium group-hover:text-foreground transition-colors duration-300">
-                          {item.label}
-                        </span>
-                        {item.isClient && (
-                          <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-primary/20 text-primary border border-primary/30 transition-all duration-300">
-                            Clientes
-                          </span>
-                        )}
-                      </Link>
-                    ))}
+                  {/* Novidades Dropdown with Hover */}
+                  <div 
+                    className="relative"
+                    onMouseEnter={handleNovidadesEnter}
+                    onMouseLeave={handleNovidadesLeave}
+                  >
+                    <button className={`relative px-4 py-2 text-sm font-medium transition-all duration-300 rounded-full group ${activeSection === "blog" ? "text-primary" : "text-foreground/70 hover:text-foreground"}`}>
+                      {activeSection === "blog" && <>
+                        <div className="absolute inset-0 bg-primary/10 rounded-full animate-pulse" />
+                        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 bg-primary rounded-full animate-ping" />
+                      </>}
+                      <div className="absolute inset-0 bg-primary/5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      <span className="relative z-10 flex items-center gap-1">
+                        Novidades
+                        <ChevronDown className={`w-3 h-3 transition-transform duration-300 ${novidadesHovered ? "rotate-180" : ""}`} />
+                      </span>
+                      <div className={`absolute bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ${activeSection === "blog" ? "scale-x-100" : ""}`} />
+                    </button>
+                    
+                    {/* Dropdown Content */}
+                    <div className={`absolute top-full left-1/2 -translate-x-1/2 pt-2 transition-all duration-200 ${novidadesHovered ? "opacity-100 visible translate-y-0" : "opacity-0 invisible -translate-y-2"}`}>
+                      <div className="w-72 bg-background/95 backdrop-blur-xl border border-border/50 shadow-xl rounded-lg p-2">
+                        {novidadesItems.map(item => (
+                          <Link 
+                            key={item.label} 
+                            to={item.path} 
+                            className="flex items-center justify-between gap-3 px-4 py-3 cursor-pointer hover:bg-primary/10 transition-all duration-300 rounded-lg group"
+                          >
+                            <span className="font-medium group-hover:text-foreground transition-colors duration-300">
+                              {item.label}
+                            </span>
+                            {item.isClient && (
+                              <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-primary/20 text-primary border border-primary/30 transition-all duration-300">
+                                Clientes
+                              </span>
+                            )}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
 
-              {/* Trabalhe conosco button */}
-              <Link to="/carreiras" className="relative px-4 py-2 text-sm font-medium transition-all duration-300 rounded-full group text-foreground/70 hover:text-foreground">
-                <div className="absolute inset-0 bg-primary/5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <span className="relative z-10">Trabalhe conosco</span>
-                <div className="absolute bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
-              </Link>
+                  {/* Trabalhe conosco button */}
+                  <Link to="/carreiras" className="relative px-4 py-2 text-sm font-medium transition-all duration-300 rounded-full group text-foreground/70 hover:text-foreground">
+                    <div className="absolute inset-0 bg-primary/5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <span className="relative z-10">Trabalhe conosco</span>
+                    <div className="absolute bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
+                  </Link>
 
-              {/* CONTATO button */}
-              <button 
-                onClick={() => handleNavClick(navItems.find(item => item.id === "contato")!)} 
-                className={`relative px-4 py-2 text-sm font-medium transition-all duration-300 rounded-full group ${activeSection === "contato" ? "text-primary" : "text-foreground/70 hover:text-foreground"}`}
-              >
-                {activeSection === "contato" && <>
-                  <div className="absolute inset-0 bg-primary/10 rounded-full animate-pulse" />
-                  <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 bg-primary rounded-full animate-ping" />
-                </>}
-                <div className="absolute inset-0 bg-primary/5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <span className="relative z-10">Contato</span>
-                <div className={`absolute bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ${activeSection === "contato" ? "scale-x-100" : ""}`} />
-              </button>
+                  {/* CONTATO button */}
+                  <button 
+                    onClick={() => handleNavClick(navItems.find(item => item.id === "contato")!)} 
+                    className={`relative px-4 py-2 text-sm font-medium transition-all duration-300 rounded-full group ${activeSection === "contato" ? "text-primary" : "text-foreground/70 hover:text-foreground"}`}
+                  >
+                    {activeSection === "contato" && <>
+                      <div className="absolute inset-0 bg-primary/10 rounded-full animate-pulse" />
+                      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 bg-primary rounded-full animate-ping" />
+                    </>}
+                    <div className="absolute inset-0 bg-primary/5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <span className="relative z-10">Contato</span>
+                    <div className={`absolute bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ${activeSection === "contato" ? "scale-x-100" : ""}`} />
+                  </button>
+                </>
+              )}
             </div>
           </nav>
 
