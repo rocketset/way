@@ -363,7 +363,13 @@ const DiagnosticsList = () => {
                 sellsOnline: '',
                 salesChannels: [],
                 averageTicket: '',
-                monthlyRevenue: ''
+                monthlyRevenue: '',
+                platform: '',
+                businessPhase: '',
+                mainSalesSources: [],
+                challengingAreas: [],
+                sixMonthObjective: '',
+                termsAccepted: false
               }}
               answers={selectedDiagnostic.answers as Record<string, boolean>}
               onRestart={() => {}}
