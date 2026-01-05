@@ -125,8 +125,8 @@ export const DiagnosticForm = ({ onSubmit, onBack }: DiagnosticFormProps) => {
               <Label htmlFor="storeUrl" className="text-white">Link da loja virtual</Label>
               <Input
                 id="storeUrl"
-                type="url"
-                placeholder="https://sualoja.com.br"
+                type="text"
+                placeholder="sualoja.com.br"
                 value={formData.storeUrl}
                 onChange={(e) => handleChange('storeUrl', e.target.value)}
                 className="bg-gray-900 border-gray-700 text-white placeholder:text-gray-500"
