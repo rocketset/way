@@ -98,7 +98,7 @@ import PagesList from "./pages/admin/pages/List";
 import PageEditor from "./pages/admin/pages/Editor";
 import CustomPage from "./pages/CustomPage";
 import { PopupDisplay } from "./components/PopupDisplay";
-import DiagnosticsList from "./pages/admin/diagnosticos/List";
+import DiagnosticosIndex from "./pages/admin/diagnosticos/Index";
 
 // Configuração do React Query
 const queryClient = new QueryClient();
@@ -250,7 +250,7 @@ const App = () => (
             <Route path="carreiras/candidatos" element={<AdminCandidatos />} />
             
             {/* Diagnósticos */}
-            <Route path="diagnosticos" element={<DiagnosticsList />} />
+            <Route path="diagnosticos" element={<DiagnosticosIndex />} />
             
             {/* Páginas Customizadas */}
             <Route path="pages" element={<PagesList />} />
