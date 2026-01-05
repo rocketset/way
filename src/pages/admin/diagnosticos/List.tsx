@@ -358,7 +358,12 @@ const DiagnosticsList = () => {
                 email: selectedDiagnostic.email,
                 storeUrl: selectedDiagnostic.store_url,
                 instagram: selectedDiagnostic.instagram,
-                whatsapp: selectedDiagnostic.whatsapp
+                whatsapp: selectedDiagnostic.whatsapp,
+                segments: [],
+                sellsOnline: '',
+                salesChannels: [],
+                averageTicket: '',
+                monthlyRevenue: ''
               }}
               answers={selectedDiagnostic.answers as Record<string, boolean>}
               onRestart={() => {}}
