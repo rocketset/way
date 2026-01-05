@@ -39,6 +39,9 @@ export const useNotifications = () => {
       })) as Notification[];
     },
     enabled: !!user,
+    refetchOnWindowFocus: true,
+    refetchOnMount: true,
+    staleTime: 0,
   });
 
   // Realtime subscription para atualizar notificações automaticamente

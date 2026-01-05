@@ -94,6 +94,9 @@ import PopupEditor from "./pages/admin/popups/Editor";
 import PopupLeads from "./pages/admin/popups/Leads";
 import LeadsKanban from "./pages/admin/LeadsKanban";
 import MenuVisibility from "./pages/admin/MenuVisibility";
+import PagesList from "./pages/admin/pages/List";
+import PageEditor from "./pages/admin/pages/Editor";
+import CustomPage from "./pages/CustomPage";
 import { PopupDisplay } from "./components/PopupDisplay";
 import DiagnosticsList from "./pages/admin/diagnosticos/List";
 
@@ -248,7 +251,15 @@ const App = () => (
             
             {/* Diagnósticos */}
             <Route path="diagnosticos" element={<DiagnosticsList />} />
+            
+            {/* Páginas Customizadas */}
+            <Route path="pages" element={<PagesList />} />
+            <Route path="pages/new" element={<PageEditor />} />
+            <Route path="pages/:id/edit" element={<PageEditor />} />
           </Route>
+          
+          {/* Páginas Customizadas Públicas */}
+          <Route path="/p/:slug" element={<CustomPage />} />
           
           {/* Rota 404 - deve ser sempre a última */}
           <Route path="*" element={<NotFound />} />

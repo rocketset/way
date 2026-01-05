@@ -695,6 +695,75 @@ export type Database = {
         }
         Relationships: []
       }
+      custom_pages: {
+        Row: {
+          atualizado_em: string | null
+          autor_id: string | null
+          blocks_content: Json | null
+          canonical_url: string | null
+          criado_em: string | null
+          css_content: string | null
+          custom_head: string | null
+          footer_visible: boolean | null
+          header_visible: boolean | null
+          html_content: string | null
+          id: string
+          js_content: string | null
+          layout: string | null
+          meta_description: string | null
+          meta_title: string | null
+          noindex: boolean | null
+          og_image: string | null
+          publicado: boolean | null
+          slug: string
+          titulo: string
+        }
+        Insert: {
+          atualizado_em?: string | null
+          autor_id?: string | null
+          blocks_content?: Json | null
+          canonical_url?: string | null
+          criado_em?: string | null
+          css_content?: string | null
+          custom_head?: string | null
+          footer_visible?: boolean | null
+          header_visible?: boolean | null
+          html_content?: string | null
+          id?: string
+          js_content?: string | null
+          layout?: string | null
+          meta_description?: string | null
+          meta_title?: string | null
+          noindex?: boolean | null
+          og_image?: string | null
+          publicado?: boolean | null
+          slug: string
+          titulo: string
+        }
+        Update: {
+          atualizado_em?: string | null
+          autor_id?: string | null
+          blocks_content?: Json | null
+          canonical_url?: string | null
+          criado_em?: string | null
+          css_content?: string | null
+          custom_head?: string | null
+          footer_visible?: boolean | null
+          header_visible?: boolean | null
+          html_content?: string | null
+          id?: string
+          js_content?: string | null
+          layout?: string | null
+          meta_description?: string | null
+          meta_title?: string | null
+          noindex?: boolean | null
+          og_image?: string | null
+          publicado?: boolean | null
+          slug?: string
+          titulo?: string
+        }
+        Relationships: []
+      }
       diagnostic_records: {
         Row: {
           answers: Json
