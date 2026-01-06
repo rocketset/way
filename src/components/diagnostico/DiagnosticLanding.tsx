@@ -277,10 +277,18 @@ export const DiagnosticLanding = ({ onStart }: DiagnosticLandingProps) => {
           </div>
           
           <div className="text-center mt-8 md:mt-10">
-            <p className="text-neutral-400 text-base md:text-lg">
+            <p className="text-neutral-400 text-base md:text-lg mb-6">
               Se você se identificou, o problema pode não ser <span className="text-white">falta de esforço</span> — 
               mas sim <span className="text-primary">falta de estrutura</span>.
             </p>
+            <Button 
+              onClick={onStart}
+              variant="outline"
+              className="border-primary/50 text-primary hover:bg-primary hover:text-background transition-all"
+            >
+              Identificar meus gargalos
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
           </div>
         </div>
       </section>
@@ -345,6 +353,16 @@ export const DiagnosticLanding = ({ onStart }: DiagnosticLandingProps) => {
                 </ul>
               </Card>
             </div>
+          </div>
+          
+          <div className="text-center mt-8">
+            <Button 
+              onClick={onStart}
+              className="bg-primary hover:bg-primary/90 text-background"
+            >
+              Fazer meu diagnóstico
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
           </div>
         </div>
       </section>
@@ -465,8 +483,19 @@ export const DiagnosticLanding = ({ onStart }: DiagnosticLandingProps) => {
                     </div>
                   )}
                 </div>
-              );
+                );
             })}
+          </div>
+          
+          <div className="text-center mt-10">
+            <Button 
+              size="lg"
+              onClick={onStart}
+              className="bg-primary hover:bg-primary/90 text-background"
+            >
+              Começar agora
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Button>
           </div>
         </div>
       </section>
@@ -533,6 +562,17 @@ export const DiagnosticLanding = ({ onStart }: DiagnosticLandingProps) => {
                 </Card>
               );
             })}
+          </div>
+          
+          <div className="text-center mt-10">
+            <Button 
+              onClick={onStart}
+              variant="outline"
+              className="border-primary/50 text-primary hover:bg-primary hover:text-background transition-all"
+            >
+              Iniciar diagnóstico gratuito
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
           </div>
         </div>
       </section>

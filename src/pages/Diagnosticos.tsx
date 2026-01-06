@@ -76,7 +76,7 @@ const Diagnosticos = () => {
       />
       
       {/* Header sem botões de CTA */}
-      <Header variant="landing" />
+      <Header variant="landing" onDiagnosticStart={handleStartDiagnostic} />
       
       {/* Conteúdo principal - com padding-top para o header fixo */}
       <main className="flex-1 pt-20">
