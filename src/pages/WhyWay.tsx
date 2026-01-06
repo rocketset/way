@@ -11,6 +11,7 @@ import { useGalleryPhotos } from "@/hooks/useGalleryPhotos";
 import PartnersCarousel from "@/components/PartnersCarousel";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { SEO } from "@/components/SEO";
+import { usePageSeoData } from "@/hooks/usePageSeoData";
 import whyWayHero from "@/assets/why-way-hero.jpeg";
 import leadershipPhoto from "@/assets/leadership-photo.jpg";
 import brazilFlag from "@/assets/brazil-flag.png";
@@ -42,6 +43,8 @@ const WhyWay = () => {
   const {
     data: dynamicPhotos
   } = useGalleryPhotos(true);
+  const { getSeoProps } = usePageSeoData('why-way');
+  const seoProps = getSeoProps();
 
   // Use dynamic photos from DB if available, otherwise fallback to static
   const galleryPhotos = dynamicPhotos && dynamicPhotos.length > 0 ? dynamicPhotos : staticGalleryPhotos.map((url, i) => ({
@@ -89,7 +92,16 @@ const WhyWay = () => {
   const regularCases = casesData?.regular || [];
   const allCases = [...featuredCases, ...regularCases].slice(0, 6);
   return <div className="min-h-screen bg-background">
-      <SEO title="Por Que Way" description="Conheça a Way E-commerce: especialistas em transformação digital com metodologia própria, equipe qualificada e resultados comprovados. Descubra por que somos referência em e-commerce." canonical="https://wayecommerce.com.br/por-que-way" keywords="por que way, sobre a way, equipe way, metodologia way, transformação digital" />
+      <SEO 
+        title={seoProps?.title || "Por Que Way"} 
+        description={seoProps?.description || "Conheça a Way E-commerce: especialistas em transformação digital com metodologia própria, equipe qualificada e resultados comprovados. Descubra por que somos referência em e-commerce."} 
+        canonical={seoProps?.canonical || "https://wayecommerce.com.br/por-que-way"} 
+        keywords={seoProps?.keywords || "por que way, sobre a way, equipe way, metodologia way, transformação digital"}
+        ogTitle={seoProps?.ogTitle}
+        ogDescription={seoProps?.ogDescription}
+        ogImage={seoProps?.ogImage}
+        noindex={seoProps?.noindex}
+      />
       <Header />
       
       {/* Hero Section - Somos para quem pensa grande */}

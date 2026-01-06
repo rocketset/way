@@ -14,8 +14,11 @@ import { useBlogCategories } from "@/hooks/useBlogCategories";
 import { formatDate, formatReadingTime } from "@/utils/dateUtils";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { SEO } from "@/components/SEO";
+import { usePageSeoData } from "@/hooks/usePageSeoData";
 
 const Blog = () => {
+  const { getSeoProps } = usePageSeoData('blog');
+  const seoProps = getSeoProps();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("Todos");
   const [visiblePosts, setVisiblePosts] = useState(6);
@@ -35,10 +38,14 @@ const Blog = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="Blog"
-        description="Fique por dentro das últimas tendências em e-commerce, marketing digital, tecnologia e estratégias para escalar seu negócio online. Conteúdo exclusivo da Way E-commerce."
-        canonical="https://wayecommerce.com.br/blog"
-        keywords="blog e-commerce, marketing digital, estratégias digitais, tendências online"
+        title={seoProps?.title || "Blog"}
+        description={seoProps?.description || "Fique por dentro das últimas tendências em e-commerce, marketing digital, tecnologia e estratégias para escalar seu negócio online. Conteúdo exclusivo da Way E-commerce."}
+        canonical={seoProps?.canonical || "https://wayecommerce.com.br/blog"}
+        keywords={seoProps?.keywords || "blog e-commerce, marketing digital, estratégias digitais, tendências online"}
+        ogTitle={seoProps?.ogTitle}
+        ogDescription={seoProps?.ogDescription}
+        ogImage={seoProps?.ogImage}
+        noindex={seoProps?.noindex}
       />
       <Header />
       

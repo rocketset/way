@@ -18,6 +18,7 @@ import { SEO } from "@/components/SEO";
 import DOMPurify from "dompurify";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
 import { useIntencoesCadastro } from "@/hooks/useIntencoesCadastro";
+import { usePageSeoData } from "@/hooks/usePageSeoData";
 
 const contactSchema = z.object({
   name: z.string().trim().min(2, {
@@ -55,6 +56,8 @@ const Contact = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { settings } = useSiteSettings();
   const { data: intencoes } = useIntencoesCadastro('contato');
+  const { getSeoProps } = usePageSeoData('contato');
+  const seoProps = getSeoProps();
   
   const form = useForm<ContactFormData>({
     resolver: zodResolver(contactSchema),
@@ -141,9 +144,13 @@ const Contact = () => {
   ];
   return <div className="min-h-screen bg-background">
       <SEO
-        title="Contato"
-        description="Entre em contato com a Way E-commerce. Estamos prontos para transformar seu e-commerce com estratégia, tecnologia e performance."
-        canonical="https://wayecommerce.com.br/contato"
+        title={seoProps?.title || "Contato"}
+        description={seoProps?.description || "Entre em contato com a Way E-commerce. Estamos prontos para transformar seu e-commerce com estratégia, tecnologia e performance."}
+        canonical={seoProps?.canonical || "https://wayecommerce.com.br/contato"}
+        ogTitle={seoProps?.ogTitle}
+        ogDescription={seoProps?.ogDescription}
+        ogImage={seoProps?.ogImage}
+        noindex={seoProps?.noindex}
       />
       <Header />
 
