@@ -18,9 +18,9 @@ const Footer = () => {
       email
     });
   };
-  return <footer className="py-6 md:py-12 bg-[#1a1a1a]">
+  return <footer className="py-6 md:py-12 bg-[#181818]">
       <div className="container mx-auto px-4">
-        <div className="rounded-xl md:rounded-2xl p-5 md:p-10 bg-[#2a2a2a]">
+        <div className="rounded-xl md:rounded-2xl p-5 md:p-10 bg-[#222222]">
           <div className="grid md:grid-cols-2 gap-6 md:gap-12">
             {/* Left Side - Company Info */}
             <div className="space-y-4 md:space-y-6 md:border-r border-white/10 md:pr-8">
