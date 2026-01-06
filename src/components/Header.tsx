@@ -88,25 +88,20 @@ const Header = ({ variant = 'default' }: HeaderProps) => {
   }];
 
   const landingNavItems = [{
-    id: "inicio",
-    label: "Início",
-    type: "link",
-    path: "/"
+    id: "como-funciona",
+    label: "Como funciona",
+    type: "anchor",
+    anchor: "#como-funciona"
   }, {
-    id: "sobre",
-    label: "Sobre a Way",
-    type: "link",
-    path: "/why-way"
+    id: "o-que-descobre",
+    label: "O que você descobre",
+    type: "anchor",
+    anchor: "#o-que-descobre"
   }, {
-    id: "cases",
-    label: "Cases",
-    type: "link",
-    path: "/cases"
-  }, {
-    id: "blog",
-    label: "Blog",
-    type: "link",
-    path: "/blog"
+    id: "quem-somos",
+    label: "Quem somos",
+    type: "anchor",
+    anchor: "#quem-somos"
   }];
 
   const navItems = variant === 'landing' ? landingNavItems : defaultNavItems;
@@ -147,7 +142,7 @@ const Header = ({ variant = 'default' }: HeaderProps) => {
     isExternal: false
   }];
 
-  const handleNavClick = (item: typeof navItems[0]) => {
+  const handleNavClick = (item: typeof defaultNavItems[0]) => {
     if (item.type === "link" && item.path) {
       window.location.href = item.path;
     } else {
@@ -197,26 +192,22 @@ const Header = ({ variant = 'default' }: HeaderProps) => {
             <img src={logoWay} alt="Way+ E-commerce" className="h-10 transition-all duration-300 group-hover:scale-110 group-hover:drop-shadow-[0_0_8px_rgba(255,215,0,0.5)]" />
           </Link>
 
-          {/* Desktop Navigation - Centered */}
-          <nav className="hidden lg:flex items-center justify-center flex-1 mx-8">
-            <div className="flex items-center gap-1 bg-background/50 backdrop-blur-sm px-4 py-2 rounded-full border border-border/50">
+          {/* Desktop Navigation */}
+          <nav className={`hidden lg:flex items-center ${variant === 'landing' ? 'ml-8' : 'justify-center flex-1 mx-8'}`}>
+            <div className={`flex items-center gap-1 bg-background/50 backdrop-blur-sm px-4 py-2 border border-border/50 ${variant === 'landing' ? 'rounded-md' : 'rounded-full'}`}>
               {variant === 'landing' ? (
-                /* Landing page - Simple navigation */
+                /* Landing page - Anchor navigation */
                 <>
-                  {navItems.map((item) => (
-                    <button 
+                  {landingNavItems.map((item) => (
+                    <a 
                       key={item.id} 
-                      onClick={() => handleNavClick(item)} 
-                      className={`relative px-4 py-2 text-sm font-medium transition-all duration-300 rounded-full group ${activeSection === item.id ? "text-primary" : "text-foreground/70 hover:text-foreground"}`}
+                      href={item.anchor}
+                      className="relative px-4 py-2 text-sm font-medium transition-all duration-300 rounded-md group text-foreground/70 hover:text-foreground"
                     >
-                      {activeSection === item.id && <>
-                        <div className="absolute inset-0 bg-primary/10 rounded-full animate-pulse" />
-                        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 bg-primary rounded-full animate-ping" />
-                      </>}
-                      <div className="absolute inset-0 bg-primary/5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      <div className="absolute inset-0 bg-primary/5 rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                       <span className="relative z-10">{item.label}</span>
-                      <div className={`absolute bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ${activeSection === item.id ? "scale-x-100" : ""}`} />
-                    </button>
+                      <div className="absolute bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
+                    </a>
                   ))}
                 </>
               ) : (
@@ -288,7 +279,7 @@ const Header = ({ variant = 'default' }: HeaderProps) => {
 
                   {/* CASES button */}
                   <button 
-                    onClick={() => handleNavClick(navItems.find(item => item.id === "cases")!)} 
+                    onClick={() => handleNavClick(defaultNavItems.find(item => item.id === "cases")!)} 
                     className={`relative px-4 py-2 text-sm font-medium transition-all duration-300 rounded-full group ${activeSection === "cases" ? "text-primary" : "text-foreground/70 hover:text-foreground"}`}
                   >
                     {activeSection === "cases" && <>
@@ -351,7 +342,7 @@ const Header = ({ variant = 'default' }: HeaderProps) => {
 
                   {/* CONTATO button */}
                   <button 
-                    onClick={() => handleNavClick(navItems.find(item => item.id === "contato")!)} 
+                    onClick={() => handleNavClick(defaultNavItems.find(item => item.id === "contato")!)} 
                     className={`relative px-4 py-2 text-sm font-medium transition-all duration-300 rounded-full group ${activeSection === "contato" ? "text-primary" : "text-foreground/70 hover:text-foreground"}`}
                   >
                     {activeSection === "contato" && <>
@@ -367,24 +358,43 @@ const Header = ({ variant = 'default' }: HeaderProps) => {
             </div>
           </nav>
 
-          {/* CTA Buttons - only show on default variant */}
-          {variant === 'default' && (
-            <div className="hidden lg:flex items-center gap-3">
-              <Button className="font-medium px-5 py-2.5 bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 rounded-lg" asChild>
-                <Link to="/admin" className="flex items-center gap-2">
-                  <User className="w-4 h-4" />
-                  Área do Cliente
-                </Link>
-              </Button>
-                
-              <Button onClick={() => handleNavClick(navItems.find(item => item.id === "contato")!)} className="relative bg-primary text-background font-medium px-5 py-2.5 hover:bg-primary/90 transition-all duration-300 rounded-lg group">
+          {/* CTA Buttons */}
+          <div className="hidden lg:flex items-center gap-3 ml-auto">
+            {variant === 'landing' ? (
+              /* Landing page CTA */
+              <Button 
+                onClick={() => {
+                  const heroSection = document.getElementById('hero-diagnostico');
+                  if (heroSection) {
+                    heroSection.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
+                className="font-medium px-5 py-2.5 bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 rounded-md"
+              >
                 <span className="flex items-center gap-2">
-                  Entrar em contato   
-                  <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                  Começar diagnóstico
+                  <ChevronRight className="w-4 h-4" />
                 </span>
               </Button>
-            </div>
-          )}
+            ) : (
+              /* Default CTAs */
+              <>
+                <Button className="font-medium px-5 py-2.5 bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 rounded-lg" asChild>
+                  <Link to="/admin" className="flex items-center gap-2">
+                    <User className="w-4 h-4" />
+                    Área do Cliente
+                  </Link>
+                </Button>
+                  
+                <Button onClick={() => handleNavClick(defaultNavItems.find(item => item.id === "contato")!)} className="relative bg-primary text-background font-medium px-5 py-2.5 hover:bg-primary/90 transition-all duration-300 rounded-lg group">
+                  <span className="flex items-center gap-2">
+                    Entrar em contato   
+                    <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                  </span>
+                </Button>
+              </>
+            )}
+          </div>
 
           {/* Mobile menu button */}
           <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="lg:hidden p-2 rounded-lg hover:bg-primary/10 transition-colors duration-300">
@@ -458,7 +468,7 @@ const Header = ({ variant = 'default' }: HeaderProps) => {
             
             {/* Cases button */}
             <button 
-              onClick={() => handleNavClick(navItems.find(item => item.id === "cases")!)} 
+              onClick={() => handleNavClick(defaultNavItems.find(item => item.id === "cases")!)} 
               className={`flex items-center justify-between px-4 py-3 text-left text-sm font-medium rounded-lg transition-all duration-300 ${activeSection === "cases" ? "bg-primary/10 text-primary" : "bg-background/50 text-foreground hover:bg-primary/5"}`}
             >
               <span>Cases</span>
@@ -508,7 +518,7 @@ const Header = ({ variant = 'default' }: HeaderProps) => {
 
             {/* Contato button */}
             <button 
-              onClick={() => handleNavClick(navItems.find(item => item.id === "contato")!)} 
+              onClick={() => handleNavClick(defaultNavItems.find(item => item.id === "contato")!)} 
               className={`flex items-center justify-between px-4 py-3 text-left text-sm font-medium rounded-lg transition-all duration-300 ${activeSection === "contato" ? "bg-primary/10 text-primary" : "bg-background/50 text-foreground hover:bg-primary/5"}`}
             >
               <span>Contato</span>
@@ -523,7 +533,7 @@ const Header = ({ variant = 'default' }: HeaderProps) => {
                 </Link>
               </Button>
                 
-              <Button onClick={() => handleNavClick(navItems.find(item => item.id === "contato")!)} className="w-full bg-primary text-background text-sm font-medium py-3 hover:bg-primary/90 transition-all duration-300 rounded-lg group">
+              <Button onClick={() => handleNavClick(defaultNavItems.find(item => item.id === "contato")!)} className="w-full bg-primary text-background text-sm font-medium py-3 hover:bg-primary/90 transition-all duration-300 rounded-lg group">
                 <span className="flex items-center gap-2 justify-center">
                   VAMOS CONVERSAR!
                   <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />

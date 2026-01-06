@@ -67,7 +67,7 @@ export const DiagnosticLanding = ({ onStart }: DiagnosticLandingProps) => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-950 via-gray-900 to-black text-white">
       {/* Hero Section - Evoluído */}
-      <section className="relative py-20 lg:py-28 px-4 overflow-hidden">
+      <section id="hero-diagnostico" className="relative py-20 lg:py-28 px-4 overflow-hidden">
         {/* Background effects */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary/20 via-transparent to-transparent" />
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wMyI+PGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMiIvPjwvZz48L2c+PC9zdmc+')] opacity-50" />
@@ -334,7 +334,7 @@ export const DiagnosticLanding = ({ onStart }: DiagnosticLandingProps) => {
       </section>
 
       {/* O que você vai descobrir - EVOLUÍDO */}
-      <section className="py-20 px-4 bg-gray-900/50">
+      <section id="o-que-descobre" className="py-20 px-4 bg-gray-900/50">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-4">
             <span className="inline-block px-3 py-1 bg-gray-800 text-gray-400 rounded-full text-sm font-medium mb-4">
@@ -392,7 +392,7 @@ export const DiagnosticLanding = ({ onStart }: DiagnosticLandingProps) => {
       </section>
 
       {/* Como funciona - AJUSTADO */}
-      <section className="py-20 px-4">
+      <section id="como-funciona" className="py-20 px-4">
         <div className="container mx-auto max-w-4xl">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -522,7 +522,7 @@ export const DiagnosticLanding = ({ onStart }: DiagnosticLandingProps) => {
       </section>
 
       {/* Seção Visual - Cards Suspensos */}
-      <section className="py-20 px-4 relative overflow-hidden">
+      <section id="quem-somos" className="py-20 px-4 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent" />
         
         <div className="container mx-auto max-w-6xl relative z-10">
