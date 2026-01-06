@@ -16,6 +16,7 @@ import {
   Heart,
   Settings,
   ClipboardCheck,
+  FileCode,
   type LucideIcon,
 } from 'lucide-react';
 
@@ -33,6 +34,7 @@ const ICON_MAP: Record<string, LucideIcon> = {
   Heart,
   Settings,
   ClipboardCheck,
+  FileCode,
 };
 
 interface DbMenuItem {
