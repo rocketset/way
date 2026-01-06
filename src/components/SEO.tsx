@@ -9,6 +9,8 @@ interface SEOProps {
   keywords?: string;
   noindex?: boolean;
   schema?: object;
+  customHeadCode?: string;
+  customBodyCode?: string;
 }
 
 export const SEO = ({
@@ -19,7 +21,9 @@ export const SEO = ({
   ogType = "website",
   keywords,
   noindex = false,
-  schema
+  schema,
+  customHeadCode,
+  customBodyCode
 }: SEOProps) => {
   const brandName = "Way E-commerce";
   const baseTitle = title.trim();
@@ -32,42 +36,80 @@ export const SEO = ({
   const fullCanonical = canonical || siteUrl;
 
   return (
-    <Helmet>
-      {/* Título e Descrição */}
-      <title>{fullTitle}</title>
-      <meta name="description" content={description} />
-      {keywords && <meta name="keywords" content={keywords} />}
-      
-      {/* Canonical */}
-      <link rel="canonical" href={fullCanonical} />
-      
-      {/* Robots */}
-      <meta 
-        name="robots" 
-        content={noindex ? "noindex, nofollow" : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"} 
-      />
-      
-      {/* Open Graph */}
-      <meta property="og:title" content={fullTitle} />
-      <meta property="og:description" content={description} />
-      <meta property="og:type" content={ogType} />
-      <meta property="og:url" content={fullCanonical} />
-      <meta property="og:image" content={ogImage} />
-      <meta property="og:site_name" content="Way E-commerce" />
-      <meta property="og:locale" content="pt_BR" />
-      
-      {/* Twitter Card */}
-      <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content={fullTitle} />
-      <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content={ogImage} />
-      
-      {/* Schema.org JSON-LD */}
-      {schema && (
-        <script type="application/ld+json">
-          {JSON.stringify(schema)}
-        </script>
+    <>
+      <Helmet>
+        {/* Título e Descrição */}
+        <title>{fullTitle}</title>
+        <meta name="description" content={description} />
+        {keywords && <meta name="keywords" content={keywords} />}
+        
+        {/* Canonical */}
+        <link rel="canonical" href={fullCanonical} />
+        
+        {/* Robots */}
+        <meta 
+          name="robots" 
+          content={noindex ? "noindex, nofollow" : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"} 
+        />
+        
+        {/* Open Graph */}
+        <meta property="og:title" content={fullTitle} />
+        <meta property="og:description" content={description} />
+        <meta property="og:type" content={ogType} />
+        <meta property="og:url" content={fullCanonical} />
+        <meta property="og:image" content={ogImage} />
+        <meta property="og:site_name" content="Way E-commerce" />
+        <meta property="og:locale" content="pt_BR" />
+        
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={fullTitle} />
+        <meta name="twitter:description" content={description} />
+        <meta name="twitter:image" content={ogImage} />
+        
+        {/* Schema.org JSON-LD */}
+        {schema && (
+          <script type="application/ld+json">
+            {JSON.stringify(schema)}
+          </script>
+        )}
+
+        {/* Custom Head Code - rendered as raw HTML */}
+        {customHeadCode && (
+          <script type="text/javascript">
+            {`
+              (function() {
+                var container = document.createElement('div');
+                container.innerHTML = ${JSON.stringify(customHeadCode)};
+                var scripts = container.querySelectorAll('script');
+                scripts.forEach(function(script) {
+                  var newScript = document.createElement('script');
+                  if (script.type) newScript.type = script.type;
+                  if (script.src) {
+                    newScript.src = script.src;
+                  } else {
+                    newScript.textContent = script.textContent;
+                  }
+                  document.head.appendChild(newScript);
+                });
+                var nonScripts = container.querySelectorAll(':not(script)');
+                nonScripts.forEach(function(el) {
+                  document.head.appendChild(el.cloneNode(true));
+                });
+              })();
+            `}
+          </script>
+        )}
+      </Helmet>
+
+      {/* Custom Body Code - injected before body close */}
+      {customBodyCode && (
+        <div 
+          dangerouslySetInnerHTML={{ __html: customBodyCode }} 
+          style={{ display: 'none' }}
+          data-seo-body-code="true"
+        />
       )}
-    </Helmet>
+    </>
   );
 };

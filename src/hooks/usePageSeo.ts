@@ -21,6 +21,8 @@ export interface PageSeo {
   twitter_image: string | null;
   twitter_site: string | null;
   schema_markup: Json | null;
+  custom_head_code: string | null;
+  custom_body_code: string | null;
   ativo: boolean;
   criado_em: string;
   atualizado_em: string;
@@ -92,6 +94,8 @@ export const useUpdatePageSeo = () => {
       twitter_description?: string | null;
       twitter_image?: string | null;
       twitter_site?: string | null;
+      custom_head_code?: string | null;
+      custom_body_code?: string | null;
     } }) => {
       const { error } = await supabase
         .from('page_seo')
