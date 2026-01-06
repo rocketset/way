@@ -11,6 +11,7 @@ import { Calendar, Clock, ArrowLeft, User } from "lucide-react";
 import { useBlogPost } from "@/hooks/useBlogPost";
 import { formatDate, formatReadingTime } from "@/utils/dateUtils";
 import { renderEditorBlock } from "@/utils/blockRenderer";
+import { SEO } from "@/components/SEO";
 
 const BlogPost = () => {
   const { slug } = useParams();
@@ -60,8 +61,45 @@ const BlogPost = () => {
     );
   }
 
+  const canonicalUrl = `https://wayecommerce.com.br/blog/${slug}`;
+  
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: post.titulo,
+    description: post.excerpt,
+    image: post.featured_image,
+    author: {
+      "@type": "Person",
+      name: post.autor_nome,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "Way E-commerce",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://wayecommerce.com.br/logo-way-yellow.png"
+      }
+    },
+    datePublished: post.criado_em,
+    dateModified: post.atualizado_em || post.criado_em,
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": canonicalUrl
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title={post.titulo}
+        description={post.excerpt || `Leia o artigo ${post.titulo} no blog da Way E-commerce.`}
+        canonical={canonicalUrl}
+        ogImage={post.featured_image}
+        ogType="article"
+        schema={articleSchema}
+        keywords={post.tags?.join(", ")}
+      />
       <Header />
 
       {/* Back Button - Mobile only acima da imagem */}

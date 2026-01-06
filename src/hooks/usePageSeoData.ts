@@ -16,6 +16,8 @@ export const usePageSeoData = (pageKey: string) => {
       keywords: seoData.meta_keywords || undefined,
       canonical: seoData.canonical_url || undefined,
       ogImage: seoData.og_image || undefined,
+      ogTitle: seoData.og_title || undefined,
+      ogDescription: seoData.og_description || undefined,
       noindex: seoData.noindex || false,
       customHeadCode: seoData.custom_head_code || undefined,
       customBodyCode: seoData.custom_body_code || undefined,
