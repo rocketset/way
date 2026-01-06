@@ -71,11 +71,21 @@ export const DiagnosticLanding = ({ onStart }: DiagnosticLandingProps) => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-950 via-gray-900 to-black text-white">
+    <div className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-black text-white relative overflow-hidden">
+      {/* Linhas decorativas diagonais - igual à home */}
+      <div className="absolute inset-0 overflow-hidden opacity-10 pointer-events-none">
+        <div className="absolute top-0 right-0 w-[800px] h-[800px] border-t-2 border-r-2 border-white rotate-45 transform translate-x-1/2 -translate-y-1/2"></div>
+        <div className="absolute top-1/4 right-1/4 w-[600px] h-[600px] border-t-2 border-r-2 border-white/70 rotate-45"></div>
+        <div className="absolute bottom-0 right-0 w-[400px] h-[400px] border-t-2 border-r-2 border-white/50 rotate-45 transform translate-x-1/3 translate-y-1/3"></div>
+      </div>
+
+      {/* Gradient overlay sutil */}
+      <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-transparent pointer-events-none" />
+
       {/* Hero Section - Evoluído */}
-      <section id="hero-diagnostico" className="relative py-12 md:py-20 lg:py-28 px-4 overflow-hidden">
+      <section id="hero-diagnostico" className="relative py-12 md:py-20 lg:py-28 px-4 overflow-hidden z-10">
         {/* Background effects */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary/20 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary/10 via-transparent to-transparent" />
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wMyI+PGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMiIvPjwvZz48L2c+PC9zdmc+')] opacity-50" />
         
         <div className="container mx-auto max-w-6xl relative z-10">
@@ -92,7 +102,7 @@ export const DiagnosticLanding = ({ onStart }: DiagnosticLandingProps) => {
                 para crescer de forma previsível?
               </h1>
               
-              <p className="text-base md:text-xl text-gray-400 leading-relaxed">
+              <p className="text-base md:text-xl text-neutral-400 leading-relaxed">
                 Descubra o nível de maturidade da sua operação em 5 minutos. 
                 Identifique gargalos, priorize investimentos e tome decisões baseadas em dados — não em achismo.
               </p>
@@ -108,7 +118,7 @@ export const DiagnosticLanding = ({ onStart }: DiagnosticLandingProps) => {
                 </Button>
               </div>
               
-              <div className="flex flex-wrap items-center gap-4 md:gap-6 text-xs md:text-sm text-gray-400 pt-1 md:pt-2">
+              <div className="flex flex-wrap items-center gap-4 md:gap-6 text-xs md:text-sm text-neutral-400 pt-1 md:pt-2">
                 <span className="flex items-center gap-1.5 md:gap-2">
                   <Clock className="h-3.5 w-3.5 md:h-4 md:w-4 text-primary" />
                   5 minutos
@@ -131,38 +141,38 @@ export const DiagnosticLanding = ({ onStart }: DiagnosticLandingProps) => {
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-primary/5 rounded-3xl border border-primary/20" />
                 
                 {/* Floating cards */}
-                <div className="absolute top-8 left-4 bg-gray-800/90 backdrop-blur-sm border border-gray-700 rounded-xl p-4 shadow-2xl animate-float-slow">
+                <div className="absolute top-8 left-4 bg-neutral-900/90 backdrop-blur-sm border border-neutral-700 rounded-xl p-4 shadow-2xl animate-float-slow">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-primary/20 rounded-lg flex items-center justify-center">
                       <LayoutGrid className="h-5 w-5 text-primary" />
                     </div>
                     <div>
                       <p className="text-sm font-medium text-white">Estrutura antes da escala</p>
-                      <p className="text-xs text-gray-400">Metodologia Way</p>
+                      <p className="text-xs text-neutral-400">Metodologia Way</p>
                     </div>
                   </div>
                 </div>
                 
-                <div className="absolute top-1/3 right-0 bg-gray-800/90 backdrop-blur-sm border border-gray-700 rounded-xl p-4 shadow-2xl animate-float-medium">
+                <div className="absolute top-1/3 right-0 bg-neutral-900/90 backdrop-blur-sm border border-neutral-700 rounded-xl p-4 shadow-2xl animate-float-medium">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-green-500/20 rounded-lg flex items-center justify-center">
                       <BarChart3 className="h-5 w-5 text-green-500" />
                     </div>
                     <div>
                       <p className="text-sm font-medium text-white">Decisão baseada em dados</p>
-                      <p className="text-xs text-gray-400">Não em achismo</p>
+                      <p className="text-xs text-neutral-400">Não em achismo</p>
                     </div>
                   </div>
                 </div>
                 
-                <div className="absolute bottom-1/4 left-8 bg-gray-800/90 backdrop-blur-sm border border-gray-700 rounded-xl p-4 shadow-2xl animate-float-fast">
+                <div className="absolute bottom-1/4 left-8 bg-neutral-900/90 backdrop-blur-sm border border-neutral-700 rounded-xl p-4 shadow-2xl animate-float-fast">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center">
-                      <CheckCircle className="h-5 w-5 text-blue-500" />
+                    <div className="w-10 h-10 bg-primary/20 rounded-lg flex items-center justify-center">
+                      <CheckCircle className="h-5 w-5 text-primary" />
                     </div>
                     <div>
                       <p className="text-sm font-medium text-white">Método validado em +190 projetos</p>
-                      <p className="text-xs text-gray-400">Operações reais</p>
+                      <p className="text-xs text-neutral-400">Operações reais</p>
                     </div>
                   </div>
                 </div>
@@ -201,7 +211,7 @@ export const DiagnosticLanding = ({ onStart }: DiagnosticLandingProps) => {
       </section>
 
       {/* O Problema Real do Lojista - NOVA SEÇÃO */}
-      <section className="py-12 md:py-20 px-4 bg-gray-900/50">
+      <section className="relative py-12 md:py-20 px-4 bg-black/30 z-10">
         <div className="container mx-auto max-w-5xl">
           <div className="text-center mb-8 md:mb-12">
             <span className="inline-block px-3 py-1 bg-red-500/10 text-red-400 rounded-full text-xs md:text-sm font-medium mb-3 md:mb-4">
@@ -250,7 +260,7 @@ export const DiagnosticLanding = ({ onStart }: DiagnosticLandingProps) => {
               return (
                 <Card 
                   key={index}
-                  className="bg-gray-800/30 border-gray-700/50 p-4 md:p-5 hover:border-red-500/30 transition-all group"
+                  className="bg-neutral-900/30 border-neutral-700/50 p-4 md:p-5 hover:border-red-500/30 transition-all group"
                 >
                   <div className="flex items-start gap-3 md:gap-4">
                     <div className="w-9 h-9 md:w-10 md:h-10 bg-red-500/10 rounded-lg flex items-center justify-center shrink-0 group-hover:bg-red-500/20 transition-colors">
@@ -258,7 +268,7 @@ export const DiagnosticLanding = ({ onStart }: DiagnosticLandingProps) => {
                     </div>
                     <div>
                       <h3 className="font-semibold text-white text-sm md:text-base mb-0.5 md:mb-1">{item.pain}</h3>
-                      <p className="text-gray-400 text-xs md:text-sm">{item.detail}</p>
+                      <p className="text-neutral-400 text-xs md:text-sm">{item.detail}</p>
                     </div>
                   </div>
                 </Card>
@@ -267,7 +277,7 @@ export const DiagnosticLanding = ({ onStart }: DiagnosticLandingProps) => {
           </div>
           
           <div className="text-center mt-6 md:mt-10">
-            <p className="text-gray-400 text-sm md:text-lg">
+            <p className="text-neutral-400 text-sm md:text-lg">
               Se você se identificou, o problema pode não ser <span className="text-white">falta de esforço</span> — 
               mas sim <span className="text-primary">falta de estrutura</span>.
             </p>
@@ -276,7 +286,7 @@ export const DiagnosticLanding = ({ onStart }: DiagnosticLandingProps) => {
       </section>
 
       {/* O que é o Diagnóstico - NOVA SEÇÃO */}
-      <section className="py-12 md:py-20 px-4">
+      <section className="relative py-12 md:py-20 px-4 z-10">
         <div className="container mx-auto max-w-5xl">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             <div className="space-y-4 md:space-y-6">
@@ -287,7 +297,7 @@ export const DiagnosticLanding = ({ onStart }: DiagnosticLandingProps) => {
                 O que é o Diagnóstico de{' '}
                 <span className="text-primary">Maturidade Way</span>?
               </h2>
-              <p className="text-gray-400 text-sm md:text-lg leading-relaxed">
+              <p className="text-neutral-400 text-sm md:text-lg leading-relaxed">
                 Uma avaliação estruturada que mapeia {totalTools} pontos críticos da sua operação 
                 de e-commerce em 6 áreas estratégicas. Em minutos, você visualiza onde está 
                 perdendo oportunidades e quais investimentos trariam maior retorno.
@@ -296,13 +306,13 @@ export const DiagnosticLanding = ({ onStart }: DiagnosticLandingProps) => {
               <div className="space-y-3 md:space-y-4">
                 <div className="flex items-start gap-3">
                   <CheckCircle className="h-4 w-4 md:h-5 md:w-5 text-green-500 mt-0.5 md:mt-1 shrink-0" />
-                  <p className="text-gray-300 text-sm md:text-base">
+                  <p className="text-neutral-300 text-sm md:text-base">
                     <strong className="text-white">É:</strong> Uma ferramenta de diagnóstico estratégico desenvolvida a partir de +190 projetos reais de e-commerce
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
                   <AlertTriangle className="h-4 w-4 md:h-5 md:w-5 text-red-400 mt-0.5 md:mt-1 shrink-0" />
-                  <p className="text-gray-300 text-sm md:text-base">
+                  <p className="text-neutral-300 text-sm md:text-base">
                     <strong className="text-white">Não é:</strong> Um quiz genérico de marketing ou ferramenta superficial de pontuação
                   </p>
                 </div>
@@ -310,12 +320,12 @@ export const DiagnosticLanding = ({ onStart }: DiagnosticLandingProps) => {
             </div>
             
             <div className="space-y-3 md:space-y-4">
-              <Card className="bg-gray-800/50 border-gray-700 p-4 md:p-6">
+              <Card className="bg-neutral-900/50 border-neutral-700 p-4 md:p-6">
                 <h3 className="font-semibold text-white text-sm md:text-base mb-2 md:mb-3 flex items-center gap-2">
                   <CheckCircle className="h-4 w-4 md:h-5 md:w-5 text-green-500" />
                   Faz sentido para você se:
                 </h3>
-                <ul className="space-y-1.5 md:space-y-2 text-gray-400 text-xs md:text-sm">
+                <ul className="space-y-1.5 md:space-y-2 text-neutral-400 text-xs md:text-sm">
                   <li>• Já vende online e quer estruturar o crescimento</li>
                   <li>• Sente que a operação trava a evolução do negócio</li>
                   <li>• Quer entender onde investir primeiro</li>
@@ -323,12 +333,12 @@ export const DiagnosticLanding = ({ onStart }: DiagnosticLandingProps) => {
                 </ul>
               </Card>
               
-              <Card className="bg-gray-800/50 border-gray-700 p-4 md:p-6">
+              <Card className="bg-neutral-900/50 border-neutral-700 p-4 md:p-6">
                 <h3 className="font-semibold text-white text-sm md:text-base mb-2 md:mb-3 flex items-center gap-2">
                   <AlertTriangle className="h-4 w-4 md:h-5 md:w-5 text-yellow-500" />
                   Pode não ser o momento se:
                 </h3>
-                <ul className="space-y-1.5 md:space-y-2 text-gray-400 text-xs md:text-sm">
+                <ul className="space-y-1.5 md:space-y-2 text-neutral-400 text-xs md:text-sm">
                   <li>• Ainda não tem loja online em operação</li>
                   <li>• Busca apenas dicas rápidas de marketing</li>
                   <li>• Não pretende investir em evolução estruturada</li>
@@ -340,10 +350,10 @@ export const DiagnosticLanding = ({ onStart }: DiagnosticLandingProps) => {
       </section>
 
       {/* O que você vai descobrir - EVOLUÍDO */}
-      <section id="o-que-descobre" className="py-12 md:py-20 px-4 bg-gray-900/50">
+      <section id="o-que-descobre" className="relative py-12 md:py-20 px-4 bg-black/30 z-10">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-3 md:mb-4">
-            <span className="inline-block px-3 py-1 bg-gray-800 text-gray-400 rounded-full text-xs md:text-sm font-medium mb-3 md:mb-4">
+            <span className="inline-block px-3 py-1 bg-neutral-800 text-neutral-400 rounded-full text-xs md:text-sm font-medium mb-3 md:mb-4">
               ESCALAR E-COMMERCE EXIGE ESTRUTURA, NÃO APENAS FERRAMENTAS
             </span>
           </div>
@@ -353,7 +363,7 @@ export const DiagnosticLanding = ({ onStart }: DiagnosticLandingProps) => {
               <span className="text-primary">bases sólidas</span>{' '}
               para crescer e escalar
             </h2>
-            <p className="text-gray-400 text-sm md:text-lg max-w-3xl mx-auto">
+            <p className="text-neutral-400 text-sm md:text-lg max-w-3xl mx-auto">
               Avaliamos sua maturidade em 6 pilares estratégicos que sustentam operações de e-commerce de alta performance
             </p>
           </div>
@@ -364,13 +374,13 @@ export const DiagnosticLanding = ({ onStart }: DiagnosticLandingProps) => {
               return (
                 <Card 
                   key={index}
-                  className="bg-gray-800/50 border-gray-700 p-4 md:p-5 text-center hover:border-primary/50 transition-all group"
+                  className="bg-neutral-900/50 border-neutral-700 p-4 md:p-5 text-center hover:border-primary/50 transition-all group"
                 >
                   <div className="w-10 h-10 md:w-14 md:h-14 bg-primary/20 rounded-xl flex items-center justify-center mx-auto mb-3 md:mb-4 group-hover:bg-primary/30 transition-colors">
                     <Icon className="h-5 w-5 md:h-7 md:w-7 text-primary" />
                   </div>
                   <h3 className="font-semibold text-white text-xs md:text-sm mb-1 md:mb-2">{pillar.title}</h3>
-                  <p className="text-[10px] md:text-xs text-gray-400 leading-relaxed">
+                  <p className="text-[10px] md:text-xs text-neutral-400 leading-relaxed">
                     {pillar.description}
                   </p>
                 </Card>
@@ -398,14 +408,14 @@ export const DiagnosticLanding = ({ onStart }: DiagnosticLandingProps) => {
       </section>
 
       {/* Como funciona - AJUSTADO */}
-      <section id="como-funciona" className="py-12 md:py-20 px-4">
+      <section id="como-funciona" className="relative py-12 md:py-20 px-4 z-10">
         <div className="container mx-auto max-w-4xl">
           <div className="text-center mb-8 md:mb-12">
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-3 md:mb-4">
               Simples, rápido e{' '}
               <span className="text-primary">sem complicação</span>
             </h2>
-            <p className="text-gray-400 text-sm md:text-lg">
+            <p className="text-neutral-400 text-sm md:text-lg">
               Em 3 passos você tem clareza sobre sua operação
             </p>
           </div>
@@ -437,13 +447,13 @@ export const DiagnosticLanding = ({ onStart }: DiagnosticLandingProps) => {
               const Icon = item.icon;
               return (
                 <div key={index} className="relative">
-                  <Card className="bg-gray-800/30 border-gray-700 p-4 md:p-6 text-center h-full hover:border-primary/50 transition-all">
+                  <Card className="bg-neutral-900/30 border-neutral-700 p-4 md:p-6 text-center h-full hover:border-primary/50 transition-all">
                     <div className="w-12 h-12 md:w-16 md:h-16 bg-primary/20 rounded-xl md:rounded-2xl flex items-center justify-center mx-auto mb-3 md:mb-4">
                       <Icon className="h-6 w-6 md:h-8 md:w-8 text-primary" />
                     </div>
                     <span className="text-[10px] md:text-xs text-primary font-bold">PASSO {item.step}</span>
                     <h3 className="font-semibold text-white text-sm md:text-lg mt-1 md:mt-2 mb-1 md:mb-2">{item.title}</h3>
-                    <p className="text-gray-400 text-xs md:text-sm mb-2 md:mb-3">{item.description}</p>
+                    <p className="text-neutral-400 text-xs md:text-sm mb-2 md:mb-3">{item.description}</p>
                     <span className="inline-block px-2 md:px-3 py-1 bg-primary/10 text-primary text-[10px] md:text-xs rounded-full font-medium">
                       {item.time}
                     </span>
@@ -462,14 +472,14 @@ export const DiagnosticLanding = ({ onStart }: DiagnosticLandingProps) => {
       </section>
 
       {/* Por que fazer o diagnóstico - INSERIDA/EVOLUÍDA */}
-      <section className="py-12 md:py-20 px-4 bg-gray-900/50">
+      <section className="relative py-12 md:py-20 px-4 bg-black/30 z-10">
         <div className="container mx-auto max-w-5xl">
           <div className="text-center mb-8 md:mb-12">
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-3 md:mb-4">
               Por que fazer{' '}
               <span className="text-primary">esse diagnóstico?</span>
             </h2>
-            <p className="text-gray-400 text-sm md:text-lg">
+            <p className="text-neutral-400 text-sm md:text-lg">
               Não é sobre vender serviço — é sobre ganhar consciência estratégica
             </p>
           </div>
@@ -511,14 +521,14 @@ export const DiagnosticLanding = ({ onStart }: DiagnosticLandingProps) => {
               return (
                 <Card 
                   key={index}
-                  className="bg-gray-800/50 border-gray-700 p-4 md:p-6 flex gap-3 md:gap-4 hover:border-primary/30 transition-all"
+                  className="bg-neutral-900/50 border-neutral-700 p-4 md:p-6 flex gap-3 md:gap-4 hover:border-primary/30 transition-all"
                 >
                   <div className="w-10 h-10 md:w-12 md:h-12 bg-primary/20 rounded-lg flex items-center justify-center shrink-0">
                     <Icon className="h-5 w-5 md:h-6 md:w-6 text-primary" />
                   </div>
                   <div>
                     <h3 className="font-semibold text-white text-sm md:text-base mb-0.5 md:mb-1">{item.title}</h3>
-                    <p className="text-gray-400 text-xs md:text-sm">{item.description}</p>
+                    <p className="text-neutral-400 text-xs md:text-sm">{item.description}</p>
                   </div>
                 </Card>
               );
@@ -528,8 +538,8 @@ export const DiagnosticLanding = ({ onStart }: DiagnosticLandingProps) => {
       </section>
 
       {/* Seção Visual - Cards Suspensos */}
-      <section id="quem-somos" className="py-12 md:py-20 px-4 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent" />
+      <section id="quem-somos" className="relative py-12 md:py-20 px-4 overflow-hidden z-10">
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent pointer-events-none" />
         
         <div className="container mx-auto max-w-6xl relative z-10">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
@@ -539,7 +549,7 @@ export const DiagnosticLanding = ({ onStart }: DiagnosticLandingProps) => {
                 <span className="text-primary">190 projetos</span>{' '}
                 de e-commerce
               </h2>
-              <p className="text-gray-400 text-sm md:text-lg leading-relaxed">
+              <p className="text-neutral-400 text-sm md:text-lg leading-relaxed">
                 A Way E-commerce atua na implantação, estruturação e aceleração de operações digitais 
                 para indústrias, redes de lojas e varejistas. Da decisão à execução, conectamos 
                 estratégia, tecnologia e performance para sustentar a escala.
@@ -548,15 +558,15 @@ export const DiagnosticLanding = ({ onStart }: DiagnosticLandingProps) => {
               <div className="grid grid-cols-3 gap-3 md:gap-4 pt-2 md:pt-4">
                 <div className="text-center">
                   <p className="text-xl md:text-3xl font-bold text-primary">+190</p>
-                  <p className="text-[10px] md:text-sm text-gray-400">Projetos B2B, B2C e B2B2C</p>
+                  <p className="text-[10px] md:text-sm text-neutral-400">Projetos B2B, B2C e B2B2C</p>
                 </div>
                 <div className="text-center">
                   <p className="text-xl md:text-3xl font-bold text-primary">1 ano</p>
-                  <p className="text-[10px] md:text-sm text-gray-400">Soluções de ponta a ponta</p>
+                  <p className="text-[10px] md:text-sm text-neutral-400">Soluções de ponta a ponta</p>
                 </div>
                 <div className="text-center">
                   <p className="text-xl md:text-3xl font-bold text-primary">700</p>
-                  <p className="text-[10px] md:text-sm text-gray-400">Clientes atendidos</p>
+                  <p className="text-[10px] md:text-sm text-neutral-400">Clientes atendidos</p>
                 </div>
               </div>
             </div>
@@ -584,15 +594,15 @@ export const DiagnosticLanding = ({ onStart }: DiagnosticLandingProps) => {
                   return (
                     <Card 
                       key={index}
-                      className="bg-gray-800/70 backdrop-blur-sm border-gray-700 p-4 md:p-6 hover:border-primary/50 transition-all"
+                      className="bg-neutral-900/70 backdrop-blur-sm border-neutral-700 p-4 md:p-6 hover:border-primary/50 transition-all"
                     >
                       <div className="flex items-start gap-3 md:gap-4">
                         <div className="w-10 h-10 md:w-12 md:h-12 bg-primary rounded-lg flex items-center justify-center shrink-0">
-                          <Icon className="h-5 w-5 md:h-6 md:w-6 text-gray-900" />
+                          <Icon className="h-5 w-5 md:h-6 md:w-6 text-neutral-900" />
                         </div>
                         <div>
                           <h3 className="font-semibold text-white text-sm md:text-base mb-0.5 md:mb-1">{item.title}</h3>
-                          <p className="text-gray-400 text-xs md:text-sm">{item.description}</p>
+                          <p className="text-neutral-400 text-xs md:text-sm">{item.description}</p>
                         </div>
                       </div>
                     </Card>
@@ -605,7 +615,7 @@ export const DiagnosticLanding = ({ onStart }: DiagnosticLandingProps) => {
       </section>
 
       {/* FAQ - EXPANDIDO */}
-      <section className="py-12 md:py-20 px-4 bg-gray-900/50">
+      <section className="relative py-12 md:py-20 px-4 bg-black/30 z-10">
         <div className="container mx-auto max-w-6xl">
           <div className="grid lg:grid-cols-[1fr_2fr] gap-6 lg:gap-12">
             {/* Left side - Title */}
@@ -651,12 +661,12 @@ export const DiagnosticLanding = ({ onStart }: DiagnosticLandingProps) => {
                   <AccordionItem 
                     key={index} 
                     value={`item-${index}`}
-                    className="border-b border-gray-700/50 py-1 md:py-2"
+                    className="border-b border-neutral-700/50 py-1 md:py-2"
                   >
                     <AccordionTrigger className="text-left text-white hover:text-primary hover:no-underline text-sm md:text-base lg:text-lg font-medium py-3 md:py-4">
                       {item.question}
                     </AccordionTrigger>
-                    <AccordionContent className="text-gray-400 text-xs md:text-sm lg:text-base pb-3 md:pb-4">
+                    <AccordionContent className="text-neutral-400 text-xs md:text-sm lg:text-base pb-3 md:pb-4">
                       {item.answer}
                     </AccordionContent>
                   </AccordionItem>
@@ -668,8 +678,8 @@ export const DiagnosticLanding = ({ onStart }: DiagnosticLandingProps) => {
       </section>
 
       {/* CTA Final - REFINADO */}
-      <section className="py-12 md:py-24 px-4 bg-gradient-to-t from-primary/20 via-primary/10 to-transparent relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-primary/20 via-transparent to-transparent" />
+      <section className="relative py-12 md:py-24 px-4 bg-gradient-to-t from-primary/10 via-transparent to-transparent overflow-hidden z-10">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-primary/10 via-transparent to-transparent pointer-events-none" />
         
         <div className="container mx-auto max-w-3xl text-center relative z-10">
           <span className="inline-block px-3 md:px-4 py-1.5 md:py-2 bg-primary/20 text-primary rounded-full text-xs md:text-sm font-medium mb-4 md:mb-6 border border-primary/30">
@@ -681,7 +691,7 @@ export const DiagnosticLanding = ({ onStart }: DiagnosticLandingProps) => {
             <span className="text-primary">maturidade</span>{' '}
             do seu e-commerce?
           </h2>
-          <p className="text-gray-400 text-sm md:text-lg mb-6 md:mb-8 max-w-2xl mx-auto">
+          <p className="text-neutral-400 text-sm md:text-lg mb-6 md:mb-8 max-w-2xl mx-auto">
             Tome decisões estratégicas baseadas em dados — não em achismo. 
             Identifique gargalos, priorize investimentos e evolua com clareza.
           </p>
@@ -695,7 +705,7 @@ export const DiagnosticLanding = ({ onStart }: DiagnosticLandingProps) => {
             <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
           </Button>
           
-          <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6 text-xs md:text-sm text-gray-400 mt-4 md:mt-6">
+          <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6 text-xs md:text-sm text-neutral-400 mt-4 md:mt-6">
             <span className="flex items-center gap-1.5 md:gap-2">
               <CheckCircle className="h-3.5 w-3.5 md:h-4 md:w-4 text-green-500" />
               100% Gratuito
