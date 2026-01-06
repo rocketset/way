@@ -6,6 +6,8 @@ interface SEOProps {
   canonical?: string;
   ogImage?: string;
   ogType?: string;
+  ogTitle?: string;
+  ogDescription?: string;
   keywords?: string;
   noindex?: boolean;
   schema?: object;
@@ -19,6 +21,8 @@ export const SEO = ({
   canonical,
   ogImage = "https://storage.googleapis.com/gpt-engineer-file-uploads/YTHfcr8kKIPEfT4TOZCdJnu0eE23/social-images/social-1760489654323-Way-ecommerce.png",
   ogType = "website",
+  ogTitle,
+  ogDescription,
   keywords,
   noindex = false,
   schema,
@@ -34,6 +38,10 @@ export const SEO = ({
     : `${baseTitle} ${suffix}`;
   const siteUrl = "https://wayecommerce.com.br";
   const fullCanonical = canonical || siteUrl;
+
+  // Use separate OG values if provided, otherwise fallback to title/description
+  const finalOgTitle = ogTitle || fullTitle;
+  const finalOgDescription = ogDescription || description;
 
   return (
     <>
@@ -53,8 +61,8 @@ export const SEO = ({
         />
         
         {/* Open Graph */}
-        <meta property="og:title" content={fullTitle} />
-        <meta property="og:description" content={description} />
+        <meta property="og:title" content={finalOgTitle} />
+        <meta property="og:description" content={finalOgDescription} />
         <meta property="og:type" content={ogType} />
         <meta property="og:url" content={fullCanonical} />
         <meta property="og:image" content={ogImage} />
@@ -63,8 +71,8 @@ export const SEO = ({
         
         {/* Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={fullTitle} />
-        <meta name="twitter:description" content={description} />
+        <meta name="twitter:title" content={finalOgTitle} />
+        <meta name="twitter:description" content={finalOgDescription} />
         <meta name="twitter:image" content={ogImage} />
         
         {/* Schema.org JSON-LD */}
