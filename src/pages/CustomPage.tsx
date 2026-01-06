@@ -5,6 +5,8 @@ import Footer from '@/components/Footer';
 import { SEO } from '@/components/SEO';
 import DOMPurify from 'dompurify';
 import { useEffect } from 'react';
+import { renderEditorBlock } from '@/utils/blockRenderer';
+import { EditorBlock } from '@/types/editor';
 
 export default function CustomPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -64,10 +66,20 @@ export default function CustomPage() {
       {page.header_visible && <Header />}
 
       <main className={page.header_visible ? 'pt-20' : ''}>
-        <div
-          className={page.layout === 'boxed' ? 'container mx-auto px-4' : ''}
-          dangerouslySetInnerHTML={{ __html: sanitizedHtml }}
-        />
+        {page.blocks_content && Array.isArray(page.blocks_content) && page.blocks_content.length > 0 ? (
+          <div className={page.layout === 'boxed' ? 'container mx-auto px-4 py-8' : 'py-8'}>
+            <div className="prose prose-lg max-w-none">
+              {(page.blocks_content as EditorBlock[]).map((block, index) =>
+                renderEditorBlock(block, index)
+              )}
+            </div>
+          </div>
+        ) : (
+          <div
+            className={page.layout === 'boxed' ? 'container mx-auto px-4' : ''}
+            dangerouslySetInnerHTML={{ __html: sanitizedHtml }}
+          />
+        )}
       </main>
 
       {page.footer_visible && <Footer />}
