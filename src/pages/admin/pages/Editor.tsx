@@ -12,7 +12,10 @@ import {
   Smartphone,
   Tablet,
   Play,
+  MousePointerClick,
 } from 'lucide-react';
+import { BlockEditor } from '@/components/editor/BlockEditor';
+import { EditorBlock } from '@/types/editor';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -62,6 +65,10 @@ export default function PageEditor() {
   // Preview state
   const [previewDevice, setPreviewDevice] = useState<'desktop' | 'tablet' | 'mobile'>('desktop');
   const [activeTab, setActiveTab] = useState('html');
+  
+  // Visual editor state
+  const [editorMode, setEditorMode] = useState<'visual' | 'code'>('visual');
+  const [blocksContent, setBlocksContent] = useState<EditorBlock[]>([]);
 
   // Load existing page data
   useEffect(() => {
@@ -80,6 +87,13 @@ export default function PageEditor() {
       setFooterVisible(existingPage.footer_visible);
       setCustomHead(existingPage.custom_head || '');
       setPublicado(existingPage.publicado);
+      // Load blocks content
+      if (existingPage.blocks_content && Array.isArray(existingPage.blocks_content)) {
+        setBlocksContent(existingPage.blocks_content as EditorBlock[]);
+        if (existingPage.blocks_content.length > 0) {
+          setEditorMode('visual');
+        }
+      }
     }
   }, [existingPage]);
 
@@ -124,6 +138,7 @@ export default function PageEditor() {
       html_content: htmlContent,
       css_content: cssContent,
       js_content: jsContent,
+      blocks_content: blocksContent,
       meta_title: metaTitle || null,
       meta_description: metaDescription || null,
       og_image: ogImage || null,
@@ -264,37 +279,59 @@ export default function PageEditor() {
             </CardContent>
           </Card>
 
-          {/* Code Editors */}
+          {/* Editor Mode Tabs */}
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg flex items-center gap-2">
-                <Code className="h-5 w-5" />
-                Editor de Código
-              </CardTitle>
-              <CardDescription>
-                Escreva HTML, CSS e JavaScript para construir sua página
-              </CardDescription>
+              <div className="flex items-center justify-between">
+                <div>
+                  <CardTitle className="text-lg">Editor de Conteúdo</CardTitle>
+                  <CardDescription>
+                    Escolha entre o editor visual ou código
+                  </CardDescription>
+                </div>
+                <Tabs value={editorMode} onValueChange={(v) => setEditorMode(v as 'visual' | 'code')}>
+                  <TabsList>
+                    <TabsTrigger value="visual" className="flex items-center gap-2">
+                      <MousePointerClick className="h-4 w-4" />
+                      Visual
+                    </TabsTrigger>
+                    <TabsTrigger value="code" className="flex items-center gap-2">
+                      <Code className="h-4 w-4" />
+                      Código
+                    </TabsTrigger>
+                  </TabsList>
+                </Tabs>
+              </div>
             </CardHeader>
             <CardContent>
-              <Tabs value={activeTab} onValueChange={setActiveTab}>
-                <TabsList className="mb-4">
-                  <TabsTrigger value="html" className="flex items-center gap-2">
-                    <FileCode className="h-4 w-4" />
-                    HTML
-                  </TabsTrigger>
-                  <TabsTrigger value="css" className="flex items-center gap-2">
-                    <Palette className="h-4 w-4" />
-                    CSS
-                  </TabsTrigger>
-                  <TabsTrigger value="js" className="flex items-center gap-2">
-                    <Play className="h-4 w-4" />
-                    JavaScript
-                  </TabsTrigger>
-                  <TabsTrigger value="preview" className="flex items-center gap-2">
-                    <Eye className="h-4 w-4" />
-                    Preview
-                  </TabsTrigger>
-                </TabsList>
+              {editorMode === 'visual' ? (
+                <div className="min-h-[500px] border rounded-lg p-4 bg-background">
+                  <BlockEditor
+                    blocks={blocksContent}
+                    onChange={setBlocksContent}
+                    placeholder="Clique em + para adicionar blocos..."
+                  />
+                </div>
+              ) : (
+                <Tabs value={activeTab} onValueChange={setActiveTab}>
+                  <TabsList className="mb-4">
+                    <TabsTrigger value="html" className="flex items-center gap-2">
+                      <FileCode className="h-4 w-4" />
+                      HTML
+                    </TabsTrigger>
+                    <TabsTrigger value="css" className="flex items-center gap-2">
+                      <Palette className="h-4 w-4" />
+                      CSS
+                    </TabsTrigger>
+                    <TabsTrigger value="js" className="flex items-center gap-2">
+                      <Play className="h-4 w-4" />
+                      JavaScript
+                    </TabsTrigger>
+                    <TabsTrigger value="preview" className="flex items-center gap-2">
+                      <Eye className="h-4 w-4" />
+                      Preview
+                    </TabsTrigger>
+                  </TabsList>
 
                 <TabsContent value="html">
                   <div className="space-y-2">
@@ -395,8 +432,9 @@ document.addEventListener('DOMContentLoaded', function() {
                       />
                     </div>
                   </div>
-                </TabsContent>
-              </Tabs>
+                  </TabsContent>
+                </Tabs>
+              )}
             </CardContent>
           </Card>
         </div>
