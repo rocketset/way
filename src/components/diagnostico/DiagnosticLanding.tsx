@@ -1,5 +1,11 @@
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { getTotalTools } from '@/data/diagnosticData';
 import { 
   ArrowRight, 
@@ -600,55 +606,63 @@ export const DiagnosticLanding = ({ onStart }: DiagnosticLandingProps) => {
 
       {/* FAQ - EXPANDIDO */}
       <section className="py-20 px-4 bg-gray-900/50">
-        <div className="container mx-auto max-w-3xl">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Dúvidas frequentes
-            </h2>
-          </div>
-          
-          <div className="space-y-4">
-            {[
-              {
-                question: 'É realmente gratuito?',
-                answer: 'Sim, 100% gratuito. Não pedimos cartão de crédito nem qualquer forma de pagamento. O diagnóstico é uma ferramenta de avaliação sem compromisso.'
-              },
-              {
-                question: 'Quanto tempo leva?',
-                answer: 'Menos de 5 minutos. O questionário é objetivo, com respostas simples sobre ferramentas e processos que você utiliza ou não.'
-              },
-              {
-                question: 'Meus dados estão seguros?',
-                answer: 'Absolutamente. Seus dados são protegidos e nunca serão compartilhados com terceiros. Utilizamos as informações apenas para gerar seu diagnóstico personalizado.'
-              },
-              {
-                question: 'O que acontece depois do diagnóstico?',
-                answer: 'Você recebe seu score de maturidade instantaneamente, com análise detalhada por área e recomendações priorizadas. A decisão de seguir adiante é sua.'
-              },
-              {
-                question: 'Serve para loja física que está entrando no digital?',
-                answer: 'O diagnóstico é focado em operações de e-commerce já em funcionamento. Se você ainda está planejando sua entrada no digital, pode ser cedo para essa avaliação.'
-              },
-              {
-                question: 'Preciso já estar vendendo online?',
-                answer: 'Sim. O diagnóstico avalia ferramentas e processos de operações ativas. Se ainda não tem loja online, recomendamos primeiro estruturar o básico.'
-              },
-              {
-                question: 'O diagnóstico gera direcionamentos práticos?',
-                answer: 'Sim. Além do score geral e por área, você recebe prioridades claras do que evoluir primeiro, baseado no estágio atual da sua operação.'
-              }
-            ].map((item, index) => (
-              <Card 
-                key={index}
-                className="bg-gray-800/50 border-gray-700 p-6 hover:border-gray-600 transition-colors"
-              >
-                <h3 className="font-semibold text-white mb-2 flex items-start gap-2">
-                  <HelpCircle className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-                  {item.question}
-                </h3>
-                <p className="text-gray-400 text-sm pl-7">{item.answer}</p>
-              </Card>
-            ))}
+        <div className="container mx-auto max-w-6xl">
+          <div className="grid lg:grid-cols-[1fr_2fr] gap-12">
+            {/* Left side - Title */}
+            <div className="lg:sticky lg:top-24 lg:self-start">
+              <h2 className="text-3xl md:text-4xl font-bold leading-tight">
+                Perguntas frequentes sobre o Diagnóstico de E-commerce
+              </h2>
+            </div>
+            
+            {/* Right side - Accordion */}
+            <div>
+              <Accordion type="single" collapsible className="w-full">
+                {[
+                  {
+                    question: 'É realmente gratuito?',
+                    answer: 'Sim, 100% gratuito. Não pedimos cartão de crédito nem qualquer forma de pagamento. O diagnóstico é uma ferramenta de avaliação sem compromisso.'
+                  },
+                  {
+                    question: 'Quanto tempo leva?',
+                    answer: 'Menos de 5 minutos. O questionário é objetivo, com respostas simples sobre ferramentas e processos que você utiliza ou não.'
+                  },
+                  {
+                    question: 'Meus dados estão seguros?',
+                    answer: 'Absolutamente. Seus dados são protegidos e nunca serão compartilhados com terceiros. Utilizamos as informações apenas para gerar seu diagnóstico personalizado.'
+                  },
+                  {
+                    question: 'O que acontece depois do diagnóstico?',
+                    answer: 'Você recebe seu score de maturidade instantaneamente, com análise detalhada por área e recomendações priorizadas. A decisão de seguir adiante é sua.'
+                  },
+                  {
+                    question: 'Serve para loja física que está entrando no digital?',
+                    answer: 'O diagnóstico é focado em operações de e-commerce já em funcionamento. Se você ainda está planejando sua entrada no digital, pode ser cedo para essa avaliação.'
+                  },
+                  {
+                    question: 'Preciso já estar vendendo online?',
+                    answer: 'Sim. O diagnóstico avalia ferramentas e processos de operações ativas. Se ainda não tem loja online, recomendamos primeiro estruturar o básico.'
+                  },
+                  {
+                    question: 'O diagnóstico gera direcionamentos práticos?',
+                    answer: 'Sim. Além do score geral e por área, você recebe prioridades claras do que evoluir primeiro, baseado no estágio atual da sua operação.'
+                  }
+                ].map((item, index) => (
+                  <AccordionItem 
+                    key={index} 
+                    value={`item-${index}`}
+                    className="border-b border-gray-700/50 py-2"
+                  >
+                    <AccordionTrigger className="text-left text-white hover:text-primary hover:no-underline text-base md:text-lg font-medium py-4">
+                      {item.question}
+                    </AccordionTrigger>
+                    <AccordionContent className="text-gray-400 text-sm md:text-base pb-4">
+                      {item.answer}
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </div>
           </div>
         </div>
       </section>

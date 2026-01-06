@@ -416,130 +416,168 @@ const Header = ({ variant = 'default' }: HeaderProps) => {
       <div className={`absolute top-20 left-0 right-0 bottom-0 bg-card/95 backdrop-blur-lg border-b border-border transition-transform duration-500 overflow-y-auto overscroll-contain ${isMobileMenuOpen ? "translate-y-0" : "-translate-y-full"}`}>
         <nav className="container mx-auto px-4 py-4">
           <div className="flex flex-col gap-1">
-            {navItems.slice(0, 2).map((item, index) => (
-              <button 
-                key={item.id} 
-                onClick={() => handleNavClick(item)} 
-                className={`flex items-center justify-between px-4 py-3 text-left text-sm font-medium rounded-lg transition-all duration-300 ${activeSection === item.id ? "bg-primary/10 text-primary" : "bg-background/50 text-foreground hover:bg-primary/5"}`} 
-                style={{ animationDelay: `${index * 0.05}s` }}
-              >
-                <span>{item.label}</span>
-                <ChevronRight className={`w-4 h-4 transition-transform duration-300 ${activeSection === item.id ? "translate-x-1" : ""}`} />
-              </button>
-            ))}
-            
-            {/* Soluções Menu */}
-            <div className="flex flex-col gap-1">
-              <button 
-                onClick={() => setIsSolutionsMenuOpen(!isSolutionsMenuOpen)} 
-                className="flex items-center justify-between px-4 py-3 text-left text-sm font-medium rounded-lg transition-all duration-300 bg-background/50 text-foreground hover:bg-primary/5" 
-                style={{ animationDelay: `0.10s` }}
-              >
-                <span>Soluções</span>
-                <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isSolutionsMenuOpen ? "rotate-180" : ""}`} />
-              </button>
-              
-              {/* Submenu de Soluções */}
-              <div className={`overflow-hidden transition-all duration-300 ${isSolutionsMenuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"}`}>
-                <div className="flex flex-col gap-1 pl-3">
-                  {solutionItems.map(solution => (
-                    solution.isExternal ? (
-                      <a 
-                        key={solution.label} 
-                        href={solution.path} 
-                        className="flex items-center gap-2 px-4 py-2.5 text-left text-sm font-medium rounded-lg transition-all duration-300 bg-background/30 text-foreground hover:bg-primary/5"
-                      >
-                        <span>{solution.label}</span>
-                      </a>
-                    ) : (
-                      <Link 
-                        key={solution.label} 
-                        to={solution.path} 
-                        className="flex items-center gap-2 px-4 py-2.5 text-left text-sm font-medium rounded-lg transition-all duration-300 bg-background/30 text-foreground hover:bg-primary/5" 
-                        onClick={() => setIsMobileMenuOpen(false)}
-                      >
-                        <span>{solution.label}</span>
-                      </Link>
-                    )
-                  ))}
-                </div>
-              </div>
-            </div>
-            
-            {/* Cases button */}
-            <button 
-              onClick={() => handleNavClick(defaultNavItems.find(item => item.id === "cases")!)} 
-              className={`flex items-center justify-between px-4 py-3 text-left text-sm font-medium rounded-lg transition-all duration-300 ${activeSection === "cases" ? "bg-primary/10 text-primary" : "bg-background/50 text-foreground hover:bg-primary/5"}`}
-            >
-              <span>Cases</span>
-              <ChevronRight className={`w-4 h-4 transition-transform duration-300 ${activeSection === "cases" ? "translate-x-1" : ""}`} />
-            </button>
-
-            {/* Novidades Menu */}
-            <div className="flex flex-col gap-1">
-              <button 
-                onClick={() => setIsNovidadesMenuOpen(!isNovidadesMenuOpen)} 
-                className={`flex items-center justify-between px-4 py-3 text-left text-sm font-medium rounded-lg transition-all duration-300 ${activeSection === "blog" ? "bg-primary/10 text-primary" : "bg-background/50 text-foreground hover:bg-primary/5"}`}
-              >
-                <span>Novidades</span>
-                <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isNovidadesMenuOpen ? "rotate-180" : ""}`} />
-              </button>
-              
-              <div className={`overflow-hidden transition-all duration-300 ${isNovidadesMenuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"}`}>
-                <div className="flex flex-col gap-1 pl-3">
-                  {novidadesItems.map(item => (
-                    <Link 
-                      key={item.label} 
-                      to={item.path} 
-                      className="flex items-center justify-between gap-2 px-4 py-2.5 text-left text-sm font-medium rounded-lg transition-all duration-300 bg-background/30 text-foreground hover:bg-primary/5" 
-                      onClick={() => setIsMobileMenuOpen(false)}
-                    >
-                      <span>{item.label}</span>
-                      {item.isClient && (
-                        <span className="text-[9px] font-semibold px-1.5 py-0.5 rounded-full bg-primary/20 text-primary border border-primary/30">
-                          Clientes
-                        </span>
-                      )}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Trabalhe conosco button */}
-            <Link 
-              to="/carreiras" 
-              className="flex items-center justify-between px-4 py-3 text-left text-sm font-medium rounded-lg transition-all duration-300 bg-background/50 text-foreground hover:bg-primary/5" 
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              <span>Trabalhe conosco</span>
-              <ChevronRight className="w-4 h-4 transition-transform duration-300" />
-            </Link>
-
-            {/* Contato button */}
-            <button 
-              onClick={() => handleNavClick(defaultNavItems.find(item => item.id === "contato")!)} 
-              className={`flex items-center justify-between px-4 py-3 text-left text-sm font-medium rounded-lg transition-all duration-300 ${activeSection === "contato" ? "bg-primary/10 text-primary" : "bg-background/50 text-foreground hover:bg-primary/5"}`}
-            >
-              <span>Contato</span>
-              <ChevronRight className={`w-4 h-4 transition-transform duration-300 ${activeSection === "contato" ? "translate-x-1" : ""}`} />
-            </button>
-            
-            <div className="mt-3 flex flex-col gap-2 pb-4">
-              <Button className="w-full text-sm font-medium py-3 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300" asChild>
-                <Link to="/admin" className="flex items-center justify-center gap-2" onClick={() => setIsMobileMenuOpen(false)}>
-                  <User className="w-4 h-4" />
-                  Área do Cliente
-                </Link>
-              </Button>
+            {variant === 'landing' ? (
+              /* Landing page mobile menu - simplified with anchors */
+              <>
+                {landingNavItems.map((item, index) => (
+                  <a 
+                    key={item.id} 
+                    href={item.anchor}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="flex items-center justify-between px-4 py-3 text-left text-sm font-medium rounded-lg transition-all duration-300 bg-background/50 text-foreground hover:bg-primary/5"
+                    style={{ animationDelay: `${index * 0.05}s` }}
+                  >
+                    <span>{item.label}</span>
+                    <ChevronRight className="w-4 h-4" />
+                  </a>
+                ))}
                 
-              <Button onClick={() => handleNavClick(defaultNavItems.find(item => item.id === "contato")!)} className="w-full bg-primary text-background text-sm font-medium py-3 hover:bg-primary/90 transition-all duration-300 rounded-lg group">
-                <span className="flex items-center gap-2 justify-center">
-                  VAMOS CONVERSAR!
-                  <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
-                </span>
-              </Button>
-            </div>
+                <div className="mt-3 pb-4">
+                  <Button 
+                    onClick={() => {
+                      setIsMobileMenuOpen(false);
+                      const heroSection = document.getElementById('hero-diagnostico');
+                      if (heroSection) {
+                        heroSection.scrollIntoView({ behavior: 'smooth' });
+                      }
+                    }}
+                    className="w-full text-sm font-medium py-3 rounded-md bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300"
+                  >
+                    <span className="flex items-center gap-2 justify-center">
+                      Começar diagnóstico
+                      <ChevronRight className="w-4 h-4" />
+                    </span>
+                  </Button>
+                </div>
+              </>
+            ) : (
+              /* Default mobile menu - full navigation */
+              <>
+                {defaultNavItems.slice(0, 2).map((item, index) => (
+                  <button 
+                    key={item.id} 
+                    onClick={() => handleNavClick(item)} 
+                    className={`flex items-center justify-between px-4 py-3 text-left text-sm font-medium rounded-lg transition-all duration-300 ${activeSection === item.id ? "bg-primary/10 text-primary" : "bg-background/50 text-foreground hover:bg-primary/5"}`} 
+                    style={{ animationDelay: `${index * 0.05}s` }}
+                  >
+                    <span>{item.label}</span>
+                    <ChevronRight className={`w-4 h-4 transition-transform duration-300 ${activeSection === item.id ? "translate-x-1" : ""}`} />
+                  </button>
+                ))}
+                
+                {/* Soluções Menu */}
+                <div className="flex flex-col gap-1">
+                  <button 
+                    onClick={() => setIsSolutionsMenuOpen(!isSolutionsMenuOpen)} 
+                    className="flex items-center justify-between px-4 py-3 text-left text-sm font-medium rounded-lg transition-all duration-300 bg-background/50 text-foreground hover:bg-primary/5" 
+                    style={{ animationDelay: `0.10s` }}
+                  >
+                    <span>Soluções</span>
+                    <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isSolutionsMenuOpen ? "rotate-180" : ""}`} />
+                  </button>
+                  
+                  <div className={`overflow-hidden transition-all duration-300 ${isSolutionsMenuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"}`}>
+                    <div className="flex flex-col gap-1 pl-3">
+                      {solutionItems.map(solution => (
+                        solution.isExternal ? (
+                          <a 
+                            key={solution.label} 
+                            href={solution.path} 
+                            className="flex items-center gap-2 px-4 py-2.5 text-left text-sm font-medium rounded-lg transition-all duration-300 bg-background/30 text-foreground hover:bg-primary/5"
+                          >
+                            <span>{solution.label}</span>
+                          </a>
+                        ) : (
+                          <Link 
+                            key={solution.label} 
+                            to={solution.path} 
+                            className="flex items-center gap-2 px-4 py-2.5 text-left text-sm font-medium rounded-lg transition-all duration-300 bg-background/30 text-foreground hover:bg-primary/5" 
+                            onClick={() => setIsMobileMenuOpen(false)}
+                          >
+                            <span>{solution.label}</span>
+                          </Link>
+                        )
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Cases button */}
+                <button 
+                  onClick={() => handleNavClick(defaultNavItems.find(item => item.id === "cases")!)} 
+                  className={`flex items-center justify-between px-4 py-3 text-left text-sm font-medium rounded-lg transition-all duration-300 ${activeSection === "cases" ? "bg-primary/10 text-primary" : "bg-background/50 text-foreground hover:bg-primary/5"}`}
+                >
+                  <span>Cases</span>
+                  <ChevronRight className={`w-4 h-4 transition-transform duration-300 ${activeSection === "cases" ? "translate-x-1" : ""}`} />
+                </button>
+
+                {/* Novidades Menu */}
+                <div className="flex flex-col gap-1">
+                  <button 
+                    onClick={() => setIsNovidadesMenuOpen(!isNovidadesMenuOpen)} 
+                    className={`flex items-center justify-between px-4 py-3 text-left text-sm font-medium rounded-lg transition-all duration-300 ${activeSection === "blog" ? "bg-primary/10 text-primary" : "bg-background/50 text-foreground hover:bg-primary/5"}`}
+                  >
+                    <span>Novidades</span>
+                    <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isNovidadesMenuOpen ? "rotate-180" : ""}`} />
+                  </button>
+                  
+                  <div className={`overflow-hidden transition-all duration-300 ${isNovidadesMenuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"}`}>
+                    <div className="flex flex-col gap-1 pl-3">
+                      {novidadesItems.map(item => (
+                        <Link 
+                          key={item.label} 
+                          to={item.path} 
+                          className="flex items-center justify-between gap-2 px-4 py-2.5 text-left text-sm font-medium rounded-lg transition-all duration-300 bg-background/30 text-foreground hover:bg-primary/5" 
+                          onClick={() => setIsMobileMenuOpen(false)}
+                        >
+                          <span>{item.label}</span>
+                          {item.isClient && (
+                            <span className="text-[9px] font-semibold px-1.5 py-0.5 rounded-full bg-primary/20 text-primary border border-primary/30">
+                              Clientes
+                            </span>
+                          )}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Trabalhe conosco button */}
+                <Link 
+                  to="/carreiras" 
+                  className="flex items-center justify-between px-4 py-3 text-left text-sm font-medium rounded-lg transition-all duration-300 bg-background/50 text-foreground hover:bg-primary/5" 
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <span>Trabalhe conosco</span>
+                  <ChevronRight className="w-4 h-4 transition-transform duration-300" />
+                </Link>
+
+                {/* Contato button */}
+                <button 
+                  onClick={() => handleNavClick(defaultNavItems.find(item => item.id === "contato")!)} 
+                  className={`flex items-center justify-between px-4 py-3 text-left text-sm font-medium rounded-lg transition-all duration-300 ${activeSection === "contato" ? "bg-primary/10 text-primary" : "bg-background/50 text-foreground hover:bg-primary/5"}`}
+                >
+                  <span>Contato</span>
+                  <ChevronRight className={`w-4 h-4 transition-transform duration-300 ${activeSection === "contato" ? "translate-x-1" : ""}`} />
+                </button>
+                
+                <div className="mt-3 flex flex-col gap-2 pb-4">
+                  <Button className="w-full text-sm font-medium py-3 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300" asChild>
+                    <Link to="/admin" className="flex items-center justify-center gap-2" onClick={() => setIsMobileMenuOpen(false)}>
+                      <User className="w-4 h-4" />
+                      Área do Cliente
+                    </Link>
+                  </Button>
+                    
+                  <Button onClick={() => handleNavClick(defaultNavItems.find(item => item.id === "contato")!)} className="w-full bg-primary text-background text-sm font-medium py-3 hover:bg-primary/90 transition-all duration-300 rounded-lg group">
+                    <span className="flex items-center gap-2 justify-center">
+                      VAMOS CONVERSAR!
+                      <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                    </span>
+                  </Button>
+                </div>
+              </>
+            )}
           </div>
         </nav>
       </div>
