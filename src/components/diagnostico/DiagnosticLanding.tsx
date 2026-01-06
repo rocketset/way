@@ -91,44 +91,44 @@ export const DiagnosticLanding = ({ onStart }: DiagnosticLandingProps) => {
         <div className="container mx-auto max-w-6xl relative z-10">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             {/* Left Content */}
-            <div className="space-y-4 md:space-y-6">
-              <span className="inline-block px-3 py-1.5 md:px-4 md:py-2 bg-primary/20 text-primary rounded-full text-xs md:text-sm font-medium border border-primary/30">
+            <div className="space-y-5 md:space-y-6">
+              <span className="inline-block px-4 py-2 bg-primary/20 text-primary rounded-full text-sm font-medium border border-primary/30">
                 Diagnóstico de Maturidade — 100% Gratuito
               </span>
               
-              <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold leading-tight">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
                 Seu e-commerce tem{' '}
                 <span className="text-primary">estrutura</span>{' '}
                 para crescer de forma previsível?
               </h1>
               
-              <p className="text-base md:text-xl text-neutral-400 leading-relaxed">
+              <p className="text-lg md:text-xl text-neutral-400 leading-relaxed">
                 Descubra o nível de maturidade da sua operação em 5 minutos. 
                 Identifique gargalos, priorize investimentos e tome decisões baseadas em dados — não em achismo.
               </p>
               
-              <div className="pt-2 md:pt-4">
+              <div className="pt-3 md:pt-4">
                 <Button 
                   size="lg" 
                   onClick={onStart}
-                  className="w-full sm:w-auto whitespace-normal text-center leading-snug text-sm sm:text-base md:text-lg px-5 sm:px-6 md:px-8 py-4 md:py-6 bg-primary hover:bg-primary/90 group"
+                  className="w-full sm:w-auto whitespace-normal text-center leading-snug text-base md:text-lg px-6 md:px-8 py-5 md:py-6 bg-primary hover:bg-primary/90 group"
                 >
                   Descobrir meu nível de maturidade
                   <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </div>
               
-              <div className="flex flex-wrap items-center gap-4 md:gap-6 text-xs md:text-sm text-neutral-400 pt-1 md:pt-2">
-                <span className="flex items-center gap-1.5 md:gap-2">
-                  <Clock className="h-3.5 w-3.5 md:h-4 md:w-4 text-primary" />
+              <div className="flex flex-wrap items-center gap-5 md:gap-6 text-sm text-neutral-400 pt-2">
+                <span className="flex items-center gap-2">
+                  <Clock className="h-4 w-4 text-primary" />
                   5 minutos
                 </span>
-                <span className="flex items-center gap-1.5 md:gap-2">
-                  <Shield className="h-3.5 w-3.5 md:h-4 md:w-4 text-primary" />
+                <span className="flex items-center gap-2">
+                  <Shield className="h-4 w-4 text-primary" />
                   Dados protegidos
                 </span>
-                <span className="flex items-center gap-1.5 md:gap-2">
-                  <Zap className="h-3.5 w-3.5 md:h-4 md:w-4 text-primary" />
+                <span className="flex items-center gap-2">
+                  <Zap className="h-4 w-4 text-primary" />
                   Resultado instantâneo
                 </span>
               </div>
@@ -211,19 +211,19 @@ export const DiagnosticLanding = ({ onStart }: DiagnosticLandingProps) => {
       </section>
 
       {/* O Problema Real do Lojista - NOVA SEÇÃO */}
-      <section className="relative py-12 md:py-20 px-4 bg-black/30 z-10">
+      <section className="relative py-16 md:py-20 px-4 bg-black/30 z-10">
         <div className="container mx-auto max-w-5xl">
-          <div className="text-center mb-8 md:mb-12">
-            <span className="inline-block px-3 py-1 bg-red-500/10 text-red-400 rounded-full text-xs md:text-sm font-medium mb-3 md:mb-4">
+          <div className="text-center mb-10 md:mb-12">
+            <span className="inline-block px-4 py-1.5 bg-red-500/10 text-red-400 rounded-full text-sm font-medium mb-4">
               O CENÁRIO REAL
             </span>
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-3 md:mb-4">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
               Você reconhece{' '}
               <span className="text-red-400">algum desses sintomas?</span>
             </h2>
           </div>
           
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {[
               {
                 icon: AlertTriangle,
@@ -260,15 +260,15 @@ export const DiagnosticLanding = ({ onStart }: DiagnosticLandingProps) => {
               return (
                 <Card 
                   key={index}
-                  className="bg-neutral-900/30 border-neutral-700/50 p-4 md:p-5 hover:border-red-500/30 transition-all group"
+                  className="bg-neutral-900/30 border-neutral-700/50 p-5 hover:border-red-500/30 transition-all group"
                 >
-                  <div className="flex items-start gap-3 md:gap-4">
-                    <div className="w-9 h-9 md:w-10 md:h-10 bg-red-500/10 rounded-lg flex items-center justify-center shrink-0 group-hover:bg-red-500/20 transition-colors">
-                      <Icon className="h-4 w-4 md:h-5 md:w-5 text-red-400" />
+                  <div className="flex items-start gap-4">
+                    <div className="w-10 h-10 bg-red-500/10 rounded-lg flex items-center justify-center shrink-0 group-hover:bg-red-500/20 transition-colors">
+                      <Icon className="h-5 w-5 text-red-400" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-white text-sm md:text-base mb-0.5 md:mb-1">{item.pain}</h3>
-                      <p className="text-neutral-400 text-xs md:text-sm">{item.detail}</p>
+                      <h3 className="font-semibold text-white text-base mb-1">{item.pain}</h3>
+                      <p className="text-neutral-400 text-sm">{item.detail}</p>
                     </div>
                   </div>
                 </Card>
@@ -276,8 +276,8 @@ export const DiagnosticLanding = ({ onStart }: DiagnosticLandingProps) => {
             })}
           </div>
           
-          <div className="text-center mt-6 md:mt-10">
-            <p className="text-neutral-400 text-sm md:text-lg">
+          <div className="text-center mt-8 md:mt-10">
+            <p className="text-neutral-400 text-base md:text-lg">
               Se você se identificou, o problema pode não ser <span className="text-white">falta de esforço</span> — 
               mas sim <span className="text-primary">falta de estrutura</span>.
             </p>
@@ -286,46 +286,46 @@ export const DiagnosticLanding = ({ onStart }: DiagnosticLandingProps) => {
       </section>
 
       {/* O que é o Diagnóstico - NOVA SEÇÃO */}
-      <section className="relative py-12 md:py-20 px-4 z-10">
+      <section className="relative py-16 md:py-20 px-4 z-10">
         <div className="container mx-auto max-w-5xl">
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            <div className="space-y-4 md:space-y-6">
-              <span className="inline-block px-3 py-1 bg-primary/10 text-primary rounded-full text-xs md:text-sm font-medium">
+          <div className="grid lg:grid-cols-2 gap-10 lg:gap-12 items-center">
+            <div className="space-y-5 md:space-y-6">
+              <span className="inline-block px-4 py-1.5 bg-primary/10 text-primary rounded-full text-sm font-medium">
                 ENTENDA O DIAGNÓSTICO
               </span>
-              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold">
                 O que é o Diagnóstico de{' '}
                 <span className="text-primary">Maturidade Way</span>?
               </h2>
-              <p className="text-neutral-400 text-sm md:text-lg leading-relaxed">
+              <p className="text-neutral-400 text-base md:text-lg leading-relaxed">
                 Uma avaliação estruturada que mapeia {totalTools} pontos críticos da sua operação 
                 de e-commerce em 6 áreas estratégicas. Em minutos, você visualiza onde está 
                 perdendo oportunidades e quais investimentos trariam maior retorno.
               </p>
               
-              <div className="space-y-3 md:space-y-4">
+              <div className="space-y-4">
                 <div className="flex items-start gap-3">
-                  <CheckCircle className="h-4 w-4 md:h-5 md:w-5 text-green-500 mt-0.5 md:mt-1 shrink-0" />
-                  <p className="text-neutral-300 text-sm md:text-base">
+                  <CheckCircle className="h-5 w-5 text-green-500 mt-0.5 shrink-0" />
+                  <p className="text-neutral-300 text-base">
                     <strong className="text-white">É:</strong> Uma ferramenta de diagnóstico estratégico desenvolvida a partir de +190 projetos reais de e-commerce
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <AlertTriangle className="h-4 w-4 md:h-5 md:w-5 text-red-400 mt-0.5 md:mt-1 shrink-0" />
-                  <p className="text-neutral-300 text-sm md:text-base">
+                  <AlertTriangle className="h-5 w-5 text-red-400 mt-0.5 shrink-0" />
+                  <p className="text-neutral-300 text-base">
                     <strong className="text-white">Não é:</strong> Um quiz genérico de marketing ou ferramenta superficial de pontuação
                   </p>
                 </div>
               </div>
             </div>
             
-            <div className="space-y-3 md:space-y-4">
-              <Card className="bg-neutral-900/50 border-neutral-700 p-4 md:p-6">
-                <h3 className="font-semibold text-white text-sm md:text-base mb-2 md:mb-3 flex items-center gap-2">
-                  <CheckCircle className="h-4 w-4 md:h-5 md:w-5 text-green-500" />
+            <div className="space-y-4">
+              <Card className="bg-neutral-900/50 border-neutral-700 p-5 md:p-6">
+                <h3 className="font-semibold text-white text-base mb-3 flex items-center gap-2">
+                  <CheckCircle className="h-5 w-5 text-green-500" />
                   Faz sentido para você se:
                 </h3>
-                <ul className="space-y-1.5 md:space-y-2 text-neutral-400 text-xs md:text-sm">
+                <ul className="space-y-2 text-neutral-400 text-sm">
                   <li>• Já vende online e quer estruturar o crescimento</li>
                   <li>• Sente que a operação trava a evolução do negócio</li>
                   <li>• Quer entender onde investir primeiro</li>
@@ -333,12 +333,12 @@ export const DiagnosticLanding = ({ onStart }: DiagnosticLandingProps) => {
                 </ul>
               </Card>
               
-              <Card className="bg-neutral-900/50 border-neutral-700 p-4 md:p-6">
-                <h3 className="font-semibold text-white text-sm md:text-base mb-2 md:mb-3 flex items-center gap-2">
-                  <AlertTriangle className="h-4 w-4 md:h-5 md:w-5 text-yellow-500" />
+              <Card className="bg-neutral-900/50 border-neutral-700 p-5 md:p-6">
+                <h3 className="font-semibold text-white text-base mb-3 flex items-center gap-2">
+                  <AlertTriangle className="h-5 w-5 text-yellow-500" />
                   Pode não ser o momento se:
                 </h3>
-                <ul className="space-y-1.5 md:space-y-2 text-neutral-400 text-xs md:text-sm">
+                <ul className="space-y-2 text-neutral-400 text-sm">
                   <li>• Ainda não tem loja online em operação</li>
                   <li>• Busca apenas dicas rápidas de marketing</li>
                   <li>• Não pretende investir em evolução estruturada</li>
@@ -350,37 +350,37 @@ export const DiagnosticLanding = ({ onStart }: DiagnosticLandingProps) => {
       </section>
 
       {/* O que você vai descobrir - EVOLUÍDO */}
-      <section id="o-que-descobre" className="relative py-12 md:py-20 px-4 bg-black/30 z-10">
+      <section id="o-que-descobre" className="relative py-16 md:py-20 px-4 bg-black/30 z-10">
         <div className="container mx-auto max-w-6xl">
-          <div className="text-center mb-3 md:mb-4">
-            <span className="inline-block px-3 py-1 bg-neutral-800 text-neutral-400 rounded-full text-xs md:text-sm font-medium mb-3 md:mb-4">
+          <div className="text-center mb-4">
+            <span className="inline-block px-4 py-1.5 bg-neutral-800 text-neutral-400 rounded-full text-sm font-medium mb-4">
               ESCALAR E-COMMERCE EXIGE ESTRUTURA, NÃO APENAS FERRAMENTAS
             </span>
           </div>
-          <div className="text-center mb-8 md:mb-12">
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-3 md:mb-4">
+          <div className="text-center mb-10 md:mb-12">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
               Seu negócio precisa de{' '}
               <span className="text-primary">bases sólidas</span>{' '}
               para crescer e escalar
             </h2>
-            <p className="text-neutral-400 text-sm md:text-lg max-w-3xl mx-auto">
+            <p className="text-neutral-400 text-base md:text-lg max-w-3xl mx-auto">
               Avaliamos sua maturidade em 6 pilares estratégicos que sustentam operações de e-commerce de alta performance
             </p>
           </div>
           
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 md:gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             {strategicPillars.map((pillar, index) => {
               const Icon = pillar.icon;
               return (
                 <Card 
                   key={index}
-                  className="bg-neutral-900/50 border-neutral-700 p-4 md:p-5 text-center hover:border-primary/50 transition-all group"
+                  className="bg-neutral-900/50 border-neutral-700 p-5 text-center hover:border-primary/50 transition-all group"
                 >
-                  <div className="w-10 h-10 md:w-14 md:h-14 bg-primary/20 rounded-xl flex items-center justify-center mx-auto mb-3 md:mb-4 group-hover:bg-primary/30 transition-colors">
-                    <Icon className="h-5 w-5 md:h-7 md:w-7 text-primary" />
+                  <div className="w-12 h-12 md:w-14 md:h-14 bg-primary/20 rounded-xl flex items-center justify-center mx-auto mb-3 md:mb-4 group-hover:bg-primary/30 transition-colors">
+                    <Icon className="h-6 w-6 md:h-7 md:w-7 text-primary" />
                   </div>
-                  <h3 className="font-semibold text-white text-xs md:text-sm mb-1 md:mb-2">{pillar.title}</h3>
-                  <p className="text-[10px] md:text-xs text-neutral-400 leading-relaxed">
+                  <h3 className="font-semibold text-white text-sm mb-2">{pillar.title}</h3>
+                  <p className="text-xs text-neutral-400 leading-relaxed">
                     {pillar.description}
                   </p>
                 </Card>
@@ -398,8 +398,8 @@ export const DiagnosticLanding = ({ onStart }: DiagnosticLandingProps) => {
             </div>
           </div>
           
-          <div className="text-center mt-4 md:mt-4">
-            <p className="text-primary italic text-sm md:text-lg">
+          <div className="text-center mt-6 md:mt-4">
+            <p className="text-primary italic text-base md:text-lg">
               Estrutura, método e performance atuando juntos<br />
               para sustentar decisões estratégicas no e-commerce.
             </p>
@@ -408,19 +408,19 @@ export const DiagnosticLanding = ({ onStart }: DiagnosticLandingProps) => {
       </section>
 
       {/* Como funciona - AJUSTADO */}
-      <section id="como-funciona" className="relative py-12 md:py-20 px-4 z-10">
+      <section id="como-funciona" className="relative py-16 md:py-20 px-4 z-10">
         <div className="container mx-auto max-w-4xl">
-          <div className="text-center mb-8 md:mb-12">
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-3 md:mb-4">
+          <div className="text-center mb-10 md:mb-12">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
               Simples, rápido e{' '}
               <span className="text-primary">sem complicação</span>
             </h2>
-            <p className="text-neutral-400 text-sm md:text-lg">
+            <p className="text-neutral-400 text-base md:text-lg">
               Em 3 passos você tem clareza sobre sua operação
             </p>
           </div>
           
-          <div className="grid md:grid-cols-3 gap-4 md:gap-8">
+          <div className="grid md:grid-cols-3 gap-5 md:gap-8">
             {[
               {
                 step: '01',
@@ -447,14 +447,14 @@ export const DiagnosticLanding = ({ onStart }: DiagnosticLandingProps) => {
               const Icon = item.icon;
               return (
                 <div key={index} className="relative">
-                  <Card className="bg-neutral-900/30 border-neutral-700 p-4 md:p-6 text-center h-full hover:border-primary/50 transition-all">
-                    <div className="w-12 h-12 md:w-16 md:h-16 bg-primary/20 rounded-xl md:rounded-2xl flex items-center justify-center mx-auto mb-3 md:mb-4">
-                      <Icon className="h-6 w-6 md:h-8 md:w-8 text-primary" />
+                  <Card className="bg-neutral-900/30 border-neutral-700 p-5 md:p-6 text-center h-full hover:border-primary/50 transition-all">
+                    <div className="w-14 h-14 md:w-16 md:h-16 bg-primary/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                      <Icon className="h-7 w-7 md:h-8 md:w-8 text-primary" />
                     </div>
-                    <span className="text-[10px] md:text-xs text-primary font-bold">PASSO {item.step}</span>
-                    <h3 className="font-semibold text-white text-sm md:text-lg mt-1 md:mt-2 mb-1 md:mb-2">{item.title}</h3>
-                    <p className="text-neutral-400 text-xs md:text-sm mb-2 md:mb-3">{item.description}</p>
-                    <span className="inline-block px-2 md:px-3 py-1 bg-primary/10 text-primary text-[10px] md:text-xs rounded-full font-medium">
+                    <span className="text-xs text-primary font-bold">PASSO {item.step}</span>
+                    <h3 className="font-semibold text-white text-base md:text-lg mt-2 mb-2">{item.title}</h3>
+                    <p className="text-neutral-400 text-sm mb-3">{item.description}</p>
+                    <span className="inline-block px-3 py-1 bg-primary/10 text-primary text-xs rounded-full font-medium">
                       {item.time}
                     </span>
                   </Card>
@@ -472,19 +472,19 @@ export const DiagnosticLanding = ({ onStart }: DiagnosticLandingProps) => {
       </section>
 
       {/* Por que fazer o diagnóstico - INSERIDA/EVOLUÍDA */}
-      <section className="relative py-12 md:py-20 px-4 bg-black/30 z-10">
+      <section className="relative py-16 md:py-20 px-4 bg-black/30 z-10">
         <div className="container mx-auto max-w-5xl">
-          <div className="text-center mb-8 md:mb-12">
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-3 md:mb-4">
+          <div className="text-center mb-10 md:mb-12">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
               Por que fazer{' '}
               <span className="text-primary">esse diagnóstico?</span>
             </h2>
-            <p className="text-neutral-400 text-sm md:text-lg">
+            <p className="text-neutral-400 text-base md:text-lg">
               Não é sobre vender serviço — é sobre ganhar consciência estratégica
             </p>
           </div>
           
-          <div className="grid sm:grid-cols-2 gap-3 md:gap-6">
+          <div className="grid sm:grid-cols-2 gap-4 md:gap-6">
             {[
               {
                 icon: Eye,
@@ -521,14 +521,14 @@ export const DiagnosticLanding = ({ onStart }: DiagnosticLandingProps) => {
               return (
                 <Card 
                   key={index}
-                  className="bg-neutral-900/50 border-neutral-700 p-4 md:p-6 flex gap-3 md:gap-4 hover:border-primary/30 transition-all"
+                  className="bg-neutral-900/50 border-neutral-700 p-5 md:p-6 flex gap-4 hover:border-primary/30 transition-all"
                 >
-                  <div className="w-10 h-10 md:w-12 md:h-12 bg-primary/20 rounded-lg flex items-center justify-center shrink-0">
+                  <div className="w-11 h-11 md:w-12 md:h-12 bg-primary/20 rounded-lg flex items-center justify-center shrink-0">
                     <Icon className="h-5 w-5 md:h-6 md:w-6 text-primary" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-white text-sm md:text-base mb-0.5 md:mb-1">{item.title}</h3>
-                    <p className="text-neutral-400 text-xs md:text-sm">{item.description}</p>
+                    <h3 className="font-semibold text-white text-base mb-1">{item.title}</h3>
+                    <p className="text-neutral-400 text-sm">{item.description}</p>
                   </div>
                 </Card>
               );
@@ -538,41 +538,41 @@ export const DiagnosticLanding = ({ onStart }: DiagnosticLandingProps) => {
       </section>
 
       {/* Seção Visual - Cards Suspensos */}
-      <section id="quem-somos" className="relative py-12 md:py-20 px-4 overflow-hidden z-10">
+      <section id="quem-somos" className="relative py-16 md:py-20 px-4 overflow-hidden z-10">
         <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent pointer-events-none" />
         
         <div className="container mx-auto max-w-6xl relative z-10">
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            <div className="space-y-4 md:space-y-6">
-              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold">
+          <div className="grid lg:grid-cols-2 gap-10 lg:gap-12 items-center">
+            <div className="space-y-5 md:space-y-6">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold">
                 Metodologia aplicada em mais de{' '}
                 <span className="text-primary">190 projetos</span>{' '}
                 de e-commerce
               </h2>
-              <p className="text-neutral-400 text-sm md:text-lg leading-relaxed">
+              <p className="text-neutral-400 text-base md:text-lg leading-relaxed">
                 A Way E-commerce atua na implantação, estruturação e aceleração de operações digitais 
                 para indústrias, redes de lojas e varejistas. Da decisão à execução, conectamos 
                 estratégia, tecnologia e performance para sustentar a escala.
               </p>
               
-              <div className="grid grid-cols-3 gap-3 md:gap-4 pt-2 md:pt-4">
+              <div className="grid grid-cols-3 gap-4 pt-4">
                 <div className="text-center">
-                  <p className="text-xl md:text-3xl font-bold text-primary">+190</p>
-                  <p className="text-[10px] md:text-sm text-neutral-400">Projetos B2B, B2C e B2B2C</p>
+                  <p className="text-2xl md:text-3xl font-bold text-primary">+190</p>
+                  <p className="text-xs md:text-sm text-neutral-400">Projetos B2B, B2C e B2B2C</p>
                 </div>
                 <div className="text-center">
-                  <p className="text-xl md:text-3xl font-bold text-primary">1 ano</p>
-                  <p className="text-[10px] md:text-sm text-neutral-400">Soluções de ponta a ponta</p>
+                  <p className="text-2xl md:text-3xl font-bold text-primary">1 ano</p>
+                  <p className="text-xs md:text-sm text-neutral-400">Soluções de ponta a ponta</p>
                 </div>
                 <div className="text-center">
-                  <p className="text-xl md:text-3xl font-bold text-primary">700</p>
-                  <p className="text-[10px] md:text-sm text-neutral-400">Clientes atendidos</p>
+                  <p className="text-2xl md:text-3xl font-bold text-primary">700</p>
+                  <p className="text-xs md:text-sm text-neutral-400">Clientes atendidos</p>
                 </div>
               </div>
             </div>
             
             <div className="relative">
-              <div className="grid grid-cols-1 gap-3 md:gap-4">
+              <div className="grid grid-cols-1 gap-4">
                 {[
                   {
                     icon: LayoutGrid,
@@ -594,15 +594,15 @@ export const DiagnosticLanding = ({ onStart }: DiagnosticLandingProps) => {
                   return (
                     <Card 
                       key={index}
-                      className="bg-neutral-900/70 backdrop-blur-sm border-neutral-700 p-4 md:p-6 hover:border-primary/50 transition-all"
+                      className="bg-neutral-900/70 backdrop-blur-sm border-neutral-700 p-5 md:p-6 hover:border-primary/50 transition-all"
                     >
-                      <div className="flex items-start gap-3 md:gap-4">
-                        <div className="w-10 h-10 md:w-12 md:h-12 bg-primary rounded-lg flex items-center justify-center shrink-0">
+                      <div className="flex items-start gap-4">
+                        <div className="w-11 h-11 md:w-12 md:h-12 bg-primary rounded-lg flex items-center justify-center shrink-0">
                           <Icon className="h-5 w-5 md:h-6 md:w-6 text-neutral-900" />
                         </div>
                         <div>
-                          <h3 className="font-semibold text-white text-sm md:text-base mb-0.5 md:mb-1">{item.title}</h3>
-                          <p className="text-neutral-400 text-xs md:text-sm">{item.description}</p>
+                          <h3 className="font-semibold text-white text-base mb-1">{item.title}</h3>
+                          <p className="text-neutral-400 text-sm">{item.description}</p>
                         </div>
                       </div>
                     </Card>
@@ -615,12 +615,12 @@ export const DiagnosticLanding = ({ onStart }: DiagnosticLandingProps) => {
       </section>
 
       {/* FAQ - EXPANDIDO */}
-      <section className="relative py-12 md:py-20 px-4 bg-black/30 z-10">
+      <section className="relative py-16 md:py-20 px-4 bg-black/30 z-10">
         <div className="container mx-auto max-w-6xl">
-          <div className="grid lg:grid-cols-[1fr_2fr] gap-6 lg:gap-12">
+          <div className="grid lg:grid-cols-[1fr_2fr] gap-8 lg:gap-12">
             {/* Left side - Title */}
             <div className="lg:sticky lg:top-24 lg:self-start">
-              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold leading-tight">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold leading-tight">
                 Perguntas frequentes sobre o Diagnóstico de E-commerce
               </h2>
             </div>
@@ -661,12 +661,12 @@ export const DiagnosticLanding = ({ onStart }: DiagnosticLandingProps) => {
                   <AccordionItem 
                     key={index} 
                     value={`item-${index}`}
-                    className="border-b border-neutral-700/50 py-1 md:py-2"
+                    className="border-b border-neutral-700/50 py-2"
                   >
-                    <AccordionTrigger className="text-left text-white hover:text-primary hover:no-underline text-sm md:text-base lg:text-lg font-medium py-3 md:py-4">
+                    <AccordionTrigger className="text-left text-white hover:text-primary hover:no-underline text-base md:text-lg font-medium py-4">
                       {item.question}
                     </AccordionTrigger>
-                    <AccordionContent className="text-neutral-400 text-xs md:text-sm lg:text-base pb-3 md:pb-4">
+                    <AccordionContent className="text-neutral-400 text-sm md:text-base pb-4">
                       {item.answer}
                     </AccordionContent>
                   </AccordionItem>
@@ -678,20 +678,20 @@ export const DiagnosticLanding = ({ onStart }: DiagnosticLandingProps) => {
       </section>
 
       {/* CTA Final - REFINADO */}
-      <section className="relative py-12 md:py-24 px-4 bg-gradient-to-t from-primary/10 via-transparent to-transparent overflow-hidden z-10">
+      <section className="relative py-16 md:py-24 px-4 bg-gradient-to-t from-primary/10 via-transparent to-transparent overflow-hidden z-10">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-primary/10 via-transparent to-transparent pointer-events-none" />
         
         <div className="container mx-auto max-w-3xl text-center relative z-10">
-          <span className="inline-block px-3 md:px-4 py-1.5 md:py-2 bg-primary/20 text-primary rounded-full text-xs md:text-sm font-medium mb-4 md:mb-6 border border-primary/30">
+          <span className="inline-block px-4 py-2 bg-primary/20 text-primary rounded-full text-sm font-medium mb-6 border border-primary/30">
             Comece agora — leva apenas 5 minutos
           </span>
           
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-3 md:mb-4">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
             Pronto para descobrir o nível de{' '}
             <span className="text-primary">maturidade</span>{' '}
             do seu e-commerce?
           </h2>
-          <p className="text-neutral-400 text-sm md:text-lg mb-6 md:mb-8 max-w-2xl mx-auto">
+          <p className="text-neutral-400 text-base md:text-lg mb-8 max-w-2xl mx-auto">
             Tome decisões estratégicas baseadas em dados — não em achismo. 
             Identifique gargalos, priorize investimentos e evolua com clareza.
           </p>
@@ -699,23 +699,23 @@ export const DiagnosticLanding = ({ onStart }: DiagnosticLandingProps) => {
           <Button 
             size="lg" 
             onClick={onStart}
-            className="w-full sm:w-auto whitespace-normal text-center leading-snug text-sm sm:text-base md:text-lg px-6 md:px-10 py-4 md:py-7 bg-primary hover:bg-primary/90 group shadow-lg shadow-primary/20"
+            className="w-full sm:w-auto whitespace-normal text-center leading-snug text-base md:text-lg px-8 md:px-10 py-5 md:py-7 bg-primary hover:bg-primary/90 group shadow-lg shadow-primary/20"
           >
             Descobrir meu nível de maturidade agora
             <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
           </Button>
           
-          <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6 text-xs md:text-sm text-neutral-400 mt-4 md:mt-6">
-            <span className="flex items-center gap-1.5 md:gap-2">
-              <CheckCircle className="h-3.5 w-3.5 md:h-4 md:w-4 text-green-500" />
+          <div className="flex flex-wrap items-center justify-center gap-5 md:gap-6 text-sm text-neutral-400 mt-6">
+            <span className="flex items-center gap-2">
+              <CheckCircle className="h-4 w-4 text-green-500" />
               100% Gratuito
             </span>
-            <span className="flex items-center gap-1.5 md:gap-2">
-              <CheckCircle className="h-3.5 w-3.5 md:h-4 md:w-4 text-green-500" />
+            <span className="flex items-center gap-2">
+              <CheckCircle className="h-4 w-4 text-green-500" />
               Resultado instantâneo
             </span>
-            <span className="flex items-center gap-1.5 md:gap-2">
-              <CheckCircle className="h-3.5 w-3.5 md:h-4 md:w-4 text-green-500" />
+            <span className="flex items-center gap-2">
+              <CheckCircle className="h-4 w-4 text-green-500" />
               Sem compromisso
             </span>
           </div>
