@@ -71,7 +71,7 @@ export const DiagnosticLanding = ({ onStart }: DiagnosticLandingProps) => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-black text-white relative overflow-hidden">
+    <div className="min-h-screen bg-[#0a0a0a] text-white relative overflow-hidden">
       {/* Linhas decorativas diagonais - igual à home */}
       <div className="absolute inset-0 overflow-hidden opacity-10 pointer-events-none">
         <div className="absolute top-0 right-0 w-[800px] h-[800px] border-t-2 border-r-2 border-white rotate-45 transform translate-x-1/2 -translate-y-1/2"></div>
