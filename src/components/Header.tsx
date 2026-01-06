@@ -6,9 +6,10 @@ import logoWay from "@/assets/logo-way.png";
 
 interface HeaderProps {
   variant?: 'default' | 'landing';
+  onDiagnosticStart?: () => void;
 }
 
-const Header = ({ variant = 'default' }: HeaderProps) => {
+const Header = ({ variant = 'default', onDiagnosticStart }: HeaderProps) => {
   const location = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -364,9 +365,8 @@ const Header = ({ variant = 'default' }: HeaderProps) => {
               /* Landing page CTA */
               <Button 
                 onClick={() => {
-                  const heroSection = document.getElementById('hero-diagnostico');
-                  if (heroSection) {
-                    heroSection.scrollIntoView({ behavior: 'smooth' });
+                  if (onDiagnosticStart) {
+                    onDiagnosticStart();
                   }
                 }}
                 className="font-medium px-5 py-2.5 bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 rounded-md"
@@ -436,9 +436,8 @@ const Header = ({ variant = 'default' }: HeaderProps) => {
                   <Button 
                     onClick={() => {
                       setIsMobileMenuOpen(false);
-                      const heroSection = document.getElementById('hero-diagnostico');
-                      if (heroSection) {
-                        heroSection.scrollIntoView({ behavior: 'smooth' });
+                      if (onDiagnosticStart) {
+                        onDiagnosticStart();
                       }
                     }}
                     className="w-full text-sm font-medium py-3 rounded-md bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300"
