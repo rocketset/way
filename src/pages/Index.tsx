@@ -11,7 +11,12 @@ import NewsSection from "@/components/NewsSection";
 import CtaResultsSection from "@/components/CtaResultsSection";
 import Footer from "@/components/Footer";
 import { SEO } from "@/components/SEO";
+import { usePageSeoData } from "@/hooks/usePageSeoData";
+
 const Index = () => {
+  const { getSeoProps } = usePageSeoData('home');
+  const seoProps = getSeoProps();
+
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
@@ -26,7 +31,17 @@ const Index = () => {
     }
   };
   return <div className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-black relative overflow-hidden">
-      <SEO title="De consultoria a performance: sua operação digital em outro nível" description="Fazemos seu e-commerce crescer com estratégia, tecnologia, integrações e performance. Estrutura, processo e resultado para escalar suas vendas com previsibilidade." keywords="e-commerce, consultoria, performance, marketing digital, implantação, desenvolvimento" schema={organizationSchema} />
+      <SEO 
+        title={seoProps?.title || "De consultoria a performance: sua operação digital em outro nível"} 
+        description={seoProps?.description || "Fazemos seu e-commerce crescer com estratégia, tecnologia, integrações e performance. Estrutura, processo e resultado para escalar suas vendas com previsibilidade."} 
+        keywords={seoProps?.keywords || "e-commerce, consultoria, performance, marketing digital, implantação, desenvolvimento"} 
+        ogTitle={seoProps?.ogTitle}
+        ogDescription={seoProps?.ogDescription}
+        ogImage={seoProps?.ogImage}
+        canonical={seoProps?.canonical}
+        noindex={seoProps?.noindex}
+        schema={organizationSchema} 
+      />
       
       {/* Linhas decorativas diagonais - fundo fixo */}
       <div className="fixed inset-0 overflow-hidden opacity-10 pointer-events-none">

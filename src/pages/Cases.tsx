@@ -14,8 +14,11 @@ import { useCases } from "@/hooks/useCases";
 import { useCaseCategories } from "@/hooks/useCaseCategories";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { SEO } from "@/components/SEO";
+import { usePageSeoData } from "@/hooks/usePageSeoData";
 
 const Cases = () => {
+  const { getSeoProps } = usePageSeoData('cases');
+  const seoProps = getSeoProps();
   const [selectedCategory, setSelectedCategory] = useState("Todos");
   const [visibleCases, setVisibleCases] = useState(4);
 
@@ -53,10 +56,14 @@ const Cases = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="Cases de Sucesso"
-        description="Conheça histórias reais de empresas que transformaram seus negócios com as soluções da Way E-commerce. Cases de sucesso em implantação, performance e consultoria."
-        canonical="https://wayecommerce.com.br/cases"
-        keywords="cases de sucesso, portfolio, clientes way, resultados e-commerce"
+        title={seoProps?.title || "Cases de Sucesso"}
+        description={seoProps?.description || "Conheça histórias reais de empresas que transformaram seus negócios com as soluções da Way E-commerce. Cases de sucesso em implantação, performance e consultoria."}
+        canonical={seoProps?.canonical || "https://wayecommerce.com.br/cases"}
+        keywords={seoProps?.keywords || "cases de sucesso, portfolio, clientes way, resultados e-commerce"}
+        ogTitle={seoProps?.ogTitle}
+        ogDescription={seoProps?.ogDescription}
+        ogImage={seoProps?.ogImage}
+        noindex={seoProps?.noindex}
       />
       <Header />
       
