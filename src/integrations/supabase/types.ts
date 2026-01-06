@@ -1471,6 +1471,8 @@ export type Database = {
           atualizado_em: string
           canonical_url: string | null
           criado_em: string
+          custom_body_code: string | null
+          custom_head_code: string | null
           id: string
           meta_description: string | null
           meta_keywords: string | null
@@ -1493,6 +1495,8 @@ export type Database = {
           atualizado_em?: string
           canonical_url?: string | null
           criado_em?: string
+          custom_body_code?: string | null
+          custom_head_code?: string | null
           id?: string
           meta_description?: string | null
           meta_keywords?: string | null
@@ -1515,6 +1519,8 @@ export type Database = {
           atualizado_em?: string
           canonical_url?: string | null
           criado_em?: string
+          custom_body_code?: string | null
+          custom_head_code?: string | null
           id?: string
           meta_description?: string | null
           meta_keywords?: string | null

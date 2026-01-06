@@ -61,6 +61,8 @@ const SEO = () => {
     twitter_description: "",
     twitter_image: "",
     twitter_site: "",
+    custom_head_code: "",
+    custom_body_code: "",
   });
   const [newPageDialog, setNewPageDialog] = useState(false);
   const [newPageForm, setNewPageForm] = useState({
@@ -100,6 +102,8 @@ const SEO = () => {
         twitter_description: selectedPage.twitter_description || "",
         twitter_image: selectedPage.twitter_image || "",
         twitter_site: selectedPage.twitter_site || "",
+        custom_head_code: selectedPage.custom_head_code || "",
+        custom_body_code: selectedPage.custom_body_code || "",
       });
     }
   }, [selectedPage]);
@@ -340,10 +344,11 @@ const SEO = () => {
                   </CardHeader>
                   <CardContent className="space-y-6">
                     <Tabs defaultValue="basic" className="w-full">
-                      <TabsList className="grid w-full grid-cols-3">
+                      <TabsList className="grid w-full grid-cols-4">
                         <TabsTrigger value="basic">Básico</TabsTrigger>
                         <TabsTrigger value="social">Social</TabsTrigger>
                         <TabsTrigger value="advanced">Avançado</TabsTrigger>
+                        <TabsTrigger value="seo-advanced">SEO Técnico</TabsTrigger>
                       </TabsList>
 
                       <TabsContent value="basic" className="space-y-4 mt-4">
@@ -521,6 +526,71 @@ const SEO = () => {
                               checked={pageForm.nofollow}
                               onCheckedChange={(checked) => setPageForm({ ...pageForm, nofollow: checked })}
                             />
+                          </div>
+                        </div>
+                      </TabsContent>
+
+                      <TabsContent value="seo-advanced" className="space-y-4 mt-4">
+                        {/* SEO Avançado / Código Personalizado */}
+                        <div className="space-y-4">
+                          <div className="p-4 rounded-lg bg-primary/5 border border-primary/20">
+                            <h4 className="font-medium flex items-center gap-2 text-primary">
+                              <Code className="w-4 h-4" />
+                              SEO Avançado
+                            </h4>
+                            <p className="text-sm text-muted-foreground mt-1">
+                              Insira código personalizado para esta página (JSON-LD, Schema, meta tags extras).
+                              O código será renderizado apenas nesta página.
+                            </p>
+                          </div>
+
+                          {/* Código no Head */}
+                          <div className="space-y-2">
+                            <Label className="flex items-center gap-2">
+                              <Code className="w-4 h-4" />
+                              Código no {"<head>"}
+                            </Label>
+                            <Textarea
+                              value={pageForm.custom_head_code}
+                              onChange={(e) => setPageForm({ ...pageForm, custom_head_code: e.target.value })}
+                              placeholder={`<!-- Exemplo: JSON-LD Schema -->\n<script type="application/ld+json">\n{\n  "@context": "https://schema.org",\n  "@type": "FAQPage",\n  "mainEntity": [...]\n}\n</script>`}
+                              rows={10}
+                              className="font-mono text-sm"
+                            />
+                            <p className="text-xs text-muted-foreground">
+                              Ideal para: JSON-LD, Schema.org, meta tags personalizadas, preconnect, etc.
+                            </p>
+                          </div>
+
+                          {/* Código antes do Body */}
+                          <div className="space-y-2">
+                            <Label className="flex items-center gap-2">
+                              <Code className="w-4 h-4" />
+                              Código antes do {"</body>"}
+                            </Label>
+                            <Textarea
+                              value={pageForm.custom_body_code}
+                              onChange={(e) => setPageForm({ ...pageForm, custom_body_code: e.target.value })}
+                              placeholder={`<!-- Exemplo: Script de tracking -->\n<script>\n  // Seu código aqui\n</script>`}
+                              rows={8}
+                              className="font-mono text-sm"
+                            />
+                            <p className="text-xs text-muted-foreground">
+                              Ideal para: scripts de tracking específicos, widgets, etc.
+                            </p>
+                          </div>
+
+                          {/* Dicas */}
+                          <div className="p-4 rounded-lg bg-muted/50 space-y-2">
+                            <h5 className="font-medium text-sm">💡 Schemas recomendados por tipo de página:</h5>
+                            <ul className="text-sm text-muted-foreground space-y-1">
+                              <li>• <strong>Diagnóstico:</strong> FAQPage, HowTo</li>
+                              <li>• <strong>Serviços:</strong> Service, Offer</li>
+                              <li>• <strong>Sobre/Empresa:</strong> Organization, LocalBusiness</li>
+                              <li>• <strong>Contato:</strong> ContactPage, LocalBusiness</li>
+                              <li>• <strong>Blog:</strong> Article, BlogPosting</li>
+                              <li>• <strong>Cases:</strong> CaseStudy, Article</li>
+                            </ul>
                           </div>
                         </div>
                       </TabsContent>
