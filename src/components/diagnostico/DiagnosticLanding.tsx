@@ -101,7 +101,7 @@ export const DiagnosticLanding = ({ onStart }: DiagnosticLandingProps) => {
                 <Button 
                   size="lg" 
                   onClick={onStart}
-                  className="w-full sm:w-auto text-base md:text-lg px-6 md:px-8 py-5 md:py-6 bg-primary hover:bg-primary/90 group"
+                  className="w-full sm:w-auto whitespace-normal text-center leading-snug text-sm sm:text-base md:text-lg px-5 sm:px-6 md:px-8 py-4 md:py-6 bg-primary hover:bg-primary/90 group"
                 >
                   Descobrir meu nível de maturidade
                   <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
@@ -689,7 +689,7 @@ export const DiagnosticLanding = ({ onStart }: DiagnosticLandingProps) => {
           <Button 
             size="lg" 
             onClick={onStart}
-            className="w-full sm:w-auto text-base md:text-lg px-8 md:px-10 py-5 md:py-7 bg-primary hover:bg-primary/90 group shadow-lg shadow-primary/20"
+            className="w-full sm:w-auto whitespace-normal text-center leading-snug text-sm sm:text-base md:text-lg px-6 md:px-10 py-4 md:py-7 bg-primary hover:bg-primary/90 group shadow-lg shadow-primary/20"
           >
             Descobrir meu nível de maturidade agora
             <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
