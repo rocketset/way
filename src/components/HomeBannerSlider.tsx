@@ -43,7 +43,7 @@ const HomeBannerSlider = () => {
         </div>
 
         {/* Clients Carousel - fixed at bottom */}
-        <div className="w-full py-6">
+        <div className="w-full pt-2 pb-4">
           <ClientsCarousel />
         </div>
       </div>
