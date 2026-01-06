@@ -13,7 +13,7 @@ const HomeBannerSlider = () => {
       {/* Main content - centered vertically */}
       <div className="relative z-10 min-h-screen flex flex-col">
         {/* Spacer to push content down from header */}
-        <div className="flex-1 flex items-center justify-center pt-20">
+        <div className="flex-1 flex items-center justify-center pt-20 py-[20px]">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-6xl mx-auto text-center space-y-10">
               {/* Main Title */}
